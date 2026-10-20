@@ -1,0 +1,56 @@
+{
+  "_nota": "Horarios y reseñas tomados de la ficha de Google Maps el 20 de octubre de 2026. Los horarios son referenciales y deben confirmarse con cada negocio. Las reseñas son extractos de usuarios de Google Maps, con su nombre público y la fecha relativa que mostraba Google.",
+  "highcuts": {
+    "horario": { "lun": ["11:00", "21:00"], "mar": ["11:00", "21:00"], "mie": ["11:00", "21:00"], "jue": ["11:00", "21:00"], "vie": ["11:00", "21:00"], "sab": ["11:00", "21:00"], "dom": ["12:00", "18:30"] },
+    "resenas": [
+      { "a": "giancarlo", "e": 5, "f": "hace 6 meses", "t": "Excelente servicio en la barbería. Desde que llegué me atendieron muy bien, el barbero fue súper profesional y se tomó el tiempo de entender exactamente el estilo que quería. El corte quedó limpio, preciso y mejor de lo que esperaba…" },
+      { "a": "Rodrigo", "e": 5, "f": "hace 5 meses", "t": "Muy recomendada la barbería, tiene un excelente servicio. El local es limpio, ordenado, fresco. Todos sus barberos son hábiles y muy atentos…" },
+      { "a": "Hector", "e": 5, "f": "hace un mes", "t": "Muy buen servicio, te explican previo el proceso. Son minuciosos y la atención es destacable…" }
+    ]
+  },
+  "labarberia": {
+    "horario": { "lun": ["09:00", "20:00"], "mar": ["09:00", "20:00"], "mie": ["09:00", "20:00"], "jue": ["09:00", "20:00"], "vie": ["09:00", "20:00"], "sab": ["09:00", "20:00"], "dom": ["10:00", "19:00"] },
+    "resenas": [
+      { "a": "Rodrigo", "e": 5, "f": "hace 10 meses", "t": "Es una buena barbería, dentro de todo he visto que la mayoría de sus barberos dejan a sus clientes satisfechos. Particularmente mi barbero Jonathan es un capo y siempre me hace un buen trabajo…" }
+    ]
+  },
+  "elite": {
+    "horario": { "lun": ["11:00", "20:30"], "mar": ["11:00", "20:30"], "mie": ["11:00", "20:30"], "jue": ["11:00", "20:30"], "vie": ["11:00", "20:30"], "sab": ["11:00", "20:30"], "dom": ["12:00", "17:30"] },
+    "resenas": [
+      { "a": "Saúl", "e": 5, "f": "hace 7 meses", "t": "Lugar cómodo, tranquilo y buen entorno, trabajan con citas por lo que no hay acumulación de gente. Los barberos realizan un trabajo minucioso y con atención en los detalles y acabados…" },
+      { "a": "Brayan", "e": 5, "f": "hace 7 meses", "t": "Una barbería de diez. La atención es impecable y los barberos son auténticos profesionales. Salí con un corte excelente, cuidando cada detalle…" },
+      { "a": "Charles", "e": 5, "f": "hace 3 meses", "t": "Excelente barbero. Alexis hace un corte preciso y con mucho cuidado al detalle. Soy extranjero frances y me atendió súper bien, además los precios son justos. Totalmente recomendado." }
+    ]
+  },
+  "arturo": {
+    "horario": null,
+    "resenas": [
+      { "a": "Edu", "e": 5, "f": "hace 10 meses", "t": "La atención de Arturito es lo máximo! Me cortó el cabello con el desde los 17 años…" },
+      { "a": "maria", "e": 5, "f": "hace 2 años", "t": "Excelente atencion en el salon de belleza de Arturo, fui atendida por el dueño, y estoy encantada, muy profesional. Lo felicito, me ha maquillado y peinado para una boda, como madrina lo ha hecho espectacular…" }
+    ]
+  },
+  "vanle": {
+    "horario": { "lun": ["09:00", "21:00"], "mar": ["09:00", "21:00"], "mie": ["09:00", "21:00"], "jue": ["09:00", "21:00"], "vie": ["09:00", "21:00"], "sab": ["09:00", "21:00"], "dom": ["09:00", "21:00"] },
+    "resenas": [
+      { "a": "yilian", "e": 5, "f": "hace 3 meses", "t": "Excelente servicio en la sede de San Miguel, mi favorita! Gracias, Lesly Vanleria, por dejarme siempre bella como las estrellas. Tu atención y profesionalismo hacen que cada visita sea una gran experiencia…" },
+      { "a": "Mariangelica", "e": 5, "f": "hace 3 meses", "t": "Fui atendida por Marisol Araujo y fue super excelente… la recomiendo 1000% muchas gracias" },
+      { "a": "Jiré", "e": 4, "f": "hace 6 meses", "t": "Me gustó mi corte, me hice algo simple como un tratamiento de botox de oro y un corte y cepillado (en total 80 so). Me gustó mucho…" }
+    ]
+  },
+  "emmanuel": {
+    "horario": { "lun": ["10:00", "21:00"], "mar": ["10:00", "21:00"], "mie": ["10:00", "21:00"], "jue": ["10:00", "21:00"], "vie": ["10:00", "21:00"], "sab": ["10:00", "21:30"], "dom": ["10:30", "19:00"] },
+    "resenas": [
+      { "a": "Diocelis", "e": 5, "f": "hace 4 meses", "t": "Increíble servicio! Fui por primera vez y me hicieron un trabajo espectacular. El barbero fue muy profesional, detallista y me dio excelentes consejos para cuidar el cabello de mi hijo…" },
+      { "a": "Juan", "e": 5, "f": "hace 8 meses", "t": "Llevé a mi sobrino a cortarse el cabello y también aproveché para cortarme yo. Ambos quedamos conformes con el resultado. El barbero fue muy profesional y amigable…" },
+      { "a": "Steven", "e": 5, "f": "hace un año", "t": "Ya e ido en 3 ocasiones y el ambiente es excelente, Escuchas musica te hacen el tratamiento completo y los precios están acorde al servicio que ofrecen, 5 estrellas de mi parte…" }
+    ]
+  },
+  "serbio": {
+    "horario": { "lun": ["10:00", "21:00"], "mar": ["10:00", "21:00"], "mie": ["10:00", "21:00"], "jue": ["10:00", "21:00"], "vie": ["10:00", "21:00"], "sab": ["10:00", "21:00"], "dom": ["10:00", "21:00"] },
+    "resenas": [
+      { "a": "Daniel", "e": 5, "f": "hace 4 meses", "t": "Primera vez que vengo y la verdad excelente lugar sobre todo el barbero que me cortó, me asesoro ala perfección y el aire acondicionado perfecto un lugar fresco y con buena música." },
+      { "a": "Sharon", "e": 5, "f": "hace 4 meses", "t": "Excelente servicio, vine por primera vez con mi hijo pequeño, ahora vienen mis otros hijos y mi esposo, súper recomendado muy profesionales…" },
+      { "a": "Jorge", "e": 5, "f": "hace 4 meses", "t": "Excelente atención. Buen ambiente y trabajos de alta calidad. Muy recomendado" }
+    ]
+  }
+}

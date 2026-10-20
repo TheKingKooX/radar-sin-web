@@ -1,0 +1,409 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radar sin web</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%2305060d%22%2F%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2222%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2211%22%20opacity%3D%22.6%22%2F%3E%3C%2Fg%3E%3Cpath%20d%3D%22M32%2032V10a22%2022%200%200%201%2020%2013z%22%20fill%3D%22%234169e1%22%20opacity%3D%22.6%22%2F%3E%3Ccircle%20cx%3D%2243%22%20cy%3D%2222%22%20r%3D%224%22%20fill%3D%22%234169e1%22%2F%3E%3C%2Fsvg%3E">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: mapa esquemático arriba, filtros (zona, tipo, web) y lista de tarjetas con miniatura; las quitadas se pueden deshacer. */
+:root {
+  --bg: #f6f8ff; --surface: #ffffff; --fg: #0a0a0f; --muted: #5b6070; --line: #dfe3f2;
+  --accent: #4169e1; --accent-text: #2a4fc4; --on-accent: #ffffff;
+  --glow: rgba(65, 105, 225, .16); --blob1: rgba(65, 105, 225, .26); --blob2: rgba(65, 105, 225, .10); --dot: rgba(65, 105, 225, .55);
+  --font-display: "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #05060d; --surface: #0f1220; --fg: #f4f6ff; --muted: #9aa1b8; --line: #22273d;
+    --accent: #4169e1; --accent-text: #7c9bff;
+    --glow: rgba(65, 105, 225, .26); --blob1: rgba(65, 105, 225, .34); --blob2: rgba(65, 105, 225, .14); --dot: rgba(124, 155, 255, .6);
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.45;
+  position: relative; isolation: isolate;
+  padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+body::before { /* fondo interactivo: resplandor azul que sigue al cursor (o deriva solo) */
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(460px circle at var(--mx, 50%) var(--my, 30%), var(--blob1), transparent 70%),
+    radial-gradient(40% 40% at 12% 88%, var(--blob2), transparent 70%),
+    radial-gradient(36% 36% at 92% 8%, var(--blob2), transparent 70%);
+}
+body::after { /* rejilla de puntos que solo se ve cerca del cursor */
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background-image: radial-gradient(var(--dot) 1.2px, transparent 1.4px); background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(300px circle at var(--mx, 50%) var(--my, 30%), #000, transparent 70%);
+  mask-image: radial-gradient(300px circle at var(--mx, 50%) var(--my, 30%), #000, transparent 70%);
+}
+.wrap { max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+header { display: flex; flex-direction: column; gap: 6px; }
+h1 {
+  font-family: var(--font-display); font-weight: 700; font-size: clamp(32px, 6vw, 48px);
+  line-height: 1.02; letter-spacing: -.035em; margin: 0; text-wrap: balance;
+}
+
+/* Filtros */
+.controls { display: flex; flex-direction: column; gap: 10px; }
+.crow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.clabel { color: var(--muted); font-size: 13px; text-transform: uppercase; letter-spacing: .06em; min-width: 52px; }
+.chip {
+  font: inherit; font-weight: 500; color: var(--fg); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer;
+}
+.chip[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.chip:focus-visible, .btn:focus-visible, a:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+select {
+  font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line);
+  border-radius: 6px; padding: 7px 10px;
+}
+
+/* Quitadas */
+[hidden] { display: none !important; }
+.toast {
+  display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center;
+  padding: 10px 14px; background: var(--fg); color: var(--bg); border-radius: 6px;
+}
+.toast .btn { color: var(--bg); border-color: var(--bg); }
+.removed { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 10px 14px; }
+.removed summary { cursor: pointer; font-weight: 600; }
+.removed ul { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.removed li { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; }
+.removed li span { flex: 1; min-width: 0; }
+
+/* Tarjetas: cerradas solo logo y nombre; al tocar se despliegan con relleno desde el punto del clic */
+.list { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; align-items: start; margin: 0; padding: 0; list-style: none; }
+.card {
+  --rx: 50%; --ry: 50%; position: relative; overflow: hidden; background: var(--surface);
+  border: 1px solid var(--line); border-radius: 14px;
+}
+.card::before { /* relleno ripple */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(circle at var(--rx) var(--ry), var(--glow), transparent 75%);
+  clip-path: circle(0 at var(--rx) var(--ry));
+}
+.card.open { grid-column: 1 / -1; border-color: var(--accent); box-shadow: 0 18px 40px -18px rgba(0, 0, 0, .55); }
+.card.open::before { clip-path: circle(150% at var(--rx) var(--ry)); }
+.head {
+  position: relative; width: 100%; display: flex; align-items: center; gap: 14px; padding: 14px;
+  background: none; border: 0; color: inherit; font: inherit; text-align: left; cursor: pointer; border-radius: 14px;
+}
+.head:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
+.av {
+  flex: none; width: 52px; height: 52px; border-radius: 12px; display: grid; place-items: center; overflow: hidden;
+  background: var(--line); color: var(--fg); font-weight: 700; font-size: 18px; letter-spacing: .04em;
+}
+.av img { width: 100%; height: 100%; object-fit: contain; filter: grayscale(1) contrast(1.05); }
+.card:hover .av img, .card.open .av img { filter: none; }
+.nm { flex: 1; min-width: 0; font-weight: 600; font-size: 16px; line-height: 1.2; letter-spacing: -.01em; text-wrap: balance; }
+.chev { flex: none; width: 9px; height: 9px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); margin-right: 4px; }
+.card.open .chev { transform: rotate(-135deg); }
+.det { display: grid; grid-template-rows: 0fr; position: relative; }
+.card.open .det { grid-template-rows: 1fr; }
+.det-in { overflow: hidden; min-height: 0; padding: 0 14px; display: flex; flex-direction: column; gap: 14px; }
+.card.open .det-in { padding-bottom: 16px; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px 20px; padding-top: 4px; border-top: 1px solid var(--line); }
+.facts > div { padding-top: 12px; }
+.lbl { display: block; color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 4px; }
+.big { font-size: 26px; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); font-size: 13px; }
+.bar { height: 4px; background: var(--line); border-radius: 2px; margin-top: 8px; overflow: hidden; max-width: 160px; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+.svs ul { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; }
+.svs li { border: 1px solid var(--line); border-radius: 999px; padding: 3px 11px; font-size: 13px; }
+.su { margin: 0; padding-left: 16px; font-size: 14px; }
+.vi p { margin: 4px 0 0; }
+.sw { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.sw i { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--line); box-shadow: inset 0 0 0 1px rgba(128,128,128,.25); }
+.sw code { font-size: 12px; color: var(--muted); margin-right: 8px; }
+.desc { margin: 0; color: var(--muted); max-width: 70ch; }
+.det iframe { width: 100%; height: 220px; border: 1px solid var(--line); border-radius: 10px; background: var(--line); display: block; }
+.row { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+
+.pill {
+  font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 999px;
+}
+.pill { border: 1px solid var(--accent); }
+.pill.none { background: var(--accent); color: var(--on-accent); }
+.pill.social { background: transparent; color: var(--accent-text); }
+.pill.web { background: var(--line); border-color: var(--line); color: var(--muted); }
+.tipo { color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.phone { font-variant-numeric: tabular-nums; font-weight: 500; }
+.btn {
+  font: inherit; font-size: 13px; font-weight: 500; color: var(--fg); background: transparent;
+  border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; cursor: pointer;
+}
+.btn.quitar { margin-left: auto; color: var(--muted); }
+.btn.quitar:hover, .btn:hover { border-color: var(--accent); color: var(--accent-text); }
+.empty { color: var(--muted); padding: 28px 0; text-align: center; }
+a { color: var(--accent-text); text-underline-offset: 3px; }
+.note { color: var(--muted); font-size: 13px; margin: 0; max-width: 70ch; }
+
+/* Encabezado */
+.logo { display: flex; align-items: center; gap: clamp(12px, 2vw, 20px); }
+.radar { width: clamp(52px, 9vw, 84px); height: auto; color: var(--fg); flex: none; overflow: visible; }
+.wm { font-size: clamp(36px, 7vw, 68px); font-weight: 700; letter-spacing: -.04em; line-height: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .barrido { transform-origin: 32px 32px; animation: barre 4s linear infinite; }
+  @keyframes barre { to { transform: rotate(360deg); } }
+  .blip { animation: blip 4s ease-in-out infinite; } .blip.b2 { animation-delay: 2s; }
+  @keyframes blip { 0%, 100% { opacity: .25; } 15% { opacity: 1; } }
+}
+h1 span { color: transparent; -webkit-text-stroke: 1.5px var(--accent); }
+header { gap: 14px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+
+/* Movimiento (sutil): elevación, relleno ripple, rotación del chevron, entrada escalonada */
+@media (prefers-reduced-motion: no-preference) {
+  .chip, .btn { transition: background .2s, color .2s, border-color .2s, transform .15s; }
+  .chip:active, .btn:active { transform: scale(.96); }
+  .card { transition: box-shadow .35s, transform .35s, border-color .35s; }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 14px 28px -16px rgba(0, 0, 0, .5); }
+  .card.open:hover { transform: none; }
+  .card::before { transition: clip-path .7s cubic-bezier(.2, .7, .2, 1); }
+  .chev { transition: transform .35s cubic-bezier(.2, .7, .2, 1); }
+  .av img { transition: filter .3s; }
+  .card.open .av { animation: pulso .55s ease; }
+  @keyframes pulso { 40% { transform: scale(1.14); } }
+  .det { transition: grid-template-rows .45s cubic-bezier(.2, .7, .2, 1); }
+  .det-in > * { opacity: 0; transform: translateY(10px); transition: opacity .3s, transform .4s; }
+  .card.open .det-in > * { opacity: 1; transform: none; }
+  .card.open .det-in > :nth-child(1) { transition-delay: .12s; }
+  .card.open .det-in > :nth-child(2) { transition-delay: .19s; }
+  .card.open .det-in > :nth-child(3) { transition-delay: .26s; }
+  .card.open .det-in > :nth-child(4) { transition-delay: .33s; }
+  .card.open .det-in > :nth-child(5) { transition-delay: .4s; }
+  .card.open .det-in > :nth-child(6) { transition-delay: .47s; }
+  header > * { animation: entra .6s cubic-bezier(.2, .7, .2, 1) both; }
+  header > :nth-child(2) { animation-delay: .06s; } header > :nth-child(3) { animation-delay: .12s; } header > :nth-child(4) { animation-delay: .18s; }
+  @keyframes entra { from { opacity: 0; transform: translateY(14px); } }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1 class="logo">
+      <svg class="radar" viewBox="0 0 64 64" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="2"><circle cx="32" cy="32" r="29"/><circle cx="32" cy="32" r="19" opacity=".6"/><circle cx="32" cy="32" r="9" opacity=".6"/><path d="M32 3v58M3 32h58" opacity=".35"/></g>
+        <g class="barrido"><path d="M32 32V3a29 29 0 0 1 26 17z" fill="var(--accent)" opacity=".4"/><path d="M32 32V3" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/></g>
+        <g fill="var(--accent)"><circle class="blip" cx="45" cy="21" r="3"/><circle class="blip b2" cx="21" cy="42" r="3"/></g>
+      </svg>
+      <b class="wm">Radar <span>sin web</span></b>
+    </h1>
+  </header>
+
+  <div class="controls">
+    <div class="crow">
+      <span class="clabel">Zona</span>
+      <button class="chip" data-z="todas" aria-pressed="true">Todas</button>
+      <button class="chip" data-z="San Miguel" aria-pressed="false">San Miguel</button>
+      <button class="chip" data-z="Magdalena del Mar" aria-pressed="false">Magdalena del Mar</button>
+      <button class="chip" data-z="Jesús María" aria-pressed="false">Jesús María</button>
+    </div>
+    <div class="crow">
+      <span class="clabel">Tipo</span>
+      <button class="chip" data-k="todos" aria-pressed="true">Todos</button>
+      <button class="chip" data-k="Barbería" aria-pressed="false">Barberías</button>
+      <button class="chip" data-k="Spa" aria-pressed="false">Spas</button>
+      <button class="chip" data-k="Salón" aria-pressed="false">Salones</button>
+    </div>
+    <div class="crow">
+      <span class="clabel">Web</span>
+      <button class="chip" data-f="todas" aria-pressed="true">Todas</button>
+      <button class="chip" data-f="none" aria-pressed="false">Sin enlace</button>
+      <button class="chip" data-f="social" aria-pressed="false">Solo red social</button>
+      <button class="chip" data-f="reservas" aria-pressed="false">Con página de reservas</button>
+    </div>
+    <div class="crow">
+      <label for="orden" class="clabel">Orden</label>
+      <select id="orden">
+        <option value="reviews">Más reseñas</option>
+        <option value="rating">Mejor puntaje</option>
+        <option value="sucursales">Más sucursales</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+  <details class="removed" id="removed" hidden></details>
+
+  <ul class="list" id="list"></ul>
+
+  <p class="note">Estado de web según el campo de sitio web de Google Maps y los perfiles de cada negocio, revisado el 20 de octubre de 2026. Un negocio puede tener página sin haberla enlazado, conviene buscarlo en Google antes de contactarlo. Logos y servicios salen de sus perfiles públicos; lo que quitas se guarda solo en este navegador.</p>
+</div>
+
+<script>
+var DATA = [
+  { id: "emmanuel", z: "San Miguel", k: "Barbería", n: "Barbería Emmanuel", a: "Jr. Miguel de Unamuno 166", r: 5.0, c: 247, t: "+51 900 505 503", s: "social", pl: "Solo red social", l: "https://www.instagram.com/em_studio23", lt: "Instagram", la: -12.0810321, lo: -77.0762217, lg: "img/emmanuel.jpg", sv: ["Corte de cabello (adultos y niños)","Tratamiento completo"], vi: {"c":["#110d0c","#ecebcb","#544d4c"],"e":"Monograma «EM» dentro de un círculo, en crema y dorado sobre fondo oscuro texturizado. Serif con remates: estilo clásico y de lujo."}, demo: "demos/emmanuel/index.html", m: "https://maps.google.com/?cid=16547947929153913721" },
+  { id: "labarberia", z: "San Miguel", k: "Barbería", n: "La Barbería", a: "2do piso, Av. Rafael Escardó 723", r: 4.4, c: 243, t: "+51 960 706 851", s: "social", pl: "Solo red social", l: "https://www.instagram.com/labarberiamensclub/", lt: "Instagram", la: -12.0737072, lo: -77.0921964, lg: "img/labarberia.jpg", sv: ["Corte de cabello","Corte kids","Barbas","Faciales"], vi: {"c":["#0d0b0b","#ffffff","#6e6c6b"],"e":"Blanco sobre negro, sans-serif en mayúsculas gruesas con icono de bigote y la leyenda «Men's Club». Sobrio y masculino.","v":"Creada para todo el público masculino, la mejor opción para un buen corte."}, demo: "demos/labarberia/index.html", m: "https://maps.google.com/?cid=16618686729091458036" },
+  { id: "serbio", z: "San Miguel", k: "Barbería", n: "El Serbio Barbershop", a: "Av. de la Marina 3281", r: 4.6, c: 221, t: "+51 955 633 252", s: "social", pl: "Solo red social", l: "https://www.facebook.com/marina305", lt: "Facebook", la: -12.0745566, lo: -77.1000256, lg: "img/serbio.jpg", sv: ["Fade","Barba","Limpieza facial","Ondulación","Mechas platinadas","Diseños"], su: ["La Paz 1499, San Miguel"], vi: {"c":["#131313","#4f4e4e","#ffffff","#872728"],"e":"Retrato de hombre con gafas y bigote sobre fondo gris humo, con pequeñas banderas rojas y azules. Estilo urbano, de personaje o mascota.","v":"Capacitados para darte la mejor experiencia."}, demo: "demos/serbio/index.html", m: "https://maps.google.com/?cid=5645825449709646759" },
+    { id: "highcuts", z: "San Miguel", k: "Barbería", n: "Highcuts Barber Shop", a: "Av. Lima 562", r: 4.9, c: 118, t: "+51 980 864 616", s: "social", pl: "Solo red social", l: "https://www.facebook.com/highcutsbarbershop/", lt: "Facebook", la: -12.089095, lo: -77.0792932, lg: "img/highcuts.jpg", sv: ["Cortes","Barbas","Limpieza facial","Asesoramiento"], vi: {"c":["#000000","#fdfdfd","#afafaf"],"e":"Solo blanco y negro. Sans geométrica en dos pesos (HIGH en negrita, CUTS en fino). Minimalista y moderno.","v":"El estilo es una forma de decir quién eres sin tener que hablar."}, demo: "demos/highcuts/index.html", m: "https://maps.google.com/?cid=11693123645377821144" },
+  { id: "elite", z: "San Miguel", k: "Barbería", n: "Elite Barbería", a: "Mercedes Gallagher de Parks 295", r: 4.8, c: 111, t: "+51 940 122 950", s: "social", pl: "Solo red social", l: "https://instagram.com/elitebarberia295_", lt: "Instagram", la: -12.0789968, lo: -77.0843088, lg: "img/elite.jpg", sv: ["Barbería"], vi: {"c":["#f9f9f9","#d1d1d1","#919191"],"e":"Fondo blanco con textura de mármol y letras gris oscuro: serif en mayúsculas muy espaciadas con líneas finas. Elegante y minimalista.","v":"Barbería de élite, barberos de alta gama."}, demo: "demos/elite/index.html", m: "https://maps.google.com/?cid=4228776580342397615" },
+  { id: "vanle", z: "San Miguel", k: "Salón", n: "Vanlé Salón San Miguel", a: "Av. de la Marina 1487", r: 4.1, c: 368, t: "+51 970 964 522", s: "social", pl: "Solo red social", l: "https://www.instagram.com/vanle_salon/", lt: "Instagram", la: -12.0794293, lo: -77.0778334, sv: ["Laceados","Tratamientos capilares","Color y balayage","Venta de productos"], lg: "img/vanle.jpg", su: ["Comas","Los Olivos","Surco (Chacarilla)","La Molina","San Juan de Lurigancho","Arequipa (Yanahuara)"], vi: {"c":["#fcfcfb","#872b39","#b2b2b2"],"e":"Círculo blanco con aro granate, icono «V» y «VANLÉ SALON» en gris oscuro y fino. Limpio, femenino y de marca de cadena.","v":"Tu cabello, tus reglas… y un precio justo."}, demo: "demos/vanle/index.html", m: "https://maps.google.com/?cid=8959664229093734476" },
+    { id: "arturo", z: "San Miguel", k: "Salón", n: "Salón de Belleza Arturo", a: "Contisuyo 295", r: 4.6, c: 151, t: "+51 972 086 964", s: "none", pl: "Sin enlace", la: -12.0717975, lo: -77.0983674, sv: ["Cabello","Tinte"], lg: "img/arturo.jpg", vi: {"c":["#e9e9e9","#afb0b2","#6c7074","#4d5258"],"e":"Logotipo en 3D metalizado: «Arturo» en script caligráfico con acabado cromo o plata y «Salón & Spa» en sans geométrica fina, sobre fondo gris claro. Elegante, moderno y de estilo premium."}, demo: "demos/arturo/index.html", m: "https://maps.google.com/?cid=10640510644021761821" },
+
+  { id: "barone", z: "Magdalena del Mar", k: "Barbería", n: "Barone Barbería Premium", a: "Av. del Ejército 1180", r: 4.9, c: 133, t: "+51 1 5044437", s: "social", pl: "Solo red social", l: "https://www.instagram.com/barone_magdalena/", lt: "Instagram", la: -12.1016026, lo: -77.0599758, lg: "img/barone.jpg", sv: ["Corte de cabello","Camuflaje de canas","Ocultar entradas","Ondulaciones","Looks y asesoría"], vi: {"c":["#010101","#e2ad49","#8d6e33"],"e":"Rostro de hombre con barba bajo una corona, en dorado sobre negro. Estilo premium y de realeza.","v":"Valora tu tiempo en la silla, conoce tu estilo."}, m: "https://maps.google.com/?cid=12266689839913501015" },
+  { id: "dinasty", z: "Magdalena del Mar", k: "Barbería", n: "Dinasty Barbershop", a: "Jr. Domingo Ponte 1097", r: 5.0, c: 150, t: "+51 997 861 603", s: "social", pl: "Solo reservas", l: "https://book.weibook.co/dinasty-barbershop", lt: "Página de reservas", la: -12.0912747, lo: -77.0622768, sv: ["Corte clássic (S/50, 45 min)"], lg: "img/dinasty.jpg", vi: {"c":["#fefdfc","#b97a17","#f1e7d4"],"e":"Casco de guerrero con espadas cruzadas y «DINASTY BARBERSHOP» en dorado sobre blanco, con sans ancha. Estilo fuerte, de guerrero.","v":"Llevamos tu estilo al siguiente nivel."}, m: "https://maps.google.com/?cid=7458781742743185219" },
+  { id: "rytual", z: "Magdalena del Mar", k: "Barbería", n: "Barbería Rytual by Steffano Negrette", a: "Jr. Huamanga 107", r: 5.0, c: 130, t: "+51 970 500 070", s: "social", pl: "Solo reservas", l: "https://rytualbysteffanonegrette.site.agendapro.com/pe", lt: "Página de reservas", la: -12.0875302, lo: -77.0644082, lg: "img/rytual.png", sv: ["Corte de cabello premium (S/50)","Barba (S/45)","Cejas (S/15)","Corte + barba (S/95)","Tratamientos faciales y capilares","Depilaciones"], vi: {"c":["#0a2964","#ffffff","#8b97ae"],"e":"Azul marino con «RYTUAL» en serif blanca de trazo fino y «by Steffano Negrette» pequeño. Elegante y premium.","v":"Reinventamos el concepto de la barbería para una experiencia única."}, m: "https://maps.google.com/?cid=15621291838656616597" },
+  { id: "lapynta", z: "Magdalena del Mar", k: "Barbería", n: "Lapynta Barbería", a: "Jr. San Martín 793", r: 5.0, c: 101, t: "+51 999 119 911", s: "social", pl: "Solo red social", l: "https://www.instagram.com/lapyntabarberia/", lt: "Instagram", la: -12.0890023, lo: -77.0741012, lg: "img/lapynta.jpg", sv: ["Corte para caballeros"], su: ["Lapynta Salón: Jr. San Martín 791, Magdalena del Mar (mismo nombre y misma cuadra)"], vi: {"c":["#ece3c6","#a93935","#324b4e"],"e":"Fondo vintage de zigzag en crema, rojo y verde azulado, con cráneo de toro y bigote y letras decorativas. Barbería clásica de estilo retro o western.","v":"Staff de barberos profesionales a tu servicio."}, m: "https://maps.google.com/?cid=6398233229638788309" },
+              { id: "lapynta-salon", z: "Magdalena del Mar", k: "Salón", n: "Lapynta Salón", a: "Jr. San Martín 791", r: 4.8, c: 142, t: "+51 975 880 001", s: "social", pl: "Solo red social", l: "https://www.instagram.com/lapyntasalon/", lt: "Instagram", la: -12.0891973, lo: -77.0740525, lg: "img/lapynta-salon.jpg", sv: ["Balayage y color","Corte","Uñas (nails)"], su: ["Lapynta Barbería: Jr. San Martín 793, Magdalena del Mar (mismo nombre y misma cuadra)"], vi: {"c":["#020202","#505050","#ffffff"],"e":"Negro con un rombo y el monograma «LP», y «LAPYNTA» en sans espaciada y blanca. Minimalista y sofisticado.","v":"Un lugar pensado en ti."}, m: "https://maps.google.com/?cid=232187037717818741" },
+  { id: "noa", z: "Magdalena del Mar", k: "Salón", n: "NOA Salón", a: "Jr. Castilla 810", r: 4.5, c: 160, t: "+51 994 602 534", s: "social", pl: "Solo red social", l: "https://www.facebook.com/noasalonspa/", lt: "Facebook", la: -12.0894418, lo: -77.0730123, lg: "img/noa.jpg", sv: ["Peluquería","Belleza y cuidado personal"], su: ["Jr. San Martín 691, Magdalena del Mar"], vi: {"c":["#010000","#cb964a","#ac7835"],"e":"Dorado sobre negro: «NOA» en sans geométrica con «SALON» espaciado debajo. Lujo discreto."}, m: "https://maps.google.com/?cid=754849118930892658" },
+
+  { id: "limabarber", z: "Jesús María", k: "Barbería", n: "Lima Barber Club", a: "Av. Gral. Eugenio Garzón 598", r: 4.1, c: 245, t: "+51 932 107 266", s: "social", pl: "Solo reservas", l: "http://limabarberclub.site.agendapro.com/", lt: "Página de reservas", la: -12.0660206, lo: -77.0446342, lg: "img/limabarber.png", sv: ["Corte","Barba","Facial","Ondulación","Tinte"], su: ["Av. San Luis 2733, San Luis"], vi: {"c":["#191d2e","#b88e40","#7b4c26","#fdfdfd"],"e":"Escudo circular azul marino con coronas doradas y retrato de hombre con gafas, borde dorado y marrón. Estilo de club clásico, tipo insignia.","v":"Como en las mejores barberías del mundo."}, m: "https://maps.google.com/?cid=6887026952226413008" },
+  { id: "peru-style", z: "Jesús María", k: "Barbería", n: "Barbería Perú Style", a: "Av. Arnaldo Márquez 1263", r: 4.2, c: 142, t: "+51 946 276 308", s: "social", pl: "Solo reservas", l: "https://www.fresha.com/es/a/barberia-peru-style-sede-jesus-maria-jesus-maria-avenida-arnaldo-marquez-1263-t3mmn8bz", lt: "Página de reservas", la: -12.0733, lo: -77.0490909, sv: ["Corte clásico o degradado (S/30)","Barba express (S/20)","Ritual de barba (S/30)","Limpieza facial (S/30 a S/90)"], lg: "img/peru-style.jpg", su: ["Calle Tarata 181, Miraflores (Parque Kennedy)"], vi: {"c":["#020202","#505050","#ffffff"],"e":"Blanco sobre negro: «PERÚ STYLE» en sans de mayúsculas gruesas con «BARBERÍA» y un bigote. Directo y masculino.","v":"Buenas charlas, atención personalizada y ambientes amenos."}, m: "https://maps.google.com/?cid=11547771809539018786" },
+  { id: "blackfade", z: "Jesús María", k: "Barbería", n: "Black Fade Studio", a: "Av. Brasil 1149, interior B", r: 5.0, c: 113, t: "+51 913 564 884", s: "social", pl: "Solo red social", l: "https://www.instagram.com/blackfade_studio/", lt: "Instagram", la: -12.071059, lo: -77.0501379, lg: "img/blackfade.jpg", sv: ["Ondulación","Platinium"], vi: {"c":["#020202","#d3d3d3","#f3f3f3"],"e":"«BLACK» en letra gótica estilo grafiti, en blanco sobre negro, con «studio» debajo. Urbano y agresivo.","v":"Mereces verte bien."}, m: "https://maps.google.com/?cid=3272312623212937246" },
+    { id: "emys", z: "Jesús María", k: "Salón", n: "Emy's Salon", a: "Av. Gral. Eugenio Garzón 719", r: 4.8, c: 104, t: "+51 1 3308233", s: "social", pl: "Solo red social", l: "https://www.instagram.com/emyssalonspa/", lt: "Instagram", la: -12.0673979, lo: -77.0455368, sv: ["Laceado japonés","Color","Cabello"], lg: "img/emys.jpg", vi: {"c":["#fc0203","#e70909","#ffffff"],"e":"Fondo rojo vivo con «Emy's» en blanco, de trazo cursivo, y «Salón & Spa». Incluye dirección y contacto en el mismo logo. Llamativo y cálido.","v":"24 años de trayectoria en el rubro de la belleza."}, m: "https://maps.google.com/?cid=8357353606332994377" }
+];
+var LABEL = { none: "Sin enlace", social: "Solo red social" };
+var KEY = "barberias-quitadas";
+var filtro = "todas", zona = "todas", tipo = "todos", orden = "reviews", sel = null, quitadas = [], timer = null;
+
+var $ = function (id) { return document.getElementById(id); };
+var list = $("list"), toast = $("toast"), removed = $("removed");
+
+try { quitadas = JSON.parse(localStorage.getItem(KEY) || "[]") || []; } catch (e) { quitadas = []; }
+function guardar() { try { localStorage.setItem(KEY, JSON.stringify(quitadas)); } catch (e) {} }
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+function byId(id) { return DATA.filter(function (d) { return d.id === id; })[0]; }
+
+var STOP = ["de", "del", "la", "el", "by", "los", "las", "y"];
+function iniciales(n) {
+  var w = n.replace(/[^A-Za-zÀ-ÿ0-9 ]/g, " ").split(/\s+/).filter(function (x) { return x && STOP.indexOf(x.toLowerCase()) === -1; });
+  if (!w.length) return "?";
+  return (w.length > 1 ? w[0][0] + w[1][0] : w[0].slice(0, 2)).toUpperCase();
+}
+
+function filtradas() {
+  return DATA.filter(function (d) {
+    return quitadas.indexOf(d.id) === -1 && (zona === "todas" || d.z === zona) && (tipo === "todos" || d.k === tipo);
+  });
+}
+
+function desc(d) {
+  return d.k + " en " + d.z + ", con " + d.r.toFixed(1) + " de puntaje y " + d.c + " reseñas en Google. " +
+    "Presencia web: " + (d.pl || LABEL[d.s]).toLowerCase() + (d.lt ? " (" + d.lt + ")" : "") + ".";
+}
+
+function fact(l, v) { return '<div><span class="lbl">' + l + '</span>' + v + '</div>'; }
+function card(d) {
+  var id = esc(d.id);
+  var link = d.l ? '<a href="' + esc(d.l) + '" target="_blank" rel="noopener">' + esc(d.lt) + '</a>' : '<span class="muted">Sin enlace</span>';
+  return '<li class="card" id="c-' + id + '">' +
+    '<button class="head" type="button" data-head aria-expanded="false" aria-controls="d-' + id + '">' +
+      '<span class="av" aria-hidden="true">' + (d.lg ? '<img src="' + esc(d.lg) + '" alt="">' : esc(iniciales(d.n))) + '</span>' +
+      '<span class="nm">' + esc(d.n) + '</span><span class="chev" aria-hidden="true"></span></button>' +
+    '<div class="det" id="d-' + id + '"><div class="det-in">' +
+      '<div class="facts">' +
+        fact("Puntaje", '<b class="big">' + d.r.toFixed(1) + ' ★</b> <span class="muted">' + d.c + ' reseñas</span><div class="bar"><i style="width:' + Math.min(100, Math.round(d.c / 250 * 100)) + '%"></i></div>') +
+        fact("Estado de web", '<span class="pill ' + d.s + '">' + esc(d.pl || LABEL[d.s]) + '</span> ' + link) +
+        fact("Dirección", esc(d.a) + ', ' + esc(d.z)) +
+        fact("Sucursales", d.su ? '<ul class="su">' + d.su.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join("") + '</ul>' : '<span class="muted">Sin sucursales encontradas</span>') +
+        fact("Teléfono", '<span class="phone">' + esc(d.t) + '</span>') +
+      '</div>' +
+      '<div class="vi"><span class="lbl">Identidad visual</span>' + (d.vi ? '<div class="sw">' + d.vi.c.map(function (c) { return '<i style="background:' + c + '" title="' + c + '"></i><code>' + c + '</code>'; }).join("") + '</div><p>' + esc(d.vi.e) + '</p>' + (d.vi.v ? '<p class="muted">Lema o tono: «' + esc(d.vi.v) + '»</p>' : '') : '<span class="muted">No se encontró identidad visual (sin logo ni perfil público).</span>') + '</div>' +
+      (d.sv ? '<div class="svs"><span class="lbl">Servicios</span><ul>' + d.sv.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join("") + '</ul></div>' : '<div></div>') +
+      '<p class="desc">' + esc(desc(d)) + '</p>' +
+      '<iframe title="Ubicación de ' + esc(d.n) + '" data-src="https://maps.google.com/maps?q=' + d.la + ',' + d.lo + '&z=18&output=embed"></iframe>' +
+      '<div class="row"><button class="btn" data-copy="' + esc(d.t) + '">Copiar número</button>' +
+        (d.demo ? '<a class="btn" href="' + esc(d.demo) + '" target="_blank" rel="noopener">Ver demo</a>' : '') +
+        '<a href="' + esc(d.m) + '" target="_blank" rel="noopener">Abrir en Google Maps</a>' +
+        '<button class="btn quitar" data-quitar="' + id + '" aria-label="Quitar ' + esc(d.n) + '">Quitar</button></div>' +
+    '</div></div></li>';
+}
+
+function cerrar(c) { c.classList.remove("open"); c.querySelector("[data-head]").setAttribute("aria-expanded", "false"); }
+function alternar(c, e) {
+  var estaba = c.classList.contains("open");
+  document.querySelectorAll(".card.open").forEach(cerrar);
+  if (estaba) return;
+  var r = c.getBoundingClientRect();
+  c.style.setProperty("--rx", (e.clientX ? e.clientX - r.left : r.width / 2) + "px");
+  c.style.setProperty("--ry", (e.clientY ? e.clientY - r.top : 28) + "px");
+  var f = c.querySelector("iframe"); if (!f.getAttribute("src")) f.setAttribute("src", f.getAttribute("data-src"));
+  c.classList.add("open"); c.querySelector("[data-head]").setAttribute("aria-expanded", "true");
+  setTimeout(function () { c.scrollIntoView({ behavior: "smooth", block: "nearest" }); }, 180);
+}
+
+function render() {
+  var base = filtradas();
+  var rows = base.filter(function (d) { return filtro === "todas" || (filtro === "reservas" ? d.pl === "Solo reservas" : filtro === "social" ? d.pl === "Solo red social" : d.s === filtro); });
+  function ns(d) { return d.su ? d.su.length : 0; }
+  rows.sort(function (x, y) { return orden === "rating" ? (y.r - x.r) || (y.c - x.c) : orden === "sucursales" ? (ns(y) - ns(x)) || (y.c - x.c) : (y.c - x.c); });
+
+  list.innerHTML = rows.length ? rows.map(card).join("") : '<li class="empty">No hay comercios con este filtro.</li>';
+
+
+  var q = quitadas.map(byId).filter(Boolean);
+  removed.hidden = q.length === 0;
+  removed.innerHTML = '<summary>Quitadas (' + q.length + ')</summary><ul>' + q.map(function (d) {
+    return '<li><span>' + esc(d.n) + ' · ' + esc(d.z) + '</span><button class="btn" data-restaurar="' + esc(d.id) + '">Restaurar</button></li>';
+  }).join("") + '</ul><p style="margin:10px 0 0"><button class="btn" data-restaurar="*">Restaurar todas</button></p>';
+}
+
+function mostrarToast(d) {
+  toast.hidden = false;
+  toast.innerHTML = '<span>Quitaste ' + esc(d.n) + '.</span><button class="btn" data-deshacer="' + esc(d.id) + '">Deshacer</button>';
+  clearTimeout(timer);
+  timer = setTimeout(function () { toast.hidden = true; }, 9000);
+}
+
+function chips(attr, setter) {
+  document.querySelectorAll("[" + attr + "]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      setter(b.getAttribute(attr));
+      document.querySelectorAll("[" + attr + "]").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      render();
+    });
+  });
+}
+chips("data-z", function (v) { zona = v; });
+chips("data-k", function (v) { tipo = v; });
+chips("data-f", function (v) { filtro = v; });
+$("orden").addEventListener("change", function (e) { orden = e.target.value; render(); });
+
+function quitar(id) {
+  if (quitadas.indexOf(id) === -1) quitadas.push(id);
+  guardar();
+}
+function restaurar(id) {
+  quitadas = id === "*" ? [] : quitadas.filter(function (x) { return x !== id; });
+  guardar();
+}
+
+document.addEventListener("click", function (e) {
+  var t = e.target, el;
+  if ((el = t.closest("[data-quitar]"))) { var id = el.getAttribute("data-quitar"); quitar(id); render(); mostrarToast(byId(id)); return; }
+  if ((el = t.closest("[data-deshacer]"))) { restaurar(el.getAttribute("data-deshacer")); toast.hidden = true; render(); return; }
+  if ((el = t.closest("[data-restaurar]"))) { restaurar(el.getAttribute("data-restaurar")); render(); return; }
+  if ((el = t.closest("[data-head]"))) { alternar(el.parentNode, e); return; }
+  if ((el = t.closest("[data-copy]"))) {
+    var txt = el.getAttribute("data-copy"), old = el.textContent;
+    var ok = function () { el.textContent = "Copiado"; setTimeout(function () { el.textContent = old; }, 1400); };
+    try { navigator.clipboard.writeText(txt).then(ok, function () { el.textContent = txt; }); } catch (err) { el.textContent = txt; }
+  }
+});
+
+render();
+
+/* Fondo interactivo: el resplandor sigue al cursor; sin movimiento del usuario deriva solo */
+var root = document.documentElement, T = { x: innerWidth * .5, y: innerHeight * .3 }, P = { x: T.x, y: T.y }, movido = 0;
+addEventListener("pointermove", function (e) { T.x = e.clientX; T.y = e.clientY; movido = performance.now(); });
+function fondo(t) {
+  if (performance.now() - movido > 3000) { T.x = innerWidth * (.5 + .35 * Math.sin(t / 4200)); T.y = innerHeight * (.4 + .3 * Math.cos(t / 5300)); }
+  P.x += (T.x - P.x) * .07; P.y += (T.y - P.y) * .07;
+  root.style.setProperty("--mx", P.x.toFixed(1) + "px"); root.style.setProperty("--my", P.y.toFixed(1) + "px");
+  requestAnimationFrame(fondo);
+}
+if (matchMedia("(prefers-reduced-motion: reduce)").matches) { root.style.setProperty("--mx", "50%"); root.style.setProperty("--my", "28%"); } else requestAnimationFrame(fondo);
+</script>

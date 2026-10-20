@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Highcuts Barber Shop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap">
+<link rel="stylesheet" href="../_comun/base.css">
+<style>
+:root { --bg: #000000; --fg: #fdfdfd; --acento: #fdfdfd; --suave: #afafaf; --f-titulo: "Poppins"; --f-texto: "Poppins"; --radio: 999px; --trazo: 2.2; color-scheme: dark; }
+/* Fondo: rejilla diagonal que se desliza y un foco de luz que sigue al cursor */
+body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 30%), rgba(255, 255, 255, .10), transparent 70%),
+    linear-gradient(135deg, transparent 49.2%, rgba(255, 255, 255, .07) 50%, transparent 50.8%) 0 0 / 64px 64px; }
+@media (prefers-reduced-motion: no-preference) { body::before { animation: rejilla 9s linear infinite; } @keyframes rejilla { to { background-position: 0 0, 64px 64px; } } }
+.hero h1 { line-height: .9; transform: scale(calc(1 + var(--p, 0) * .4)); opacity: calc(1 - var(--p, 0) * .7); }
+.hero h1 .a { font-weight: 800; } .hero h1 .b { font-weight: 300; }
+</style>
+<noscript><style>.rv { opacity: 1 !important; transform: none !important; }</style></noscript>
+</head>
+<body>
+<header class="top">
+  <a class="marca" href="#inicio"><img src="logo.jpg" alt="Logo de Highcuts Barber Shop"></a>
+  <nav><a href="#servicios">Servicios</a><a href="#ubicacion">Ubicación</a><a href="#contacto">Contacto</a><a class="cta ico" href="https://wa.me/51980864616?text=Hola%2C%20quiero%20reservar%20en%20Highcuts%20Barber%20Shop" target="_blank" rel="noopener" aria-label="Reservar" title="Reservar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a></nav>
+</header>
+<main>
+<section id="inicio" class="hero"><div class="hero-in">
+  <h1 aria-label="Highcuts Barber Shop"><span class="a">HIGH</span><br><span class="b">CUTS</span></h1>
+  <p class="baja">El estilo es una forma de decir quién eres sin tener que hablar.</p>
+  <div class="acc"><a class="btn ico" href="https://wa.me/51980864616?text=Hola%2C%20quiero%20reservar%20en%20Highcuts%20Barber%20Shop" target="_blank" rel="noopener" aria-label="Reservar por WhatsApp" title="Reservar por WhatsApp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a><a class="btn sec ico" href="#ubicacion" aria-label="Cómo llegar" title="Cómo llegar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></a></div>
+</div></section>
+<section id="nosotros"><div class="in-w">
+  <span class="lbl rv">Nosotros</span>
+  <div class="about"><h2 class="rv">Highcuts Barber Shop</h2><p class="rv">Highcuts Barber Shop es una barbería en San Miguel, con 4.9 de puntaje y 118 reseñas en Google. Ofrece cortes, barbas, limpieza facial y asesoramiento. Reserva tu cita y ven a conocernos.</p></div>
+  <div class="why"><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg><h3>4.9 ★ en Google</h3><p>Calificación basada en 118 reseñas de clientes en Google Maps.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Reserva fácil</h3><p>Agenda tu cita por WhatsApp en pocos minutos.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>En San Miguel</h3><p>Av. Lima 562. Fácil de encontrar.</p></div></div>
+</div></section>
+
+<section id="servicios"><div class="in-w">
+  <span class="lbl rv">Servicios</span><h2 class="rv">Lo que hacemos</h2>
+  <div class="svs"><div class="sv rv"><b>01</b><svg class="ic sic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.1 8.1 20 20M8.1 15.9 20 4"/></svg><span>Cortes</span></div><div class="sv rv"><b>02</b><svg class="ic sic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="4" width="8" height="16" rx="1.5"/><path d="M8 9l8-3M8 14l8-3M8 19l8-3M10 2h4M10 22h4"/></svg><span>Barbas</span></div><div class="sv rv"><b>03</b><svg class="ic sic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19C5 9 11 4 20 4c0 9-5 15-15 15z"/><path d="m5 19 9-9"/></svg><span>Limpieza facial</span></div><div class="sv rv"><b>04</b><svg class="ic sic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v5H3z"/><path d="M5 12v6M8 12v6M11 12v6M14 12v6M17 12v6M20 12v6"/></svg><span>Asesoramiento</span></div></div>
+</div></section>
+<section id="galeria"><div class="in-w">
+  <span class="lbl rv">Galería</span><h2 class="rv">Nuestro trabajo</h2>
+  <div class="gal"><figure class="rv" style="--i:0"><svg class="ic big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.1 8.1 20 20M8.1 15.9 20 4"/></svg><figcaption>Cortes</figcaption></figure><figure class="rv" style="--i:1"><svg class="ic big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="4" width="8" height="16" rx="1.5"/><path d="M8 9l8-3M8 14l8-3M8 19l8-3M10 2h4M10 22h4"/></svg><figcaption>Barbas</figcaption></figure><figure class="rv" style="--i:2"><svg class="ic big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19C5 9 11 4 20 4c0 9-5 15-15 15z"/><path d="m5 19 9-9"/></svg><figcaption>Limpieza facial</figcaption></figure><figure class="rv" style="--i:3"><svg class="ic big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v5H3z"/><path d="M5 12v6M8 12v6M11 12v6M14 12v6M17 12v6M20 12v6"/></svg><figcaption>Asesoramiento</figcaption></figure><figure class="rv" style="--i:4"><svg class="ic big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="4" width="8" height="16" rx="1.5"/><path d="M8 9l8-3M8 14l8-3M8 19l8-3M10 2h4M10 22h4"/></svg><figcaption>Barba</figcaption></figure><figure class="rv" style="--i:5"><svg class="ic big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg><figcaption>Estilo</figcaption></figure></div>
+</div></section>
+<section id="reservar"><div class="in-w">
+  <span class="lbl rv">Reservar</span><h2 class="rv">Cómo reservar</h2>
+  <ol class="pasos"><li class="rv"><span class="num">1</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Escríbenos</h3><p>Envíanos un mensaje por WhatsApp.</p></li><li class="rv"><span class="num">2</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><h3>Elige tu horario</h3><p>Dinos el servicio que quieres y cuándo te viene mejor.</p></li><li class="rv"><span class="num">3</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>Ven al local</h3><p>Te esperamos en Av. Lima 562, San Miguel.</p></li></ol>
+  <form id="cita" class="cita rv" novalidate>
+    <label>Servicio<select name="s"><option>Cortes</option><option>Barbas</option><option>Limpieza facial</option><option>Asesoramiento</option></select></label>
+    <label>Día<input type="date" name="d" required></label>
+    <label>Hora<select name="h" required></select></label>
+    <label>Tu nombre<input type="text" name="n" autocomplete="given-name" maxlength="40" required></label>
+    <button class="btn" type="submit">Solicitar cita</button>
+    <p class="nota">Horario referencial. El negocio confirma tu cita por WhatsApp.</p>
+    <p class="err" role="alert"></p>
+  </form>
+</div></section>
+<section id="valoracion"><div class="in-w">
+  <span class="lbl rv">Opiniones en Google</span>
+  <div class="val rv"><span class="n">4.9 ★</span><p>118 reseñas en Google Maps</p></div>
+  <div class="opin"><p class="opin-h"><span class="vivo" aria-hidden="true"></span>Lo que dicen en Google Maps</p><ul class="feed"><li class="rev"><span class="av2" aria-hidden="true">G</span><div class="bub"><div class="rh"><b>giancarlo</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">hace 6 meses</span><span class="nuevo">Nueva reseña</span></div><p>Excelente servicio en la barbería. Desde que llegué me atendieron muy bien, el barbero fue súper profesional y se tomó el tiempo de entender exactamente el estilo que quería. El corte quedó limpio, preciso y mejor de lo que esperaba…</p></div></li><li class="rev"><span class="av2" aria-hidden="true">R</span><div class="bub"><div class="rh"><b>Rodrigo</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">hace 5 meses</span><span class="nuevo">Nueva reseña</span></div><p>Muy recomendada la barbería, tiene un excelente servicio. El local es limpio, ordenado, fresco. Todos sus barberos son hábiles y muy atentos…</p></div></li><li class="rev"><span class="av2" aria-hidden="true">H</span><div class="bub"><div class="rh"><b>Hector</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">hace un mes</span><span class="nuevo">Nueva reseña</span></div><p>Muy buen servicio, te explican previo el proceso. Son minuciosos y la atención es destacable…</p></div></li></ul><a class="mas" href="https://maps.google.com/?cid=11693123645377821144" target="_blank" rel="noopener">Ver todas las reseñas en Google Maps →</a></div>
+</div></section>
+
+<section id="faq"><div class="in-w">
+  <span class="lbl rv">Preguntas frecuentes</span><h2 class="rv">Antes de venir</h2>
+  <div class="faq"><details class="rv"><summary>¿Dónde están ubicados?</summary><p>Av. Lima 562, San Miguel, Lima.</p></details><details class="rv"><summary>¿Cómo reservo una cita?</summary><p>Escríbenos por WhatsApp al +51 980 864 616.</p></details><details class="rv"><summary>¿Qué servicios ofrecen?</summary><p>Cortes, Barbas, Limpieza facial y Asesoramiento.</p></details></div>
+</div></section>
+<section id="ubicacion"><div class="in-w ubi">
+  <div class="rv"><span class="lbl">Ubicación</span><h2>Visítanos</h2>
+    <address>Av. Lima 562<br>San Miguel, Lima</address>
+    <a class="btn sec ico" href="https://maps.google.com/?cid=11693123645377821144" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></a></div>
+  <div class="mapa rv"><iframe title="Mapa de Highcuts Barber Shop" loading="lazy" src="https://maps.google.com/maps?q=-12.089095,-77.0792932&z=17&output=embed"></iframe></div>
+</div></section>
+<section id="contacto" class="cont"><div class="in-w">
+  <h2 class="rv">Reserva tu cita</h2>
+  <p class="rv" style="color:var(--suave)">+51 980 864 616</p>
+  <div class="acc rv"><a class="btn ico" href="https://wa.me/51980864616?text=Hola%2C%20quiero%20reservar%20en%20Highcuts%20Barber%20Shop" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp" title="Escríbenos por WhatsApp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a><a class="btn sec ico" href="tel:+51980864616" aria-label="Llamar" title="Llamar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a><a class="btn sec ico" href="https://www.facebook.com/highcutsbarbershop/" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a></div>
+</div></section>
+</main>
+<footer><span>Highcuts Barber Shop</span><span>Av. Lima 562, San Miguel</span></footer>
+<script>window.CITA = {"wa":"https://wa.me/51980864616","n":"Highcuts Barber Shop","h":{"lun":["11:00","21:00"],"mar":["11:00","21:00"],"mie":["11:00","21:00"],"jue":["11:00","21:00"],"vie":["11:00","21:00"],"sab":["11:00","21:00"],"dom":["12:00","18:30"]},"ant":2};</script>
+<script src="../_comun/base.js"></script>
+<script>(function () {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var h = document.querySelector(".hero"), esp = false;
+  function f() { h.style.setProperty("--p", Math.min(1, scrollY / (h.offsetHeight * .7)).toFixed(3)); esp = false; }
+  addEventListener("scroll", function () { if (!esp) { esp = true; requestAnimationFrame(f); } }, { passive: true });
+})();</script>
+</body>
+</html>

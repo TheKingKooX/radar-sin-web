@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salón de Belleza Arturo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Great+Vibes&display=swap">
+<link rel="stylesheet" href="../_comun/base.css">
+<style>
+:root { --bg: #e9e9e9; --fg: #22262b; --acento: #4d5258; --suave: #4d5258; --f-titulo: "Great Vibes", cursive; --f-texto: "Montserrat"; --radio: 999px; --trazo: 1.2; color-scheme: light; }
+/* Fondo: brillo de metal cepillado que barre la página y un reflejo que sigue al cursor */
+body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(115deg, transparent 0, rgba(255, 255, 255, .6) 18%, transparent 36%, rgba(77, 82, 88, .09) 58%, transparent 78%, rgba(255, 255, 255, .55) 100%) 0 0 / 300% 100%; }
+body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 30%), rgba(255, 255, 255, .7), transparent 70%); }
+@media (prefers-reduced-motion: no-preference) { body::before { animation: metal 22s ease-in-out infinite alternate; } @keyframes metal { to { background-position: 100% 0; } } }
+.btn:not(.sec), .cta { background: linear-gradient(135deg, #7b8188, #3f444a); border-color: #4d5258; }
+.hero h1 { line-height: 1; letter-spacing: 0; }
+.lg { position: relative; display: block; width: clamp(300px, 62vw, 800px); overflow: hidden; border-radius: 22px; box-shadow: 0 30px 60px -30px rgba(34, 38, 43, .45); }
+.lg img { width: 100%; height: auto; }
+.lg::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, .95) 50%, transparent 62%); background-size: 260% 100%; background-position: 130% 0; mix-blend-mode: overlay; }
+h2, .val .n { font-family: "Great Vibes", cursive; font-weight: 400; letter-spacing: 0; }
+h2 { font-size: clamp(40px, 6vw, 68px); }
+.lbl, .sv b, .why h3, .pasos h3, .gal figcaption, .pasos .num { font-family: "Montserrat"; font-weight: 500; }
+.why h3, .pasos h3 { font-size: 19px; }
+.hero .baja { font-weight: 300; letter-spacing: .06em; }
+@media (prefers-reduced-motion: no-preference) {
+  .lg::after { animation: brillo 5s 1s ease-in-out infinite; }
+  @keyframes brillo { 0% { background-position: 130% 0; } 45%, 100% { background-position: -30% 0; } }
+}
+</style>
+<noscript><style>.rv { opacity: 1 !important; transform: none !important; }</style></noscript>
+</head>
+<body>
+<header class="top">
+  <a class="marca" href="#inicio"><img src="logo.jpg" alt="Logo de Arturo Salón &amp; Spa"></a>
+  <nav><a href="#servicios">Servicios</a><a href="#ubicacion">Ubicación</a><a href="#contacto">Contacto</a><a class="cta ico" href="https://wa.me/51972086964?text=Hola%2C%20quiero%20reservar%20en%20Sal%C3%B3n%20de%20Belleza%20Arturo" target="_blank" rel="noopener" aria-label="Reservar" title="Reservar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a></nav>
+</header>
+<main>
+<section id="inicio" class="hero"><div class="hero-in">
+  <h1 aria-label="Salón de Belleza Arturo"><span class="lg"><img src="logo.jpg" alt=""></span></h1>
+  <p class="baja">Cabello y tinte en San Miguel.</p>
+  <div class="acc"><a class="btn ico" href="https://wa.me/51972086964?text=Hola%2C%20quiero%20reservar%20en%20Sal%C3%B3n%20de%20Belleza%20Arturo" target="_blank" rel="noopener" aria-label="Reservar por WhatsApp" title="Reservar por WhatsApp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a><a class="btn sec ico" href="#ubicacion" aria-label="Cómo llegar" title="Cómo llegar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></a></div>
+</div></section>
+<section id="nosotros"><div class="in-w">
+  <span class="lbl rv">Nosotros</span>
+  <div class="about"><h2 class="rv">Salón de Belleza Arturo</h2><p class="rv">Salón de Belleza Arturo es un salón en San Miguel, con 4.6 de puntaje y 151 reseñas en Google. Ofrece cabello y tinte. Reserva tu cita y ven a conocernos.</p></div>
+  <div class="why"><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg><h3>4.6 ★ en Google</h3><p>Calificación basada en 151 reseñas de clientes en Google Maps.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Reserva fácil</h3><p>Agenda tu cita por WhatsApp en pocos minutos.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>En San Miguel</h3><p>Contisuyo 295. Fácil de encontrar.</p></div></div>
+</div></section>
+
+<section id="servicios"><div class="in-w">
+  <span class="lbl rv">Servicios</span><h2 class="rv">Lo que hacemos</h2>
+  <div class="svs"><div class="sv rv"><b>01</b><svg class="ic sic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.1 8.1 20 20M8.1 15.9 20 4"/></svg><span>Cabello</span></div><div class="sv rv"><b>02</b><svg class="ic sic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20c0-3 2-5 5-5l9-9 3 3-9 9c0 3-2 5-5 5z"/></svg><span>Tinte</span></div></div>
+</div></section>
+<section id="galeria"><div class="in-w">
+  <span class="lbl rv">Galería</span><h2 class="rv">Nuestro trabajo</h2>
+  <div class="gal"><figure class="rv" style="--i:0"><svg class="ic big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.1 8.1 20 20M8.1 15.9 20 4"/></svg><figcaption>Cabello</figcaption></figure><figure class="rv" style="--i:1"><svg class="ic big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20c0-3 2-5 5-5l9-9 3 3-9 9c0 3-2 5-5 5z"/></svg><figcaption>Tinte</figcaption></figure><figure class="rv" style="--i:2"><svg class="ic big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20c0-3 2-5 5-5l9-9 3 3-9 9c0 3-2 5-5 5z"/></svg><figcaption>Color</figcaption></figure><figure class="rv" style="--i:3"><svg class="ic big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v5H3z"/><path d="M5 12v6M8 12v6M11 12v6M14 12v6M17 12v6M20 12v6"/></svg><figcaption>Tratamientos</figcaption></figure></div>
+</div></section>
+<section id="reservar"><div class="in-w">
+  <span class="lbl rv">Reservar</span><h2 class="rv">Cómo reservar</h2>
+  <ol class="pasos"><li class="rv"><span class="num">1</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Escríbenos</h3><p>Envíanos un mensaje por WhatsApp.</p></li><li class="rv"><span class="num">2</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><h3>Elige tu horario</h3><p>Dinos el servicio que quieres y cuándo te viene mejor.</p></li><li class="rv"><span class="num">3</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>Ven al local</h3><p>Te esperamos en Contisuyo 295, San Miguel.</p></li></ol>
+  <form id="cita" class="cita rv" novalidate>
+    <label>Servicio<select name="s"><option>Cabello</option><option>Tinte</option></select></label>
+    <label>Día<input type="date" name="d" required></label>
+    <label>Franja<select name="h" required></select></label>
+    <label>Tu nombre<input type="text" name="n" autocomplete="given-name" maxlength="40" required></label>
+    <button class="btn" type="submit">Solicitar cita</button>
+    <p class="nota">Horario referencial. El negocio confirma tu cita por WhatsApp.</p>
+    <p class="err" role="alert"></p>
+  </form>
+</div></section>
+<section id="valoracion"><div class="in-w">
+  <span class="lbl rv">Opiniones en Google</span>
+  <div class="val rv"><span class="n">4.6 ★</span><p>151 reseñas en Google Maps</p></div>
+  <div class="opin"><p class="opin-h"><span class="vivo" aria-hidden="true"></span>Lo que dicen en Google Maps</p><ul class="feed"><li class="rev"><span class="av2" aria-hidden="true">E</span><div class="bub"><div class="rh"><b>Edu</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">hace 10 meses</span><span class="nuevo">Nueva reseña</span></div><p>La atención de Arturito es lo máximo! Me cortó el cabello con el desde los 17 años…</p></div></li><li class="rev"><span class="av2" aria-hidden="true">M</span><div class="bub"><div class="rh"><b>maria</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">hace 2 años</span><span class="nuevo">Nueva reseña</span></div><p>Excelente atencion en el salon de belleza de Arturo, fui atendida por el dueño, y estoy encantada, muy profesional. Lo felicito, me ha maquillado y peinado para una boda, como madrina lo ha hecho espectacular…</p></div></li></ul><a class="mas" href="https://maps.google.com/?cid=10640510644021761821" target="_blank" rel="noopener">Ver todas las reseñas en Google Maps →</a></div>
+</div></section>
+
+<section id="faq"><div class="in-w">
+  <span class="lbl rv">Preguntas frecuentes</span><h2 class="rv">Antes de venir</h2>
+  <div class="faq"><details class="rv"><summary>¿Dónde están ubicados?</summary><p>Contisuyo 295, San Miguel, Lima.</p></details><details class="rv"><summary>¿Cómo reservo una cita?</summary><p>Escríbenos por WhatsApp al +51 972 086 964.</p></details><details class="rv"><summary>¿Qué servicios ofrecen?</summary><p>Cabello y Tinte.</p></details></div>
+</div></section>
+<section id="ubicacion"><div class="in-w ubi">
+  <div class="rv"><span class="lbl">Ubicación</span><h2>Visítanos</h2>
+    <address>Contisuyo 295<br>San Miguel, Lima</address>
+    <a class="btn sec ico" href="https://maps.google.com/?cid=10640510644021761821" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></a></div>
+  <div class="mapa rv"><iframe title="Mapa de Salón de Belleza Arturo" loading="lazy" src="https://maps.google.com/maps?q=-12.0717975,-77.0983674&z=17&output=embed"></iframe></div>
+</div></section>
+<section id="contacto" class="cont"><div class="in-w">
+  <h2 class="rv">Reserva tu cita</h2>
+  <p class="rv" style="color:var(--suave)">+51 972 086 964</p>
+  <div class="acc rv"><a class="btn ico" href="https://wa.me/51972086964?text=Hola%2C%20quiero%20reservar%20en%20Sal%C3%B3n%20de%20Belleza%20Arturo" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp" title="Escríbenos por WhatsApp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a><a class="btn sec ico" href="tel:+51972086964" aria-label="Llamar" title="Llamar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a></div>
+</div></section>
+</main>
+<footer><span>Salón de Belleza Arturo</span><span>Contisuyo 295, San Miguel</span></footer>
+<script>window.CITA = {"wa":"https://wa.me/51972086964","n":"Salón de Belleza Arturo","h":null,"ant":2};</script>
+<script src="../_comun/base.js"></script>
+<script></script>
+</body>
+</html>

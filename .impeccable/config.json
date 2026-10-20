@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "demos/valea/index.html"
+        ],
+        "createdAt": "2026-10-20T14:09:36.194Z",
+        "reason": "decidido por mí, no por el usuario: las secciones usan padding con clamp() (96-170 px vertical, 20-84 px lateral) que el detector no parsea; se ve el margen en capturas"
+      }
+    ]
+  }
+}

@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Valea · Barbería & Spa</title>
+<meta name="description" content="Valea: barbería y spa en San Miguel, Lima. Corte, barba, masajes y rituales. Reserva tu cita en un minuto.">
+<meta name="theme-color" content="#072A2B">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23072A2B'/%3E%3Cpath d='M14 22c6 0 8 6 14 6s8-6 14-6 6 0 8 0M14 34c6 0 8 6 14 6s8-6 14-6 6 0 8 0M14 46c6 0 8 6 14 6s8-6 14-6' fill='none' stroke='%2346C2AE' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="styles.css?v=20261020">
+</head>
+<body>
+
+<!-- Íconos (se reutilizan con <use>) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></symbol>
+    <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+    <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.1 8.1 20 20M8.1 15.9 20 4"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19C5 9 11 4 20 4c0 9-5 15-15 15z"/><path d="m5 19 9-9"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8M12 8c-2-4-6-3-5 0s5 0 5 0zM12 8c2-4 6-3 5 0s-5 0-5 0z"/></symbol>
+  </defs>
+</svg>
+
+<!-- Pantalla de carga (doble seguridad: animación CSS a los 4.5 s + JS) -->
+<div class="splash" data-splash aria-hidden="true">
+  <div class="splash-in"><span class="splash-name" data-t="Valea">Valea</span><span class="splash-sub">Barbería &amp; Spa</span><i class="splash-bar"></i></div>
+</div>
+
+<div class="progress" aria-hidden="true"><i></i></div>
+<div class="glow" aria-hidden="true"></div>
+
+<div class="demo-strip" id="demoStrip">
+  <p>Propuesta de diseño · los textos, precios, horarios y reseñas son de ejemplo.</p>
+  <button type="button" aria-label="Cerrar aviso" data-close-strip><svg class="ic"><use href="#i-x"/></svg></button>
+</div>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#inicio" aria-label="Valea, ir al inicio">
+    <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M5 17c5 0 7 5 12 5s7-5 12-5 7 0 14 0M5 27c5 0 7 5 12 5s7-5 12-5 7 0 14 0M5 37c5 0 7 5 12 5s7-5 12-5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    <span class="brand-name">Valea</span>
+  </a>
+  <nav class="nav-links" aria-label="Principal">
+    <a href="#servicios">Servicios</a>
+    <a href="#experiencia">Experiencia</a>
+    <a href="#campana">Campaña</a>
+    <a href="#galeria">Galería</a>
+    <a href="#resenas">Reseñas</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+  <div class="nav-actions">
+    <a class="icon-btn" href="#" data-wa aria-label="Escribir por WhatsApp" title="WhatsApp"><svg class="ic"><use href="#i-wa"/></svg></a>
+    <a class="btn btn-copper btn-sm" href="#reservar">Reservar</a>
+    <button class="burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><i></i><i></i></button>
+  </div>
+</header>
+
+<div class="menu" id="menu" aria-hidden="true">
+  <nav aria-label="Menú móvil">
+    <a href="#servicios">Servicios</a><a href="#experiencia">Experiencia</a><a href="#campana">Campaña</a><a href="#galeria">Galería</a><a href="#resenas">Reseñas</a><a href="#contacto">Contacto</a>
+    <a class="btn btn-copper" href="#reservar">Reservar cita</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- HERO -->
+<section class="hero tone-deep" id="inicio">
+  <canvas class="waves" id="waves" aria-hidden="true"></canvas>
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <p class="kicker hero-kicker">Barbería &amp; Spa · San Miguel, Lima</p>
+      <h1 class="hero-title" data-split aria-label="Cuidado que fluye.">Cuidado<br>que <em>fluye</em>.</h1>
+      <p class="hero-sub">Corte, barba y spa bajo un mismo techo. Reserva en un minuto y llega a un lugar hecho para bajar el ritmo.</p>
+      <div class="hero-cta">
+        <a class="btn btn-copper magnetic" href="#reservar">Reservar cita <svg class="ic"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-ghost magnetic" href="#servicios">Ver servicios</a>
+      </div>
+      <p class="hero-status" id="openNow" aria-live="polite"><span class="dot"></span><span data-open-text>Calculando horario…</span></p>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="arch a"><img src="assets/img/agua.webp" alt="" fetchpriority="high" loading="eager" decoding="sync"></div>
+      <div class="blob b"><img src="assets/img/eucalipto.webp" alt="" loading="eager"></div>
+      <div class="ring"></div>
+    </div>
+  </div>
+  <a class="scroll-cue" href="#experiencia" aria-label="Bajar"><i></i></a>
+</section>
+
+<div class="marquee tone-deep2" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Corte clásico</span><span>Afeitado con toalla caliente</span><span>Masaje relajante</span><span>Piedras calientes</span><span>Barba y perfilado</span><span>Aromaterapia</span><span>Limpieza facial</span><span>Rituales de pareja</span>
+    <span>Corte clásico</span><span>Afeitado con toalla caliente</span><span>Masaje relajante</span><span>Piedras calientes</span><span>Barba y perfilado</span><span>Aromaterapia</span><span>Limpieza facial</span><span>Rituales de pareja</span>
+  </div>
+</div>
+
+<!-- EXPERIENCIA -->
+<section class="tone-mist" id="experiencia">
+  <div class="wave-top" aria-hidden="true"><svg viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60C180 0 540 120 720 60S1260 120 1440 60S1980 120 2160 60S2700 120 2880 60V120H0Z"/></svg></div>
+  <div class="wrap two">
+    <div class="photo-col">
+      <div class="photo arch reveal-clip"><img src="assets/img/navaja.webp" alt="Navaja de afeitar clásica sobre fondo claro" loading="lazy" decoding="async"></div>
+      <div class="photo blob small reveal-clip d2"><img src="assets/img/aceite.webp" alt="Difusor de aromas con varillas de caña" loading="lazy" decoding="async"></div>
+    </div>
+    <div class="text-col">
+      <p class="kicker reveal">La casa</p>
+      <h2 class="h2" data-split aria-label="Dos oficios, un mismo ritmo.">Dos oficios,<br>un mismo <em>ritmo</em>.</h2>
+      <p class="lead reveal">En Valea el corte preciso y el masaje largo comparten sala de espera. Llegas por uno y te quedas por el otro.</p>
+      <ul class="pillars">
+        <li class="reveal"><svg class="ic"><use href="#i-scissors"/></svg><div><h3>Barbería de precisión</h3><p>Cortes clásicos y modernos, afeitado con toalla caliente y perfilado de barba.</p></div></li>
+        <li class="reveal"><svg class="ic"><use href="#i-leaf"/></svg><div><h3>Spa terapéutico</h3><p>Masajes, piedras calientes y aromaterapia con aceites esenciales.</p></div></li>
+        <li class="reveal"><svg class="ic"><use href="#i-drop"/></svg><div><h3>Rituales combinados</h3><p>Corte, barba y masaje en una sola visita, con el orden pensado para salir como nuevo.</p></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section class="tone-paper" id="servicios">
+  <div class="wave-top" aria-hidden="true"><svg viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60C180 0 540 120 720 60S1260 120 1440 60S1980 120 2160 60S2700 120 2880 60V120H0Z"/></svg></div>
+  <div class="wrap">
+    <p class="kicker reveal">Servicios</p>
+    <h2 class="h2" data-split aria-label="Elige tu ritual.">Elige tu <em>ritual</em>.</h2>
+    <div class="tabs" role="tablist" aria-label="Tipo de servicio">
+      <button class="tab is-active" role="tab" id="t-barberia" aria-selected="true" aria-controls="p-barberia" type="button">Barbería</button>
+      <button class="tab" role="tab" id="t-spa" aria-selected="false" aria-controls="p-spa" tabindex="-1" type="button">Spa</button>
+      <button class="tab" role="tab" id="t-rituales" aria-selected="false" aria-controls="p-rituales" tabindex="-1" type="button">Rituales</button>
+      <i class="tab-ind" aria-hidden="true"></i>
+    </div>
+
+    <div class="panel is-active" role="tabpanel" id="p-barberia" aria-labelledby="t-barberia">
+      <ul class="menu-list">
+        <li><div><h3>Corte clásico</h3><p>Tijera y máquina, lavado y peinado final.</p></div><span class="meta">45 min</span><span class="price">S/ 45</span><button class="btn btn-line btn-sm" type="button" data-servicio="Corte clásico">Reservar</button></li>
+        <li><div><h3>Corte y barba</h3><p>El combo de siempre, con toalla caliente al cierre.</p></div><span class="meta">75 min</span><span class="price">S/ 80</span><button class="btn btn-line btn-sm" type="button" data-servicio="Corte y barba">Reservar</button></li>
+        <li><div><h3>Afeitado con toalla caliente</h3><p>Navaja, espuma tibia y aceites para una piel tranquila.</p></div><span class="meta">40 min</span><span class="price">S/ 55</span><button class="btn btn-line btn-sm" type="button" data-servicio="Afeitado con toalla caliente">Reservar</button></li>
+        <li><div><h3>Perfilado de barba</h3><p>Diseño, línea y acabado con aceite.</p></div><span class="meta">30 min</span><span class="price">S/ 35</span><button class="btn btn-line btn-sm" type="button" data-servicio="Perfilado de barba">Reservar</button></li>
+        <li><div><h3>Tratamiento capilar</h3><p>Limpieza profunda y masaje craneal.</p></div><span class="meta">45 min</span><span class="price">S/ 60</span><button class="btn btn-line btn-sm" type="button" data-servicio="Tratamiento capilar">Reservar</button></li>
+        <li><div><h3>Corte infantil</h3><p>Para los más chicos, con paciencia.</p></div><span class="meta">30 min</span><span class="price">S/ 35</span><button class="btn btn-line btn-sm" type="button" data-servicio="Corte infantil">Reservar</button></li>
+      </ul>
+    </div>
+    <div class="panel" role="tabpanel" id="p-spa" aria-labelledby="t-spa" hidden>
+      <ul class="menu-list">
+        <li><div><h3>Masaje relajante</h3><p>Presión suave y continua para soltar el día.</p></div><span class="meta">60 min</span><span class="price">S/ 120</span><button class="btn btn-line btn-sm" type="button" data-servicio="Masaje relajante">Reservar</button></li>
+        <li><div><h3>Masaje con piedras calientes</h3><p>Piedras de basalto y aceites tibios en espalda y hombros.</p></div><span class="meta">75 min</span><span class="price">S/ 160</span><button class="btn btn-line btn-sm" type="button" data-servicio="Masaje con piedras calientes">Reservar</button></li>
+        <li><div><h3>Masaje descontracturante</h3><p>Trabajo profundo sobre cuello, espalda y lumbar.</p></div><span class="meta">60 min</span><span class="price">S/ 130</span><button class="btn btn-line btn-sm" type="button" data-servicio="Masaje descontracturante">Reservar</button></li>
+        <li><div><h3>Limpieza facial</h3><p>Limpieza, vapor, extracción y mascarilla calmante.</p></div><span class="meta">60 min</span><span class="price">S/ 110</span><button class="btn btn-line btn-sm" type="button" data-servicio="Limpieza facial">Reservar</button></li>
+        <li><div><h3>Exfoliación corporal</h3><p>Sales y aceites esenciales para renovar la piel.</p></div><span class="meta">50 min</span><span class="price">S/ 130</span><button class="btn btn-line btn-sm" type="button" data-servicio="Exfoliación corporal">Reservar</button></li>
+        <li><div><h3>Aromaterapia</h3><p>Sesión guiada con eucalipto, lavanda y cítricos.</p></div><span class="meta">45 min</span><span class="price">S/ 95</span><button class="btn btn-line btn-sm" type="button" data-servicio="Aromaterapia">Reservar</button></li>
+      </ul>
+    </div>
+    <div class="panel" role="tabpanel" id="p-rituales" aria-labelledby="t-rituales" hidden>
+      <ul class="menu-list">
+        <li><div><h3>Ritual Valea</h3><p>Corte, barba, toalla caliente y masaje relajante de espalda.</p></div><span class="meta">120 min</span><span class="price">S/ 190</span><button class="btn btn-line btn-sm" type="button" data-servicio="Ritual Valea">Reservar</button></li>
+        <li><div><h3>Ritual de pareja</h3><p>Dos masajes relajantes en cabina compartida, con infusión.</p></div><span class="meta">60 min</span><span class="price">S/ 320</span><button class="btn btn-line btn-sm" type="button" data-servicio="Ritual de pareja">Reservar</button></li>
+        <li><div><h3>Día del novio</h3><p>Corte, afeitado, limpieza facial y masaje descontracturante.</p></div><span class="meta">150 min</span><span class="price">S/ 280</span><button class="btn btn-line btn-sm" type="button" data-servicio="Día del novio">Reservar</button></li>
+      </ul>
+    </div>
+    <p class="fine reveal">Precios y duraciones de ejemplo. Aquí irían los reales de cada negocio.</p>
+  </div>
+</section>
+
+<!-- CAMPAÑA -->
+<section class="campaign tone-deep" id="campana">
+  <div class="wave-top" aria-hidden="true"><svg viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60C180 0 540 120 720 60S1260 120 1440 60S1980 120 2160 60S2700 120 2880 60V120H0Z"/></svg></div>
+  <div class="camp-bg" aria-hidden="true"><img src="assets/img/velas.webp" alt="" loading="lazy" decoding="async"></div>
+  <div class="camp-mesh" aria-hidden="true"></div>
+  <div class="wrap camp-grid">
+    <div class="camp-copy">
+      <p class="badge reveal"><svg class="ic"><use href="#i-gift"/></svg> Campaña · Ritual de Primavera</p>
+      <h2 class="h2" data-split aria-label="2×1 en masaje relajante.">2×1 en<br>masaje <em>relajante</em>.</h2>
+      <p class="lead reveal">De lunes a jueves, reserva un masaje relajante y trae a quien quieras: el segundo va por nuestra cuenta.</p>
+      <div class="coupon reveal">
+        <span class="coupon-label">Tu código</span>
+        <code id="couponCode">VALEA2X1</code>
+        <button class="btn btn-ghost btn-sm" type="button" data-copy="VALEA2X1"><svg class="ic"><use href="#i-copy"/></svg><span>Copiar</span></button>
+      </div>
+      <a class="btn btn-copper magnetic reveal" href="#reservar" data-servicio="Masaje relajante" data-nota="Campaña Ritual de Primavera · código VALEA2X1">Reservar con la campaña <svg class="ic"><use href="#i-arrow"/></svg></a>
+      <p class="fine light reveal">Válido hasta el 30 de noviembre de 2026. No acumulable con otras promociones. Campaña de ejemplo.</p>
+    </div>
+    <div class="countdown reveal" id="countdown" aria-live="off" role="timer" aria-label="Tiempo restante de la campaña">
+      <div><b data-cd="d">00</b><span>días</span></div>
+      <div><b data-cd="h">00</b><span>horas</span></div>
+      <div><b data-cd="m">00</b><span>min</span></div>
+      <div><b data-cd="s">00</b><span>seg</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- RITUAL EN 4 PASOS -->
+<section class="tone-mist2" id="ritual">
+  <div class="wave-top" aria-hidden="true"><svg viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60C180 0 540 120 720 60S1260 120 1440 60S1980 120 2160 60S2700 120 2880 60V120H0Z"/></svg></div>
+  <div class="wrap">
+    <p class="kicker reveal">Tu visita</p>
+    <h2 class="h2" data-split aria-label="Un ritual en cuatro pasos.">Un ritual en<br><em>cuatro</em> pasos.</h2>
+    <ol class="steps" id="steps">
+      <i class="steps-line" aria-hidden="true"><b></b></i>
+      <li class="reveal"><span class="n">01</span><div><h3>Llegada</h3><p>Una infusión de bienvenida y una charla corta para saber qué necesitas hoy.</p></div></li>
+      <li class="reveal"><span class="n">02</span><div><h3>Diagnóstico</h3><p>Revisamos tu cabello, tu piel y tus tensiones, y armamos el orden del ritual.</p></div></li>
+      <li class="reveal"><span class="n">03</span><div><h3>Servicio</h3><p>Manos expertas, toalla caliente, aceites y piedras. Sin apuros.</p></div></li>
+      <li class="reveal"><span class="n">04</span><div><h3>Cierre</h3><p>Aromaterapia final, consejos para casa y tu próxima cita lista.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- GALERÍA -->
+<section class="tone-paper" id="galeria">
+  <div class="wave-top" aria-hidden="true"><svg viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60C180 0 540 120 720 60S1260 120 1440 60S1980 120 2160 60S2700 120 2880 60V120H0Z"/></svg></div>
+  <div class="wrap">
+    <p class="kicker reveal">Galería</p>
+    <h2 class="h2" data-split aria-label="Detalles que importan.">Detalles que <em>importan</em>.</h2>
+    <div class="gallery">
+      <button class="g g1 reveal" type="button" data-full="assets/img/agua.webp" data-alt="Piscina interior de un spa con duchas"><img src="assets/img/agua.webp" alt="Piscina interior de un spa con duchas" loading="lazy" decoding="async"><span>Aguas</span></button>
+      <button class="g g2 reveal" type="button" data-full="assets/img/navaja.webp" data-alt="Navaja de afeitar clásica"><img src="assets/img/navaja.webp" alt="Navaja de afeitar clásica" loading="lazy" decoding="async"><span>Navaja</span></button>
+      <button class="g g3 reveal" type="button" data-full="assets/img/eucalipto.webp" data-alt="Hojas de eucalipto"><img src="assets/img/eucalipto.webp" alt="Hojas de eucalipto" loading="lazy" decoding="async"><span>Eucalipto</span></button>
+      <button class="g g4 reveal" type="button" data-full="assets/img/velas.webp" data-alt="Sala de spa con decoración cálida"><img src="assets/img/velas.webp" alt="Sala de spa con decoración cálida" loading="lazy" decoding="async"><span>Sala</span></button>
+      <button class="g g5 reveal" type="button" data-full="assets/img/tijeras.webp" data-alt="Letrero antiguo de barbería con tijeras y peine"><img src="assets/img/tijeras.webp" alt="Letrero antiguo de barbería con tijeras y peine" loading="lazy" decoding="async"><span>Oficio</span></button>
+      <button class="g g6 reveal" type="button" data-full="assets/img/bambu.webp" data-alt="Bambú negro visto desde abajo"><img src="assets/img/bambu.webp" alt="Bambú negro visto desde abajo" loading="lazy" decoding="async"><span>Bambú</span></button>
+    </div>
+    <p class="fine reveal">Imágenes de referencia con licencia libre. <a href="creditos.html">Créditos fotográficos →</a></p>
+  </div>
+</section>
+
+<!-- RESEÑAS -->
+<section class="tone-deep" id="resenas">
+  <div class="wave-top" aria-hidden="true"><svg viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60C180 0 540 120 720 60S1260 120 1440 60S1980 120 2160 60S2700 120 2880 60V120H0Z"/></svg></div>
+  <div class="wrap two rev-grid">
+    <div>
+      <p class="kicker reveal">Opiniones</p>
+      <h2 class="h2" data-split aria-label="Lo que dicen de nosotros.">Lo que dicen<br>de <em>nosotros</em>.</h2>
+      <div class="rating reveal"><b>4,9</b><div><span class="stars" aria-label="4,9 de 5 estrellas">★★★★★</span><p>en Google Maps · dato de ejemplo</p></div></div>
+      <a class="btn btn-ghost reveal" href="https://maps.google.com/?q=San+Miguel+Lima" target="_blank" rel="noopener">Ver reseñas en Google Maps <svg class="ic"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="feed-col">
+      <p class="live"><span class="dot"></span>Reseñas de ejemplo</p>
+      <ul class="feed" id="feed">
+        <li class="rev"><span class="av2" aria-hidden="true">V</span><div class="bub"><div class="rh"><b>Valentina R.</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">hace 2 semanas</span><span class="tag">Ejemplo</span></div><p>Llegué por un masaje y salí con el corte de mi vida. El lugar huele a eucalipto y nadie te apura.</p></div></li>
+        <li class="rev"><span class="av2" aria-hidden="true">D</span><div class="bub"><div class="rh"><b>Diego M.</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">hace un mes</span><span class="tag">Ejemplo</span></div><p>El afeitado con toalla caliente es otra cosa. Reservé por WhatsApp en un minuto y me atendieron a la hora.</p></div></li>
+        <li class="rev"><span class="av2" aria-hidden="true">C</span><div class="bub"><div class="rh"><b>Camila S.</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">hace 2 meses</span><span class="tag">Ejemplo</span></div><p>Fuimos en pareja al ritual y fue lo mejor del mes. Muy cuidado cada detalle, hasta la infusión final.</p></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVAR -->
+<section class="tone-mist" id="reservar">
+  <div class="wave-top" aria-hidden="true"><svg viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60C180 0 540 120 720 60S1260 120 1440 60S1980 120 2160 60S2700 120 2880 60V120H0Z"/></svg></div>
+  <div class="wrap">
+    <p class="kicker reveal">Reservas</p>
+    <h2 class="h2" data-split aria-label="Reserva tu cita.">Reserva tu <em>cita</em>.</h2>
+    <p class="lead reveal">Elige servicio, día y hora. Al enviar, te abrimos WhatsApp con tu solicitud lista para confirmar con el equipo.</p>
+
+    <div class="book">
+      <form class="book-form reveal" id="reserva" novalidate>
+        <fieldset>
+          <legend><span class="step">1</span> Servicio</legend>
+          <div class="field"><label for="r-servicio">¿Qué te gustaría hacer?</label>
+            <select id="r-servicio" name="servicio" required>
+              <optgroup label="Barbería">
+                <option data-min="45" data-precio="45">Corte clásico</option><option data-min="75" data-precio="80">Corte y barba</option><option data-min="40" data-precio="55">Afeitado con toalla caliente</option><option data-min="30" data-precio="35">Perfilado de barba</option><option data-min="45" data-precio="60">Tratamiento capilar</option><option data-min="30" data-precio="35">Corte infantil</option>
+              </optgroup>
+              <optgroup label="Spa">
+                <option data-min="60" data-precio="120">Masaje relajante</option><option data-min="75" data-precio="160">Masaje con piedras calientes</option><option data-min="60" data-precio="130">Masaje descontracturante</option><option data-min="60" data-precio="110">Limpieza facial</option><option data-min="50" data-precio="130">Exfoliación corporal</option><option data-min="45" data-precio="95">Aromaterapia</option>
+              </optgroup>
+              <optgroup label="Rituales">
+                <option data-min="120" data-precio="190">Ritual Valea</option><option data-min="60" data-precio="320">Ritual de pareja</option><option data-min="150" data-precio="280">Día del novio</option>
+              </optgroup>
+            </select></div>
+          <div class="field"><label for="r-esp">Especialista</label>
+            <select id="r-esp" name="esp"><option>Cualquiera disponible</option><option>Mateo · Barbero</option><option>Lucía · Terapeuta</option><option>Andrés · Barbero</option></select></div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="step">2</span> Día y hora</legend>
+          <div class="field"><label for="r-fecha">Día</label><input type="date" id="r-fecha" name="fecha" required></div>
+          <div class="field"><span class="label" id="r-horas-l">Hora <small>(disponibilidad de ejemplo)</small></span>
+            <div class="slots" id="r-slots" role="radiogroup" aria-labelledby="r-horas-l"><p class="slots-empty">Elige un día para ver los horarios.</p></div></div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="step">3</span> Tus datos</legend>
+          <div class="row2">
+            <div class="field"><label for="r-nombre">Nombre</label><input id="r-nombre" name="nombre" autocomplete="given-name" maxlength="40" required></div>
+            <div class="field"><label for="r-tel">Celular</label><input id="r-tel" name="tel" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="9 dígitos" maxlength="11" required></div>
+          </div>
+          <div class="field"><label for="r-notas">Notas (opcional)</label><textarea id="r-notas" name="notas" rows="2" maxlength="200" placeholder="Alergias, preferencias, código de campaña…"></textarea></div>
+        </fieldset>
+        <p class="form-err" id="r-err" role="alert"></p>
+        <button class="btn btn-copper btn-lg" type="submit" id="r-submit"><span>Solicitar cita</span><svg class="ic"><use href="#i-arrow"/></svg></button>
+      </form>
+
+      <aside class="summary reveal" id="r-resumen" aria-live="polite">
+        <h3>Tu reserva</h3>
+        <dl>
+          <div><dt>Servicio</dt><dd data-sum="servicio">—</dd></div>
+          <div><dt>Duración</dt><dd data-sum="dur">—</dd></div>
+          <div><dt>Día</dt><dd data-sum="dia">—</dd></div>
+          <div><dt>Hora</dt><dd data-sum="hora">—</dd></div>
+          <div class="total"><dt>Total estimado</dt><dd data-sum="total">—</dd></div>
+        </dl>
+        <p class="fine">Pagas en el local. La cita queda confirmada cuando el equipo responde por WhatsApp.</p>
+      </aside>
+    </div>
+
+    <div class="success" id="r-ok" hidden role="status" tabindex="-1">
+      <svg class="check" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24" fill="none"/><path d="M14 27l8 8 16-17" fill="none"/></svg>
+      <h3>¡Solicitud lista!</h3>
+      <p data-ok-text>Te abrimos WhatsApp para confirmar con el equipo.</p>
+      <div class="success-cta">
+        <a class="btn btn-copper" href="#" target="_blank" rel="noopener" data-ok-wa><svg class="ic"><use href="#i-wa"/></svg> Confirmar por WhatsApp</a>
+        <button class="btn btn-line" type="button" data-ok-ics><svg class="ic"><use href="#i-cal"/></svg> Agregar al calendario</button>
+        <button class="btn btn-ghost-dark" type="button" data-ok-new>Nueva reserva</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="tone-paper" id="faq">
+  <div class="wave-top" aria-hidden="true"><svg viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60C180 0 540 120 720 60S1260 120 1440 60S1980 120 2160 60S2700 120 2880 60V120H0Z"/></svg></div>
+  <div class="wrap narrow">
+    <p class="kicker reveal">Preguntas frecuentes</p>
+    <h2 class="h2" data-split aria-label="Antes de venir.">Antes de <em>venir</em>.</h2>
+    <div class="faq">
+      <details class="reveal"><summary>¿Necesito reservar?</summary><p>Recomendamos reservar, sobre todo para spa y rituales. Si hay espacio, también atendemos sin cita.</p></details>
+      <details class="reveal"><summary>¿Qué pasa si debo cancelar?</summary><p>Avísanos por WhatsApp con al menos 3 horas de anticipación y reprogramamos sin costo.</p></details>
+      <details class="reveal"><summary>¿Puedo reservar para otra persona?</summary><p>Claro. Pon el nombre de quien asistirá en las notas y tu celular para confirmar.</p></details>
+      <details class="reveal"><summary>¿Cómo se paga?</summary><p>En el local, con efectivo, tarjeta, Yape o Plin.</p></details>
+      <details class="reveal"><summary>¿Atienden niños?</summary><p>Sí, tenemos corte infantil. Los masajes son para mayores de 16 años.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="tone-deep" id="contacto">
+  <div class="wave-top" aria-hidden="true"><svg viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60C180 0 540 120 720 60S1260 120 1440 60S1980 120 2160 60S2700 120 2880 60V120H0Z"/></svg></div>
+  <div class="wrap">
+    <p class="kicker reveal">Contacto</p>
+    <h2 class="h2" data-split aria-label="Escríbenos o ven a vernos.">Escríbenos<br>o <em>ven a vernos</em>.</h2>
+    <div class="contact-grid">
+      <div class="contact-cards">
+        <a class="c-card reveal" href="#" data-wa><svg class="ic"><use href="#i-wa"/></svg><div><b>WhatsApp</b><span>Respuesta rápida</span></div><svg class="ic go"><use href="#i-arrow"/></svg></a>
+        <a class="c-card reveal" href="tel:+51900000000"><svg class="ic"><use href="#i-tel"/></svg><div><b>Llamar</b><span>+51 900 000 000</span></div><svg class="ic go"><use href="#i-arrow"/></svg></a>
+        <a class="c-card reveal" href="https://instagram.com/" target="_blank" rel="noopener"><svg class="ic"><use href="#i-ig"/></svg><div><b>Instagram</b><span>@valea.barberiaspa</span></div><svg class="ic go"><use href="#i-arrow"/></svg></a>
+        <a class="c-card reveal" href="mailto:hola@valea.example"><svg class="ic"><use href="#i-mail"/></svg><div><b>Correo</b><span>hola@valea.example</span></div><svg class="ic go"><use href="#i-arrow"/></svg></a>
+        <div class="hours reveal" id="hours">
+          <h3><svg class="ic"><use href="#i-clock"/></svg> Horario <small>de ejemplo</small></h3>
+          <table><tbody></tbody></table>
+        </div>
+      </div>
+      <div class="map reveal">
+        <iframe title="Mapa de San Miguel, Lima" loading="lazy" src="https://maps.google.com/maps?q=San+Miguel,+Lima&z=14&output=embed"></iframe>
+        <p><svg class="ic"><use href="#i-pin"/></svg> Av. La Marina 1234, San Miguel, Lima <small>(dirección de ejemplo)</small></p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="tone-deep2">
+  <div class="foot">
+    <div><span class="brand-name">Valea</span><p>Barbería &amp; Spa · San Miguel, Lima</p></div>
+    <nav aria-label="Pie"><a href="#servicios">Servicios</a><a href="#campana">Campaña</a><a href="#reservar">Reservar</a><a href="#contacto">Contacto</a><a href="creditos.html">Créditos fotográficos</a></nav>
+    <p class="fine light">© <span data-year>2026</span> Valea · Propuesta de diseño con contenido de ejemplo.</p>
+  </div>
+</footer>
+
+<a class="fab" href="#" data-wa aria-label="Escribir por WhatsApp" title="WhatsApp"><svg class="ic"><use href="#i-wa"/></svg></a>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Imagen ampliada"><button type="button" class="lb-close" aria-label="Cerrar"><svg class="ic"><use href="#i-x"/></svg></button><img alt="" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"></div>
+
+<script defer src="lib/gsap.min.js?v=20261020"></script>
+<script defer src="lib/ScrollTrigger.min.js?v=20261020"></script>
+<script defer src="lib/data.js?v=20261020"></script>
+<script defer src="main.js?v=20261020"></script>
+</body>
+</html>

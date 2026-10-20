@@ -164,6 +164,15 @@ a { color: var(--accent-text); text-underline-offset: 3px; }
 h1 span { color: transparent; -webkit-text-stroke: 1.5px var(--accent); }
 header { gap: 14px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
 
+/* Tarjeta de ejemplo terminado (Valea) */
+.showcase { display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center; padding: 18px 22px; border-radius: 18px; text-decoration: none; color: #eaf3f1; border: 1px solid rgba(70, 194, 174, .5); background: linear-gradient(120deg, #072a2b, #0b3b3c 60%, #12595b); box-shadow: 0 20px 40px -28px rgba(7, 42, 43, .9); }
+.sc-ic { width: 46px; height: 46px; color: #46c2ae; }
+.sc-txt { display: grid; gap: 2px; font-size: 14px; color: #a9c7c2; }
+.sc-txt b { font-size: 21px; font-weight: 500; letter-spacing: -.01em; color: #eaf3f1; }
+.sc-badge { justify-self: start; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; background: #de9c72; color: #2a1408; margin-bottom: 4px; }
+.sc-go { font-weight: 600; white-space: nowrap; color: #de9c72; }
+.showcase:hover .sc-go { text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 640px) { .showcase { grid-template-columns: auto 1fr; } .sc-go { grid-column: 1 / -1; } }
 /* Movimiento (sutil): elevación, relleno ripple, rotación del chevron, entrada escalonada */
 @media (prefers-reduced-motion: no-preference) {
   .chip, .btn { transition: background .2s, color .2s, border-color .2s, transform .15s; }
@@ -202,6 +211,12 @@ header { gap: 14px; padding-bottom: 22px; border-bottom: 1px solid var(--line); 
       <b class="wm">Radar <span>sin web</span></b>
     </h1>
   </header>
+
+  <a class="showcase" href="demos/valea/index.html" target="_blank" rel="noopener">
+    <svg class="sc-ic" viewBox="0 0 48 48" aria-hidden="true"><path d="M5 17c5 0 7 5 12 5s7-5 12-5 7 0 14 0M5 27c5 0 7 5 12 5s7-5 12-5 7 0 14 0M5 37c5 0 7 5 12 5s7-5 12-5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    <span class="sc-txt"><span class="sc-badge">Ejemplo terminado</span><b>Valea · Barbería &amp; Spa</b><span>Así podría quedar una página trabajada al 100%: reservas, campaña, reseñas y fondo interactivo.</span></span>
+    <span class="sc-go" aria-hidden="true">Ver página →</span>
+  </a>
 
   <div class="controls">
     <div class="crow">

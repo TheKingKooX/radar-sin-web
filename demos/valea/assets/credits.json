@@ -1,0 +1,86 @@
+{
+  "navaja": {
+    "id": "navaja",
+    "src": "assets/img/navaja.webp",
+    "title": "Open Razor with double stabiliser",
+    "creator": "Dr.K. 20:15, 16 October 2007 (UTC)",
+    "creator_url": "",
+    "license": "CC BY-SA 3.0",
+    "license_version": "",
+    "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+    "foreign_landing_url": "https://commons.wikimedia.org/wiki/File:Open_Razor_with_double_stabiliser.JPG",
+    "source": "Wikimedia Commons"
+  },
+  "tijeras": {
+    "id": "tijeras",
+    "src": "assets/img/tijeras.webp",
+    "title": "Laufenburg (31)",
+    "creator": "User:Mattes",
+    "creator_url": "",
+    "license": "CC BY-SA 2.0",
+    "license_version": "",
+    "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+    "foreign_landing_url": "https://commons.wikimedia.org/wiki/File:Laufenburg_(31).JPG",
+    "source": "Wikimedia Commons"
+  },
+  "velas": {
+    "id": "velas",
+    "src": "assets/img/velas.webp",
+    "title": "Spa Enticement",
+    "creator": "Kyakwera",
+    "creator_url": "",
+    "license": "CC BY-SA 4.0",
+    "license_version": "",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "foreign_landing_url": "https://commons.wikimedia.org/wiki/File:Spa_Enticement.jpg",
+    "source": "Wikimedia Commons"
+  },
+  "eucalipto": {
+    "id": "eucalipto",
+    "src": "assets/img/eucalipto.webp",
+    "title": "Eucalyptus moluccana - leaves",
+    "creator": "Geekstreet",
+    "creator_url": "",
+    "license": "CC BY-SA 4.0",
+    "license_version": "",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "foreign_landing_url": "https://commons.wikimedia.org/wiki/File:Eucalyptus_moluccana_-_leaves.jpg",
+    "source": "Wikimedia Commons"
+  },
+  "aceite": {
+    "id": "aceite",
+    "src": "assets/img/aceite.webp",
+    "title": "Reed diffuser",
+    "creator": "Alex Tang",
+    "creator_url": "",
+    "license": "CC0",
+    "license_version": "",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "foreign_landing_url": "https://commons.wikimedia.org/wiki/File:Reed_diffuser.jpg",
+    "source": "Wikimedia Commons"
+  },
+  "agua": {
+    "id": "agua",
+    "src": "assets/img/agua.webp",
+    "title": "Indoor pool and showers of the spa at Amantaka luxury Resort & Hotel in Luang Prabang Laos",
+    "creator": "Basile Morin",
+    "creator_url": "",
+    "license": "CC BY-SA 4.0",
+    "license_version": "",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "foreign_landing_url": "https://commons.wikimedia.org/wiki/File:Indoor_pool_and_showers_of_the_spa_at_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg",
+    "source": "Wikimedia Commons"
+  },
+  "bambu": {
+    "id": "bambu",
+    "src": "assets/img/bambu.webp",
+    "title": "Cadnant Gardens Bamboo",
+    "creator": "AMJX00X",
+    "creator_url": "",
+    "license": "CC BY-SA 4.0",
+    "license_version": "",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "foreign_landing_url": "https://commons.wikimedia.org/wiki/File:Cadnant_Gardens_Bamboo.jpg",
+    "source": "Wikimedia Commons"
+  }
+}

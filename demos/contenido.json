@@ -1,56 +1,1269 @@
 {
-  "_nota": "Horarios y reseñas tomados de la ficha de Google Maps el 20 de octubre de 2026. Los horarios son referenciales y deben confirmarse con cada negocio. Las reseñas son extractos de usuarios de Google Maps, con su nombre público y la fecha relativa que mostraba Google.",
-  "highcuts": {
-    "horario": { "lun": ["11:00", "21:00"], "mar": ["11:00", "21:00"], "mie": ["11:00", "21:00"], "jue": ["11:00", "21:00"], "vie": ["11:00", "21:00"], "sab": ["11:00", "21:00"], "dom": ["12:00", "18:30"] },
-    "resenas": [
-      { "a": "giancarlo", "e": 5, "f": "hace 6 meses", "t": "Excelente servicio en la barbería. Desde que llegué me atendieron muy bien, el barbero fue súper profesional y se tomó el tiempo de entender exactamente el estilo que quería. El corte quedó limpio, preciso y mejor de lo que esperaba…" },
-      { "a": "Rodrigo", "e": 5, "f": "hace 5 meses", "t": "Muy recomendada la barbería, tiene un excelente servicio. El local es limpio, ordenado, fresco. Todos sus barberos son hábiles y muy atentos…" },
-      { "a": "Hector", "e": 5, "f": "hace un mes", "t": "Muy buen servicio, te explican previo el proceso. Son minuciosos y la atención es destacable…" }
-    ]
+ "_nota": "Horarios y reseñas tomados de la ficha de Google Maps el 20 de octubre de 2026. Los horarios son referenciales y deben confirmarse con cada negocio. Las reseñas son extractos de usuarios de Google Maps, con su nombre público y la fecha relativa que mostraba Google.",
+ "highcuts": {
+  "horario": {
+   "lun": [
+    "11:00",
+    "21:00"
+   ],
+   "mar": [
+    "11:00",
+    "21:00"
+   ],
+   "mie": [
+    "11:00",
+    "21:00"
+   ],
+   "jue": [
+    "11:00",
+    "21:00"
+   ],
+   "vie": [
+    "11:00",
+    "21:00"
+   ],
+   "sab": [
+    "11:00",
+    "21:00"
+   ],
+   "dom": [
+    "12:00",
+    "18:30"
+   ]
   },
-  "labarberia": {
-    "horario": { "lun": ["09:00", "20:00"], "mar": ["09:00", "20:00"], "mie": ["09:00", "20:00"], "jue": ["09:00", "20:00"], "vie": ["09:00", "20:00"], "sab": ["09:00", "20:00"], "dom": ["10:00", "19:00"] },
-    "resenas": [
-      { "a": "Rodrigo", "e": 5, "f": "hace 10 meses", "t": "Es una buena barbería, dentro de todo he visto que la mayoría de sus barberos dejan a sus clientes satisfechos. Particularmente mi barbero Jonathan es un capo y siempre me hace un buen trabajo…" }
-    ]
+  "resenas": [
+   {
+    "a": "Giancarlo",
+    "e": 5,
+    "f": "Hace 6 meses",
+    "t": "Excelente servicio en la barbería. Desde que llegué me atendieron muy bien, el barbero fue súper profesional y se tomó el tiempo de entender exactamente el estilo que quería. El corte quedó limpio, preciso y mejor de lo…",
+    "u": "https://maps.app.goo.gl/GMMJdNo33CEbh5aW6"
+   },
+   {
+    "a": "Hector S.",
+    "e": 5,
+    "f": "Hace un mes",
+    "t": "Muy buen servicio, te explican previo el proceso. Son minuciosos y la atención es destacable.",
+    "u": "https://maps.app.goo.gl/rbuwDzmMcqvADTqz5"
+   },
+   {
+    "a": "Rodrigo M.",
+    "e": 5,
+    "f": "Hace 5 meses",
+    "t": "Muy recomendada la barbería, tiene un excelente servicio. El local es limpio, ordenado, fresco. Todos sus barberos son hábiles y muy atentos. Y siempre que voy el resultado es buenísimo, es excelente.",
+    "u": "https://maps.app.goo.gl/KVpvqRwN1MtAtQF46"
+   },
+   {
+    "a": "Diego T.",
+    "e": 5,
+    "f": "Hace 3 meses",
+    "t": "Todo muy bien, el barbero muy atento y el corte muy bueno, la asesoría en ese lugar es 10/10 y si no sabes que corte seria mejor para ti, alli te pueden ayudar. Lo mejor de lo mejor.",
+    "u": "https://maps.app.goo.gl/PUxSs6aASF27Msxb7"
+   },
+   {
+    "a": "Daniel Q.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Buen corte a full tijera. Excelente servicio",
+    "u": "https://maps.app.goo.gl/jkvbPK786is7u18z8"
+   },
+   {
+    "a": "Eduardo S.",
+    "e": 5,
+    "f": "Hace 2 meses",
+    "t": "Execelente servicio y buena experiencia, 100% recomendadoo",
+    "u": "https://maps.app.goo.gl/Hw6Knk8gvYXdaw4G6"
+   },
+   {
+    "a": "Javier A.",
+    "e": 5,
+    "f": "Hace 8 meses",
+    "t": "Me gusto la puntualidad en la cita y el trato amable, de inmediato entendieron lo que estaba buscando en el corte y la realización del trabajo fue excelente, regresaré sin pensarlo dos veces.",
+    "u": "https://maps.app.goo.gl/CMsFVgwRhxVVbJjm9"
+   },
+   {
+    "a": "Fernando T.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "me gusto mucho la atencion el corte me lleve una buena experiencia con el barbero que siga asi fue exelente.",
+    "u": "https://maps.app.goo.gl/QSs5VbH5T2G44SUh6"
+   },
+   {
+    "a": "Saul Q.",
+    "e": 5,
+    "f": "Hace 6 meses",
+    "t": "Buen servicio y ambiente en el lugar, aire acondicionado, buena música y sillas cómodas.",
+    "u": "https://maps.app.goo.gl/FqrwXCkq5izkqiZn6"
+   },
+   {
+    "a": "Rodrigo R.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Excelente atención y corte de cabello. Muy buena barber.",
+    "u": "https://maps.app.goo.gl/QVugapUH7UyW6hdC6"
+   },
+   {
+    "a": "Matias R.",
+    "e": 5,
+    "f": "Hace 8 meses",
+    "t": "Muy buen servicio, local,corte, todo espectacular, recomendado para todos.",
+    "u": "https://maps.app.goo.gl/QntnQGbiNo56wZUD6"
+   },
+   {
+    "a": "Piero L.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "Excelente servicio y un buen lugar para cortarse el cabello",
+    "u": "https://maps.app.goo.gl/P5JKz9daCiFiYL737"
+   },
+   {
+    "a": "Noel H.",
+    "e": 5,
+    "f": "Hace 5 meses",
+    "t": "Excelente servicio! Lugar cómodo y barberos top!",
+    "u": "https://maps.app.goo.gl/4tM86nyNCVpjH95A6"
+   },
+   {
+    "a": "Kevin B.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Buena barberia en lo top de asesoramiento y corte, sumado al servicio de lavado y bebidas que te brindan. 👍🏻…",
+    "u": "https://maps.app.goo.gl/NSf96xGBvvT2YiRQA"
+   },
+   {
+    "a": "Andrés",
+    "e": 5,
+    "f": "Hace 6 meses",
+    "t": "Súper recomendado, buena atención y lo más importante, buenos cortes",
+    "u": "https://maps.app.goo.gl/AUPMy1aLei69CDEF6"
+   },
+   {
+    "a": "Diego C.",
+    "e": 5,
+    "f": "Hace 8 meses",
+    "t": "Excelente servicio, buena predisposición en todo momento. Recomendado…!!!",
+    "u": "https://maps.app.goo.gl/Wzxdxed44iSKujfR7"
+   },
+   {
+    "a": "Steffano M.",
+    "e": 5,
+    "f": "Hace 8 meses",
+    "t": "Lugar limpio y atención muy buena. Te ayudan en asesorarte en tu corte y cuidado del cabello. Muy excelente en serio.",
+    "u": "https://maps.app.goo.gl/oZxs1s2Jnd2S1mSe8"
+   },
+   {
+    "a": "Stephano E.",
+    "e": 5,
+    "f": "Hace 8 meses",
+    "t": "Muy buena atencion, exelente servicio",
+    "u": "https://maps.app.goo.gl/Zn5CBkR4VBGUugGP6"
+   },
+   {
+    "a": "Luis S.",
+    "e": 5,
+    "f": "Hace 8 meses",
+    "t": "Muy buen servicio, profesionales y educados.",
+    "u": "https://maps.app.goo.gl/hc24RZsQPY76Entp9"
+   },
+   {
+    "a": "Juan S.",
+    "e": 5,
+    "f": "Hace 5 meses",
+    "t": "Excelente atención, y buen ambiente.",
+    "u": "https://maps.app.goo.gl/JZBe2oz9RDcx96oP6"
+   },
+   {
+    "a": "Aldair A.",
+    "e": 5,
+    "f": "Hace 6 meses",
+    "t": "Excelente atención, con barberos profesionales y muy capacitados.",
+    "u": "https://maps.app.goo.gl/Ps2y7nXU9wpP2C3g8"
+   },
+   {
+    "a": "Alvaro C.",
+    "e": 5,
+    "f": "Hace 6 meses",
+    "t": "Excelente servicio y trato al cliente",
+    "u": "https://maps.app.goo.gl/ooukMZhWb1rm5kLf9"
+   },
+   {
+    "a": "Oskar F.",
+    "e": 5,
+    "f": "Hace 6 meses",
+    "t": "Buen corte, buena charla, buen servicio a un precio justo",
+    "u": "https://maps.app.goo.gl/bWemiJxUtoWm2poh6"
+   },
+   {
+    "a": "Yvonne R.",
+    "e": 5,
+    "f": "Hace 8 meses",
+    "t": "Le cortaron a mi hijito, quede muy contenta, muy profesionales, los recomiendo",
+    "u": "https://maps.app.goo.gl/aU1uNfXWboaUZYxt8"
+   }
+  ]
+ },
+ "labarberia": {
+  "horario": {
+   "lun": [
+    "09:00",
+    "20:00"
+   ],
+   "mar": [
+    "09:00",
+    "20:00"
+   ],
+   "mie": [
+    "09:00",
+    "20:00"
+   ],
+   "jue": [
+    "09:00",
+    "20:00"
+   ],
+   "vie": [
+    "09:00",
+    "20:00"
+   ],
+   "sab": [
+    "09:00",
+    "20:00"
+   ],
+   "dom": [
+    "10:00",
+    "19:00"
+   ]
   },
-  "elite": {
-    "horario": { "lun": ["11:00", "20:30"], "mar": ["11:00", "20:30"], "mie": ["11:00", "20:30"], "jue": ["11:00", "20:30"], "vie": ["11:00", "20:30"], "sab": ["11:00", "20:30"], "dom": ["12:00", "17:30"] },
-    "resenas": [
-      { "a": "Saúl", "e": 5, "f": "hace 7 meses", "t": "Lugar cómodo, tranquilo y buen entorno, trabajan con citas por lo que no hay acumulación de gente. Los barberos realizan un trabajo minucioso y con atención en los detalles y acabados…" },
-      { "a": "Brayan", "e": 5, "f": "hace 7 meses", "t": "Una barbería de diez. La atención es impecable y los barberos son auténticos profesionales. Salí con un corte excelente, cuidando cada detalle…" },
-      { "a": "Charles", "e": 5, "f": "hace 3 meses", "t": "Excelente barbero. Alexis hace un corte preciso y con mucho cuidado al detalle. Soy extranjero frances y me atendió súper bien, además los precios son justos. Totalmente recomendado." }
-    ]
+  "resenas": [
+   {
+    "a": "Rodrigo M.",
+    "e": 5,
+    "f": "Hace 10 meses",
+    "t": "Es una buena barbería, dentro de todo he visto que la mayoría de sus barberos dejan a sus clientes satisfechos. Particularmente mi barbero Jonathan es un capo y siempre me hace un buen trabajo. La…",
+    "u": "https://maps.app.goo.gl/KkZLVUjEDQyBLaNq6"
+   },
+   {
+    "a": "Mario M.",
+    "e": 5,
+    "f": "Hace 2 años",
+    "t": "Opción de estacionar, 3 lugares regularmente disponibles. Muy buena atención en recepción.…",
+    "u": "https://maps.app.goo.gl/MuS2FJQcgPZhJu9VA"
+   },
+   {
+    "a": "Carolina P.",
+    "e": 5,
+    "f": "Hace 9 meses",
+    "t": "Lleve a mi papá a hacerse un corte, la atención del barbero fue muy buena, muy amable y siempre atento a la comodidad de mi papá. Gracias 🫂…",
+    "u": "https://maps.app.goo.gl/nWqHcSZ8dTrcRgyB9"
+   },
+   {
+    "a": "Angel R.",
+    "e": 5,
+    "f": "Hace 2 años",
+    "t": "Gracias por la atención, excelente lugar lo recomiendo, no recuerdo el nombre del Barbero, pero es Venezolano. Una plática amena durante el corte. Se los recomiendo. Me asombró que me brindará de…",
+    "u": "https://maps.app.goo.gl/X7S6GbtkfPDrKPyz7"
+   },
+   {
+    "a": "Wilson R.",
+    "e": 5,
+    "f": "Hace 4 años",
+    "t": "Exelente atención y servicio, la flaca de la recepción un top",
+    "u": "https://maps.app.goo.gl/cotLtz9VVUkJZfbNA"
+   },
+   {
+    "a": "Pablo L.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Uno de los mejores barberos gracias siempre un trabajo impecable.",
+    "u": "https://maps.app.goo.gl/PBN78iFghjxAQEdR8"
+   },
+   {
+    "a": "Jorge L.",
+    "e": 5,
+    "f": "Hace 7 años",
+    "t": "Es un super lugar para darse un engreimiento ya que aparte de atender muy bien tiene los mejores barberos de lima y Sumandole el buen servicio te dan algún refresco o si gustas asta una cervecita de…",
+    "u": "https://maps.app.goo.gl/4CtjqWNxzJpM7btWA"
+   },
+   {
+    "a": "Luis F.",
+    "e": 5,
+    "f": "Hace 8 años",
+    "t": "Muy buena atención y se preocupan porque el usuario después de atenderlo se retiren con la certeza de que regresen para otra oportunidad. Sigan así muchachos y lograrán sus objetivos y metas.",
+    "u": "https://maps.app.goo.gl/rfyYuWCiDfpqza749"
+   },
+   {
+    "a": "Augusto C.",
+    "e": 5,
+    "f": "Hace 8 años",
+    "t": "Excelente servicio y precio. Te tratan como un cliente regular y te brindan bebidas calientes o frías. Definitivamente volveré.",
+    "u": "https://maps.app.goo.gl/Zkp4hypNJkip9Ae67"
+   },
+   {
+    "a": "Top P.",
+    "e": 5,
+    "f": "Hace 4 años",
+    "t": "Muy buen servicio. Se nota que se esmeran en el trabajo que hacen",
+    "u": "https://maps.app.goo.gl/pF8nProp2FoiSDTe9"
+   },
+   {
+    "a": "Javier B.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Excelente atención, con todos los protocolos. Muy profesionales. Super recomendado",
+    "u": "https://maps.app.goo.gl/x2hpWiFvsfCsHQnB6"
+   },
+   {
+    "a": "Nelly R.",
+    "e": 5,
+    "f": "Hace 2 años",
+    "t": "Muy buen servicio, excelente atención y rapidez.",
+    "u": "https://maps.app.goo.gl/H5P4k1eYoQqM4Z6z6"
+   },
+   {
+    "a": "Liliana T.",
+    "e": 4,
+    "f": "Hace 3 años",
+    "t": "Se esmeran por brindar buena atención. Ambiente agradable.",
+    "u": "https://maps.app.goo.gl/SfJXDHKBYhjPc49L9"
+   },
+   {
+    "a": "José",
+    "e": 5,
+    "f": "Hace 7 años",
+    "t": "Buena atención y asesoría, personal educado, conocen su negocio,local amplio y aseado. Fui para que me recorten la barba y el barbero William me orientó acertadamente, indicándome el tipo de corte…",
+    "u": "https://maps.app.goo.gl/A9bwrHNAfR5b1HxB8"
+   },
+   {
+    "a": "Carlos A.",
+    "e": 5,
+    "f": "Hace 9 años",
+    "t": "La atención es muy buena, lugar que recomiendo para un buen corte. El trato del personal también es excelente.",
+    "u": "https://maps.app.goo.gl/fxubdk9jBBSfKuTK9"
+   },
+   {
+    "a": "Ivonne P.",
+    "e": 5,
+    "f": "Hace 4 años",
+    "t": "Me gustó mucho la atención, es amplio y limpio cumplen con los protocolos.",
+    "u": "https://maps.app.goo.gl/9mnEhbYUb7hxGDZ87"
+   },
+   {
+    "a": "Braulio R.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Excelente servicio en buena zona y cómodo local. Plus: tiene estacionamiento.",
+    "u": "https://maps.app.goo.gl/7VPrcJ7ok9caG8wv6"
+   },
+   {
+    "a": "Cliente",
+    "e": 5,
+    "f": "Hace 9 años",
+    "t": "El lugar es limpio y los chicos que trabajar ahí son muy atentos y habiles. Saben cortar el pelo muy bien y son todos jóvenes los precios Son razonables",
+    "u": "https://maps.app.goo.gl/du3Sj3ofDLjTqu5r7"
+   },
+   {
+    "a": "Aldo C.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "El barbero David es muy bueno, tiene paciencia y profesionalismo",
+    "u": "https://maps.app.goo.gl/t9UZrAzz5zjySoXm6"
+   },
+   {
+    "a": "José A.",
+    "e": 5,
+    "f": "Hace 3 años",
+    "t": "Muy buen lugar para cortarse el pelo. Excelentes barberos, amplio espacio y cordial atención.",
+    "u": "https://maps.app.goo.gl/uYG4VTV4RebDNNXf9"
+   },
+   {
+    "a": "Cristian A.",
+    "e": 5,
+    "f": "Hace 9 años",
+    "t": "Buena atención. Todos realmente saben hacer cortes muy buenos.",
+    "u": "https://maps.app.goo.gl/fbevFr81PQKJDXDe8"
+   }
+  ]
+ },
+ "elite": {
+  "horario": {
+   "lun": [
+    "11:00",
+    "20:30"
+   ],
+   "mar": [
+    "11:00",
+    "20:30"
+   ],
+   "mie": [
+    "11:00",
+    "20:30"
+   ],
+   "jue": [
+    "11:00",
+    "20:30"
+   ],
+   "vie": [
+    "11:00",
+    "20:30"
+   ],
+   "sab": [
+    "11:00",
+    "20:30"
+   ],
+   "dom": [
+    "12:00",
+    "17:30"
+   ]
   },
-  "arturo": {
-    "horario": null,
-    "resenas": [
-      { "a": "Edu", "e": 5, "f": "hace 10 meses", "t": "La atención de Arturito es lo máximo! Me cortó el cabello con el desde los 17 años…" },
-      { "a": "maria", "e": 5, "f": "hace 2 años", "t": "Excelente atencion en el salon de belleza de Arturo, fui atendida por el dueño, y estoy encantada, muy profesional. Lo felicito, me ha maquillado y peinado para una boda, como madrina lo ha hecho espectacular…" }
-    ]
+  "resenas": [
+   {
+    "a": "Saúl A.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "Lugar cómodo, tranquilo y buen entorno, trabajan con citas por lo que no hay acumulación de gente. Los barberos realizan un trabajo minucioso y con atención en los detalles y acabados. Recomiendo a…",
+    "u": "https://maps.app.goo.gl/HuzGXv2ks3EpJ3bw9"
+   },
+   {
+    "a": "Brayan M.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "Una barbería de diez. La atención es impecable y los barberos son auténticos profesionales. Salí con un corte excelente, cuidando cada detalle. Sin duda, el mejor lugar de la zona para un buen cambio…",
+    "u": "https://maps.app.goo.gl/79jTN38GAEkHjpo49"
+   },
+   {
+    "a": "Charles T.",
+    "e": 5,
+    "f": "Hace 3 meses",
+    "t": "Excelente barbero. Alexis hace un corte preciso y con mucho cuidado al detalle. Soy extranjero frances y me atendió súper bien, además los precios son justos. Totalmente recomendado.",
+    "u": "https://maps.app.goo.gl/WbqCD2EMyvJdyefL8"
+   },
+   {
+    "a": "Lesly F.",
+    "e": 5,
+    "f": "Hace 10 meses",
+    "t": "El local está bien cuidado, el personal sumamente atento; se recomienda sacar cita para no esperar, pero también puedes esperar por orden de llegada y reservar si necesitas hacer algo en el interin.…",
+    "u": "https://maps.app.goo.gl/rvqduvRNVbkVFFUB6"
+   },
+   {
+    "a": "Cliente",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "Excelente atención por parte de nuestro amigo Kevin , súper recomendado 🔝…",
+    "u": "https://maps.app.goo.gl/QcQyP3fp4qsHwr5K6"
+   },
+   {
+    "a": "Giovanna C.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "Corte de caballero elegante buen trato magnífico ambiente y seguro .y Kevin siempre dispuesto atender con el mismo carisma y profesionalismo en el corte .Super recomendado",
+    "u": "https://maps.app.goo.gl/xB8rt7C9AJuRWkxw6"
+   },
+   {
+    "a": "Jose L.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "Local ordenado y limpio. Además de un buen servicio de asesoramiento para elegir el corte de cabello ideal.",
+    "u": "https://maps.app.goo.gl/ekkRKtzQwcbFJpEw7"
+   },
+   {
+    "a": "Juan D.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "Excelente servicio, limpio y con la debida atención. Todo corte te lk hacen a la perfección. Especialmente mi causita Kevin un crack cortando",
+    "u": "https://maps.app.goo.gl/g784fZ45vMKY4FRo8"
+   },
+   {
+    "a": "Ignacio C.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "Excelentes barberos y excelente trato, tú les puedes indicar el corte que desees y ellos se acomodarán a tu estilo y gusto. Los precios de corte y barba súper cómodos",
+    "u": "https://maps.app.goo.gl/rgp6Qcfr1n7ViRjU6"
+   },
+   {
+    "a": "Mathias B.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "Excelente servicio y todo siempre está limpio",
+    "u": "https://maps.app.goo.gl/w7geKhkufxpAccGn8"
+   },
+   {
+    "a": "Cesar V.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "Muy buena atención, personalizado y excelente servicio!",
+    "u": "https://maps.app.goo.gl/WieonU5HCdqrKumY7"
+   },
+   {
+    "a": "Sandro R.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "Hacen los mejores cortes modernos de la zona, sobre todo los degradados, súper recomendado",
+    "u": "https://maps.app.goo.gl/zcPuQkcD9oFNpaP3A"
+   },
+   {
+    "a": "Jose D.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "Buena atención, servicio personalizado barberos atentos y detallistas",
+    "u": "https://maps.app.goo.gl/z2kTLn9S9H6giM318"
+   },
+   {
+    "a": "Alvaro M.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "Soy cliente frecuente (4 años) súper recomendada la barbería!",
+    "u": "https://maps.app.goo.gl/GdnQv5Yt6oePW17c8"
+   },
+   {
+    "a": "Pablo M.",
+    "e": 5,
+    "f": "Hace 3 años",
+    "t": "Excelente servicio de inicio a fin, he visitado varias Barberías en el pasado y ésta ha sido la mejor experiencia hasta el momento. Jean me realizó el corte que le solicité siendo muy meticuloso y…",
+    "u": "https://maps.app.goo.gl/SxNCynzmfuGkEK26A"
+   },
+   {
+    "a": "Ryan D.",
+    "e": 5,
+    "f": "Hace 2 años",
+    "t": "Muy contento con la experiencia en Elite Barbería. Al inicio entre con dudas pero el barbero Jean me asesoró sobre que corte de pelo me quedaría mejor y quede bastante contento. 100% recomendado,…",
+    "u": "https://maps.app.goo.gl/RHtWPLCEpQExb1J68"
+   },
+   {
+    "a": "Andres W.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Buen ambiente, la película que pusieron estuvo buena y la atención ni qué decir, estuvo A1, con lavado y todo, definitivamente volveré.",
+    "u": "https://maps.app.goo.gl/YQQ4xfbs66ddMxbx7"
+   },
+   {
+    "a": "Juan V.",
+    "e": 5,
+    "f": "Hace 2 años",
+    "t": "Buen lugar. Barberos amigables y hacen del servicio un rato bastante agradable. El diálogo, una persona súper servicial y ayuda en el asesoramiento de corte… súper recomendado!!!",
+    "u": "https://maps.app.goo.gl/PZLwUHpppFWQ4e5F9"
+   },
+   {
+    "a": "Freddy C.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "Excelente servicio , excelentes profesionales",
+    "u": "https://maps.app.goo.gl/totJ7wWsPbd2P4QG6"
+   },
+   {
+    "a": "Cliente",
+    "e": 5,
+    "f": "Hace 2 años",
+    "t": "Excelente ambiente y atención, se las recomiendo mil %, como siempre excelente el servicio de mi hermano Jean Castillo 💪🏽🙌🏽…",
+    "u": "https://maps.app.goo.gl/Q87ge42iNXjWyRYp6"
+   }
+  ]
+ },
+ "arturo": {
+  "horario": null,
+  "resenas": [
+   {
+    "a": "Edu A.",
+    "e": 5,
+    "f": "Hace 10 meses",
+    "t": "La atención de Arturito es lo máximo! Me cortó el cabello con el desde los 17 años",
+    "u": "https://maps.app.goo.gl/YCzz7rnta5cWbzbs7"
+   },
+   {
+    "a": "Maria D.",
+    "e": 5,
+    "f": "Hace 2 años",
+    "t": "Excelente atencion en el salon de belleza de Arturo, fui atendida por el dueño, y estoy encantada, muy profesional. Lo felicito, me ha maquillado y peinado para una boda, como madrina lo ha hecho…",
+    "u": "https://maps.app.goo.gl/5seBtiGeoscSthwn8"
+   },
+   {
+    "a": "Cesar L.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Muchos años siguiendo a Arturo, ejemplo de superación con la modernización de su local y dedicación a sus clientes por brindar la mejor atención, ayer 14/06/2021 tocó corte de cabello con mi esposa e…",
+    "u": "https://maps.app.goo.gl/tAdhFsgofpKsgZcn7"
+   },
+   {
+    "a": "Mark F.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Es por los ultimos 10 años mi único lugar en donde me corto el cabello, super recomendable. La atención es muy buena y agradable. También cumplen con todos los protocolos de bioseguridad que ahora…",
+    "u": "https://maps.app.goo.gl/sq24rSUYDshCnkqN8"
+   },
+   {
+    "a": "Maria D.",
+    "e": 5,
+    "f": "Hace 2 años",
+    "t": "Me encanta el lugar, me hacen unos cortes de cabello hermosos y siempre lo recomiendo, Arturo es un artista, hace unos cortes, tintes, mechas y maquilla hermoso, eres lo máximo Arturo",
+    "u": "https://maps.app.goo.gl/VL4Yapx6d6XcZgVy7"
+   },
+   {
+    "a": "Marieta A.",
+    "e": 5,
+    "f": "Hace 7 años",
+    "t": "Buena atencion, buen trato y muy amable Arturo, regreso mañana nuevamente para que me hagan otra cosita.",
+    "u": "https://maps.app.goo.gl/vkoEptAtRYxfq5JS7"
+   },
+   {
+    "a": "Céfiro A.",
+    "e": 5,
+    "f": "Hace 6 años",
+    "t": "Muy buena atención y personal profesional para todo tipo de corte en mi caso para caballeros. Buenos precios en cortes y productos. Buena ubicación y seguridad. Limpieza y orden. Recomendable.",
+    "u": "https://maps.app.goo.gl/m3P8EQvcw9hJKNFK7"
+   },
+   {
+    "a": "Max R.",
+    "e": 5,
+    "f": "Hace 4 años",
+    "t": "Excelente servicio de decolorado que me hicieron, 5 horas tardaron pero excelente resultados, y a muy buen precio, recomendado 100%",
+    "u": "https://maps.app.goo.gl/itEcXjoBEjEUH6vE9"
+   },
+   {
+    "a": "Jose F.",
+    "e": 4,
+    "f": "Hace 4 años",
+    "t": "Buena atención, salón grande y espacioso. Con tuendita para comprar algo mientras esperas tu turno.",
+    "u": "https://maps.app.goo.gl/7PP6L2hRfp8uaE5w6"
+   },
+   {
+    "a": "Margarita C.",
+    "e": 5,
+    "f": "Hace 7 años",
+    "t": "Ir a arreglarse el cabello Arturo es llegar a relajarte te hacen sentir tan bien fíjense cuando salgo me siento la mujer más bella del mundo",
+    "u": "https://maps.app.goo.gl/7hTfu2VmvLAAXafM6"
+   },
+   {
+    "a": "Jorge F.",
+    "e": 5,
+    "f": "Hace 4 años",
+    "t": "Un lugar acogedor y con bueno servicios ofrecidos. Cada vez que me cortó hago algún arreglo en el cabello salgo muy contento.",
+    "u": "https://maps.app.goo.gl/usH3PVHsjL2EHm3GA"
+   },
+   {
+    "a": "Isabel M.",
+    "e": 5,
+    "f": "Hace 2 años",
+    "t": "Buena atención. Muy profesionales.",
+    "u": "https://maps.app.goo.gl/X1wK1GFxTrqvMVj5A"
+   },
+   {
+    "a": "Patricia S.",
+    "e": 5,
+    "f": "Hace 4 años",
+    "t": "Excelente atención, buen trato y bien trabajo ☺️👏…",
+    "u": "https://maps.app.goo.gl/xZ4Zzu4dCibygTC86"
+   },
+   {
+    "a": "Teresa L.",
+    "e": 4,
+    "f": "Hace 4 años",
+    "t": "Un salón amplio,con todas las medidas de seguridad y muy buena atención.Arturo un gran profesional de la belleza!!",
+    "u": "https://maps.app.goo.gl/8AMKE1ewDYDbsXkW7"
+   },
+   {
+    "a": "Edith L.",
+    "e": 4,
+    "f": "Hace 7 años",
+    "t": "Mucha higiene. Buena atención. Buenos trabajos de belleza.…",
+    "u": "https://maps.app.goo.gl/V3Dx8VRwSKj25GXJA"
+   },
+   {
+    "a": "Monica C.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Buena atención...lindo Arturo, Irma la colorista también, geniales.",
+    "u": "https://maps.app.goo.gl/BpGwkA65pJprVm5a9"
+   },
+   {
+    "a": "Silvana",
+    "e": 5,
+    "f": "Hace 3 años",
+    "t": "Me encantó el corte que me hizo Arturo 🥰 buena relación precio - calidad…",
+    "u": "https://maps.app.goo.gl/Ny6vEySht1Ww61xaA"
+   },
+   {
+    "a": "Esther U.",
+    "e": 5,
+    "f": "Hace 8 años",
+    "t": "Me siento muy cómoda, me atiende el mismo Arturo y me gusta su atención.",
+    "u": "https://maps.app.goo.gl/ziQVeU8bhcM1hvzQ7"
+   },
+   {
+    "a": "Gina G.",
+    "e": 5,
+    "f": "Hace 7 años",
+    "t": "Arturito, mi gran estilista y amigo, como siempre super satisfecha de su trabajo. 100% recomendado",
+    "u": "https://maps.app.goo.gl/9NMb8aL9HPusHErn8"
+   },
+   {
+    "a": "Luis S.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Excelente atención!! Precios cómodos y un lugar acogedor!!",
+    "u": "https://maps.app.goo.gl/jtnwA7YjRS8ZakZJ6"
+   },
+   {
+    "a": "Alberto U.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Excelente servicio y una muy buena atención.",
+    "u": "https://maps.app.goo.gl/iK4TH47AbnPARFSs9"
+   },
+   {
+    "a": "Doris J.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Muy buena atención, como siempre.",
+    "u": "https://maps.app.goo.gl/kW7MJbSCRnroddnZ6"
+   }
+  ]
+ },
+ "vanle": {
+  "horario": {
+   "lun": [
+    "09:00",
+    "21:00"
+   ],
+   "mar": [
+    "09:00",
+    "21:00"
+   ],
+   "mie": [
+    "09:00",
+    "21:00"
+   ],
+   "jue": [
+    "09:00",
+    "21:00"
+   ],
+   "vie": [
+    "09:00",
+    "21:00"
+   ],
+   "sab": [
+    "09:00",
+    "21:00"
+   ],
+   "dom": [
+    "09:00",
+    "21:00"
+   ]
   },
-  "vanle": {
-    "horario": { "lun": ["09:00", "21:00"], "mar": ["09:00", "21:00"], "mie": ["09:00", "21:00"], "jue": ["09:00", "21:00"], "vie": ["09:00", "21:00"], "sab": ["09:00", "21:00"], "dom": ["09:00", "21:00"] },
-    "resenas": [
-      { "a": "yilian", "e": 5, "f": "hace 3 meses", "t": "Excelente servicio en la sede de San Miguel, mi favorita! Gracias, Lesly Vanleria, por dejarme siempre bella como las estrellas. Tu atención y profesionalismo hacen que cada visita sea una gran experiencia…" },
-      { "a": "Mariangelica", "e": 5, "f": "hace 3 meses", "t": "Fui atendida por Marisol Araujo y fue super excelente… la recomiendo 1000% muchas gracias" },
-      { "a": "Jiré", "e": 4, "f": "hace 6 meses", "t": "Me gustó mi corte, me hice algo simple como un tratamiento de botox de oro y un corte y cepillado (en total 80 so). Me gustó mucho…" }
-    ]
+  "resenas": [
+   {
+    "a": "Yilian P.",
+    "e": 5,
+    "f": "Hace 3 meses",
+    "t": "Excelente servicio en la sede de San Miguel, mi favorita! ✨ Gracias, Lesly Vanleria, por dejarme siempre bella como las estrellas. 🌟 Tu atención y profesionalismo hacen que cada visita sea una gran…",
+    "u": "https://maps.app.goo.gl/DXTUwqiXgRLj9ofN9"
+   },
+   {
+    "a": "Mariangelica R.",
+    "e": 5,
+    "f": "Hace 3 meses",
+    "t": "Fui atendida por Marisol Araujo y fue super excelente… la recomiendo 1000% muchas gracias",
+    "u": "https://maps.app.goo.gl/BFDEQkb7z1jXDYBL9"
+   },
+   {
+    "a": "Jiré R.",
+    "e": 4,
+    "f": "Hace 6 meses",
+    "t": "Me gustó mi corte, me hice algo simple como un tratamiento de botox de oro y un corte y cepillado (en total 80 so). Me gustó mucho, aunque de lo del tratamiento si no dura mucho, si me explicaron…",
+    "u": "https://maps.app.goo.gl/98UvNLZSha5UYQkn6"
+   },
+   {
+    "a": "Jhoa",
+    "e": 5,
+    "f": "Hace 5 meses",
+    "t": "Un salón servicial, limpio y ordenado. Donde te atienden desde el minuto 1. La Srta Vanessa muy atenta y con mucha paciencia me explico todo los detalles para recuperar el brillo y el cuerpo de mi…",
+    "u": "https://maps.app.goo.gl/M2vdV41KWFyTuEZc7"
+   },
+   {
+    "a": "Patricia H.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "Los recomiendo para los tratamientos de alisado, te escuchan y evalúan lo más indicado para uno. Estoy muy contenta con los resultados.. No me maltraron el cabello y me sentí bien atendida. Sin duda…",
+    "u": "https://maps.app.goo.gl/UhoAJ3UZKXu5nZsZ9"
+   },
+   {
+    "a": "Silvana M.",
+    "e": 5,
+    "f": "Hace 3 meses",
+    "t": "Vanlé Salón ya conoce mi cabello mejor que yo. 😂❤️ Siempre lo dejan espectacular.…",
+    "u": "https://maps.app.goo.gl/z3HANDBEyTfN981T7"
+   },
+   {
+    "a": "Claudia R.",
+    "e": 5,
+    "f": "Hace 6 meses",
+    "t": "Excelente servicio! La atención es súper amable y los resultados de mi cabello son increíbles me encanta. Todas son súper profesionales, a mi me atiende siempre Vannesa estoy muy feliz con su…",
+    "u": "https://maps.app.goo.gl/Xgk13VJfxD5ippPB6"
+   },
+   {
+    "a": "Alessandra R.",
+    "e": 5,
+    "f": "Hace 6 meses",
+    "t": "Me atendió la Srta. Marisol Araujo, muy amable y profesional. Me brindó varios consejos útiles para mejorar el cuidado de mi cabello, lo cual valoro mucho. Sin duda regresaré y los recomiendo…",
+    "u": "https://maps.app.goo.gl/oh9DMS5CH1KfsJ849"
+   },
+   {
+    "a": "Meryane",
+    "e": 4,
+    "f": "Hace 3 meses",
+    "t": "Me gustó mucho la atención, la señorita tiene mucha paciencia y te explica todo muy bien y los precios son accesibles. Me sentí muy bien, sin duda volvería a atenderme aquí.",
+    "u": "https://maps.app.goo.gl/FZueX5nU68wuEMedA"
+   },
+   {
+    "a": "Erika S.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Excelente atención y el procedimiento que le dieron a mi cabello fue espectacular, quedó super lindo. Gracias ☺️",
+    "u": "https://maps.app.goo.gl/P2kyjdKPag59eUZ39"
+   },
+   {
+    "a": "Katty S.",
+    "e": 5,
+    "f": "Hace 3 meses",
+    "t": "Excelente servicio y sobre todo las recomendaciones. Fui atendida por Leslie. Gracias!",
+    "u": "https://maps.app.goo.gl/F7VrVSJyM9LdLuQb8"
+   },
+   {
+    "a": "Gianella L.",
+    "e": 4,
+    "f": "Hace 6 meses",
+    "t": "Responden a tus dudas y tienen trato cordial",
+    "u": "https://maps.app.goo.gl/kuTHNRZV6istvp6RA"
+   },
+   {
+    "a": "Bianca M.",
+    "e": 5,
+    "f": "Hace 3 meses",
+    "t": "Muy buen servicio, te cuidan mucho tu cabello y te dan todas las facilidades",
+    "u": "https://maps.app.goo.gl/xdU8bAqT124wRZcGA"
+   },
+   {
+    "a": "Luz C.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Excelente atención de Fabiana Regresaré pronto para un tratamiento de mi cabello Sigan así!!",
+    "u": "https://maps.app.goo.gl/iHB2skfFuxMgrgxr9"
+   },
+   {
+    "a": "Memita B.",
+    "e": 5,
+    "f": "Hace 3 meses",
+    "t": "Excelente atención! Muchísimas gracias Yajaira por tu paciencia y profesionalismo",
+    "u": "https://maps.app.goo.gl/mdgfkr1iUKwaZEtg7"
+   },
+   {
+    "a": "Mercedes L.",
+    "e": 5,
+    "f": "Hace 3 meses",
+    "t": "Hoy fui atendida muy bien con mucho respeto y total seriedad en Vanle Salón sede de San miguel por la señorita Marisol Araujo, quien.me realizó un laceado brasileño, quede satisfecha y lo recomiendo.",
+    "u": "https://maps.app.goo.gl/zRtMeS4zWCaaSyQJ9"
+   },
+   {
+    "a": "Jocelyne O.",
+    "e": 5,
+    "f": "Hace 2 meses",
+    "t": "Me pareció muy bueno , la atención y la variedad de servicios y productos",
+    "u": "https://maps.app.goo.gl/MXWuC7th6b6RhSSF8"
+   },
+   {
+    "a": "Rafael P.",
+    "e": 5,
+    "f": "Hace 8 meses",
+    "t": "Un excelente servicio ninguna queja la Srita q atendió a mi esposa está completamente capacitada 100% recomendados",
+    "u": "https://maps.app.goo.gl/xaB4rFNAKryZKvbG7"
+   },
+   {
+    "a": "Angeela A.",
+    "e": 5,
+    "f": "Hace 3 meses",
+    "t": "Me encantó el servicio, sobre todo la atención de la señorita Emy de la sede San Miguel, quedé encantada con el resultado del servicio de balayage.",
+    "u": "https://maps.app.goo.gl/y8Xpt41184VkNoSd7"
+   },
+   {
+    "a": "Jessica C.",
+    "e": 5,
+    "f": "Hace 2 meses",
+    "t": "Buen servicio y personal amable. Me encantó!",
+    "u": "https://maps.app.goo.gl/fBpwuWvLrzBrydfD9"
+   },
+   {
+    "a": "Ceci M.",
+    "e": 5,
+    "f": "Hace 5 meses",
+    "t": "Feliz con el cambio de look, la atención del Salón, el ambiente y sobre todo de Marisol Araujo quien me sugiero y atendió con profesiobalisno. Éxitos a Vanlé 💫…",
+    "u": "https://maps.app.goo.gl/VDy3gyxT8nucrEM26"
+   }
+  ]
+ },
+ "emmanuel": {
+  "horario": {
+   "lun": [
+    "10:00",
+    "21:00"
+   ],
+   "mar": [
+    "10:00",
+    "21:00"
+   ],
+   "mie": [
+    "10:00",
+    "21:00"
+   ],
+   "jue": [
+    "10:00",
+    "21:00"
+   ],
+   "vie": [
+    "10:00",
+    "21:00"
+   ],
+   "sab": [
+    "10:00",
+    "21:30"
+   ],
+   "dom": [
+    "10:30",
+    "19:00"
+   ]
   },
-  "emmanuel": {
-    "horario": { "lun": ["10:00", "21:00"], "mar": ["10:00", "21:00"], "mie": ["10:00", "21:00"], "jue": ["10:00", "21:00"], "vie": ["10:00", "21:00"], "sab": ["10:00", "21:30"], "dom": ["10:30", "19:00"] },
-    "resenas": [
-      { "a": "Diocelis", "e": 5, "f": "hace 4 meses", "t": "Increíble servicio! Fui por primera vez y me hicieron un trabajo espectacular. El barbero fue muy profesional, detallista y me dio excelentes consejos para cuidar el cabello de mi hijo…" },
-      { "a": "Juan", "e": 5, "f": "hace 8 meses", "t": "Llevé a mi sobrino a cortarse el cabello y también aproveché para cortarme yo. Ambos quedamos conformes con el resultado. El barbero fue muy profesional y amigable…" },
-      { "a": "Steven", "e": 5, "f": "hace un año", "t": "Ya e ido en 3 ocasiones y el ambiente es excelente, Escuchas musica te hacen el tratamiento completo y los precios están acorde al servicio que ofrecen, 5 estrellas de mi parte…" }
-    ]
+  "resenas": [
+   {
+    "a": "Diocelis L.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Increíble servicio! Fui por primera vez y me hicieron un trabajo espectacular. El barbero fue muy profesional, detallista y me dio excelentes consejos para cuidar el cabello de mi hijo El ambiente del local es muy…",
+    "u": "https://maps.app.goo.gl/FjcyD128zrcr1Z1e9"
+   },
+   {
+    "a": "Juan C.",
+    "e": 5,
+    "f": "Hace 8 meses",
+    "t": "Llevé a mi sobrino a cortarse el cabello y también aproveché para cortarme yo. Ambos quedamos conformes con el resultado. El barbero fue muy profesional y amigable, escuchó bien lo que queríamos y lo hizo tal cual.…",
+    "u": "https://maps.app.goo.gl/iWKXBw4uwDRrDC599"
+   },
+   {
+    "a": "Steven B.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Ya e ido en 3 ocasiones y el ambiente es excelente, Escuchas musica te hacen el tratamiento completo y los precios están acorde al servicio que ofrecen, 5 estrellas de mi parte ❤️‍🔥…",
+    "u": "https://maps.app.goo.gl/2vR1KcEksVsZCzsMA"
+   },
+   {
+    "a": "Sebastian S.",
+    "e": 5,
+    "f": "Hace 5 meses",
+    "t": "Muy buen servicio, mucha paciencia para explicarte cada detalle del corte y recomendaciones de tu tipo de cabello",
+    "u": "https://maps.app.goo.gl/HekFMXH33eeX7f5t7"
+   },
+   {
+    "a": "Amc A.",
+    "e": 5,
+    "f": "Hace 8 meses",
+    "t": "Excelente servicio, me sentí a gusto, un excelente Barbero no solo 1 sino el equipo, me atendí en 2 Oportunidades y en ambas recibí el mismo trato, lo recomiendo.",
+    "u": "https://maps.app.goo.gl/iT7o9Rr1if8uND8p9"
+   },
+   {
+    "a": "Erick O.",
+    "e": 5,
+    "f": "Hace 3 meses",
+    "t": "Muy buena atención, súper amables. Salí súper relajado",
+    "u": "https://maps.app.goo.gl/5CkGF7oArgmuCrnx7"
+   },
+   {
+    "a": "Mary T.",
+    "e": 5,
+    "f": "Hace 2 años",
+    "t": "Corte realizado a sugerencia de mis hijos, ellos quedaron encantados, el barbero incluso dio sugerencia de acuerdo al tipo de rostro. Aquel día decidí que hagan el lavado después del corte. Costo S/. 25 soles",
+    "u": "https://maps.app.goo.gl/K8R6qtbZmG1J3tfG8"
+   },
+   {
+    "a": "Walter R.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Excelente barbería. Llevo cortándome el cabello aquí hace más de un año. Tienen un excelente servicio. Además del corte, me han hecho mascarillas, cuidado de las cejas, masaje capilar y barba. Todo muy profesional.",
+    "u": "https://maps.app.goo.gl/WYL1xh1UsffnZpc48"
+   },
+   {
+    "a": "Josh C.",
+    "e": 5,
+    "f": "Hace 11 meses",
+    "t": "Excelente barbero, muy profesional y detallista. Se nota que le gusta su trabajo y cuida cada corte al máximo. El ambiente es agradable y siempre salgo satisfecho. ¡Totalmente recomendado!",
+    "u": "https://maps.app.goo.gl/DXukJUtiXDHcwkFL9"
+   },
+   {
+    "a": "Ingrid A.",
+    "e": 5,
+    "f": "Hace 10 meses",
+    "t": "Muy buen servicio el corte de mi hijo en otros lugares no quedaba como él quería pero aquí mi hijo le explicó y lo dejo tal cual como él deseaba un éxito. Y la zona bien ubicado lugar muy tranquilo y bonito. Recomendado",
+    "u": "https://maps.app.goo.gl/ie3uckSdmo3s25qw6"
+   },
+   {
+    "a": "Mayra C.",
+    "e": 5,
+    "f": "Hace 10 meses",
+    "t": "El ambiente muy acogedor, buena música con volumen moderado. El barbero muy profesional, le hizo un buen corte a mi hijo. Quedamos muy satisfechos con todo el servicio.",
+    "u": "https://maps.app.goo.gl/jFK32uRkpTnQyd179"
+   },
+   {
+    "a": "Leonardo A.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Desde sus inicios yendo. Rapidez si se necesita y el mejor equipo para quedar con el mejor estilo.",
+    "u": "https://maps.app.goo.gl/DgZ7khepDQhqoLB59"
+   },
+   {
+    "a": "Karen J.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Excelente servicio !! Lleve a mi hijo y quedé satisfecha con la atención y lo profesional que son .. muy atentos y sobre todo el local súper limpio y acogedor ..",
+    "u": "https://maps.app.goo.gl/xCQWa2r42spqU5867"
+   },
+   {
+    "a": "Jair C.",
+    "e": 5,
+    "f": "Hace 10 meses",
+    "t": "Buena atención desde el primer momento, super cordial el muchacho que me atendió, y me quedo super bien la ayuda con el corte y peinado que quería, recomendado al 100",
+    "u": "https://maps.app.goo.gl/BuHuc9H1AnzBPPL78"
+   },
+   {
+    "a": "Rafael A.",
+    "e": 5,
+    "f": "Hace 10 meses",
+    "t": "Muy buen servicio desde la entrada hasta el final. Todo el personal fue atento y amable, y cada detalle estuvo muy bien cuidado.",
+    "u": "https://maps.app.goo.gl/7oepBFWrnjYciE998"
+   },
+   {
+    "a": "Gustavo A.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Una experiencia buena, trato espectacular desde tu llegaste el final de tu corte de lo mejor la atención, buena música y sobre todo la calidad del trabajo",
+    "u": "https://maps.app.goo.gl/wjvxs7qfZco73AANA"
+   },
+   {
+    "a": "Wiston A.",
+    "e": 5,
+    "f": "Hace 8 meses",
+    "t": "Excelente servicio y buena presencia calides en la barbería los recomiendo",
+    "u": "https://maps.app.goo.gl/BtZfNsSZsz3PqBJr6"
+   },
+   {
+    "a": "Gabriel A.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Fui a realizarme un corte, y me relaje bastante es increíble la manera en la que te atienden siempre pendiente a lo que necesitas asesoría sobre el corte que te vas a realizar consejos para cuidarte el cabello y allí…",
+    "u": "https://maps.app.goo.gl/vq4EJVMpJHxcyHzy8"
+   },
+   {
+    "a": "Lisbeth R.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Desde la primera vez que lleve a mi hijo a cortarle el cabello con Emmanuel nunca eh dejado de llevarlo con él. Apesar que es un poco complicado cortarle el cabello a un niño con TEA él ah sido siempre tan empático y…",
+    "u": "https://maps.app.goo.gl/7GcQiFabudKD1Hk46"
+   },
+   {
+    "a": "Elviannys C.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Es un buen lugar ,atienden bien alas personas lleve a mi hijo y me encanto emanuel es un excelente en sus corte de cabello se lo recomiendo con los ojos cerrados el serviso es agradable y recomendable felicidades chico…",
+    "u": "https://maps.app.goo.gl/SG17uBLAK4kMuSW96"
+   },
+   {
+    "a": "Daniela M.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Lleve a mi hijo y me atendieron muy bien , la barberia en muy limpia y acogedora y no solo eso sino que el resultado fue exactamente lo que queria para mi pequeño…",
+    "u": "https://maps.app.goo.gl/qPhwKwCtnAmFrzeF7"
+   },
+   {
+    "a": "Fran B.",
+    "e": 5,
+    "f": "Hace 10 meses",
+    "t": "Realizan un buen trabajo y además cuida tu imagen y cada detalle cuando te corta el cabello spre consejando a los clientes .",
+    "u": "https://maps.app.goo.gl/UGWToVoTejSSKxBLA"
+   }
+  ]
+ },
+ "serbio": {
+  "horario": {
+   "lun": [
+    "10:00",
+    "21:00"
+   ],
+   "mar": [
+    "10:00",
+    "21:00"
+   ],
+   "mie": [
+    "10:00",
+    "21:00"
+   ],
+   "jue": [
+    "10:00",
+    "21:00"
+   ],
+   "vie": [
+    "10:00",
+    "21:00"
+   ],
+   "sab": [
+    "10:00",
+    "21:00"
+   ],
+   "dom": [
+    "10:00",
+    "21:00"
+   ]
   },
-  "serbio": {
-    "horario": { "lun": ["10:00", "21:00"], "mar": ["10:00", "21:00"], "mie": ["10:00", "21:00"], "jue": ["10:00", "21:00"], "vie": ["10:00", "21:00"], "sab": ["10:00", "21:00"], "dom": ["10:00", "21:00"] },
-    "resenas": [
-      { "a": "Daniel", "e": 5, "f": "hace 4 meses", "t": "Primera vez que vengo y la verdad excelente lugar sobre todo el barbero que me cortó, me asesoro ala perfección y el aire acondicionado perfecto un lugar fresco y con buena música." },
-      { "a": "Sharon", "e": 5, "f": "hace 4 meses", "t": "Excelente servicio, vine por primera vez con mi hijo pequeño, ahora vienen mis otros hijos y mi esposo, súper recomendado muy profesionales…" },
-      { "a": "Jorge", "e": 5, "f": "hace 4 meses", "t": "Excelente atención. Buen ambiente y trabajos de alta calidad. Muy recomendado" }
-    ]
-  }
+  "resenas": [
+   {
+    "a": "Daniel C.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Primera vez que vengo y la verdad excelente lugar sobre todo el barbero que me cortó, me asesoro ala perfección y el aire acondicionado perfecto un lugar fresco y con buena música .",
+    "u": "https://maps.app.goo.gl/7xGzc7wktjjSZqsR9"
+   },
+   {
+    "a": "Sharon R.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Excelente servicio, vine por primera vez con mi hijo pequeño, ahora vienen mis otros hijos y mi esposo, súper recomendado muy profesionales. Sigan así detallistas como siempre. 😊…",
+    "u": "https://maps.app.goo.gl/uMQnTvVmnHLqvW738"
+   },
+   {
+    "a": "Jorge A.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Excelente atención. Buen ambiente y trabajos de alta calidad. Muy recomendado",
+    "u": "https://maps.app.goo.gl/YHV4e75z2pERFgYj6"
+   },
+   {
+    "a": "Walter C.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "EXCELENTE SERVICIO TOP !!! Siempre puntuales y profesionales las citas! Siempre limpio y el aire acondicionado siempre al cien todo A1 la barber mas top de la zona de lejosss !!! Tiene hasta play…",
+    "u": "https://maps.app.goo.gl/Niqgyz6ZrbCiXNXv8"
+   },
+   {
+    "a": "Luis P.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "La mejor barbería a la que e podido asistir totalmente profesionales en asesoría de imagen, los chicos muy confiables y te ofrecen bebidas de cortesía. Si lo que buscas es pasar un momento agradable…",
+    "u": "https://maps.app.goo.gl/kLnMm9s2fNL9eQfP9"
+   },
+   {
+    "a": "Yormarys A.",
+    "e": 5,
+    "f": "Hace 5 meses",
+    "t": "Excelente servicio llevé a mi hijo y todo espectacular tienen mucha paciencia para los peques 👏…",
+    "u": "https://maps.app.goo.gl/32WXWbG9BJ3ev32K6"
+   },
+   {
+    "a": "Khalef C.",
+    "e": 5,
+    "f": "Hace 3 meses",
+    "t": "Excelente ambiente, el espacio físico muy mejorado. La atención bastante buena, el barbero captó el corte que quería exactamente. La novedad de su app, es otra cosa 🔥🔥…",
+    "u": "https://maps.app.goo.gl/xZkuJ8b3NDoifSAD7"
+   },
+   {
+    "a": "Diego C.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Excelente servicio, me cambiaron la imagen al 100% buen trato super amables. Fui con una idea de corte y me sugirieron un estilo más a mi tipo de cara y quedo 10/ 10.",
+    "u": "https://maps.app.goo.gl/n9ii45bBGmWtE6t46"
+   },
+   {
+    "a": "Dylan W.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "excelente servicio ! desde que entras hasta que sales por la puerta. Muy atentos y saben lo que hacen 🔥🔥…",
+    "u": "https://maps.app.goo.gl/b5bNK4N32wL4DDeEA"
+   },
+   {
+    "a": "Andrea A.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Buena atención, buen corte y paciencia para darle servicio a niños!",
+    "u": "https://maps.app.goo.gl/8UfqqR8yKtHWrps78"
+   },
+   {
+    "a": "Kevin O.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Excelente asesoramiento, estupendo recorte y muy buen ambiente del local 10/10",
+    "u": "https://maps.app.goo.gl/RD6oNTh35B2BAg7W8"
+   },
+   {
+    "a": "Marvid L.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Excelente lugar y el servicio que prestan es A1.! Te tratan como artista.! 😎👽…",
+    "u": "https://maps.app.goo.gl/JiQY5axYnnmLNT6V8"
+   },
+   {
+    "a": "Jairo G.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Muy buena atención ☝🏻 calidad de corte, te cambia la vida. Lo recomiendo!…",
+    "u": "https://maps.app.goo.gl/aGYrokMgb4FVAbPb9"
+   },
+   {
+    "a": "Sandoval S.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Se lo recomiendo, buen servicio, excelentes cortes profesionales, A1",
+    "u": "https://maps.app.goo.gl/gt2zx6GUmS1CnNxKA"
+   },
+   {
+    "a": "Beto P.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Excelente , buen trato y muy prgesionales. Recomendadisimo",
+    "u": "https://maps.app.goo.gl/PDenZusUWr2ScZm19"
+   },
+   {
+    "a": "Dervim C.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Excelente atención, los duros de San Miguel. Pagas por lo que saben 💪🏽…",
+    "u": "https://maps.app.goo.gl/pBpaGyaguPKNMNaD9"
+   },
+   {
+    "a": "Pa K.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "La calidad que estaba buscando en san Miguel, bastante limpio",
+    "u": "https://maps.app.goo.gl/bq6W2TCHL2Si4gYR6"
+   },
+   {
+    "a": "Roberto E.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Excelente servicio , buena música y cortes elegantes.",
+    "u": "https://maps.app.goo.gl/q627LEXB3wAzR68t8"
+   },
+   {
+    "a": "Luis L.",
+    "e": 5,
+    "f": "Hace 3 meses",
+    "t": "Me encantó el corte y la atención espectacular :)",
+    "u": "https://maps.app.goo.gl/N5aDkMiy1R7UDGaZA"
+   },
+   {
+    "a": "Jp P.",
+    "e": 5,
+    "f": "Hace 3 años",
+    "t": "Buena atención, encantado con el servicio y profesionalismo... Vuelvo después de tiempo..recomendado",
+    "u": "https://maps.app.goo.gl/VM6CQQUJhdQTFEj28"
+   },
+   {
+    "a": "Jeanpierre D.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "corte elegante y muy buena atención",
+    "u": "https://maps.app.goo.gl/6m4Q1d4F6Vac3qGi9"
+   }
+  ]
+ }
 }

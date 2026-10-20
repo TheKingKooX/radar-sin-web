@@ -57,23 +57,59 @@
   });
 })();
 
-/* Reseñas: llegan una a una, como mensajes nuevos (indicador de escritura y aviso "Nueva reseña"). */
+/* Reseñas en bucle. Tocar una abre un panel que ofrece ir a la reseña exacta en Google. */
 (function () {
-  var feed = document.querySelector(".feed");
-  if (!feed) return;
-  var revs = [].slice.call(feed.querySelectorAll(".rev"));
-  if (!revs.length || !("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  revs.forEach(function (r) { r.classList.add("pend"); });
-  function typing() { var t = document.createElement("li"); t.className = "typing"; t.setAttribute("aria-hidden", "true"); t.innerHTML = '<span class="av2">·</span><span class="dots"><i></i><i></i><i></i></span>'; feed.appendChild(t); return t; }
-  function siguiente(i) {
-    if (i >= revs.length) return;
-    var t = typing();
-    setTimeout(function () {
-      t.remove();
-      var r = revs[i]; r.classList.remove("pend"); r.classList.add("entra", "nueva");
-      setTimeout(function () { r.classList.remove("nueva"); }, 3200);
-      setTimeout(function () { siguiente(i + 1); }, 900);
-    }, 1100);
+  var feed = document.querySelector(".feed"), data = window.RESENAS;
+  if (!feed || !data || !data.length) return;
+  var VIS = Math.min(3, data.length), sig = VIS, pausado = false, enModal = false, encima = false, visible = true, timer = null, ultimo = null;
+  var lento = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  var est = function (n) { return "★".repeat(n) + "☆".repeat(5 - n); };
+  function tarjeta(k) {
+    var r = data[k % data.length], li = document.createElement("li");
+    li.className = "rev entra";
+    li.innerHTML = '<span class="av2" aria-hidden="true">' + esc(r.a.charAt(0).toUpperCase()) + '</span><button type="button" class="bub" data-rv="' + (k % data.length) + '" aria-haspopup="dialog"><span class="rh"><b>' + esc(r.a) + '</b><span class="est" aria-label="' + r.e + ' de 5 estrellas">' + est(r.e) + '</span><span class="fe">' + esc(r.f) + '</span></span><span class="rtxt">' + esc(r.t) + '</span><span class="ver">Ver en Google ↗</span></button>';
+    return li;
   }
-  new IntersectionObserver(function (es, io) { if (es[0].isIntersecting) { io.disconnect(); siguiente(0); } }, { threshold: .3 }).observe(feed);
+  feed.innerHTML = "";
+  for (var k = 0; k < VIS; k++) { var t0 = tarjeta(k); t0.classList.remove("entra"); feed.appendChild(t0); }
+
+  function avanzar() {
+    if (pausado || enModal || encima || !visible || document.hidden || data.length <= VIS) return;
+    var ind = document.createElement("li"); ind.className = "typing"; ind.setAttribute("aria-hidden", "true");
+    ind.innerHTML = '<span class="av2">·</span><span class="dots"><i></i><i></i><i></i></span>'; feed.appendChild(ind);
+    setTimeout(function () {
+      ind.remove(); var primero = feed.firstElementChild; feed.appendChild(tarjeta(sig++));
+      if (primero) { if (lento) primero.remove(); else { primero.classList.add("sale"); setTimeout(function () { primero.remove(); }, 520); } }
+    }, lento ? 200 : 1000);
+  }
+  timer = setInterval(avanzar, lento ? 8000 : 5600);
+  if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(feed);
+  feed.addEventListener("mouseover", function () { encima = true; });
+  feed.addEventListener("mouseout", function () { encima = false; });
+  feed.addEventListener("focusin", function () { encima = true; });
+  feed.addEventListener("focusout", function () { encima = false; });
+  var ctl = document.querySelector(".feed-ctl");
+  if (ctl) ctl.addEventListener("click", function () { pausado = !pausado; ctl.setAttribute("aria-pressed", pausado ? "true" : "false"); ctl.textContent = pausado ? "Reanudar" : "Pausar"; });
+
+  var modal = document.createElement("div");
+  modal.className = "rv-modal"; modal.hidden = true; modal.setAttribute("role", "dialog"); modal.setAttribute("aria-modal", "true"); modal.setAttribute("aria-labelledby", "rvM-t");
+  modal.innerHTML = '<div class="rv-card"><p class="rv-k">Reseña de Google</p><h3 id="rvM-t">¿Quieres ver esta reseña en Google?</h3><blockquote class="rv-q"></blockquote><p class="rv-by"></p><p class="rv-n">Te llevaremos a la reseña original en Google Maps. Se abre en una pestaña nueva.</p><div class="rv-act"><a class="btn rv-go" target="_blank" rel="noopener">Aceptar e ir a la reseña</a><button type="button" class="btn sec rv-no">Cancelar</button></div></div>';
+  document.body.appendChild(modal);
+  var go = modal.querySelector(".rv-go"), no = modal.querySelector(".rv-no");
+  function abrir(k, btn) {
+    var r = data[k]; ultimo = btn; modal.querySelector(".rv-q").textContent = r.t;
+    modal.querySelector(".rv-by").textContent = "— " + r.a + " · " + est(r.e) + " · " + r.f;
+    go.href = r.u; modal.hidden = false; enModal = true; document.body.style.overflow = "hidden"; go.focus();
+  }
+  function cerrar() { modal.hidden = true; enModal = false; document.body.style.overflow = ""; if (ultimo && document.contains(ultimo)) ultimo.focus(); }
+  feed.addEventListener("click", function (e) { var b = e.target.closest("[data-rv]"); if (b) abrir(+b.getAttribute("data-rv"), b); });
+  go.addEventListener("click", function () { setTimeout(cerrar, 150); });
+  no.addEventListener("click", cerrar);
+  modal.addEventListener("click", function (e) { if (e.target === modal) cerrar(); });
+  addEventListener("keydown", function (e) {
+    if (modal.hidden) return;
+    if (e.key === "Escape") cerrar();
+    if (e.key === "Tab") { var a = [go, no], j = a.indexOf(document.activeElement); e.preventDefault(); a[(j + (e.shiftKey ? -1 : 1) + a.length) % a.length].focus(); }
+  });
 })();

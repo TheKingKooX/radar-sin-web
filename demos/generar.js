@@ -79,7 +79,8 @@ function pagina(d, m) {
   const c = CONT[d.id] || {};
   const opciones = (d.sv || ["Consulta"]).map((s) => `<option>${esc(s)}</option>`).join("");
   const estrellas = (n) => "★".repeat(n) + "☆".repeat(5 - n);
-  const resenas = (c.resenas || []).map((r) => `<li class="rev"><span class="av2" aria-hidden="true">${esc(r.a.charAt(0).toUpperCase())}</span><div class="bub"><div class="rh"><b>${esc(r.a)}</b><span class="est" aria-label="${r.e} de 5 estrellas">${estrellas(r.e)}</span><span class="fe">${esc(r.f)}</span><span class="nuevo">Nueva reseña</span></div><p>${esc(r.t)}</p></div></li>`).join("");
+  const resenas = (c.resenas || []).slice(0, 3).map((r, i) => `<li class="rev"><span class="av2" aria-hidden="true">${esc(r.a.charAt(0).toUpperCase())}</span><button type="button" class="bub" data-rv="${i}" aria-haspopup="dialog"><span class="rh"><b>${esc(r.a)}</b><span class="est" aria-label="${r.e} de 5 estrellas">${estrellas(r.e)}</span><span class="fe">${esc(r.f)}</span></span><span class="rtxt">${esc(r.t)}</span><span class="ver">Ver en Google ↗</span></button></li>`).join("");
+  const resenasJson = JSON.stringify((c.resenas || []).map((r) => ({ a: r.a, e: r.e, f: r.f, t: r.t, u: r.u }))).replace(/</g, "\\u003c");
   const cita = JSON.stringify({ wa: whatsapp(d.t), n: d.n, h: c.horario || null, ant: 2 }).replace(/</g, "\\u003c");
   const tipo = d.k === "Salón" ? "un salón" : d.k === "Spa" ? "un spa" : "una barbería";
   const sobre = `${d.n} es ${tipo} en ${d.z}, con ${d.r.toFixed(1)} de puntaje y ${d.c} reseñas en Google. ` +
@@ -163,7 +164,7 @@ ${servicios}
 <section id="valoracion"><div class="in-w">
   <span class="lbl rv">Opiniones en Google</span>
   <div class="val rv"><span class="n">${d.r.toFixed(1)} ★</span><p>${d.c} reseñas en Google Maps</p></div>
-  ${resenas ? `<div class="opin"><p class="opin-h"><span class="vivo" aria-hidden="true"></span>Lo que dicen en Google Maps</p><ul class="feed">${resenas}</ul><a class="mas" href="${esc(d.m)}" target="_blank" rel="noopener">Ver todas las reseñas en Google Maps →</a></div>` : ""}
+  ${resenas ? `<div class="opin"><p class="opin-h"><span class="vivo" aria-hidden="true"></span>Lo que dicen en Google Maps<button type="button" class="feed-ctl" aria-pressed="false">Pausar</button></p><ul class="feed">${resenas}</ul><a class="mas" href="${esc(d.m)}" target="_blank" rel="noopener">Ver todas las reseñas en Google Maps →</a></div>` : ""}
 </div></section>
 ${sedes}
 <section id="faq"><div class="in-w">
@@ -183,7 +184,7 @@ ${sedes}
 </div></section>
 </main>
 <footer><span>${esc(d.n)}</span><span>${esc(d.a)}, ${esc(d.z)}</span></footer>
-<script>window.CITA = ${cita};</script>
+<script>window.CITA = ${cita}; window.RESENAS = ${resenasJson};</script>
 <script src="../_comun/base.js"></script>
 <script>${m.efecto.js}</script>
 </body>

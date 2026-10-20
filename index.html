@@ -164,6 +164,25 @@ a { color: var(--accent-text); text-underline-offset: 3px; }
 h1 span { color: transparent; -webkit-text-stroke: 1.5px var(--accent); }
 header { gap: 14px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
 
+/* Selección para crear una ruta */
+.head { padding-right: 96px; }
+.pick { position: absolute; right: 50px; top: 25px; z-index: 2; width: 30px; height: 30px; display: grid; place-items: center; cursor: pointer; }
+.pick input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.pick span { width: 22px; height: 22px; border-radius: 7px; border: 2px solid var(--muted); display: grid; place-items: center; transition: background .25s, border-color .25s, transform .25s; }
+.pick span::after { content: ""; width: 6px; height: 11px; border: solid #fff; border-width: 0 2.5px 2.5px 0; transform: rotate(45deg) scale(0); margin-top: -2px; transition: transform .25s; }
+.pick input:checked + span { background: var(--accent); border-color: var(--accent); }
+.pick input:checked + span::after { transform: rotate(45deg) scale(1); }
+.pick input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 3px; }
+.pick:hover span { transform: scale(1.1); }
+.routebar { position: fixed; left: 50%; bottom: 16px; z-index: 50; width: min(760px, calc(100vw - 24px)); transform: translateX(-50%); display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 12px 16px; border-radius: 18px; background: var(--surface); border: 1px solid var(--accent); box-shadow: 0 18px 40px -16px rgba(0, 0, 0, .6); }
+.rb-n { font-weight: 600; margin-right: auto; }
+.rb-opt { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); cursor: pointer; }
+.rb-opt input { accent-color: var(--accent); width: 18px; height: 18px; }
+.btn-go { background: var(--accent); color: #fff !important; border-color: var(--accent); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; }
+.btn-go[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+.rb-msg { flex-basis: 100%; font-size: 13px; color: #e5645c; margin: 0; }
+.rb-msg:empty { display: none; }
+body { padding-bottom: 92px; }
 /* Tarjeta de ejemplo terminado (Valea) */
 .showcase { display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center; padding: 18px 22px; border-radius: 18px; text-decoration: none; color: #eaf3f1; border: 1px solid rgba(70, 194, 174, .5); background: linear-gradient(120deg, #072a2b, #0b3b3c 60%, #12595b); box-shadow: 0 20px 40px -28px rgba(7, 42, 43, .9); }
 .sc-ic { width: 46px; height: 46px; color: #46c2ae; }
@@ -247,6 +266,7 @@ header { gap: 14px; padding-bottom: 22px; border-bottom: 1px solid var(--line); 
         <option value="rating">Mejor puntaje</option>
         <option value="sucursales">Más sucursales</option>
       </select>
+      <button class="chip" type="button" id="selVis">Seleccionar visibles para la ruta</button>
     </div>
   </div>
 
@@ -256,6 +276,14 @@ header { gap: 14px; padding-bottom: 22px; border-bottom: 1px solid var(--line); 
   <ul class="list" id="list"></ul>
 
   <p class="note">Estado de web según el campo de sitio web de Google Maps y los perfiles de cada negocio, revisado el 20 de octubre de 2026. Un negocio puede tener página sin haberla enlazado, conviene buscarlo en Google antes de contactarlo. Logos y servicios salen de sus perfiles públicos; lo que quitas se guarda solo en este navegador.</p>
+</div>
+
+<div class="routebar" id="routebar" hidden role="region" aria-label="Ruta en Google Maps">
+  <span class="rb-n" id="rbN" aria-live="polite"></span>
+  <label class="rb-opt"><input type="checkbox" id="rbOpt" checked> Ordenar para recorrer menos</label>
+  <button class="btn" type="button" id="rbClear">Limpiar</button>
+  <a class="btn btn-go" id="rbGo" href="#" target="_blank" rel="noopener">Crear ruta en Google Maps</a>
+  <p class="rb-msg" id="rbMsg" role="alert"></p>
 </div>
 
 <script>
@@ -285,6 +313,7 @@ var KEY = "barberias-quitadas";
 var filtro = "todas", zona = "todas", tipo = "todos", orden = "reviews", sel = null, quitadas = [], timer = null;
 
 var $ = function (id) { return document.getElementById(id); };
+var ruta = [], visibles = [], MAX_PARADAS = 10;   // Google Maps admite destino + 9 paradas intermedias
 var list = $("list"), toast = $("toast"), removed = $("removed");
 
 try { quitadas = JSON.parse(localStorage.getItem(KEY) || "[]") || []; } catch (e) { quitadas = []; }
@@ -318,6 +347,7 @@ function card(d) {
     '<button class="head" type="button" data-head aria-expanded="false" aria-controls="d-' + id + '">' +
       '<span class="av" aria-hidden="true">' + (d.lg ? '<img src="' + esc(d.lg) + '" alt="">' : esc(iniciales(d.n))) + '</span>' +
       '<span class="nm">' + esc(d.n) + '</span><span class="chev" aria-hidden="true"></span></button>' +
+    '<label class="pick" title="Añadir a la ruta"><input type="checkbox" data-pick="' + id + '"' + (ruta.indexOf(d.id) > -1 ? " checked" : "") + ' aria-label="Añadir ' + esc(d.n) + ' a la ruta"><span aria-hidden="true"></span></label>' +
     '<div class="det" id="d-' + id + '"><div class="det-in">' +
       '<div class="facts">' +
         fact("Puntaje", '<b class="big">' + d.r.toFixed(1) + ' ★</b> <span class="muted">' + d.c + ' reseñas</span><div class="bar"><i style="width:' + Math.min(100, Math.round(d.c / 250 * 100)) + '%"></i></div>') +
@@ -350,13 +380,45 @@ function alternar(c, e) {
   setTimeout(function () { c.scrollIntoView({ behavior: "smooth", block: "nearest" }); }, 180);
 }
 
+function dkm(a, b) {
+  var r = Math.PI / 180, dl = (b.la - a.la) * r, dn = (b.lo - a.lo) * r;
+  var x = Math.sin(dl / 2) * Math.sin(dl / 2) + Math.cos(a.la * r) * Math.cos(b.la * r) * Math.sin(dn / 2) * Math.sin(dn / 2);
+  return 12742 * Math.asin(Math.sqrt(x));
+}
+// ponytail: vecino más cercano desde la primera parada; no es el recorrido óptimo exacto, sirve bien con 10 paradas o menos.
+function ordenarRuta(pts) {
+  var resto = pts.slice(1), sal = [pts[0]];
+  while (resto.length) {
+    var u = sal[sal.length - 1], k = 0;
+    resto.forEach(function (p, i) { if (dkm(u, p) < dkm(u, resto[k])) k = i; });
+    sal.push(resto.splice(k, 1)[0]);
+  }
+  return sal;
+}
+function urlRuta() {
+  var pts = ruta.map(byId);
+  if ($("rbOpt").checked && pts.length > 2) pts = ordenarRuta(pts);
+  var c = function (p) { return p.la + "," + p.lo; }, dest = pts[pts.length - 1], via = pts.slice(0, -1).map(c).join("|");
+  return "https://www.google.com/maps/dir/?api=1&travelmode=driving&destination=" + c(dest) + (via ? "&waypoints=" + encodeURIComponent(via) : "");
+}
+function actualizarBarra() {
+  var bar = $("routebar"), go = $("rbGo"), n = ruta.length, demasiadas = n > MAX_PARADAS;
+  bar.hidden = n === 0;
+  $("rbN").textContent = n + (n === 1 ? " negocio seleccionado" : " negocios seleccionados");
+  $("rbMsg").textContent = demasiadas ? "Google Maps admite 10 paradas como máximo. Quita " + (n - MAX_PARADAS) + "." : "";
+  go.setAttribute("aria-disabled", n === 0 || demasiadas ? "true" : "false");
+  go.href = n && !demasiadas ? urlRuta() : "#";
+}
+
 function render() {
   var base = filtradas();
   var rows = base.filter(function (d) { return filtro === "todas" || (filtro === "reservas" ? d.pl === "Solo reservas" : filtro === "social" ? d.pl === "Solo red social" : d.s === filtro); });
   function ns(d) { return d.su ? d.su.length : 0; }
   rows.sort(function (x, y) { return orden === "rating" ? (y.r - x.r) || (y.c - x.c) : orden === "sucursales" ? (ns(y) - ns(x)) || (y.c - x.c) : (y.c - x.c); });
 
+  visibles = rows.map(function (d) { return d.id; });
   list.innerHTML = rows.length ? rows.map(card).join("") : '<li class="empty">No hay comercios con este filtro.</li>';
+  actualizarBarra();
 
 
   var q = quitadas.map(byId).filter(Boolean);
@@ -385,9 +447,20 @@ function chips(attr, setter) {
 chips("data-z", function (v) { zona = v; });
 chips("data-k", function (v) { tipo = v; });
 chips("data-f", function (v) { filtro = v; });
+list.addEventListener("change", function (e) {
+  var cb = e.target.closest("[data-pick]"); if (!cb) return;
+  var id = cb.getAttribute("data-pick"), i = ruta.indexOf(id);
+  if (cb.checked && i < 0) ruta.push(id); else if (!cb.checked && i > -1) ruta.splice(i, 1);
+  actualizarBarra();
+});
+$("selVis").addEventListener("click", function () { visibles.forEach(function (id) { if (ruta.indexOf(id) < 0) ruta.push(id); }); render(); });
+$("rbClear").addEventListener("click", function () { ruta = []; render(); });
+$("rbOpt").addEventListener("change", actualizarBarra);
+$("rbGo").addEventListener("click", function (e) { if (this.getAttribute("aria-disabled") === "true") e.preventDefault(); });
 $("orden").addEventListener("change", function (e) { orden = e.target.value; render(); });
 
 function quitar(id) {
+  ruta = ruta.filter(function (x) { return x !== id; });
   if (quitadas.indexOf(id) === -1) quitadas.push(id);
   guardar();
 }

@@ -22,3 +22,4 @@ Proyecto de prospección de Kleiber: encontrar negocios de belleza con muchas re
 - Identidad visual: campo `vi` ({c: colores hex, e: estilo, v: lema}) sacado del logo y del perfil público; sin `vi` la tarjeta lo indica.
 - Demos en `demos/`: se generan con `node demos/generar.js [id]` desde `datos.json` y `demos/marcas/<id>.js`; el campo `demo` de cada negocio muestra el botón "Ver demo" en su tarjeta.
 - Ejemplo terminado: `demos/valea/` (barbería y spa ficticia, con reservas, campaña, reseñas de ejemplo y fondos interactivos). Se enlaza con una tarjeta destacada en `index.html`; no forma parte de `DATA`. Imágenes de Wikimedia Commons con atribución en `demos/valea/creditos.html`.
+- Ruta en Google Maps: cada tarjeta tiene una casilla; la barra inferior arma `maps/dir/?api=1` con las coordenadas (`la`, `lo`) de los negocios elegidos (máximo 10 paradas) y puede ordenarlas por cercanía.

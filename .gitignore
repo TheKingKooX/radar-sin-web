@@ -2,3 +2,5 @@
 docs/
 *.bak
 demos/valea/assets/photos/source/
+
+.cache-mapas/

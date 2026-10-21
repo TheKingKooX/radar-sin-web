@@ -14,6 +14,7 @@ const NO_ABRIR = args.includes("--no-abrir");
 let PUERTO = pedido;
 
 const TIPOS = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".json": "application/json; charset=utf-8", ".webmanifest": "application/manifest+json", ".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp", ".ico": "image/x-icon", ".txt": "text/plain; charset=utf-8", ".woff2": "font/woff2" };
+const PERMITIDOS = ["https://thekingkoox.github.io"]; // páginas de internet que pueden usar el buscador
 const BLOQUEADOS = /(^|\/)(\.|herramientas\/|node_modules\/|docs\/)/;
 
 /* ---------- Estado del trabajo en curso (uno a la vez) ---------- */
@@ -50,7 +51,7 @@ function origenPermitido(req) {
   const host = (req.headers.host || "").toLowerCase();
   if (host !== "localhost:" + PUERTO && host !== "127.0.0.1:" + PUERTO) return false;
   const origen = req.headers.origin;
-  return !origen || origen === "http://" + host;
+  return !origen || origen === "http://" + host || PERMITIDOS.includes(origen);
 }
 function json(res, codigo, obj) { res.writeHead(codigo, { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" }); res.end(JSON.stringify(obj)); }
 function leerCuerpo(req) {
@@ -63,6 +64,10 @@ function leerCuerpo(req) {
 const servidor = http.createServer(async (req, res) => {
   try {
     if (!origenPermitido(req)) { res.writeHead(403); return res.end("Acceso no permitido"); }
+    if (PERMITIDOS.includes(req.headers.origin)) {
+      res.setHeader("Access-Control-Allow-Origin", req.headers.origin); res.setHeader("Vary", "Origin");
+      if (req.method === "OPTIONS") { res.writeHead(204, { "Access-Control-Allow-Methods": "GET, POST", "Access-Control-Allow-Headers": "content-type, x-radar", "Access-Control-Allow-Private-Network": "true", "Access-Control-Max-Age": "600" }); return res.end(); }
+    }
     const url = new URL(req.url, "http://localhost");
     const ruta = decodeURIComponent(url.pathname);
 
@@ -114,7 +119,12 @@ function escuchar(p, intentos) {
     if (!NO_ABRIR) abrir(url);
   });
 }
-escuchar(PUERTO, 10);
+// Si ya hay un buscador abierto en el puerto base, no abrimos otro.
+fetch("http://127.0.0.1:" + PUERTO + "/api/estado").then((r) => r.ok).catch(() => false).then((ya) => {
+  if (!ya) return escuchar(PUERTO, 10);
+  console.log("Radar sin web ya estaba abierto en http://localhost:" + PUERTO + "/");
+  if (!NO_ABRIR) abrir("http://localhost:" + PUERTO + "/");
+});
 
 process.on("SIGINT", () => {
   if (job.corriendo && !job.parar) { job.parar = true; console.log("\nDeteniendo la búsqueda y guardando lo avanzado… (Ctrl+C otra vez para salir ya)"); return; }

@@ -388,6 +388,8 @@ var MAX_PARADAS = 10;   // Google Maps admite destino + 9 paradas intermedias
 var modo = "lista", filtro = "todas", zona = "todas", tipo = "todos", orden = "reviews", buscar = "", minRes = 0, minRat = 0, red = "todas";
 var quitadas = [], GUARD = [], EXP = [], ruta = [], visibles = [], timer = null, abierta = null, primera = true;
 var centro = null, centroTxt = "", radio = 5, conectado = false, buscando = false, orig = null;
+// En tu equipo la app habla con su propio servidor; desde GitHub Pages, con el buscador local en 127.0.0.1.
+var API = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? "" : "http://127.0.0.1:8787";
 var $ = function (id) { return document.getElementById(id); };
 var list = $("list"), listaExp = $("listaExp"), toast = $("toast"), removed = $("removed");
 
@@ -706,21 +708,31 @@ function pintarConexion(ok, detalle) {
   conectado = ok;
   $("conexion").innerHTML = ok
     ? '<p class="conx"><i class="punto"></i><b>Buscador conectado</b><span class="muted">' + esc(detalle || "") + '</span></p>'
-    : '<p class="conx no"><i class="punto"></i><b>Buscador no conectado</b></p><p class="hint">El buscador usa un programa en tu computadora. Haz doble clic en <b>Iniciar Radar.bat</b> (o ejecuta <code>node herramientas/servidor.js</code>); se abrirá la app en <code>http://localhost:8787</code> con el buscador listo. Ahora estás en <code>' + esc(location.origin === "null" ? "un archivo local" : location.origin) + '</code>.</p><div class="acts"><button class="btn" type="button" id="btnReconectar">Reintentar conexión</button></div>';
+    : '<p class="conx no"><i class="punto"></i><b>Buscador no conectado</b></p><p class="hint">El buscador usa un programa en tu computadora. Haz doble clic en <b>Iniciar Radar.bat</b> (o ejecuta <code>node herramientas/servidor.js</code>); se abrirá la app en <code>http://localhost:8787</code> con el buscador listo. Ahora estás en <code>' + esc(location.origin === "null" ? "un archivo local" : location.origin) + '</code>.</p><div class="acts"><button class="btn go" type="button" id="btnIniciarBuscador">Iniciar buscador</button><button class="btn" type="button" id="btnReconectar">Reintentar conexión</button></div><p class="hint" id="iniNota"></p>';
   pintarPlan();
 }
 function conectar() {
-  if (!/^https?:$/.test(location.protocol)) { pintarConexion(false); return; }
-  fetch("/api/estado", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : Promise.reject(); }).then(function (j) {
+  fetch(API + "/api/estado", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : Promise.reject(); }).then(function (j) {
     if (!j || !j.ok) throw 0;
     pintarConexion(true, j.navegador ? "Chrome o Edge listo" : "No encuentro Chrome ni Edge");
     if (!j.navegador) { conectado = false; pintarPlan(); }
     abrirEventos();
   }).catch(function () { pintarConexion(false); });
 }
+// Pide a Windows que arranque el buscador (enlace radarsinweb:// registrado una vez con «Activar boton de Explorar.bat») y espera a que responda.
+function iniciarBuscador() {
+  var nota = function (t) { var n = $("iniNota"); if (n) n.textContent = t; }, intentos = 0, a = document.createElement("a");
+  nota("Abriendo el buscador… si el navegador pregunta, permite abrir «Radar sin web».");
+  a.href = "radarsinweb://iniciar"; document.body.appendChild(a); a.click(); a.remove();
+  var t = setInterval(function () {
+    if (conectado) { clearInterval(t); return; }
+    if (++intentos > 20) { clearInterval(t); nota("No respondió. Ejecuta «Activar boton de Explorar.bat» una vez, o abre «Iniciar Radar.bat»."); return; }
+    fetch(API + "/api/estado", { cache: "no-store" }).then(function (r) { if (r.ok) { clearInterval(t); conectar(); } }).catch(function () {});
+  }, 1500);
+}
 function abrirEventos() {
   if (orig) return;
-  orig = new EventSource("/api/eventos");
+  orig = new EventSource(API + "/api/eventos");
   orig.addEventListener("estado", function (e) { var s = JSON.parse(e.data); estadoDe(s); });
   orig.addEventListener("log", function (e) { logLinea(JSON.parse(e.data)); });
   orig.addEventListener("etapa", function (e) { etapaDe(JSON.parse(e.data)); });
@@ -759,7 +771,7 @@ function iniciarBusqueda() {
   cfg.centro = $("centroIn").value.trim(); cfg.consultas = q.join("\n"); guardarCfg();
   if (cfg.reemplazar) { EXP = []; centro = null; }
   $("reg").textContent = ""; $("progreso").hidden = false; $("pEtapa").textContent = "Preparando…"; $("pConteo").textContent = ""; $("pDetalle").textContent = ""; $("pFill").style.width = "0%";
-  fetch("/api/buscar", { method: "POST", headers: { "Content-Type": "application/json", "X-Radar": "1" }, body: JSON.stringify({ centro: cfg.centro, radio: cfg.radio, consultas: q, minResenas: cfg.minRes, teselas: cfg.cob, pausa: cfg.vel, limite: cfg.limite, conocidos: cfg.conocidos, ver: cfg.ver }) })
+  fetch(API + "/api/buscar", { method: "POST", headers: { "Content-Type": "application/json", "X-Radar": "1" }, body: JSON.stringify({ centro: cfg.centro, radio: cfg.radio, consultas: q, minResenas: cfg.minRes, teselas: cfg.cob, pausa: cfg.vel, limite: cfg.limite, conocidos: cfg.conocidos, ver: cfg.ver }) })
     .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || "No se pudo iniciar"); }); })
     .then(function () { buscando = true; $("btnParar").hidden = false; $("btnBuscar").hidden = true; $("busq").open = false; render(); })
     .catch(function (e) { $("pEtapa").textContent = "No se pudo iniciar"; $("pDetalle").textContent = e.message; });
@@ -772,8 +784,9 @@ function usarUbicacion() {
 $("explorar").addEventListener("click", function (e) {
   var t = e.target, el;
   if (t.closest("#btnBuscar")) { iniciarBusqueda(); return; }
-  if (t.closest("#btnParar")) { fetch("/api/parar", { method: "POST", headers: { "X-Radar": "1" } }); $("pEtapa").textContent = "Deteniendo…"; return; }
+  if (t.closest("#btnParar")) { fetch(API + "/api/parar", { method: "POST", headers: { "X-Radar": "1" } }); $("pEtapa").textContent = "Deteniendo…"; return; }
   if (t.closest("#btnReconectar")) { conectar(); return; }
+  if (t.closest("#btnIniciarBuscador")) { iniciarBuscador(); return; }
   if (t.closest("#btnUbic")) { usarUbicacion(); return; }
   if ((el = t.closest("[data-rub]"))) {
     var k = el.getAttribute("data-rub");

@@ -273,7 +273,8 @@
    "e": "Rostro de hombre con barba bajo una corona, en dorado sobre negro. Estilo premium y de realeza.",
    "v": "Valora tu tiempo en la silla, conoce tu estilo."
   },
-  "m": "https://maps.google.com/?cid=12266689839913501015"
+  "m": "https://maps.google.com/?cid=12266689839913501015",
+  "demo": "demos/barone/index.html"
  },
  {
   "id": "dinasty",
@@ -303,7 +304,8 @@
    "e": "Casco de guerrero con espadas cruzadas y «DINASTY BARBERSHOP» en dorado sobre blanco, con sans ancha. Estilo fuerte, de guerrero.",
    "v": "Llevamos tu estilo al siguiente nivel."
   },
-  "m": "https://maps.google.com/?cid=7458781742743185219"
+  "m": "https://maps.google.com/?cid=7458781742743185219",
+  "demo": "demos/dinasty/index.html"
  },
  {
   "id": "rytual",
@@ -338,7 +340,8 @@
    "e": "Azul marino con «RYTUAL» en serif blanca de trazo fino y «by Steffano Negrette» pequeño. Elegante y premium.",
    "v": "Reinventamos el concepto de la barbería para una experiencia única."
   },
-  "m": "https://maps.google.com/?cid=15621291838656616597"
+  "m": "https://maps.google.com/?cid=15621291838656616597",
+  "demo": "demos/rytual/index.html"
  },
  {
   "id": "lapynta",
@@ -371,7 +374,8 @@
    "e": "Fondo vintage de zigzag en crema, rojo y verde azulado, con cráneo de toro y bigote y letras decorativas. Barbería clásica de estilo retro o western.",
    "v": "Staff de barberos profesionales a tu servicio."
   },
-  "m": "https://maps.google.com/?cid=6398233229638788309"
+  "m": "https://maps.google.com/?cid=6398233229638788309",
+  "demo": "demos/lapynta/index.html"
  },
  {
   "id": "lapynta-salon",
@@ -406,7 +410,8 @@
    "e": "Negro con un rombo y el monograma «LP», y «LAPYNTA» en sans espaciada y blanca. Minimalista y sofisticado.",
    "v": "Un lugar pensado en ti."
   },
-  "m": "https://maps.google.com/?cid=232187037717818741"
+  "m": "https://maps.google.com/?cid=232187037717818741",
+  "demo": "demos/lapynta-salon/index.html"
  },
  {
   "id": "noa",
@@ -439,7 +444,8 @@
    ],
    "e": "Dorado sobre negro: «NOA» en sans geométrica con «SALON» espaciado debajo. Lujo discreto."
   },
-  "m": "https://maps.google.com/?cid=754849118930892658"
+  "m": "https://maps.google.com/?cid=754849118930892658",
+  "demo": "demos/noa/index.html"
  },
  {
   "id": "limabarber",

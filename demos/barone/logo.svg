@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" font-family="Cinzel, Georgia, serif">
+  <rect width="200" height="200" fill="#010101"/>
+  <path d="M70 62 66 30l20 15 14-22 14 22 20-15-4 32Z" fill="#e2ad49"/>
+  <path d="M60 84c0 34 12 58 40 66 28-8 40-32 40-66-8 8-16 10-24 6-6-4-10-4-16-4s-10 0-16 4c-8 4-16 2-24-6Z" fill="#e2ad49"/>
+  <path d="M88 118c6 4 18 4 24 0-4 6-8 8-12 8s-8-2-12-8Z" fill="#010101"/>
+  <text x="100" y="184" text-anchor="middle" font-size="17" font-weight="600" letter-spacing="6" fill="#e2ad49">BARONE</text>
+</svg>

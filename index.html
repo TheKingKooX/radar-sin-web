@@ -227,6 +227,21 @@ a { color: var(--accent-text); text-underline-offset: 3px; }
 .xcard form + .hint { margin-top: 8px; }
 .pill.web { background: var(--surface2); border-color: var(--line); color: var(--muted); }
 body[data-modo="exp"] [data-solo="lista"], body[data-modo="lista"] [data-solo="exp"] { display: none; }
+
+/* Buscador de Explorar */
+.lbl2 { display: block; margin: 12px 0 6px; color: var(--muted); font-size: 13px; }
+textarea.tin { height: auto; padding: 10px 12px; resize: vertical; line-height: 1.4; font-size: 15px; }
+.avz { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 4px; }
+.avz summary { cursor: pointer; padding: 10px 0; font-weight: 600; color: var(--muted); }
+.ptop { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.pbar { height: 8px; margin: 10px 0 4px; border-radius: 4px; background: var(--surface2); overflow: hidden; }
+.pbar i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 4px; transition: width .4s var(--ease); }
+#reg { margin: 6px 0 0; max-height: 240px; overflow: auto; padding: 10px 12px; border-radius: 12px; background: var(--bg); border: 1px solid var(--line); font: 12px/1.5 ui-monospace, Consolas, monospace; white-space: pre-wrap; color: var(--muted); }
+.conx { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0; }
+.conx .punto { width: 10px; height: 10px; border-radius: 50%; background: #3fb27f; flex: none; }
+.conx.no .punto { background: #d9a441; }
+.conx code { font-size: 12.5px; background: var(--surface2); padding: 2px 6px; border-radius: 6px; }
+.krow .btn { flex: none; }
 </style>
 </head>
 <body>
@@ -292,22 +307,33 @@ body[data-modo="exp"] [data-solo="lista"], body[data-modo="lista"] [data-solo="e
         <section id="explorar" hidden>
           <div class="xcard" id="conexion"></div>
           <details class="xcard" id="busq" open>
-            <summary>Buscar locales</summary>
+            <summary>Buscador</summary>
             <div class="xg"><span class="lbl">Centro de la búsqueda</span>
-              <div class="acts"><button class="btn pri" type="button" id="btnUbic">Usar mi ubicación</button></div>
-              <form id="zForm" class="krow"><input id="zonaIn" type="search" placeholder="…o escribe una zona o dirección" autocomplete="off" aria-label="Zona o dirección"><button class="btn" id="btnZona" type="submit">Buscar zona</button></form>
-              <p class="hint" id="centroT"></p></div>
-            <div class="xg"><span class="lbl">Radio: <b id="radioT"></b></span><input id="radio" class="rng" type="range" min="500" max="5000" step="250" value="1500" aria-label="Radio de búsqueda"></div>
-            <div class="xg"><span class="lbl">Qué buscar</span><div class="chips" id="cats"></div>
-              <input id="texto" class="tin" type="search" placeholder="…o escribe qué buscar (ej. ferretería)" autocomplete="off" aria-label="Búsqueda libre"></div>
-            <div class="xg"><span class="lbl">Cobertura</span><div class="chips"><button class="chip" data-cob="1" aria-pressed="true">Rápida</button><button class="chip" data-cob="5" aria-pressed="false">Amplia</button><button class="chip" data-cob="9" aria-pressed="false">Máxima</button></div>
-              <p class="hint">Google devuelve como máximo 20 locales por consulta. Más cobertura repite la búsqueda en zonas más pequeñas del círculo.</p></div>
+              <div class="krow"><input id="centroIn" type="search" placeholder="Dirección, o latitud,longitud" autocomplete="off" aria-label="Centro de la búsqueda"><button class="btn" id="btnUbic" type="button">Mi ubicación</button></div></div>
+            <div class="xg"><span class="lbl">Radio: <b id="radioT"></b></span><input id="radio" class="rng" type="range" min="0.5" max="25" step="0.5" value="5" aria-label="Radio en kilómetros"></div>
+            <div class="xg"><span class="lbl">Rubros</span><div class="chips" id="rubros"></div>
+              <label class="lbl2" for="consultas">Búsquedas (una por línea o separadas por comas). Puedes editarlas, quitar o agregar.</label>
+              <textarea id="consultas" class="tin" rows="4" spellcheck="false"></textarea></div>
+            <div class="xg"><span class="lbl">Reseñas mínimas</span><div class="chips" id="resMin"></div></div>
+            <div class="xg"><span class="lbl">Cobertura</span><div class="chips" id="cobert"></div>
+              <p class="hint">Cuántas zonas del círculo se recorren por cada búsqueda. Más zonas encuentran más negocios pero tardan más.</p></div>
+            <details class="avz"><summary>Opciones avanzadas</summary>
+              <div class="xg"><span class="lbl">Velocidad (pausa entre páginas)</span><div class="chips" id="vel"></div></div>
+              <div class="xg"><label class="lbl2" for="limite">Leer como máximo (fichas; 0 = todas, útil para probar)</label><input id="limite" class="tin" type="number" min="0" max="500" value="0"></div>
+              <label class="opt"><input type="checkbox" id="oConocidos"> Incluir los negocios que ya están en Mi lista</label>
+              <label class="opt"><input type="checkbox" id="oReemplazar" checked> Reemplazar los resultados anteriores</label>
+              <label class="opt"><input type="checkbox" id="oVer"> Mostrar la ventana del navegador mientras busca</label>
+            </details>
             <p class="hint" id="plan"></p>
-            <div class="acts"><button class="btn go" type="button" id="btnBuscar" disabled>Buscar locales</button><button class="btn" type="button" id="btnParar">Detener</button></div>
-            <p class="hint" id="cuota"></p>
+            <div class="acts"><button class="btn go" type="button" id="btnBuscar" disabled>Iniciar búsqueda</button><button class="btn" type="button" id="btnParar" hidden>Detener</button></div>
           </details>
-          <p class="hint" id="estado" role="status" aria-live="polite"></p>
-        </section>
+          <div class="xcard" id="progreso" hidden>
+            <div class="ptop"><b id="pEtapa">Preparando…</b><span class="muted" id="pConteo"></span></div>
+            <div class="pbar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pBar"><i id="pFill"></i></div>
+            <p class="hint" id="pDetalle"></p>
+            <details class="avz" id="regD"><summary>Registro</summary><pre id="reg" aria-live="off"></pre></details>
+          </div>
+        
         <div class="sum" id="sum"></div>
         <ul class="list" id="list"></ul>
         <ul class="list" id="listaExp" hidden></ul>
@@ -356,12 +382,12 @@ var DATA = [
 // Búsqueda manual en Google Maps alrededor de Av. La Mar 2591 (San Miguel), 5 km; ver zona-la-mar.json
 var ZONA = {"centro":{"nombre":"Av. La Mar 2591, San Miguel","la":-12.0738746,"lo":-77.0870215,"radioKm":5},"negocios":[["Bambú Massage San Miguel",4.9,1310,"Spa de masajes","Jr. prlg. Cuzco 1029","947 709 283","https://www.bambumassages.com/",-12.083529,-77.083338,"9828852585269160716"],["Bambú Massage Jesús Maria - Masajes & Terapias",4.9,1049,"Spa y gimnasio","Av Ricardo Tizón y Bueno 190","991 399 547","https://linktr.ee/bambumassage",-12.076859,-77.053798,"3565270767966785935"],["Benefit Cosmetics Brow Bar",5,686,"Depilación con cera","Saga Falabella, Centro Comercial Plaza, Av. de la Marina 2100","997 543 477","https://www.falabella.com.pe/falabella-pe/brand/BENEFIT",-12.076783,-77.083592,"17159681282639609995"],["Montalvo Javier Prado",4.2,634,"Peluquería","Av. Javier Prado Oeste 583","945 036 190","http://montalvo.com.pe/",-12.091812,-77.063102,"17369918405929835590"],["Torero Estética Sede Jesús María",4.2,629,"Centro de estética","Av Horacio Urteaga 1233","933 970 617","https://www.facebook.com/search/top?q=torero+est%C3%A9tica",-12.07353,-77.047999,"11845682687621202852"],["Torero Estética Sede San Miguel",4.4,531,"Peluquería","Hermanos Catari 227","933 970 617","https://www.instagram.com/torero.estetica/",-12.076795,-77.09696,"3561263541250524025"],["Motivos Spa",4.4,527,"Centro de estética","Av. República Dominicana 212","(01) 4249428","http://www.motivosspa.com/",-12.073221,-77.050175,"13736592494405298575"],["Soho Color - San Miguel",4,512,"Peluquería","Av. Rafael Escardó 819","9038323","http://sohocolor.pe/",-12.072416,-77.092117,"6663795916864545325"],["Montalvo Spa & Peluquería",4.3,440,"Centro de estética","Av. Gral. Eugenio Garzón 1491","945 036 189","http://montalvo.com.pe/",-12.074912,-77.051654,"13509547248817053814"],["Montalvo Universitaria",4.2,433,"Centro de estética","Av. Universitaria 1057","947 571 179","http://www.montalvo.com.pe/",-12.075253,-77.080332,"1478673335903058625"],["El Turco Barbería – San Isidro (Alberto del Campo)",4.8,432,"Barbería","Av. Alberto del Campo 295","937 094 629","https://elturco.pe/",-12.098262,-77.055524,"11308514227060664783"],["Montalvo Ucayali",4.2,381,"Peluquería","Ca. Ucayali 122","945 036 147","https://www.montalvo.com.pe/",-12.07557,-77.082903,"2783078970518233270"],["Marco Aldany Pueblo Libre",4.1,374,"Centro de estética","Av. Manuel Cipriano Dulanto 2039","(01) 4620262","http://pe.marcoaldany.com/",-12.07524,-77.078848,"13469122808490472302"],["MARKUS Barberia - Pueblo Libre",4.8,356,"Barbería","Av Antonio José de Sucre 1073","959 339 311","https://www.instagram.com/markus_barberia",-12.08182,-77.066526,"12475939968046725746"],["ANGEL'S NAILS SALON Orrantia",4.9,348,"Centro de estética","Av. Gral. Felipe Salaverry 3570","943 178 711","https://www.angelsnails.com.pe/",-12.102439,-77.058355,"15398000179025033368"],["Bambu Massage Elmert Faucett",4.9,332,"Spa","Av. Elmer Faucett 216","923 209 449","http://www.bambumassages.com/",-12.071323,-77.098309,"16402830824430918520"],["Dermathani",4.9,330,"Clínica dermatológica","Jr. Manco II 992","989 313 771","https://dermathani.pe/",-12.075131,-77.105743,"10253461431197173408"],["Montalvo Salón & Spa Escardó",4.3,322,"Centro de estética","Av. Rafael Escardó 396","945 036 183","http://www.facebook.com/MontalvoSalonSpa",-12.079141,-77.093926,"13735641216938794055"],["Bellestet Depilación Láser & Estética",4.9,296,"Centro de depilación láser","Av. de la Marina 1463","928 018 808","https://bellestet.com/",-12.079511,-77.077726,"14935593293952312618"],["Montalvo Escobedo",4.3,290,"Centro de estética","Av. Gregorio Escobedo 884","945 374 442","http://montalvo.com.pe/",-12.088032,-77.056573,"18444518919415151411"],["MARKUS Barbería - Cercado de Lima",4.9,274,"Barbería","Jr. Pedro Gárezon 1544","960 378 805","https://www.markusbarberia.com/",-12.040737,-77.062122,"13426371066101222816"],["Seven Spa",4.3,272,"Spa","Av Antonio José de Sucre 1420","(01) 2617428","https://www.facebook.com/sevenspaoficial/",-12.085926,-77.068179,"16655490264157079242"],["Montalvo For Men Garzón",4.4,256,"Barbería","Av. Gral. Eugenio Garzón 1451","945 036 205","https://montalvoformen.com.pe/",-12.074442,-77.051381,"13508062242034536337"],["Bambú Massage Maranga",5,245,"Fisioterapeuta","Av. De Los Precursores 375","961 753 668","http://www.bambumassages.com/",-12.070936,-77.091441,"14780159779506335880"],["Zamba Pisando Tierra - Salon de Rizos",4.7,238,"Peluquería","Jr. Alberto Alexander 2488","987 134 426","https://www.zambapisandotierra.com/",-12.087718,-77.047208,"446648500759646458"],["Gloria Vega Spa & Nails",5,230,"Centro de estética","Av Horacio Urteaga 1471","992 901 293","https://www.facebook.com/Gloria-Vega-Spa-Nails-103842391187564/",-12.076038,-77.049982,"1718579053929082272"],["Yao Ling Spa",4.5,228,"Spa","Centro Comercial Mega Center, Jr. Bolognesi 364","(01) 2632227","",-12.091955,-77.07131,"11347850065717400654"],["REHVITAL Baños Turcos Sauna Spa",4,226,"Sauna","Av. Óscar R. Benavides 1681","912 829 553","http://www.facebook.com/rehvital",-12.048597,-77.063266,"12305202852418841640"],["Black & White Academy (curso de barbería) - Sede Jesús María",5,224,"Barbería","Av. Brasil 1657","957 194 984","https://www.blackwhiteacademy.com/sede-jesus-maria",-12.07575,-77.053969,"1363329387928353315"],["HAIR & HANDS SALÓN - San Miguel",4.8,223,"Centro de estética","C. Teniente Cesar Lopez Rojas 195-197","972 102 163","https://www.hairandhands.com/sedes/san-miguel",-12.075833,-77.090025,"6764041999215237304"],["Luas studio",4.4,210,"Salón de manicura y pedicura","Jr. Tacna 787","955 443 505","https://www.instagram.com/luas.studio",-12.091173,-77.071714,"7731687858921069260"],["Billin Salón & Spa",4.4,205,"Centro de estética","Av. Gregorio Escobedo 692","(01) 4638355","",-12.086497,-77.054848,"3464761004819751769"],["Bizago Epil San Miguel",5,205,"Depilación con cera","Av. La Mar 2275","960 964 538","https://bizagoepil.com/",-12.074994,-77.08169,"1859243712600212779"],["ANGEL'S NAILS SALON",4.7,193,"Centro de estética","Av. Manuel Cipriano Dulanto 2043","963 425 502","https://www.angelsnails.com.pe/",-12.075211,-77.078975,"1200509537847483292"],["HAIR & HANDS SALÓN - Magdalena",4.8,186,"Centro de estética","Jirón, De La Roca De Vergallo 487","968 742 437","https://www.hairandhands.com/sedes/magdalena",-12.091078,-77.05697,"3918421221983278201"],["Aramis Kids",4.4,184,"Peluquería","Centro Comercial Plaza, Av. de la Marina 2000","(01) 5662883","http://www.aramisspa.com.pe/",-12.076224,-77.083582,"13364799822829325944"],["Leonardo La Peluquería",4.5,175,"Centro de estética","C. Eugenio de la Torre 292","(01) 5785184","",-12.078103,-77.092932,"13961305452071854780"],["ANGEL'S NAILS SALON",3.8,175,"Centro de estética","Tomás Ramsey 920","986 616 733","https://angelsnails.com.pe/",-12.092266,-77.058571,"8801893685971134595"],["Sahomy Sthetic Spa",4.3,170,"Spa","Manuel Mesones Muro 267","2994464","",-12.077835,-77.098145,"4340071868602442419"],["José Antonio Salón & Spa",4.7,170,"Centro de estética","Av. Javier Prado Oeste 627","956 343 198","http://www.joseantoniospa.com/",-12.09229,-77.06249,"12935138804818302767"],["Londres Barbería Clásica Jesús María",4.7,165,"Barbería","Av. San Felipe 1059","997 349 172","",-12.081888,-77.046881,"14895386402076419629"],["Qoeurs Spa - Masajes, Depilaciones y Tratamientos",4.9,165,"Spa","Jr. Cuzco 120","987 206 953","https://qoeursspamagdalena.com/",-12.090276,-77.06699,"14029112398522626877"],["Milash studio Sede San Miguel",4.8,163,"Centro de estética","C. B 143","954 119 858","",-12.075475,-77.08374,"12126753902858583946"],["image & color",3.9,163,"Centro de estética","Av. de la Marina 1378","935 290 762","",-12.07934,-77.076907,"15365783267340391439"],["Thomas´s Salón & Spa(Jr Castilla 793)",4.4,162,"Centro de estética","Jr. Mariscal Ramón Castilla 793","(01) 2632214","http://www.thomassalonyspa.com/",-12.089481,-77.073271,"17620057192263174419"],["Marco Aldany",4,161,"Centro de estética","Av. Húsares de Junín 184","(01) 6823418","https://www.facebook.com/MarcoAldanyJesusMaria",-12.075888,-77.052983,"5548639790217385736"],["Glitz Studio - Nails and Lashes",5,160,"Salón de manicura y pedicura","Av Horacio Urteaga 1471","930 986 478","https://wa.me/c/51930986478",-12.076038,-77.049982,"4271674464558401568"],["Fade Essence | Barber Studio",4.9,157,"Barbería","Av. de la Marina 2274","934 260 441","https://www.fadeessence.com/",-12.077616,-77.086138,"15608352369664447994"],["MARKUS Barbería - Sede Magdalena del Mar",5,150,"Barbería","","991 589 891","https://www.markusbarberia.com/",-12.089549,-77.070717,"9076259183193418105"],["GLAM PREMIUM San Isidro",4.8,149,"Salón de belleza","555 Calle Los Eucaliptos","966 691 148","https://glampremium.com/",-12.097985,-77.047731,"5568828723945944686"],["Unica Centro Estetica",3.5,148,"Centro de estética","Av. José María Plaza 193","982 399 617","https://www.facebook.com/unicacentroestetica",-12.071765,-77.049492,"17653996290400170176"],["D\"Vela salon spa y barberia",4.9,145,"Peluquería","Ca. Ucayali 111","949 423 758","https://www.instagram.com/dvelasalonyspa",-12.075556,-77.083139,"8021399929397751662"],["CAPILART CLÍNICA CAPILAR Y ESTÉTICA",5,142,"Servicio de tratamiento del cabello","0051","977 940 031","",-12.075388,-77.05378,"12649058148272507844"],["Leticia Prado Salón & Spa - Autoridad en Belleza",4.3,139,"Centro de estética","Av. Monseñor Jorge Dintilhac 665","(01) 5943435","https://www.facebook.com/LPsalon",-12.07701,-77.085262,"15715492509880543855"],["Ex Zafra salón",4.5,138,"Centro de estética","104, Jr. Restauración 276","","http://zsalon.com.pe/",-12.06652,-77.04928,"10864257893802723191"],["BE YOU",4.5,136,"Esteticista facial","C. Bernardo de O'Higgins 563","963 976 730","",-12.071598,-77.063929,"7049227446131886173"],["Kantu Spa",4.6,136,"Centro de estética","Av. Francisco Javier Mariátegui 1455","991 410 840","https://www.kantuspa.com/",-12.078002,-77.051195,"1976917497934370938"],["Samy's Peluquería",4.9,135,"Peluquería","Av. Mello Franco 426","982 808 235","",-12.076493,-77.050121,"11039970877863430585"],["Pilar Nails Lima",4.8,135,"Salón de manicura y pedicura","Av Horacio Urteaga 1471","913 929 935","https://www.facebook.com/profile.php?id=100084803345697",-12.076038,-77.049982,"12257644932013089694"],["Iman's Estilistas",4.3,132,"Centro de estética","Av. Simón Bolívar 1023","979 746 916","https://www.facebook.com/ImansEstilistas/",-12.072238,-77.064725,"4555175708218957169"],["Sayu centro estetica",4.8,131,"Spa","Av. Arnaldo Márquez 1231","981 476 732","https://linktr.ee/sayucentroestetica",-12.073281,-77.048756,"5408955492479591688"],["Sammys spa estilistas",4.9,130,"Centro de estética","Av. Lima 298","969 757 180","https://www.facebook.com/share/1JNKJQHbLm/",-12.090058,-77.077348,"7467176913416153688"],["Reset90 | Spa y Masajes San miguel",5,130,"Spa de masajes","Av. Universitaria 672","902 991 765","",-12.082494,-77.082238,"7132801900396647381"],["GenesisNails.pe",4.9,129,"Centro de estética","Av. 6 de Agosto 517","935 217 606","https://www.instagram.com/genesisnails.pe",-12.073957,-77.040863,"15124634661384798061"],["Centro Estético Romina Lima",4.8,128,"Servicio de estética","Cacique, Umachiri 374","961 509 002","http://centroesteticoromina.com/",-12.082218,-77.073009,"4042521737387646037"],["Tijeritas",4.5,126,"Peluquería","Cdra. 22 Supermercado Wong, Av. de la Marina","969 002 940","https://m.facebook.com/TijeritasOfficial/",-12.076878,-77.08169,"1163559696807659975"],["Galeria San Martín",3.8,123,"Salón de manicura y pedicura","Jr. San Martín 751","","",-12.089423,-77.073831,"16508212547978611861"],["Emma Belleza y Arte",4.3,123,"Centro de estética","Av Horacio Urteaga 1485","998 192 271","",-12.076101,-77.05009,"10485394353366322893"],["Ponte Bella Nails Bar",4.6,122,"Salón de manicura y pedicura","Jr. José Gálvez 345","940 861 190","http://instagram.com/pontebellanailsbar/",-12.091299,-77.070874,"10637423850986278010"],["TAMARI'S STUDIO",4.8,120,"Centro de estética","Jr. José Gálvez 476","951 201 166","https://mobile.facebook.com/TAMARIS.STUDIO/",-12.090604,-77.071882,"17487771705556883489"],["Abanto's Barber Shop",4.7,120,"Barbería","654, C. Bernardo de O'Higgins 594","938 219 765","",-12.072598,-77.064298,"11351390635242239303"],["Valdani 21 Estética Jesús María",4.2,120,"Spa","Av. Húsares de Junín 424","933 048 098","https://spavaldani21.com/",-12.077451,-77.051,"10562507385781881184"],["Depilarte San Miguel",4.9,119,"Centro de depilación láser","Av. de la Marina 2270","947 295 572","https://www.depilarte.co/peru/centros/san-miguel/san-miguel",-12.077527,-77.086129,"10786215976591026743"],["Salon Urban Julio Cesar",4.5,117,"Peluquería","Av. Perú 3696 - San Martin de Porres, Av. Perú 3725 - San Martin de Porres, Av. Perú 3696","987 469 162","https://www.facebook.com/Salon.Urban.JulioCesar/",-12.030447,-77.088041,"5055022361551826367"],["Paola's Salón & Urban Spa",4.3,117,"Centro de estética","Jr. Grau 295","925 610 420","https://www.facebook.com/Paolas-Salon-Urban-Spa-175859272620980/",-12.093615,-77.070965,"15735544248662660533"],["Barbershop 365",4.2,116,"Barbería","Av. Venezuela 1127","","",-12.055235,-77.049756,"9121118079077300187"],["Sauna Y Masajes Althea",3.9,116,"Sauna","Av. de la Marina 1407","(01) 2648490","",-12.079752,-77.077055,"11439903507363907494"],["Sharp Studio",5,116,"Barbería","15076","939 898 641","https://www.instagram.com/sharpstudio_pe",-12.091068,-77.056986,"11549902703525464228"],["VIA BEAUTY SALON",4.5,116,"Centro de estética","Jirón Pachacútec 952","907 922 164","",-12.071909,-77.044437,"7613146869625594184"],["Black & White Academy (curso de barbería) - Sede Callao",5,115,"Barbería","Av. Elmer Faucett 1702","957 194 984","https://www.blackwhiteacademy.com/sede-callao",-12.060405,-77.097118,"13355279691007701280"],["One Look Salon Spa",4.5,115,"Peluquería","Intisuyo 308","931 412 137","",-12.073846,-77.092937,"15413258858031993055"],["Saramiss Salón & Spa",4.2,114,"Centro de estética","Av. Gral. Eugenio Garzón 1116","996 737 265","https://www.facebook.com/pages/Saramiss-Salon-Spa/189000574503286",-12.071309,-77.048749,"9105409321526082761"],["Chic House",4.2,106,"Salón de manicura y pedicura","Av Horacio Urteaga 1612","962 645 103","https://www.instagram.com/chic_house_nailslash/",-12.077231,-77.051386,"13639161166011101391"],["ANKA BEAUTY",4.2,105,"Centro de estética","Av Antonio José de Sucre 163","921 830 040","https://www.facebook.com/ANKANAILSANDCOFFEE/",-12.073334,-77.062165,"538049628763124466"],["Warmy Salón & Spa",4.7,104,"Centro de estética","Jr. Crnel. Francisco Bolognesi 239","956 007 851","https://bit.ly/WarmySal%C3%B3nSpa",-12.090973,-77.081087,"10832791860165594421"],["Koko Caceres Estilistas",4.3,103,"Centro de estética","Av. Dos de Mayo 1620","(01) 4219223","",-12.092501,-77.047915,"614122005541018734"],["Victory Studio",5,102,"Centro de estética","Av. Universitaria 672","998 158 484","",-12.082425,-77.082202,"1750600319947155265"],["Killasumo",4,101,"Centro de estética","Av. Mello Franco 241","990 398 254","",-12.075122,-77.051629,"4750212667261070772"]]};
 var LABEL = { none: "Sin enlace", social: "Solo red social", web: "Web propia" };
-var KEY = "barberias-quitadas", GK = "radar-gkey", GU = "radar-guardados";
-var LIMITE_MES = 900;   // tope de seguridad de la app: Google da unas 1.000 consultas gratis al mes en este nivel (confírmalo en su tabla de precios)
+var KEY = "barberias-quitadas", GU = "radar-guardados", BU = "radar-buscador", UL = "radar-ultimo";
+
 var MAX_PARADAS = 10;   // Google Maps admite destino + 9 paradas intermedias
 var modo = "lista", filtro = "todas", zona = "todas", tipo = "todos", orden = "reviews", buscar = "", minRes = 0, minRat = 0, red = "todas";
 var quitadas = [], GUARD = [], EXP = [], ruta = [], visibles = [], timer = null, abierta = null, primera = true;
-var centro = null, centroTxt = "", radio = 1500, cats = [], texto = "", cobertura = 1, cancelar = false, buscando = false;
+var centro = null, centroTxt = "", radio = 5, conectado = false, buscando = false, orig = null;
 var $ = function (id) { return document.getElementById(id); };
 var list = $("list"), listaExp = $("listaExp"), toast = $("toast"), removed = $("removed");
 
@@ -369,9 +395,9 @@ function leer(k, v) { try { return JSON.parse(localStorage.getItem(k) || "null")
 function poner_(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 quitadas = leer(KEY, []); GUARD = leer(GU, []);
 function guardar() { poner_(KEY, quitadas); poner_(GU, GUARD); }
-function apiKey() { try { return localStorage.getItem(GK) || ""; } catch (e) { return ""; } }
-function cuotaKey() { var f = new Date(); return "radar-consultas-" + f.getFullYear() + "-" + (f.getMonth() + 1); }
-function cuota(n) { var v = (leer(cuotaKey(), 0) || 0) + (n || 0); if (n) poner_(cuotaKey(), v); return v; }
+
+
+
 
 function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
 function norm(s) { return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
@@ -411,23 +437,6 @@ function dkm(a, b) {
 }
 function fmtDist(km) { return km < 1 ? Math.round(km * 1000 / 10) * 10 + " m" : km.toFixed(1) + " km"; }
 
-/* Categorías de la industria comercial → tipos de Google (Table A, Places API New) */
-var CATS = [
-  { id: "belleza", n: "Belleza y cuidado personal", t: ["barber_shop", "beauty_salon", "hair_salon", "hair_care", "nail_salon", "spa", "massage", "makeup_artist", "beautician", "skin_care_clinic", "tanning_studio", "sauna", "wellness_center", "body_art_service"] },
-  { id: "comida", n: "Restaurantes y cafés", t: ["restaurant", "cafe", "coffee_shop", "bakery", "bar", "fast_food_restaurant", "pizza_restaurant", "ice_cream_shop", "meal_takeaway", "meal_delivery", "pub", "sandwich_shop", "dessert_shop", "cake_shop", "pastry_shop", "juice_shop", "peruvian_restaurant", "seafood_restaurant", "chicken_restaurant", "catering_service"] },
-  { id: "salud", n: "Salud", t: ["doctor", "dentist", "dental_clinic", "hospital", "medical_clinic", "medical_center", "pharmacy", "drugstore", "physiotherapist", "medical_lab", "chiropractor", "general_hospital"] },
-  { id: "fitness", n: "Deporte y fitness", t: ["gym", "fitness_center", "yoga_studio", "sports_club", "sports_complex", "swimming_pool", "sports_school", "sports_coaching", "tennis_court"] },
-  { id: "tiendas", n: "Tiendas y comercios", t: ["clothing_store", "womens_clothing_store", "shoe_store", "jewelry_store", "electronics_store", "cell_phone_store", "furniture_store", "home_goods_store", "gift_shop", "book_store", "convenience_store", "grocery_store", "supermarket", "liquor_store", "department_store", "florist", "bicycle_store", "sporting_goods_store", "cosmetics_store", "toy_store", "butcher_shop", "store"] },
-  { id: "hogar", n: "Hogar y construcción", t: ["hardware_store", "home_improvement_store", "building_materials_store", "garden_center", "electrician", "plumber", "painter", "locksmith", "roofing_contractor", "moving_company", "laundry", "storage"] },
-  { id: "auto", n: "Automotriz", t: ["car_repair", "car_wash", "car_dealer", "car_rental", "auto_parts_store", "gas_station", "tire_shop", "parking", "truck_dealer"] },
-  { id: "pro", n: "Servicios profesionales y finanzas", t: ["lawyer", "accounting", "insurance_agency", "real_estate_agency", "consultant", "marketing_consultant", "bank", "employment_agency", "courier_service", "shipping_service", "tailor"] },
-  { id: "educ", n: "Educación", t: ["school", "preschool", "primary_school", "secondary_school", "university", "educational_institution", "child_care_agency", "library"] },
-  { id: "mascotas", n: "Mascotas", t: ["pet_store", "veterinary_care", "pet_care", "pet_boarding_service"] },
-  { id: "turismo", n: "Hoteles y turismo", t: ["hotel", "hostel", "lodging", "motel", "bed_and_breakfast", "guest_house", "inn", "travel_agency", "tour_agency", "event_venue", "wedding_venue", "banquet_hall"] },
-  { id: "ocio", n: "Entretenimiento", t: ["movie_theater", "night_club", "bowling_alley", "amusement_center", "video_arcade", "karaoke", "casino", "internet_cafe", "art_gallery", "museum", "dance_hall", "live_music_venue"] }
-];
-// "photographer" no figura en la Tabla A; se descarta al armar la consulta
-var TIPOS_OK = (function () { var o = {}; ["photographer"].forEach(function (t) { o[t] = 1; }); return o; })();
 
 /* ---------- Filtros y orden ---------- */
 function fuente() { return modo === "lista" ? DATA.concat(GUARD) : EXP; }
@@ -643,141 +652,153 @@ function ponerModo(m) {
 $("modoLista").addEventListener("click", function () { ponerModo("lista"); });
 $("modoExp").addEventListener("click", function () { ponerModo("exp"); });
 
-/* ---------- Explorar: ubicación, categorías y consultas a Google Places (New) ---------- */
-function pintarClave() {
-  var k = apiKey();
-  $("conexion").innerHTML = k
-    ? '<p class="ok">Clave de Google conectada. <button class="btn" type="button" id="kQuitar">Quitar clave</button></p>'
-    : '<p><b>Conecta Google Maps</b></p><ol class="ayuda"><li>En Google Cloud, crea un proyecto y activa <b>Places API (New)</b>.</li><li>Crea una <b>clave de API</b> y restríngela a tu dominio (<code>https://thekingkoox.github.io/*</code>).</li><li>Pon un <b>presupuesto con alerta</b> para no pasarte del gasto.</li></ol>' +
-      '<form id="kForm" class="krow"><input id="kIn" type="password" placeholder="Pega tu clave de API" autocomplete="off" spellcheck="false" aria-label="Clave de API de Google"><button class="btn pri" type="submit">Guardar</button></form>' +
-      '<p class="hint">La clave se guarda solo en este dispositivo. Nunca se sube al repositorio.</p>';
-  $("cuota").textContent = "Consultas este mes en esta app: " + cuota() + " de " + LIMITE_MES + " (tope de seguridad)";
-}
-function pintarCats() {
-  $("cats").innerHTML = CATS.map(function (c) { return '<button class="chip" type="button" data-cat="' + c.id + '" aria-pressed="' + (cats.indexOf(c.id) > -1) + '">' + esc(c.n) + '</button>'; }).join("");
-}
-function tiposElegidos() {
-  var t = [];
-  CATS.forEach(function (c) { if (cats.indexOf(c.id) > -1) c.t.forEach(function (x) { if (!TIPOS_OK[x] && t.indexOf(x) === -1) t.push(x); }); });
-  return t;
-}
-function circulos() {
-  if (!centro) return [];
-  var r = radio, out = [{ la: centro.la, lo: centro.lo, r: r }];
-  if (cobertura === 1) return out;
-  var rr = Math.round(r * 0.6), off = r * 0.55, k = cobertura === 5 ? [[1, 0], [-1, 0], [0, 1], [0, -1]] : [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]];
-  out = [];
-  if (cobertura === 5) out.push({ la: centro.la, lo: centro.lo, r: rr });
-  else out.push({ la: centro.la, lo: centro.lo, r: rr });
-  k.forEach(function (v) {
-    out.push({ la: centro.la + (v[0] * off) / 111320, lo: centro.lo + (v[1] * off) / (111320 * Math.cos(centro.la * Math.PI / 180)), r: rr });
-  });
-  return out;
-}
-function plan() {
-  var t = tiposElegidos(), lotes = Math.ceil(t.length / 50), c = circulos().length, tx = texto.trim() ? c : 0;
-  return { tipos: t, lotes: lotes, n: (t.length ? lotes * c : 0) + tx };
-}
-function pintarPlan() {
-  var p = plan();
-  $("plan").textContent = !centro ? "Primero define el centro de la búsqueda." : (p.n ? "Esta búsqueda hará hasta " + p.n + (p.n === 1 ? " consulta" : " consultas") + " a Google (cada una cuenta para tu presupuesto)." : "Elige al menos una categoría o escribe qué buscar.");
-  $("radioT").textContent = radio >= 1000 ? (radio / 1000).toFixed(radio % 1000 ? 2 : 0).replace(/0$/, "") + " km" : radio + " m";
-  var rest = Math.max(0, LIMITE_MES - cuota());
-  $("btnBuscar").disabled = !centro || !p.n || buscando || !apiKey() || p.n > rest;
-  if (centro && p.n && p.n > rest) $("plan").textContent = "Esta búsqueda (" + p.n + " consultas) supera lo que te queda del tope mensual de la app (" + rest + " de " + LIMITE_MES + "). Reduce la cobertura o espera al próximo mes.";
-  $("centroT").textContent = centro ? (centroTxt || "Centro: " + centro.la.toFixed(4) + ", " + centro.lo.toFixed(4)) : "Sin centro definido";
-}
-var MASCARA = "places.id,places.displayName,places.formattedAddress,places.location,places.rating,places.userRatingCount,places.websiteUri,places.nationalPhoneNumber,places.googleMapsUri,places.primaryTypeDisplayName,places.businessStatus";
-function llamar(url, cuerpo, mascara) {
-  cuota(1);
-  return fetch(url, { method: "POST", headers: { "Content-Type": "application/json", "X-Goog-Api-Key": apiKey(), "X-Goog-FieldMask": mascara }, body: JSON.stringify(cuerpo) })
-    .then(function (r) { return r.json().then(function (j) { if (!r.ok) { var m = (j.error && j.error.message) || ("Error " + r.status); throw new Error(m); } return j; }); });
-}
-function aItem(p) {
-  var cl = clasificar(p.websiteUri), partes = String(p.formattedAddress || "").split(", ");
-  var z = (partes[1] || partes[0] || "").replace(/\s*\d{3,}\s*/g, " ").trim();
-  var it = { id: "g:" + p.id, g: true, n: (p.displayName && p.displayName.text) || "Sin nombre", k: (p.primaryTypeDisplayName && p.primaryTypeDisplayName.text) || "Negocio", z: z, a: partes[0] || "", r: p.rating || 0, c: p.userRatingCount || 0, t: p.nationalPhoneNumber || "", s: cl.s, pl: cl.pl, redes: cl.redes, la: p.location.latitude, lo: p.location.longitude, m: p.googleMapsUri || "" };
+/* ---------- Explorar: buscador local (herramientas/servidor.js) ---------- */
+var RUB = [["belleza", "Belleza"], ["comida", "Comida"], ["salud", "Salud"], ["fitness", "Fitness"], ["tiendas", "Tiendas"], ["hogar", "Hogar"], ["auto", "Automotriz"], ["profesional", "Profesionales"], ["educacion", "Educación"], ["mascotas", "Mascotas"], ["turismo", "Turismo"], ["ocio", "Ocio"]];
+var RUBQ = {
+  belleza: ["barbería", "peluquería", "salón de belleza", "spa", "uñas manicure", "centro de estética"],
+  comida: ["restaurante", "cafetería", "panadería pastelería", "pollería", "cevichería", "bar"],
+  salud: ["clínica", "dentista", "farmacia", "laboratorio clínico", "fisioterapia"],
+  fitness: ["gimnasio", "yoga", "academia de baile"],
+  tiendas: ["tienda de ropa", "zapatería", "joyería", "ferretería", "librería", "minimarket", "florería"],
+  hogar: ["electricista", "gasfitero", "carpintería", "lavandería", "mudanzas"],
+  auto: ["taller mecánico", "lavado de autos", "repuestos automotrices", "grifo"],
+  profesional: ["estudio de abogados", "contador", "inmobiliaria", "agencia de marketing", "seguros"],
+  educacion: ["academia", "colegio", "instituto", "jardín de niños"],
+  mascotas: ["veterinaria", "tienda de mascotas", "peluquería canina"],
+  turismo: ["hotel", "hostal", "agencia de viajes", "salón de eventos"],
+  ocio: ["discoteca", "karaoke", "cine", "salón de juegos"]
+};
+var cfg = { centro: "", radio: 5, rubros: ["belleza"], consultas: "", minRes: 100, cob: 5, vel: 1800, limite: 0, conocidos: false, reemplazar: true, ver: false };
+var CHIPS = { resMin: [[0, "Todas"], [50, "50+"], [100, "100+"], [250, "250+"], [500, "500+"]], cobert: [[1, "Rápida"], [5, "Amplia"], [9, "Máxima"]], vel: [[1800, "Normal"], [3200, "Lenta"], [5500, "Muy lenta"]] };
+(function () { var g = leer(BU, null); if (g) Object.keys(g).forEach(function (k) { if (k in cfg) cfg[k] = g[k]; }); })();
+function guardarCfg() { poner_(BU, cfg); }
+
+function itemDeFila(r) {
+  var cl = clasificar(r[6]), it = { id: "g:" + r[9], g: true, n: r[0], r: r[1], c: r[2], k: r[3], a: r[4], z: "", t: r[5], s: cl.s, pl: cl.pl, redes: cl.redes, la: r[7], lo: r[8], m: "https://maps.google.com/?cid=" + r[9] };
   if (cl.l) { it.l = cl.l; it.lt = cl.lt; }
   if (cl.ig) it.ig = cl.ig;
+  if (centro) it.dist = dkm(centro, it);
   return it;
 }
-function buscarCerca() {
-  var p = plan(), vistos = {}, tareas = [], total = 0, hechas = 0, errores = [];
-  if (!centro || !p.n || !apiKey()) return;
-  buscando = true; cancelar = false; pintarPlan();
-  var cs = circulos();
-  var estado = function (t) { $("estado").textContent = t; };
-  if (p.tipos.length) for (var i = 0; i < p.lotes; i++) cs.forEach(function (c) {
-    tareas.push({ tipo: "cerca", url: "https://places.googleapis.com/v1/places:searchNearby", mascara: MASCARA, cuerpo: { includedTypes: p.tipos.slice(i * 50, i * 50 + 50), maxResultCount: 20, rankPreference: "POPULARITY", languageCode: "es", locationRestriction: { circle: { center: { latitude: c.la, longitude: c.lo }, radius: c.r } } } });
+function consultasDeRubros() {
+  var q = []; cfg.rubros.forEach(function (k) { (RUBQ[k] || []).forEach(function (x) { if (q.indexOf(x) === -1) q.push(x); }); }); return q;
+}
+function listaConsultas() { return String($("consultas").value || "").split(/[,\n]/).map(function (s) { return s.trim(); }).filter(Boolean); }
+function pintarChips() {
+  $("rubros").innerHTML = RUB.map(function (r) { return '<button class="chip" type="button" data-rub="' + r[0] + '" aria-pressed="' + (cfg.rubros.indexOf(r[0]) > -1) + '">' + r[1] + '</button>'; }).join("") + '<button class="chip" type="button" data-rub="*" aria-pressed="false">Todos</button>';
+  ["resMin", "cobert", "vel"].forEach(function (id) {
+    var cur = id === "resMin" ? cfg.minRes : id === "cobert" ? cfg.cob : cfg.vel;
+    $(id).innerHTML = CHIPS[id].map(function (c) { return '<button class="chip" type="button" data-' + id + '="' + c[0] + '" aria-pressed="' + (c[0] === cur) + '">' + c[1] + '</button>'; }).join("");
   });
-  if (texto.trim()) cs.forEach(function (c) {
-    tareas.push({ tipo: "texto", url: "https://places.googleapis.com/v1/places:searchText", mascara: MASCARA, cuerpo: { textQuery: texto.trim(), pageSize: 20, languageCode: "es", locationBias: { circle: { center: { latitude: c.la, longitude: c.lo }, radius: c.r } } } });
-  });
-  total = tareas.length; EXP = [];
-  function paso() {
-    if (cancelar || !tareas.length) { fin(); return; }
-    var t = tareas.shift(); hechas++; estado("Consulta " + hechas + " de " + total + "… " + EXP.length + " locales");
-    llamar(t.url, t.cuerpo, t.mascara).then(function (j) {
-      (j.places || []).forEach(function (pl) {
-        if (pl.businessStatus === "CLOSED_PERMANENTLY" || !pl.location || vistos[pl.id]) return;
-        vistos[pl.id] = 1;
-        var it = aItem(pl); it.dist = dkm({ la: centro.la, lo: centro.lo }, it);
-        if (it.dist <= radio / 1000 * 1.05) EXP.push(it);
-      });
-    }).catch(function (e) { errores.push(e.message); if (/API key|PERMISSION|403|referer|not valid/i.test(e.message)) tareas = []; })
-      .then(function () { render(); paso(); });
-  }
-  function fin() {
-    buscando = false; pintarPlan(); $("cuota").textContent = "Consultas este mes en esta app: " + cuota() + " de " + LIMITE_MES + " (tope de seguridad)";
-    estado(errores.length ? "Terminó con un problema: " + errores[0] : (cancelar ? "Búsqueda detenida. " : "Listo. ") + EXP.length + " locales encontrados.");
-    $("busq").open = false; render(); $("main").scrollTo({ top: 0 });
-  }
-  paso();
+}
+function pintarForm() {
+  $("centroIn").value = cfg.centro; $("radio").value = cfg.radio; $("consultas").value = cfg.consultas || consultasDeRubros().join("\n");
+  $("limite").value = cfg.limite; $("oConocidos").checked = cfg.conocidos; $("oReemplazar").checked = cfg.reemplazar; $("oVer").checked = cfg.ver;
+  pintarChips(); pintarPlan();
+}
+function pintarPlan() {
+  var q = listaConsultas().length, bus = q * cfg.cob, min = Math.round(bus * 0.95);
+  $("radioT").textContent = cfg.radio + " km";
+  $("plan").textContent = q ? ("Hará unas " + bus + " búsquedas en Google Maps (" + q + " × " + cfg.cob + " zonas), unos " + min + " minutos, más abrir cada negocio que cumpla (unos 10 segundos cada uno). Puedes detenerla cuando quieras y se guarda lo avanzado.") : "Elige al menos un rubro o escribe una búsqueda.";
+  $("btnBuscar").disabled = !conectado || buscando || !q || !$("centroIn").value.trim();
+}
+function pintarConexion(ok, detalle) {
+  conectado = ok;
+  $("conexion").innerHTML = ok
+    ? '<p class="conx"><i class="punto"></i><b>Buscador conectado</b><span class="muted">' + esc(detalle || "") + '</span></p>'
+    : '<p class="conx no"><i class="punto"></i><b>Buscador no conectado</b></p><p class="hint">El buscador usa un programa en tu computadora. Haz doble clic en <b>Iniciar Radar.bat</b> (o ejecuta <code>node herramientas/servidor.js</code>); se abrirá la app en <code>http://localhost:8787</code> con el buscador listo. Ahora estás en <code>' + esc(location.origin === "null" ? "un archivo local" : location.origin) + '</code>.</p><div class="acts"><button class="btn" type="button" id="btnReconectar">Reintentar conexión</button></div>';
+  pintarPlan();
+}
+function conectar() {
+  if (!/^https?:$/.test(location.protocol)) { pintarConexion(false); return; }
+  fetch("/api/estado", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : Promise.reject(); }).then(function (j) {
+    if (!j || !j.ok) throw 0;
+    pintarConexion(true, j.navegador ? "Chrome o Edge listo" : "No encuentro Chrome ni Edge");
+    if (!j.navegador) { conectado = false; pintarPlan(); }
+    abrirEventos();
+  }).catch(function () { pintarConexion(false); });
+}
+function abrirEventos() {
+  if (orig) return;
+  orig = new EventSource("/api/eventos");
+  orig.addEventListener("estado", function (e) { var s = JSON.parse(e.data); estadoDe(s); });
+  orig.addEventListener("log", function (e) { logLinea(JSON.parse(e.data)); });
+  orig.addEventListener("etapa", function (e) { etapaDe(JSON.parse(e.data)); });
+  orig.addEventListener("centro", function (e) { centro = { la: JSON.parse(e.data).la, lo: JSON.parse(e.data).lo }; });
+  orig.addEventListener("fila", function (e) { var it = itemDeFila(JSON.parse(e.data)); EXP = EXP.filter(function (x) { return x.id !== it.id; }); EXP.push(it); render(); });
+  orig.addEventListener("fin", function (e) { finDe(JSON.parse(e.data)); });
+  orig.onerror = function () { if (orig) { orig.close(); orig = null; } if (buscando) { buscando = false; } pintarConexion(false); };
+}
+function logLinea(t) { var r = $("reg"); r.textContent += (r.textContent ? "\n" : "") + t; r.scrollTop = r.scrollHeight; }
+function etapaDe(e) {
+  $("progreso").hidden = false;
+  var nombres = { inicio: "Preparando…", centro: "Ubicando el centro", busquedas: "Buscando en Google Maps", fichas: "Leyendo cada negocio" };
+  $("pEtapa").textContent = nombres[e.nombre] || e.nombre;
+  $("pConteo").textContent = e.n > 1 ? e.i + " de " + e.n : "";
+  $("pDetalle").textContent = e.detalle || "";
+  var base = e.nombre === "busquedas" ? 0 : e.nombre === "fichas" ? 60 : 0, peso = e.nombre === "busquedas" ? 60 : e.nombre === "fichas" ? 40 : 0;
+  $("pFill").style.width = Math.min(100, base + (e.n ? peso * e.i / e.n : 0)) + "%";
+}
+function estadoDe(s) {
+  buscando = !!s.corriendo;
+  if (s.centro) centro = { la: s.centro.la, lo: s.centro.lo };
+  if (s.corriendo || s.log.length) { $("progreso").hidden = false; $("reg").textContent = s.log.join("\n"); if (s.etapa) etapaDe(s.etapa); }
+  if (s.corriendo && s.filas.length && !EXP.length) { EXP = s.filas.map(itemDeFila); render(); }
+  $("btnParar").hidden = !s.corriendo; $("btnBuscar").hidden = !!s.corriendo; pintarPlan();
+}
+function finDe(f) {
+  buscando = false; $("btnParar").hidden = true; $("btnBuscar").hidden = false; pintarPlan();
+  $("pFill").style.width = "100%"; $("pEtapa").textContent = f.error ? "Se detuvo con un problema" : (f.resultado && f.resultado.parado ? "Búsqueda detenida" : "Búsqueda terminada");
+  $("pDetalle").textContent = f.error ? f.error : (f.resultado ? f.resultado.total + " negocios guardados en " + f.resultado.archivo : "");
+  $("busq").open = false;
+  if (EXP.length) poner_(UL, { centro: centro, filas: EXP.map(function (d) { return [d.n, d.r, d.c, d.k, d.a, d.t, d.l || "", d.la, d.lo, String(d.id).slice(2)]; }) });
+  render();
+}
+function iniciarBusqueda() {
+  var q = listaConsultas();
+  cfg.centro = $("centroIn").value.trim(); cfg.consultas = q.join("\n"); guardarCfg();
+  if (cfg.reemplazar) { EXP = []; centro = null; }
+  $("reg").textContent = ""; $("progreso").hidden = false; $("pEtapa").textContent = "Preparando…"; $("pConteo").textContent = ""; $("pDetalle").textContent = ""; $("pFill").style.width = "0%";
+  fetch("/api/buscar", { method: "POST", headers: { "Content-Type": "application/json", "X-Radar": "1" }, body: JSON.stringify({ centro: cfg.centro, radio: cfg.radio, consultas: q, minResenas: cfg.minRes, teselas: cfg.cob, pausa: cfg.vel, limite: cfg.limite, conocidos: cfg.conocidos, ver: cfg.ver }) })
+    .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || "No se pudo iniciar"); }); })
+    .then(function () { buscando = true; $("btnParar").hidden = false; $("btnBuscar").hidden = true; $("busq").open = false; render(); })
+    .catch(function (e) { $("pEtapa").textContent = "No se pudo iniciar"; $("pDetalle").textContent = e.message; });
 }
 function usarUbicacion() {
-  if (!navigator.geolocation) { $("estado").textContent = "Tu navegador no permite ubicación."; return; }
-  $("estado").textContent = "Buscando tu ubicación…";
-  navigator.geolocation.getCurrentPosition(function (p) {
-    centro = { la: p.coords.latitude, lo: p.coords.longitude }; centroTxt = "Tu ubicación (±" + Math.round(p.coords.accuracy) + " m)";
-    $("estado").textContent = ""; pintarPlan();
-  }, function (e) {
-    $("estado").textContent = e.code === 1 ? "Permiso de ubicación denegado. Actívalo en el navegador o escribe una zona." : "No se pudo obtener tu ubicación. Escribe una zona.";
-  }, { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 });
-}
-function otraZona(q) {
-  if (!q.trim() || !apiKey()) { $("estado").textContent = apiKey() ? "Escribe una zona o dirección." : "Conecta tu clave de Google primero."; return; }
-  $("estado").textContent = "Buscando zona…";
-  llamar("https://places.googleapis.com/v1/places:searchText", { textQuery: q, pageSize: 1, languageCode: "es" }, "places.location,places.displayName,places.formattedAddress").then(function (j) {
-    var p = (j.places || [])[0];
-    if (!p) { $("estado").textContent = "No encontré esa zona."; return; }
-    centro = { la: p.location.latitude, lo: p.location.longitude }; centroTxt = "Zona: " + ((p.displayName && p.displayName.text) || q);
-    $("estado").textContent = ""; pintarPlan();
-  }).catch(function (e) { $("estado").textContent = e.message; });
+  if (!navigator.geolocation) { aviso("Tu navegador no permite ubicación."); return; }
+  navigator.geolocation.getCurrentPosition(function (p) { $("centroIn").value = p.coords.latitude.toFixed(5) + "," + p.coords.longitude.toFixed(5); pintarPlan(); }, function (e) { aviso(e.code === 1 ? "Permiso de ubicación denegado. Escribe una dirección." : "No se pudo obtener tu ubicación."); }, { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 });
 }
 
 $("explorar").addEventListener("click", function (e) {
   var t = e.target, el;
+  if (t.closest("#btnBuscar")) { iniciarBusqueda(); return; }
+  if (t.closest("#btnParar")) { fetch("/api/parar", { method: "POST", headers: { "X-Radar": "1" } }); $("pEtapa").textContent = "Deteniendo…"; return; }
+  if (t.closest("#btnReconectar")) { conectar(); return; }
   if (t.closest("#btnUbic")) { usarUbicacion(); return; }
-  if (t.closest("#btnZona")) { otraZona($("zonaIn").value); return; }
-  if (t.closest("#btnBuscar")) { buscarCerca(); return; }
-  if (t.closest("#btnParar")) { cancelar = true; return; }
-  if (t.closest("#kQuitar")) { try { localStorage.removeItem(GK); } catch (err) {} pintarClave(); pintarPlan(); return; }
-  if ((el = t.closest("[data-cat]"))) {
-    var id = el.getAttribute("data-cat"), i = cats.indexOf(id);
-    if (i > -1) cats.splice(i, 1); else cats.push(id);
-    el.setAttribute("aria-pressed", i === -1); pintarPlan(); return;
+  if ((el = t.closest("[data-rub]"))) {
+    var k = el.getAttribute("data-rub");
+    if (k === "*") cfg.rubros = cfg.rubros.length === RUB.length ? [] : RUB.map(function (r) { return r[0]; });
+    else { var i = cfg.rubros.indexOf(k); if (i > -1) cfg.rubros.splice(i, 1); else cfg.rubros.push(k); }
+    cfg.consultas = ""; $("consultas").value = consultasDeRubros().join("\n"); pintarChips(); pintarPlan(); guardarCfg(); return;
   }
-  if ((el = t.closest("[data-cob]"))) {
-    cobertura = +el.getAttribute("data-cob");
-    document.querySelectorAll("[data-cob]").forEach(function (x) { x.setAttribute("aria-pressed", x === el ? "true" : "false"); }); pintarPlan();
-  }
+  if ((el = t.closest("[data-resMin]"))) { cfg.minRes = +el.getAttribute("data-resMin"); pintarChips(); guardarCfg(); return; }
+  if ((el = t.closest("[data-cobert]"))) { cfg.cob = +el.getAttribute("data-cobert"); pintarChips(); pintarPlan(); guardarCfg(); return; }
+  if ((el = t.closest("[data-vel]"))) { cfg.vel = +el.getAttribute("data-vel"); pintarChips(); guardarCfg(); }
 });
-$("explorar").addEventListener("submit", function (e) {
-  if (e.target.id === "kForm") { e.preventDefault(); var v = $("kIn").value.trim(); if (v) { try { localStorage.setItem(GK, v); } catch (err) {} pintarClave(); pintarPlan(); } }
-  if (e.target.id === "zForm") { e.preventDefault(); otraZona($("zonaIn").value); }
+$("explorar").addEventListener("input", function (e) {
+  var id = e.target.id;
+  if (id === "radio") { cfg.radio = +e.target.value; }
+  else if (id === "consultas") { cfg.consultas = e.target.value; }
+  else if (id === "limite") { cfg.limite = Math.max(0, parseInt(e.target.value, 10) || 0); }
+  else if (id === "centroIn") { cfg.centro = e.target.value; }
+  pintarPlan(); guardarCfg();
 });
-$("radio").addEventListener("input", function (e) { radio = +e.target.value; pintarPlan(); });
-$("texto").addEventListener("input", function (e) { texto = e.target.value; pintarPlan(); });
+$("explorar").addEventListener("change", function (e) {
+  if (e.target.id === "oConocidos") cfg.conocidos = e.target.checked;
+  if (e.target.id === "oReemplazar") cfg.reemplazar = e.target.checked;
+  if (e.target.id === "oVer") cfg.ver = e.target.checked;
+  guardarCfg();
+});
 
 $("tabNeg").addEventListener("click", function () { cerrarHojas(); $("main").scrollTo({ top: 0 }); });
 $("tabFil").addEventListener("click", function () { hojaActual === $("filtros") ? cerrarHojas() : abrirHoja($("filtros"), $("tabFil")); tabs(); });
@@ -811,20 +832,15 @@ document.addEventListener("click", function (e) {
 });
 document.addEventListener("change", function (e) { if (e.target.id === "rbOpt") { optim = e.target.checked; pintarRuta(); } });
 
-// Resultados iniciales de Explorar: la búsqueda manual alrededor de Av. La Mar 2591
+// Resultados iniciales de Explorar: la última búsqueda hecha con el buscador o, si no hay, la búsqueda manual alrededor de Av. La Mar 2591
 (function () {
-  var c = { la: ZONA.centro.la, lo: ZONA.centro.lo };
-  EXP = ZONA.negocios.map(function (r) {
-    var cl = clasificar(r[6]), it = { id: "g:" + r[9], g: true, n: r[0], r: r[1], c: r[2], k: r[3], a: r[4], z: "", t: r[5], s: cl.s, pl: cl.pl, redes: cl.redes, la: r[7], lo: r[8], m: "https://maps.google.com/?cid=" + r[9] };
-    if (cl.l) { it.l = cl.l; it.lt = cl.lt; }
-    if (cl.ig) it.ig = cl.ig;
-    it.dist = dkm(c, it);
-    return it;
-  });
-  centro = c; centroTxt = ZONA.centro.nombre; radio = ZONA.centro.radioKm * 1000; $("radio").value = radio;
-  $("estado").textContent = "Resultados cargados: " + EXP.length + " negocios con 100+ reseñas en 5 km de " + ZONA.centro.nombre + " (búsqueda manual). Una búsqueda nueva reemplaza esta lista.";
+  var ult = leer(UL, null), base = ult && ult.filas && ult.filas.length ? ult : { centro: ZONA.centro, filas: ZONA.negocios }, c = base.centro || ZONA.centro;
+  centro = { la: c.la, lo: c.lo };
+  EXP = base.filas.map(itemDeFila);
+  if (!cfg.centro) cfg.centro = c.nombre || (c.la.toFixed(5) + "," + c.lo.toFixed(5));
+  if (ult && ult.filas && ult.filas.length) { cfg.radio = cfg.radio || 5; }
 })();
-pintarCats(); pintarClave(); pintarPlan();
+pintarForm(); pintarConexion(false); conectar();
 ponerModo("lista");
 
 </script>

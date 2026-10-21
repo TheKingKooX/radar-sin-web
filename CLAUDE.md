@@ -27,3 +27,5 @@ Proyecto de prospección de Kleiber: encontrar negocios de belleza con muchas re
 - Resultados iniciales de Explorar: `zona-la-mar.json` (búsqueda manual en Google Maps de belleza, 100+ reseñas, 5 km de Av. La Mar 2591, San Miguel), embebidos en index.html como ZONA. Estado de web = enlace que Google muestra; conviene confirmar en Google antes de ofrecer una página.
 - Recolector automático: `node herramientas/mapas.js --centro "dirección" --radio 5 --rubro belleza --app` (ver herramientas/README.md). Lee Google Maps con Chrome o Edge, es lento a propósito, se detiene ante verificaciones de Google y deja los resultados en zona-*.json y, con --app, en Explorar.
 - Ruta en Google Maps: cada tarjeta tiene una casilla; la barra inferior arma `maps/dir/?api=1` con las coordenadas (`la`, `lo`) de los negocios elegidos (máximo 10 paradas) y puede ordenarlas por cercanía.
+
+- Buscador en Explorar: `Iniciar Radar.bat` (o `node herramientas/servidor.js`) sirve la app en `localhost:8787` y expone `/api/*`; Explorar controla `herramientas/mapas.js` (sin API de Google, sin claves). Config guardada en localStorage; último resultado en `radar-ultimo`.

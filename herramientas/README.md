@@ -5,7 +5,11 @@ muchas reseñas, abrir cada ficha para leer web, teléfono y dirección, y dejar
 
 No tiene dependencias: solo necesita **Node 22 o más** y **Chrome o Edge** instalados.
 
-## Uso rápido
+## Desde la pestaña Explorar (recomendado)
+
+Haz doble clic en **Iniciar Radar.bat** (o `node herramientas/servidor.js`). Se abre la app en `http://localhost:8787` y la pestaña **Explorar** muestra el buscador: centro, radio, rubros, búsquedas editables, reseñas mínimas, cobertura y velocidad. Con **Iniciar búsqueda** ves el avance en vivo y los negocios van apareciendo en la lista; **Detener** guarda lo avanzado. No usa la API de Google ni claves. El servidor solo escucha en tu equipo (127.0.0.1). Abierta como archivo o desde GitHub Pages, Explorar muestra los resultados guardados pero no puede buscar.
+
+## Uso rápido (línea de comandos)
 
 ```bash
 node herramientas/mapas.js --centro "Av. La Mar 2591, San Miguel" --radio 5 --rubro belleza --min-resenas 100 --app

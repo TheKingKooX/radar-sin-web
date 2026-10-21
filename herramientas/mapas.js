@@ -218,45 +218,70 @@ async function verificar(p, o, etapa) {
 }
 
 /* ---------- Programa principal ---------- */
-async function main() {
-  const o = leerArgs();
+function filaDe(x, f) {
+  const partes = x.det.split("·").map((s) => s.trim()), cat = partes[0] || "";
+  const dir = (f.dir || "").replace(/,?\s*(San Miguel|Magdalena del Mar|Jesús María|Pueblo Libre|Lima|San Isidro|Callao|Breña|Lince)\b.*$/i, "").trim() || partes.slice(1).join(", ");
+  return [x.n, x.r, x.c, cat, dir, f.tel || "", f.web ? limpiarUrl(f.web) : "", +x.la.toFixed(6), +x.lo.toFixed(6), x.cid];
+}
+
+// Valida y completa las opciones (la usa el servidor del buscador de la app)
+function completar(raw) {
+  const o = { radio: 5, minResenas: 100, teselas: 5, limite: 0, pausa: 1800, conocidos: false, app: false, ver: false, ...raw };
+  o.centro = String(o.centro || "").trim();
+  if (!o.centro) throw new Error("Falta el centro de la búsqueda.");
+  o.radio = parseFloat(o.radio); o.minResenas = parseInt(o.minResenas, 10) || 0; o.teselas = parseInt(o.teselas, 10); o.limite = parseInt(o.limite, 10) || 0; o.pausa = Math.max(1000, parseInt(o.pausa, 10) || 1800);
+  if (!(o.radio > 0 && o.radio <= 25)) throw new Error("El radio debe estar entre 0 y 25 km.");
+  if (![1, 5, 9].includes(o.teselas)) throw new Error("La cobertura debe ser 1, 5 o 9 zonas.");
+  let c = o.consultas;
+  if (typeof c === "string") c = c.split(/[,\n]/);
+  c = (c || []).map((s) => String(s).trim()).filter(Boolean).slice(0, 60);
+  if (!c.length) throw new Error("Elige al menos un rubro o escribe una búsqueda.");
+  o.consultas = c;
+  return o;
+}
+
+async function ejecutar(o, hooks = {}) {
+  const h = { log() {}, etapa() {}, fila() {}, parar: () => false, ...hooks };
   const cache = path.join(RAIZ, ".cache-mapas"); fs.mkdirSync(cache, { recursive: true });
   const archivoFichas = path.join(cache, "fichas.json");
   const fichas = fs.existsSync(archivoFichas) ? JSON.parse(fs.readFileSync(archivoFichas, "utf8")) : {};
   const guardarFichas = () => fs.writeFileSync(archivoFichas, JSON.stringify(fichas));
   const { pagina: p, cerrar } = await abrirNavegador(o);
-  process.on("SIGINT", async () => { console.log("\nDetenido; cerrando el navegador…"); await cerrar(); process.exit(130); });
-  let centro = null, nombreCentro = o.centro;
+  let centro = null, parado = false;
+  const nombreCentro = o.centro;
   try {
     // 1) Centro
     const ll = o.centro.match(/^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/);
     if (ll) { centro = { la: +ll[1], lo: +ll[2] }; }
     else {
+      h.etapa("centro", 0, 1);
       await p.ir("https://www.google.com/maps/search/" + encodeURIComponent(o.centro) + "?hl=es"); await verificar(p, o, "centro");
       for (let i = 0; i < 40 && !centro; i++) {
         await dormir(500);
         const u = await p.url(), m = u.match(/!3d(-?[0-9.]+)!4d(-?[0-9.]+)/) || u.match(/@(-?[0-9.]+),(-?[0-9.]+),/);
         if (m && /\/maps\/place\//.test(u)) centro = { la: +m[1], lo: +m[2] };
       }
-      if (!centro) throw new Error("No pude ubicar «" + o.centro + "». Prueba con coordenadas: --centro \"-12.07,-77.08\".");
+      if (!centro) throw new Error("No pude ubicar «" + o.centro + "». Prueba con una dirección más completa o con coordenadas (lat,lng).");
     }
-    console.log("Centro: " + nombreCentro + " (" + centro.la.toFixed(5) + ", " + centro.lo.toFixed(5) + "), radio " + o.radio + " km");
+    if (h.centro) h.centro({ nombre: nombreCentro, la: centro.la, lo: centro.lo, radioKm: o.radio });
+    h.log("Centro: " + nombreCentro + " (" + centro.la.toFixed(5) + ", " + centro.lo.toFixed(5) + "), radio " + o.radio + " km");
 
     // 2) Búsquedas por rubro y zona
     const zonas = teselas(centro, o.radio, o.teselas), zoom = zoomPara(o.radio), encontrados = {};
     const total = o.consultas.length * zonas.length; let hecho = 0;
-    for (const q of o.consultas) for (const z of zonas) {
-      hecho++;
-      process.stdout.write("[" + hecho + "/" + total + "] «" + q + "» en " + z.la.toFixed(3) + "," + z.lo.toFixed(3) + " … ");
-      await p.ir("https://www.google.com/maps/search/" + encodeURIComponent(q) + "/@" + z.la.toFixed(6) + "," + z.lo.toFixed(6) + "," + zoom + "z?hl=es&entry=ttu");
-      await verificar(p, o, "búsqueda");
+    const urlBusqueda = (q, z) => "https://www.google.com/maps/search/" + encodeURIComponent(q) + "/@" + z.la.toFixed(6) + "," + z.lo.toFixed(6) + "," + zoom + "z?hl=es&entry=ttu";
+    busquedas: for (const q of o.consultas) for (const z of zonas) {
+      if (h.parar()) { parado = true; break busquedas; }
+      hecho++; h.etapa("busquedas", hecho, total, q);
+      const pre = "[" + hecho + "/" + total + "] «" + q + "» en " + z.la.toFixed(3) + "," + z.lo.toFixed(3) + " … ";
+      await p.ir(urlBusqueda(q, z)); await verificar(p, o, "búsqueda");
       let r = await p.evaluar("(" + paginaLista + ")()");
-      if (r.error || !r.items.length) { await dormir(4000); await p.ir("https://www.google.com/maps/search/" + encodeURIComponent(q) + "/@" + z.la.toFixed(6) + "," + z.lo.toFixed(6) + "," + zoom + "z?hl=es&entry=ttu"); await verificar(p, o, "búsqueda"); r = await p.evaluar("(" + paginaLista + ")()"); } // un reintento si vino vacía
-      if (r.error) { if (BLOQUEO.test(r.texto || "")) throw new Error("Google mostró una verificación (" + q + "). Espera y vuelve a ejecutar."); console.log("sin resultados"); }
+      if (r.error || !r.items.length) { await dormir(4000); await p.ir(urlBusqueda(q, z)); await verificar(p, o, "búsqueda"); r = await p.evaluar("(" + paginaLista + ")()"); } // un reintento si vino vacía
+      if (r.error) { if (BLOQUEO.test(r.texto || "")) throw new Error("Google mostró una verificación (" + q + "). Espera un rato y vuelve a intentar."); h.log(pre + "sin resultados"); }
       else {
         let nuevos = 0;
         r.items.forEach((it) => { if (it.cid && !encontrados[it.cid]) { encontrados[it.cid] = it; nuevos++; } });
-        console.log(r.items.length + " locales, " + nuevos + " nuevos");
+        h.log(pre + r.items.length + " locales, " + nuevos + " nuevos");
       }
       await dormir(o.pausa + azar(0, 900));
     }
@@ -269,51 +294,57 @@ async function main() {
     let cand = Object.values(encontrados).map((x) => ({ ...x, d: dkm(centro, x) }))
       .filter((x) => x.d <= o.radio * 1.01 && x.c >= o.minResenas && !conocidos.has(x.cid))
       .sort((a, b) => b.c - a.c);
-    console.log("\nEncontrados: " + Object.keys(encontrados).length + "; en " + o.radio + " km con " + o.minResenas + "+ reseñas y no conocidos: " + cand.length);
+    h.log("Encontrados: " + Object.keys(encontrados).length + "; en " + o.radio + " km con " + o.minResenas + "+ reseñas" + (o.conocidos ? "" : " y que no están en tu lista") + ": " + cand.length);
     if (o.limite > 0) cand = cand.slice(0, o.limite);
 
     // 4) Abrir cada ficha
     let i = 0;
-    for (const x of cand) {
-      i++;
-      if (fichas[x.cid] && fichas[x.cid].ok) { console.log("[" + i + "/" + cand.length + "] " + x.n + " (ya leída)"); continue; }
-      process.stdout.write("[" + i + "/" + cand.length + "] " + x.n + " … ");
+    if (!parado) for (const x of cand) {
+      if (h.parar()) { parado = true; break; }
+      i++; h.etapa("fichas", i, cand.length, x.n);
+      const pre = "[" + i + "/" + cand.length + "] " + x.n + " … ";
+      if (fichas[x.cid] && fichas[x.cid].ok) { h.log(pre + "(ya leída)"); h.fila(filaDe(x, fichas[x.cid])); continue; }
       await p.ir("https://www.google.com/maps?cid=" + x.cid + "&hl=es"); await verificar(p, o, "ficha");
       const d = await p.evaluar("(" + paginaDetalle + ")()");
-      if (!d.ok && BLOQUEO.test(d.texto || "")) { guardarFichas(); throw new Error("Google mostró una verificación en una ficha. Lo avanzado quedó guardado; vuelve a ejecutar más tarde."); }
+      if (!d.ok && BLOQUEO.test(d.texto || "")) { guardarFichas(); throw new Error("Google mostró una verificación en una ficha. Lo avanzado quedó guardado; vuelve a intentar más tarde."); }
       fichas[x.cid] = d; guardarFichas();
-      console.log(d.ok ? tipoWeb(d.web) : "sin datos");
+      h.log(pre + (d.ok ? tipoWeb(d.web) : "sin datos"));
+      if (d.ok) h.fila(filaDe(x, d));
       await dormir(o.pausa + azar(0, 900));
     }
 
-    // 5) Resultados
-    const negocios = cand.map((x) => {
-      const f = fichas[x.cid] || {}, partes = x.det.split("·").map((s) => s.trim()), cat = partes[0] || "";
-      const dir = (f.dir || "").replace(/,?\s*(San Miguel|Magdalena del Mar|Jesús María|Pueblo Libre|Lima|San Isidro|Callao|Breña|Lince)\b.*$/i, "").trim() || partes.slice(1).join(", ");
-      return [x.n, x.r, x.c, cat, dir, f.tel || "", f.web ? limpiarUrl(f.web) : "", +x.la.toFixed(6), +x.lo.toFixed(6), x.cid];
-    });
-    const slug = o.centro.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40);
+    // 5) Resultados (solo las fichas leídas bien)
+    const negocios = cand.filter((x) => fichas[x.cid] && fichas[x.cid].ok).map((x) => filaDe(x, fichas[x.cid]));
+    const slug = o.centro.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40);
     const salida = path.resolve(RAIZ, o.salida || "zona-" + slug + ".json");
     const datos = { centro: { nombre: nombreCentro, la: centro.la, lo: centro.lo, radioKm: o.radio },
-      nota: "Recolectado de Google Maps el " + new Date().toISOString().slice(0, 10) + " (" + o.consultas.join(", ") + "); " + o.minResenas + "+ reseñas dentro de " + o.radio + " km. Filas: [nombre, puntaje, reseñas, categoría, dirección, teléfono, enlace web de Google, latitud, longitud, cid].",
+      nota: "Recolectado de Google Maps el " + new Date().toISOString().slice(0, 10) + " (" + o.consultas.join(", ") + "); " + o.minResenas + "+ reseñas dentro de " + o.radio + " km" + (parado ? " (búsqueda detenida antes de terminar)" : "") + ". Filas: [nombre, puntaje, reseñas, categoría, dirección, teléfono, enlace web de Google, latitud, longitud, cid].",
       negocios };
     fs.writeFileSync(salida, JSON.stringify(datos, null, 1));
     const cuenta = { "sin enlace": 0, "solo red social": 0, "solo reservas": 0, "web propia": 0 };
     negocios.forEach((n) => { cuenta[tipoWeb(n[6])]++; });
-    console.log("\nListo: " + negocios.length + " negocios → " + path.relative(RAIZ, salida));
-    console.log(Object.entries(cuenta).map(([k, v]) => k + ": " + v).join(" · "));
+    h.log((parado ? "Detenido: " : "Listo: ") + negocios.length + " negocios → " + path.relative(RAIZ, salida));
+    h.log(Object.entries(cuenta).map(([k, v]) => k + ": " + v).join(" · "));
 
     if (o.app) {
-      const idx = path.join(RAIZ, "index.html"); let h = fs.readFileSync(idx, "utf8");
-      const ini = h.indexOf("var ZONA = ");
-      if (ini < 0) console.log("index.html no tiene la variable ZONA; no se actualizó la app.");
+      const idx = path.join(RAIZ, "index.html"); let html = fs.readFileSync(idx, "utf8");
+      const ini = html.indexOf("var ZONA = ");
+      if (ini < 0) h.log("index.html no tiene la variable ZONA; no se actualizó la app.");
       else {
-        const lineaFin = h.indexOf("\n", ini);
-        h = h.slice(0, ini) + "var ZONA = " + JSON.stringify({ centro: datos.centro, negocios }) + ";" + h.slice(lineaFin);
-        fs.writeFileSync(idx, h); console.log("Explorar actualizado en index.html con estos resultados.");
+        const lineaFin = html.indexOf("\n", ini);
+        html = html.slice(0, ini) + "var ZONA = " + JSON.stringify({ centro: datos.centro, negocios }) + ";" + html.slice(lineaFin);
+        fs.writeFileSync(idx, html); h.log("Explorar actualizado en index.html con estos resultados.");
       }
     }
+    return { datos, salida, cuenta, parado };
   } finally { await cerrar(); }
 }
 
-main().catch((e) => { console.error("\nError: " + e.message); process.exit(1); });
+module.exports = { ejecutar, completar, RUBROS, tipoWeb, buscarNavegador };
+
+if (require.main === module) {
+  const o = leerArgs();
+  let parar = false;
+  process.on("SIGINT", () => { if (parar) process.exit(130); parar = true; console.log("\nDeteniendo y guardando lo avanzado… (Ctrl+C otra vez para salir ya)"); });
+  ejecutar(o, { log: (t) => console.log(t), parar: () => parar }).catch((e) => { console.error("\nError: " + e.message); process.exit(1); });
+}

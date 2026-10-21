@@ -52,7 +52,7 @@ a { color: var(--accent-text); text-underline-offset: 3px; }
 .brand svg { width: 34px; height: 34px; color: var(--fg); overflow: visible; flex: none; }
 .brand i { font-style: normal; color: transparent; -webkit-text-stroke: 1.2px var(--accent); }
 .search { flex: 1; min-width: 0; max-width: 460px; margin-left: auto; display: flex; align-items: center; gap: 8px; height: 42px; padding: 0 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; transition: border-color .2s, box-shadow .2s; }
-.search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--glow); }
+.search:focus-within { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 1px; }
 .search svg { flex: none; width: 18px; height: 18px; color: var(--muted); }
 .search input { flex: 1; min-width: 0; height: 100%; border: 0; background: none; color: inherit; font: inherit; font-size: 16px; outline: none; }
 .search input::-webkit-search-cancel-button { appearance: none; }
@@ -178,7 +178,7 @@ a { color: var(--accent-text); text-underline-offset: 3px; }
 .toast span { flex: 1; font-size: 14px; }
 .toast .btn { min-height: 34px; background: transparent; color: var(--bg); border-color: color-mix(in srgb, var(--bg) 50%, transparent); }
 @keyframes sube { from { opacity: 0; transform: translateY(12px); } }
-.fab { position: fixed; z-index: 45; right: 24px; bottom: 24px; display: none; align-items: center; gap: 10px; min-height: 52px; padding: 0 20px; border: 0; border-radius: 16px; background: var(--accent); color: #fff; font-weight: 600; box-shadow: 0 14px 30px -10px rgba(65, 105, 225, .7); cursor: pointer; }
+.fab { position: fixed; z-index: 45; right: 24px; bottom: 24px; display: none; align-items: center; gap: 10px; min-height: 52px; padding: 0 20px; border: 0; border-radius: 16px; background: var(--accent); color: #fff; font-weight: 600; box-shadow: 0 14px 30px -12px rgba(0, 0, 0, .6); cursor: pointer; }
 
 /* Escritorio */
 @media (min-width: 900px) {
@@ -210,7 +210,7 @@ a { color: var(--accent-text); text-underline-offset: 3px; }
 /* Modo Explorar */
 .seg { display: flex; gap: 4px; padding: 4px; margin-bottom: 14px; background: var(--surface2); border-radius: 14px; }
 .seg button { flex: 1; min-height: 40px; border: 0; border-radius: 11px; background: none; font-weight: 600; color: var(--muted); cursor: pointer; transition: background .2s, color .2s, box-shadow .2s; }
-.seg button[aria-selected="true"] { background: var(--accent); color: #fff; box-shadow: 0 6px 16px -8px rgba(65, 105, 225, .8); }
+.seg button[aria-selected="true"] { background: var(--accent); color: #fff; box-shadow: 0 6px 16px -8px rgba(0, 0, 0, .5); }
 .xcard { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px; margin-bottom: 12px; }
 .xcard summary { cursor: pointer; font-weight: 600; font-size: 16px; padding: 4px 0; }
 .xg { margin-top: 16px; }
@@ -355,6 +355,7 @@ var DATA = [
 ];
 var LABEL = { none: "Sin enlace", social: "Solo red social", web: "Web propia" };
 var KEY = "barberias-quitadas", GK = "radar-gkey", GU = "radar-guardados";
+var LIMITE_MES = 900;   // tope de seguridad de la app: Google da unas 1.000 consultas gratis al mes en este nivel (confírmalo en su tabla de precios)
 var MAX_PARADAS = 10;   // Google Maps admite destino + 9 paradas intermedias
 var modo = "lista", filtro = "todas", zona = "todas", tipo = "todos", orden = "reviews", buscar = "", minRes = 0, minRat = 0, red = "todas";
 var quitadas = [], GUARD = [], EXP = [], ruta = [], visibles = [], timer = null, abierta = null, primera = true;
@@ -648,7 +649,7 @@ function pintarClave() {
     : '<p><b>Conecta Google Maps</b></p><ol class="ayuda"><li>En Google Cloud, crea un proyecto y activa <b>Places API (New)</b>.</li><li>Crea una <b>clave de API</b> y restríngela a tu dominio (<code>https://thekingkoox.github.io/*</code>).</li><li>Pon un <b>presupuesto con alerta</b> para no pasarte del gasto.</li></ol>' +
       '<form id="kForm" class="krow"><input id="kIn" type="password" placeholder="Pega tu clave de API" autocomplete="off" spellcheck="false" aria-label="Clave de API de Google"><button class="btn pri" type="submit">Guardar</button></form>' +
       '<p class="hint">La clave se guarda solo en este dispositivo. Nunca se sube al repositorio.</p>';
-  $("cuota").textContent = "Consultas este mes en esta app: " + cuota();
+  $("cuota").textContent = "Consultas este mes en esta app: " + cuota() + " de " + LIMITE_MES + " (tope de seguridad)";
 }
 function pintarCats() {
   $("cats").innerHTML = CATS.map(function (c) { return '<button class="chip" type="button" data-cat="' + c.id + '" aria-pressed="' + (cats.indexOf(c.id) > -1) + '">' + esc(c.n) + '</button>'; }).join("");
@@ -679,7 +680,9 @@ function pintarPlan() {
   var p = plan();
   $("plan").textContent = !centro ? "Primero define el centro de la búsqueda." : (p.n ? "Esta búsqueda hará hasta " + p.n + (p.n === 1 ? " consulta" : " consultas") + " a Google (cada una cuenta para tu presupuesto)." : "Elige al menos una categoría o escribe qué buscar.");
   $("radioT").textContent = radio >= 1000 ? (radio / 1000).toFixed(radio % 1000 ? 2 : 0).replace(/0$/, "") + " km" : radio + " m";
-  $("btnBuscar").disabled = !centro || !p.n || buscando || !apiKey();
+  var rest = Math.max(0, LIMITE_MES - cuota());
+  $("btnBuscar").disabled = !centro || !p.n || buscando || !apiKey() || p.n > rest;
+  if (centro && p.n && p.n > rest) $("plan").textContent = "Esta búsqueda (" + p.n + " consultas) supera lo que te queda del tope mensual de la app (" + rest + " de " + LIMITE_MES + "). Reduce la cobertura o espera al próximo mes.";
   $("centroT").textContent = centro ? (centroTxt || "Centro: " + centro.la.toFixed(4) + ", " + centro.lo.toFixed(4)) : "Sin centro definido";
 }
 var MASCARA = "places.id,places.displayName,places.formattedAddress,places.location,places.rating,places.userRatingCount,places.websiteUri,places.nationalPhoneNumber,places.googleMapsUri,places.primaryTypeDisplayName,places.businessStatus";
@@ -723,7 +726,7 @@ function buscarCerca() {
       .then(function () { render(); paso(); });
   }
   function fin() {
-    buscando = false; pintarPlan(); $("cuota").textContent = "Consultas este mes en esta app: " + cuota();
+    buscando = false; pintarPlan(); $("cuota").textContent = "Consultas este mes en esta app: " + cuota() + " de " + LIMITE_MES + " (tope de seguridad)";
     estado(errores.length ? "Terminó con un problema: " + errores[0] : (cancelar ? "Búsqueda detenida. " : "Listo. ") + EXP.length + " locales encontrados.");
     $("busq").open = false; render(); $("main").scrollTo({ top: 0 });
   }

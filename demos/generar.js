@@ -193,10 +193,10 @@ ${tarjetas ? "" : galeria}
 </div></section>
 ${m.fusionUbicacion ? "" : m.opinionesAlFinal === false ? valoracion : ""}
 ${sedes}
-<section id="faq"><div class="in-w">
+${m.sinFaq ? "" : `<section id="faq"><div class="in-w">
   <span class="lbl rv">Preguntas frecuentes</span><h2 class="rv">Antes de venir</h2>
   <div class="faq">${faq.map((q) => `<details class="rv"><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join("")}</div>
-</div></section>
+</div></section>`}
 ${m.fusionUbicacion ? "" : `<section id="ubicacion"><div class="in-w ubi">
   <div class="rv"><span class="lbl">Ubicación</span><h2>Visítanos</h2>
     <address>${esc(d.a)}<br>${esc(d.z)}, Lima</address>

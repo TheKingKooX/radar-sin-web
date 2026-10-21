@@ -16,8 +16,8 @@ Proyecto de prospección de Kleiber: encontrar negocios de belleza con muchas re
 - La página funciona abriendo `index.html` en el navegador, sin servidor.
 
 ## Interfaz
-- Paleta: blanco o negro (según el sistema) y azul rey `#4169e1`. Fondo interactivo con resplandor que sigue al cursor.
-- Tarjetas desplegables: cerradas solo logo y nombre; los logos están en `img/` (campo `lg`) y los servicios en `sv`.
+- Paleta: blanco o negro (según el sistema) y azul rey `#4169e1`. Fondo con resplandor suave fijo.
+- Interfaz tipo app: barra superior con buscador; filtros en panel lateral (escritorio) u hoja inferior (celular); filas con logo, puntaje y estado; detalle en hoja o cajón; pestañas inferiores y ruta; se instala con `manifest.webmanifest` e `icon.svg`. Los logos están en `img/` (campo `lg`) y los servicios en `sv`.
 - Sucursales: campo `su` (lista de textos) solo cuando hay evidencia; sin el campo la tarjeta dice "Sin sucursales encontradas".
 - Identidad visual: campo `vi` ({c: colores hex, e: estilo, v: lema}) sacado del logo y del perfil público; sin `vi` la tarjeta lo indica.
 - Demos en `demos/`: se generan con `node demos/generar.js [id]` desde `datos.json` y `demos/marcas/<id>.js`; el campo `demo` de cada negocio muestra el botón "Ver demo" en su tarjeta.

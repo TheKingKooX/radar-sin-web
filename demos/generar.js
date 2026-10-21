@@ -130,6 +130,11 @@ function pagina(d, m) {
     <div class="fus-o">${cuerpoOpin}</div>
   </div>
 </div></section>`;
+  const contacto = `<section id="contacto" class="cont"><div class="in-w">
+  <h2 class="rv">Reserva tu cita</h2>
+  <p class="rv" style="color:var(--suave)">${esc(d.t)}</p>
+  <div class="acc rv"><a class="btn" href="${esc(wa)}"${ext}>${icono(esWa ? "whatsapp" : "telefono")}<span>${esWa ? "Escríbenos por WhatsApp" : "Llamar ahora"}</span></a>${llamar}${red}</div>
+</div></section>`;
   const galeria = `<section id="galeria"><div class="in-w">
   <span class="lbl rv">Galería</span><h2 class="rv">Nuestro trabajo</h2>
   <div class="gal">${mosaicos(d).map((x, i) => `<figure class="rv" style="--i:${i}">${icono(x.i, "ic big")}<figcaption>${esc(x.t)}</figcaption></figure>`).join("")}</div>
@@ -203,12 +208,9 @@ ${m.fusionUbicacion ? "" : `<section id="ubicacion"><div class="in-w ubi">
     <a class="btn sec" href="${esc(d.m)}" target="_blank" rel="noopener">${icono("pin")}<span>Abrir en Google Maps</span></a></div>
   <div class="mapa rv"><iframe title="Mapa de ${esc(d.n)}" loading="lazy" src="https://maps.google.com/maps?q=${d.la},${d.lo}&z=17&output=embed"></iframe></div>
 </div></section>`}
-<section id="contacto" class="cont"><div class="in-w">
-  <h2 class="rv">Reserva tu cita</h2>
-  <p class="rv" style="color:var(--suave)">${esc(d.t)}</p>
-  <div class="acc rv"><a class="btn" href="${esc(wa)}"${ext}>${icono(esWa ? "whatsapp" : "telefono")}<span>${esWa ? "Escríbenos por WhatsApp" : "Llamar ahora"}</span></a>${llamar}${red}</div>
-</div></section>
+${m.contactoAlFinal ? "" : contacto}
 ${m.fusionUbicacion ? fusion : m.opinionesAlFinal === false ? "" : valoracion}
+${m.contactoAlFinal ? contacto : ""}
 </main>
 <footer><span>${esc(d.n)}</span><span>${esc(d.a)}, ${esc(d.z)}</span></footer>
 <script>window.CITA = ${cita}; window.RESENAS = ${resenasJson};</script>

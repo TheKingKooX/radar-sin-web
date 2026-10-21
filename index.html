@@ -242,6 +242,11 @@ textarea.tin { height: auto; padding: 10px 12px; resize: vertical; line-height: 
 .conx.no .punto { background: #d9a441; }
 .conx code { font-size: 12.5px; background: var(--surface2); padding: 2px 6px; border-radius: 6px; }
 .krow .btn { flex: none; }
+.qr { display: flex; align-items: center; gap: 14px; }
+.qr a { flex: none; width: 132px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); line-height: 0; }
+.qr svg { width: 100%; height: auto; display: block; }
+.qr div { display: grid; gap: 4px; min-width: 0; }
+.qr code { font-size: 11.5px; color: var(--muted); overflow-wrap: anywhere; }
 </style>
 </head>
 <body>
@@ -479,6 +484,68 @@ var IC = {
   ig: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>',
   save: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"/></svg>'
 };
+/* ---------- Código QR (byte, corrección M, versiones 1–10) ---------- */
+function qrSvg(text) {
+  var bytes = unescape(encodeURIComponent(text)).split("").map(function (c) { return c.charCodeAt(0); });
+  var ECC = [10, 16, 26, 18, 24, 16, 18, 22, 22, 26], NB = [1, 1, 1, 2, 2, 4, 4, 4, 5, 5];
+  function raw(v) { var r = (16 * v + 128) * v + 64; if (v >= 2) { var n = Math.floor(v / 7) + 2; r -= (25 * n - 10) * n - 55; if (v >= 7) r -= 36; } return r; }
+  var ver = 1; while (ver <= 10 && (Math.floor(raw(ver) / 8) - ECC[ver - 1] * NB[ver - 1]) * 8 < 4 + 8 + bytes.length * 8) ver++;
+  if (ver > 10) return "";
+  var eccLen = ECC[ver - 1], nb = NB[ver - 1], dataCw = Math.floor(raw(ver) / 8) - eccLen * nb, size = ver * 4 + 17;
+  var bits = [];
+  function put(v, n) { for (var i = n - 1; i >= 0; i--) bits.push((v >>> i) & 1); }
+  put(4, 4); put(bytes.length, ver < 10 ? 8 : 16); bytes.forEach(function (b) { put(b, 8); });
+  put(0, Math.min(4, dataCw * 8 - bits.length)); while (bits.length % 8) bits.push(0);
+  for (var pad = 0xEC; bits.length < dataCw * 8; pad ^= 0xEC ^ 0x11) put(pad, 8);
+  var data = []; for (var i = 0; i < bits.length; i += 8) data.push(parseInt(bits.slice(i, i + 8).join(""), 2));
+  function mul(x, y) { var z = 0; for (var i = 7; i >= 0; i--) { z = (z << 1) ^ ((z >>> 7) * 0x11D); z ^= ((y >>> i) & 1) * x; } return z; }
+  var div = []; for (i = 0; i < eccLen - 1; i++) div.push(0); div.push(1);
+  for (var root = 1, k = 0; k < eccLen; k++) { for (var j = 0; j < eccLen; j++) { div[j] = mul(div[j], root); if (j + 1 < eccLen) div[j] ^= div[j + 1]; } root = mul(root, 2); }
+  var rawCw = Math.floor(raw(ver) / 8), shorts = nb - rawCw % nb, shortLen = Math.floor(rawCw / nb), blocks = [], pos = 0;
+  for (i = 0; i < nb; i++) {
+    var dat = data.slice(pos, pos + shortLen - eccLen + (i < shorts ? 0 : 1)); pos += dat.length;
+    var rem = []; for (j = 0; j < eccLen; j++) rem.push(0);
+    dat.forEach(function (b) { var f = b ^ rem.shift(); rem.push(0); div.forEach(function (c, q) { rem[q] ^= mul(c, f); }); });
+    if (i < shorts) dat.push(0); blocks.push(dat.concat(rem));
+  }
+  var cw = []; for (i = 0; i < blocks[0].length; i++) blocks.forEach(function (b, q) { if (i !== shortLen - eccLen || q >= shorts) cw.push(b[i]); });
+  var m = [], fn = []; for (i = 0; i < size; i++) { m.push(new Array(size).fill(false)); fn.push(new Array(size).fill(false)); }
+  function set(x, y, d) { m[y][x] = d; fn[y][x] = true; }
+  for (i = 0; i < size; i++) { set(6, i, i % 2 === 0); set(i, 6, i % 2 === 0); }
+  [[3, 3], [size - 4, 3], [3, size - 4]].forEach(function (c) {
+    for (var dy = -4; dy <= 4; dy++) for (var dx = -4; dx <= 4; dx++) { var d = Math.max(Math.abs(dx), Math.abs(dy)), x = c[0] + dx, y = c[1] + dy; if (x >= 0 && x < size && y >= 0 && y < size) set(x, y, d !== 2 && d !== 4); }
+  });
+  var al = []; if (ver > 1) { var na = Math.floor(ver / 7) + 2, step = Math.ceil((ver * 4 + 4) / (na * 2 - 2)) * 2; al = [6]; for (var p = size - 7; al.length < na; p -= step) al.splice(1, 0, p); }
+  al.forEach(function (ay, a) { al.forEach(function (ax, b) {
+    if ((a === 0 && b === 0) || (a === 0 && b === al.length - 1) || (a === al.length - 1 && b === 0)) return;
+    for (var dy = -2; dy <= 2; dy++) for (var dx = -2; dx <= 2; dx++) set(ax + dx, ay + dy, Math.max(Math.abs(dx), Math.abs(dy)) !== 1);
+  }); });
+  function fmt(mask) {
+    var d = mask, r = d; for (var q = 0; q < 10; q++) r = (r << 1) ^ ((r >>> 9) * 0x537);
+    var b = ((d << 10) | r) ^ 0x5412, g = function (q) { return ((b >>> q) & 1) !== 0; };
+    for (q = 0; q <= 5; q++) set(8, q, g(q)); set(8, 7, g(6)); set(8, 8, g(7)); set(7, 8, g(8)); for (q = 9; q < 15; q++) set(14 - q, 8, g(q));
+    for (q = 0; q < 8; q++) set(size - 1 - q, 8, g(q)); for (q = 8; q < 15; q++) set(8, size - 15 + q, g(q)); set(8, size - 8, true);
+  }
+  fmt(0);
+  if (ver >= 7) { var vr = ver; for (i = 0; i < 12; i++) vr = (vr << 1) ^ ((vr >>> 11) * 0x1F25); var vb = (ver << 12) | vr; for (i = 0; i < 18; i++) { var a2 = size - 11 + i % 3, b2 = Math.floor(i / 3), bit = ((vb >>> i) & 1) !== 0; set(a2, b2, bit); set(b2, a2, bit); } }
+  var n = 0; for (var right = size - 1; right >= 1; right -= 2) { if (right === 6) right = 5; for (var vert = 0; vert < size; vert++) for (j = 0; j < 2; j++) { var x = right - j, y = ((right + 1) & 2) === 0 ? size - 1 - vert : vert; if (!fn[y][x] && n < cw.length * 8) { m[y][x] = ((cw[n >>> 3] >>> (7 - (n & 7))) & 1) !== 0; n++; } } }
+  var conds = [function (x, y) { return (x + y) % 2 === 0; }, function (x, y) { return y % 2 === 0; }, function (x) { return x % 3 === 0; }, function (x, y) { return (x + y) % 3 === 0; }, function (x, y) { return (Math.floor(x / 3) + Math.floor(y / 2)) % 2 === 0; }, function (x, y) { return x * y % 2 + x * y % 3 === 0; }, function (x, y) { return (x * y % 2 + x * y % 3) % 2 === 0; }, function (x, y) { return ((x + y) % 2 + x * y % 3) % 2 === 0; }];
+  function flip(mask) { for (var y = 0; y < size; y++) for (var x = 0; x < size; x++) if (!fn[y][x] && conds[mask](x, y)) m[y][x] = !m[y][x]; }
+  function penalty() {
+    var s = 0, dark = 0, x, y, run;
+    for (var t = 0; t < 2; t++) for (y = 0; y < size; y++) { run = 1; for (x = 1; x < size; x++) { var c = t ? m[x][y] : m[y][x], pv = t ? m[x - 1][y] : m[y][x - 1]; if (c === pv) { run++; if (run === 5) s += 3; else if (run > 5) s++; } else run = 1; } }
+    for (y = 0; y < size - 1; y++) for (x = 0; x < size - 1; x++) { var v = m[y][x]; if (v === m[y][x + 1] && v === m[y + 1][x] && v === m[y + 1][x + 1]) s += 3; }
+    for (y = 0; y < size; y++) for (x = 0; x < size; x++) if (m[y][x]) dark++;
+    return s + Math.floor(Math.abs(dark * 20 - size * size * 10) / (size * size)) * 10;
+  }
+  var best = 0, bp = 1e9; for (var mk = 0; mk < 8; mk++) { flip(mk); fmt(mk); var pe = penalty(); if (pe < bp) { bp = pe; best = mk; } flip(mk); }
+  flip(best); fmt(best);
+  var d = ""; for (var yy = 0; yy < size; yy++) for (var xx = 0; xx < size; xx++) if (m[yy][xx]) d += "M" + (xx + 4) + " " + (yy + 4) + "h1v1h-1z";
+  return '<svg viewBox="0 0 ' + (size + 8) + " " + (size + 8) + '" shape-rendering="crispEdges" aria-hidden="true"><rect width="100%" height="100%" fill="#fff"/><path d="' + d + '" fill="#000"/></svg>';
+}
+
+var PUBLICA = "https://thekingkoox.github.io/radar-sin-web/";
+function demoUrl(d) { return PUBLICA + d.demo; }
 function fx(l, v) { return '<div><span class="lbl">' + l + '</span>' + v + '</div>'; }
 function detalle(d) {
   var id = esc(d.id), wa = movil(d.t), ig = igDe(d), tieneTel = !!String(d.t || "").replace(/\D/g, "");
@@ -501,6 +568,7 @@ function detalle(d) {
       '</div>' +
       '<div class="fx">' +
         fx("Puntaje", (d.r ? '<b class="big">' + d.r.toFixed(1) + ' ★</b> ' : '') + '<span class="muted">' + d.c + ' reseñas</span><div class="bar2"><i style="width:' + Math.min(100, Math.round(d.c / 250 * 100)) + '%"></i></div>') +
+        (d.demo ? fx("Demo", '<div class="qr"><a href="' + esc(d.demo) + '" target="_blank" rel="noopener" aria-label="Abrir la demo">' + qrSvg(demoUrl(d)) + '</a><div><b>Escanea para abrir la demo</b><span class="muted">Con la cámara del celular. Se abre la página ya hecha para este negocio.</span><code>' + esc(demoUrl(d).replace("https://", "")) + '</code></div></div>') : '') +
         fx("Estado de web", '<span class="pill ' + d.s + '">' + esc(d.pl || LABEL[d.s]) + '</span> ' + link) +
         fx("Dirección", esc(d.a || "Ver en Google Maps") + (d.z ? ', ' + esc(d.z) : '')) +
         (tieneTel ? fx("Teléfono", '<b>' + esc(d.t) + '</b>') : '') +

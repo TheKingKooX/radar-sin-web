@@ -249,3 +249,13 @@ html.quieto .top .marca::before { animation: onda 3.6s cubic-bezier(.23, 1, .32,
 html.quieto .top .marca::after { animation: onda 3.6s 1.8s cubic-bezier(.23, 1, .32, 1) infinite; }
 @keyframes respira { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 transparent); } 50% { transform: scale(1.12); filter: drop-shadow(0 0 7px color-mix(in srgb, var(--acento) 60%, transparent)); } }
 @keyframes onda { 0% { transform: scale(1); opacity: .85; } 80%, 100% { transform: scale(2.2); opacity: 0; } }
+
+/* Ubicación y opiniones fusionadas */
+.fus-g { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(24px, 4vw, 56px); align-items: start; margin-top: 30px; }
+.fus-m address { font-style: normal; font-size: 20px; margin-bottom: 18px; }
+.fus .mapa { margin-bottom: 20px; }
+.fus .mapa iframe { height: clamp(300px, 46vh, 460px); }
+.fus .val .n { font-size: clamp(48px, 7vw, 88px); }
+.fus .opin { margin-top: 20px; max-width: none; }
+.fus .cinta-vp { height: min(440px, 62vh); }
+@media (max-width: 860px) { .fus-g { grid-template-columns: 1fr; } }

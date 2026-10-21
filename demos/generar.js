@@ -118,6 +118,18 @@ function pagina(d, m) {
   <div class="val rv"><span class="n">${d.r.toFixed(1)} ★</span><p>${d.c} reseñas en Google Maps</p></div>
   ${resenas ? `<div class="opin${m.cinta === false ? "" : " cinta"}${m.cintaManual === false ? "" : " manual"}"><p class="opin-h"><span class="vivo" aria-hidden="true"></span>Lo que dicen en Google Maps<button type="button" class="feed-ctl" aria-pressed="false">Pausar</button></p><ul class="feed">${resenas}</ul><a class="mas" href="${esc(d.m)}" target="_blank" rel="noopener">Ver todas las reseñas en Google Maps →</a></div>` : ""}
 </div></section>`;
+  // Ubicación y opiniones en una sola sección (opcional por marca: fusionUbicacion: true): mapa a un lado, nota y reseñas al otro
+  const marcaOpin = '<span class="lbl rv">Opiniones en Google</span>';
+  const cuerpoOpin = valoracion.slice(valoracion.indexOf(marcaOpin) + marcaOpin.length, valoracion.lastIndexOf("</div></section>"));
+  const fusion = `<section id="ubicacion" class="fus"><div class="in-w">
+  <span class="lbl rv">Ubicación y opiniones</span><h2 class="rv">Visítanos y mira lo que dicen</h2>
+  <div class="fus-g">
+    <div class="fus-m rv"><address>${esc(d.a)}<br>${esc(d.z)}, Lima</address>
+      <div class="mapa"><iframe title="Mapa de ${esc(d.n)}" loading="lazy" src="https://maps.google.com/maps?q=${d.la},${d.lo}&z=17&output=embed"></iframe></div>
+      <a class="btn sec" href="${esc(d.m)}" target="_blank" rel="noopener">${icono("pin")}<span>Abrir en Google Maps</span></a></div>
+    <div class="fus-o">${cuerpoOpin}</div>
+  </div>
+</div></section>`;
   const galeria = `<section id="galeria"><div class="in-w">
   <span class="lbl rv">Galería</span><h2 class="rv">Nuestro trabajo</h2>
   <div class="gal">${mosaicos(d).map((x, i) => `<figure class="rv" style="--i:${i}">${icono(x.i, "ic big")}<figcaption>${esc(x.t)}</figcaption></figure>`).join("")}</div>
@@ -179,24 +191,24 @@ ${tarjetas ? "" : galeria}
     <p class="err" role="alert"></p>
   </form>
 </div></section>
-${m.opinionesAlFinal === false ? valoracion : ""}
+${m.fusionUbicacion ? "" : m.opinionesAlFinal === false ? valoracion : ""}
 ${sedes}
 <section id="faq"><div class="in-w">
   <span class="lbl rv">Preguntas frecuentes</span><h2 class="rv">Antes de venir</h2>
   <div class="faq">${faq.map((q) => `<details class="rv"><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join("")}</div>
 </div></section>
-<section id="ubicacion"><div class="in-w ubi">
+${m.fusionUbicacion ? "" : `<section id="ubicacion"><div class="in-w ubi">
   <div class="rv"><span class="lbl">Ubicación</span><h2>Visítanos</h2>
     <address>${esc(d.a)}<br>${esc(d.z)}, Lima</address>
     <a class="btn sec" href="${esc(d.m)}" target="_blank" rel="noopener">${icono("pin")}<span>Abrir en Google Maps</span></a></div>
   <div class="mapa rv"><iframe title="Mapa de ${esc(d.n)}" loading="lazy" src="https://maps.google.com/maps?q=${d.la},${d.lo}&z=17&output=embed"></iframe></div>
-</div></section>
+</div></section>`}
 <section id="contacto" class="cont"><div class="in-w">
   <h2 class="rv">Reserva tu cita</h2>
   <p class="rv" style="color:var(--suave)">${esc(d.t)}</p>
   <div class="acc rv"><a class="btn" href="${esc(wa)}"${ext}>${icono(esWa ? "whatsapp" : "telefono")}<span>${esWa ? "Escríbenos por WhatsApp" : "Llamar ahora"}</span></a>${llamar}${red}</div>
 </div></section>
-${m.opinionesAlFinal === false ? "" : valoracion}
+${m.fusionUbicacion ? fusion : m.opinionesAlFinal === false ? "" : valoracion}
 </main>
 <footer><span>${esc(d.n)}</span><span>${esc(d.a)}, ${esc(d.z)}</span></footer>
 <script>window.CITA = ${cita}; window.RESENAS = ${resenasJson};</script>

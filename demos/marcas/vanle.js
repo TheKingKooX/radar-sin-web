@@ -1,6 +1,8 @@
 // Vanlé Salón San Miguel: blanco, granate y gris, Jost fino; el aro del logo se dibuja en la portada.
 module.exports = {
   id: "vanle",
+  opinionesAlFinal: true, // la sección de opiniones va al pie, después del contacto
+  cintaManual: true, // la cinta de reseñas se puede desplazar a mano
   fuentes: ["Jost:wght@300;400;500;600"],
   tema: { bg: "#fcfcfb", fg: "#2f2f2f", acento: "#872b39", suave: "#6a6a6a", titulo: '"Jost"', texto: '"Jost"', esquema: "light", radio: "999px", trazo: 1.5 },
   logo: "logo.svg",

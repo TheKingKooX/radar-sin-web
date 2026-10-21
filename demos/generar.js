@@ -112,6 +112,11 @@ function pagina(d, m) {
 </div></section>` : "";
   const red = d.l ? `<a class="btn sec" href="${esc(d.l)}" target="_blank" rel="noopener">${icono(iconoRed(d.lt))}<span>${esc(d.lt || "Red social")}</span></a>` : "";
   const llamar = esWa ? `<a class="btn sec" href="tel:+51${String(d.t).replace(/\D/g, "").replace(/^51/, "")}">${icono("telefono")}<span>Llamar</span></a>` : "";
+  const valoracion = `<section id="valoracion"><div class="in-w">
+  <span class="lbl rv">Opiniones en Google</span>
+  <div class="val rv"><span class="n">${d.r.toFixed(1)} ★</span><p>${d.c} reseñas en Google Maps</p></div>
+  ${resenas ? `<div class="opin${m.cinta === false ? "" : " cinta"}${m.cintaManual ? " manual" : ""}"><p class="opin-h"><span class="vivo" aria-hidden="true"></span>Lo que dicen en Google Maps<button type="button" class="feed-ctl" aria-pressed="false">Pausar</button></p><ul class="feed">${resenas}</ul><a class="mas" href="${esc(d.m)}" target="_blank" rel="noopener">Ver todas las reseñas en Google Maps →</a></div>` : ""}
+</div></section>`;
   const html = `<!doctype html>
 <html lang="es">
 <head>
@@ -161,11 +166,7 @@ ${servicios}
     <p class="err" role="alert"></p>
   </form>
 </div></section>
-<section id="valoracion"><div class="in-w">
-  <span class="lbl rv">Opiniones en Google</span>
-  <div class="val rv"><span class="n">${d.r.toFixed(1)} ★</span><p>${d.c} reseñas en Google Maps</p></div>
-  ${resenas ? `<div class="opin${m.cinta === false ? "" : " cinta"}"><p class="opin-h"><span class="vivo" aria-hidden="true"></span>Lo que dicen en Google Maps<button type="button" class="feed-ctl" aria-pressed="false">Pausar</button></p><ul class="feed">${resenas}</ul><a class="mas" href="${esc(d.m)}" target="_blank" rel="noopener">Ver todas las reseñas en Google Maps →</a></div>` : ""}
-</div></section>
+${m.opinionesAlFinal ? "" : valoracion}
 ${sedes}
 <section id="faq"><div class="in-w">
   <span class="lbl rv">Preguntas frecuentes</span><h2 class="rv">Antes de venir</h2>
@@ -182,6 +183,7 @@ ${sedes}
   <p class="rv" style="color:var(--suave)">${esc(d.t)}</p>
   <div class="acc rv"><a class="btn" href="${esc(wa)}"${ext}>${icono(esWa ? "whatsapp" : "telefono")}<span>${esWa ? "Escríbenos por WhatsApp" : "Llamar ahora"}</span></a>${llamar}${red}</div>
 </div></section>
+${m.opinionesAlFinal ? valoracion : ""}
 </main>
 <footer><span>${esc(d.n)}</span><span>${esc(d.a)}, ${esc(d.z)}</span></footer>
 <script>window.CITA = ${cita}; window.RESENAS = ${resenasJson};</script>

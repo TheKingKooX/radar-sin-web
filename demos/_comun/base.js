@@ -77,8 +77,29 @@
   if (cinta) {
     // Modo cinta: todas las reseñas dos veces en una columna que sube sin parar; los bordes se desvanecen por CSS.
     var vp = document.createElement("div"); vp.className = "cinta-vp"; feed.parentNode.insertBefore(vp, feed); vp.appendChild(feed);
-    feed.classList.add("en-cinta"); feed.style.setProperty("--dur", data.length * 7 + "s");
+    var manual = feed.parentNode.parentNode.classList.contains("manual");
+    vp.classList.toggle("manual", manual);
+    if (manual) feed.classList.add("cinta-m"); else { feed.classList.add("en-cinta"); feed.style.setProperty("--dur", data.length * 7 + "s"); }
     for (var c = 0; c < 2 * data.length; c++) { var tc = tarjeta(c); tc.classList.remove("entra"); if (c >= data.length) tc.setAttribute("aria-hidden", "true"); feed.appendChild(tc); }
+    if (manual) {
+      // Cinta con scroll propio: avanza sola y se detiene cuando la persona la toca, la desplaza o la mira de cerca; es infinita en ambos sentidos.
+      // Los saltos de borde restan 3 px de más para no rebotar entre un borde y el otro.
+      var acc = 0, mitad = 0, ult = 0, t0 = 0, pos = 0;
+      var medir = function () { mitad = feed.scrollHeight / 2; };
+      var toco = function () { ult = performance.now(); };
+      ["wheel", "touchstart", "pointerdown", "keydown"].forEach(function (ev) { vp.addEventListener(ev, toco, { passive: true }); });
+      vp.addEventListener("scroll", function () { if (mitad && vp.scrollTop < 1) { vp.scrollTop += mitad - 3; acc = vp.scrollTop; } else if (mitad && vp.scrollTop >= mitad) { vp.scrollTop -= mitad - 3; acc = vp.scrollTop; } }, { passive: true });
+      var paso = function (t) {
+        var dt = Math.min(t - (t0 || t), 64); t0 = t;
+        if (!mitad) medir();
+        if (Math.abs(vp.scrollTop - Math.round(acc)) > 1.5) { acc = vp.scrollTop; ult = t; } // la persona movió la lista
+        var quieta = pausado || enModal || encima || !visible || document.hidden || t - ult < 2500;
+        if (!quieta) { acc += 26 * dt / 1000; if (acc >= mitad) acc -= mitad - 3; vp.scrollTop = acc; }
+        requestAnimationFrame(paso);
+      };
+      addEventListener("resize", medir); addEventListener("load", medir);
+      vp.scrollTop = 1; acc = 1; requestAnimationFrame(paso);
+    }
   } else for (var k = 0; k < VIS; k++) { var t0 = tarjeta(k); t0.classList.remove("entra"); feed.appendChild(t0); }
 
   function avanzar() {

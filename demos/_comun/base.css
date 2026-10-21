@@ -212,3 +212,8 @@ button.bub:hover, button.bub:focus-visible { transform: translateY(-3px); border
   .btn:hover, .why > div:hover, .pasos li:hover, .gal figure:hover, button.bub:hover { transform: none; box-shadow: none; }
   .gal figure:hover .ic { transform: none; }
 }
+
+/* Cinta con scroll manual (cintaManual: true): se puede desplazar con dedo, rueda o barra */
+.cinta-vp.manual { overflow-y: auto; scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--fg) 35%, transparent) transparent; }
+.feed.cinta-m { min-height: 0; gap: 0; }
+.feed.cinta-m > li { margin-bottom: 16px; }

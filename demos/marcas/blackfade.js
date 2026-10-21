@@ -1,8 +1,8 @@
 // Black Fade Studio: blanco sobre negro, letra gótica estilo grafiti para «Black», estética urbana; un degradado de fade recorre el fondo.
 module.exports = {
   id: "blackfade",
-  fuentes: ["UnifrakturCook:wght@700", "Space Grotesk:wght@300;400;500;700"],
-  tema: { bg: "#050505", fg: "#f3f3f3", acento: "#f3f3f3", suave: "#9a9a9a", titulo: '"UnifrakturCook", "Old English Text MT", serif', texto: '"Space Grotesk"', esquema: "dark", radio: "0", trazo: 2 },
+  fuentes: ["UnifrakturCook:wght@700", "Chivo:wght@300;400;500;700"],
+  tema: { bg: "#050505", fg: "#f3f3f3", acento: "#f3f3f3", suave: "#9a9a9a", titulo: '"UnifrakturCook", "Old English Text MT", serif', texto: '"Chivo"', esquema: "dark", radio: "0", trazo: 2 },
   logo: "logo.svg",
   logoAlt: "Logo de Black Fade Studio",
   hero: {
@@ -19,9 +19,9 @@ body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-event
 .btn, .cta { text-transform: uppercase; letter-spacing: .18em; font-size: 12px; font-weight: 700; color: #050505; }
 .hero h1 { display: grid; gap: 6px; line-height: .9; font-weight: 700; }
 .hero h1 .a { font-size: clamp(90px, 24vw, 300px); letter-spacing: 0; }
-.hero h1 .b { font-family: "Space Grotesk", sans-serif; font-size: clamp(16px, 3vw, 34px); letter-spacing: .6em; font-weight: 300; color: var(--suave); }
+.hero h1 .b { font-family: "Chivo", sans-serif; font-size: clamp(16px, 3vw, 34px); letter-spacing: .6em; font-weight: 300; color: var(--suave); }
 h2 { font-weight: 700; letter-spacing: 0; font-size: clamp(40px, 6vw, 72px); }
-.sv span { font-family: "Space Grotesk", sans-serif; font-weight: 500; }
+.sv span { font-family: "Chivo", sans-serif; font-weight: 500; }
 .val .n { font-weight: 700; }
 @media (prefers-reduced-motion: no-preference) {
   .hero h1 .a { animation: ent 1.2s cubic-bezier(.23, 1, .32, 1) both; }

@@ -23,6 +23,25 @@ body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-even
 .hero-in { position: static; }
 .hero { isolation: isolate; }
 .sv span { font-weight: 500; }
+/* Pulido de movimiento (emil-design-eng): curva fuerte, tiempos cortos, feedback al presionar, hover solo con puntero, escalonado */
+@media (prefers-reduced-motion: no-preference) {
+  .rv { transition: opacity .5s var(--ease), transform .5s var(--ease); }
+  .btn { transition: transform .16s var(--ease), opacity .16s ease; }
+  .btn:active { transform: scale(.97); }
+  .why > div, .pasos li, .gal figure { transition: transform .22s var(--ease), box-shadow .22s var(--ease); }
+  button.bub { transition: transform .22s var(--ease), border-color .2s ease, box-shadow .22s var(--ease); }
+  button.bub:active { transform: scale(.985); }
+  .svs .sv:nth-child(2).in, .gal figure:nth-child(2).in { transition-delay: 60ms; }
+  .svs .sv:nth-child(3).in, .gal figure:nth-child(3).in { transition-delay: 120ms; }
+  .svs .sv:nth-child(4).in, .gal figure:nth-child(4).in { transition-delay: 180ms; }
+  .gal figure.in:hover { transition-delay: 0s; }
+  .rv-modal { animation-duration: .2s; }
+  .rv-card { animation-duration: .28s; }
+}
+@media (hover: none) {
+  .btn:hover, .why > div:hover, .pasos li:hover, .gal figure:hover, button.bub:hover { transform: none; box-shadow: none; }
+  .gal figure:hover .ic { transform: none; }
+}
 .val .n { font-weight: 300; color: var(--acento); }
 @media (prefers-reduced-motion: no-preference) {
   .hero .ring { stroke-dashoffset: 1; animation: aro 2.8s .2s cubic-bezier(.4, 0, .2, 1) forwards; }

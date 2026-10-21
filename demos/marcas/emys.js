@@ -1,9 +1,6 @@
 // Emy's Salon: rojo vivo y blanco, trazo cursivo llamativo y cálido; manchas rojas y rosas que flotan.
 module.exports = {
   id: "emys",
-  contactoAlFinal: true, // «Reserva tu cita» va al pie, después de ubicación y opiniones
-  sinFaq: true, // sin sección de preguntas frecuentes
-  fusionUbicacion: true, // ubicación y opiniones en una sola sección, al pie
   fuentes: ["Pacifico", "Nunito:wght@300;400;600;700"],
   tema: { bg: "#fff8f6", fg: "#3a1414", acento: "#d8090b", suave: "#7a4a4a", titulo: '"Pacifico", cursive', texto: '"Nunito"', esquema: "light", radio: "999px", trazo: 1.6 },
   logo: "logo.svg",

@@ -118,7 +118,7 @@ function pagina(d, m) {
   <div class="val rv"><span class="n">${d.r.toFixed(1)} ★</span><p>${d.c} reseñas en Google Maps</p></div>
   ${resenas ? `<div class="opin${m.cinta === false ? "" : " cinta"}${m.cintaManual === false ? "" : " manual"}"><p class="opin-h"><span class="vivo" aria-hidden="true"></span>Lo que dicen en Google Maps<button type="button" class="feed-ctl" aria-pressed="false">Pausar</button></p><ul class="feed">${resenas}</ul><a class="mas" href="${esc(d.m)}" target="_blank" rel="noopener">Ver todas las reseñas en Google Maps →</a></div>` : ""}
 </div></section>`;
-  // Ubicación y opiniones en una sola sección (opcional por marca: fusionUbicacion: true): mapa a un lado, nota y reseñas al otro
+  // Ubicación y opiniones en una sola sección (por defecto; fusionUbicacion: false la separa): mapa a un lado, nota y reseñas al otro
   const marcaOpin = '<span class="lbl rv">Opiniones en Google</span>';
   const cuerpoOpin = valoracion.slice(valoracion.indexOf(marcaOpin) + marcaOpin.length, valoracion.lastIndexOf("</div></section>"));
   const fusion = `<section id="ubicacion" class="fus"><div class="in-w">
@@ -196,21 +196,21 @@ ${tarjetas ? "" : galeria}
     <p class="err" role="alert"></p>
   </form>
 </div></section>
-${m.fusionUbicacion ? "" : m.opinionesAlFinal === false ? valoracion : ""}
+${m.fusionUbicacion !== false ? "" : m.opinionesAlFinal === false ? valoracion : ""}
 ${sedes}
-${m.sinFaq ? "" : `<section id="faq"><div class="in-w">
+${m.sinFaq !== false ? "" : `<section id="faq"><div class="in-w">
   <span class="lbl rv">Preguntas frecuentes</span><h2 class="rv">Antes de venir</h2>
   <div class="faq">${faq.map((q) => `<details class="rv"><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join("")}</div>
 </div></section>`}
-${m.fusionUbicacion ? "" : `<section id="ubicacion"><div class="in-w ubi">
+${m.fusionUbicacion !== false ? "" : `<section id="ubicacion"><div class="in-w ubi">
   <div class="rv"><span class="lbl">Ubicación</span><h2>Visítanos</h2>
     <address>${esc(d.a)}<br>${esc(d.z)}, Lima</address>
     <a class="btn sec" href="${esc(d.m)}" target="_blank" rel="noopener">${icono("pin")}<span>Abrir en Google Maps</span></a></div>
   <div class="mapa rv"><iframe title="Mapa de ${esc(d.n)}" loading="lazy" src="https://maps.google.com/maps?q=${d.la},${d.lo}&z=17&output=embed"></iframe></div>
 </div></section>`}
-${m.contactoAlFinal ? "" : contacto}
-${m.fusionUbicacion ? fusion : m.opinionesAlFinal === false ? "" : valoracion}
-${m.contactoAlFinal ? contacto : ""}
+${m.contactoAlFinal !== false ? "" : contacto}
+${m.fusionUbicacion !== false ? fusion : m.opinionesAlFinal === false ? "" : valoracion}
+${m.contactoAlFinal !== false ? contacto : ""}
 </main>
 <footer><span>${esc(d.n)}</span><span>${esc(d.a)}, ${esc(d.z)}</span></footer>
 <script>window.CITA = ${cita}; window.RESENAS = ${resenasJson};</script>

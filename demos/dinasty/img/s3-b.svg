@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700" role="img" aria-label="Ilustración referencial">
+<defs>
+<linearGradient id="fondo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fefdfc"/><stop offset="1" stop-color="#f1e7d4"/></linearGradient>
+<linearGradient id="bandasg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fefdfc"/><stop offset=".35" stop-color="#e9d3a4"/><stop offset=".7" stop-color="#fefdfc"/><stop offset="1" stop-color="#e9d3a4"/></linearGradient>
+<filter id="difuso" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="34"/></filter>
+<filter id="grano"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="10"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .08 0"/></filter>
+</defs>
+<rect width="600" height="700" fill="url(#fondo)"/>
+<g stroke="#b97a17" stroke-width="2" opacity=".28"><path d="M-200 760L200 -60"/><path d="M-150 760L250 -60"/><path d="M-100 760L300 -60"/><path d="M-50 760L350 -60"/><path d="M0 760L400 -60"/><path d="M50 760L450 -60"/><path d="M100 760L500 -60"/><path d="M150 760L550 -60"/><path d="M200 760L600 -60"/><path d="M250 760L650 -60"/><path d="M300 760L700 -60"/><path d="M350 760L750 -60"/><path d="M400 760L800 -60"/><path d="M450 760L850 -60"/><path d="M500 760L900 -60"/><path d="M550 760L950 -60"/><path d="M600 760L1000 -60"/><path d="M650 760L1050 -60"/><path d="M700 760L1100 -60"/><path d="M750 760L1150 -60"/><path d="M800 760L1200 -60"/><path d="M850 760L1250 -60"/><path d="M900 760L1300 -60"/><path d="M950 760L1350 -60"/><path d="M1000 760L1400 -60"/><path d="M1050 760L1450 -60"/></g><g filter="url(#difuso)"><ellipse cx="170" cy="210" rx="190" ry="230" fill="#e9d3a4" opacity=".55"/><ellipse cx="450" cy="520" rx="200" ry="200" fill="#b97a17" opacity=".3"/></g>
+<rect width="600" height="700" filter="url(#grano)"/>
+<rect x="26" y="26" width="548" height="648" fill="none" stroke="#1d1810" stroke-width="1.4" opacity=".5"/>
+<g fill="none" stroke="#1d1810" color="#b97a17" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M200 250C200 150 400 150 400 250v90C400 460 340 520 300 540 260 520 200 460 200 340z"/><path d="M200 340C222 404 262 424 300 424s78-20 100-84"/><path d="M252 396c22-16 34-6 48 0 14-6 26-16 48 0" opacity=".8"/><path d="M262 300h0M338 300h0" stroke-width="7"/></g>
+</svg>

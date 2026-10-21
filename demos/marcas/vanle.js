@@ -51,16 +51,11 @@ html.quieto .marca svg path { animation: latido 3.6s ease-in-out infinite; }
 @keyframes barrido { to { stroke-dashoffset: -1; } }
 @keyframes latido { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }`,
     js: `(function () {
-  var logo = document.querySelector(".marca svg"), r = document.documentElement, t = null;
+  var logo = document.querySelector(".marca svg");
   if (!logo) return;
   var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
   c.setAttribute("class", "barrido"); c.setAttribute("cx", "100"); c.setAttribute("cy", "100"); c.setAttribute("r", "96"); c.setAttribute("pathLength", "1");
   logo.appendChild(c);
-  function arriba() { return (window.scrollY || 0) < 80; }
-  function quieto() { if (arriba()) r.classList.add("quieto"); }
-  function actividad() { r.classList.remove("quieto"); clearTimeout(t); t = setTimeout(quieto, 1500); }
-  ["pointermove", "pointerdown", "wheel", "keydown", "touchstart", "scroll"].forEach(function (e) { addEventListener(e, actividad, { passive: true }); });
-  actividad();
 })();`
   }
 };

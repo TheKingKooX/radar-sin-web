@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700" role="img" aria-label="Ilustración referencial">
+<defs>
+<linearGradient id="fondo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ece3c6"/><stop offset="1" stop-color="#dccf9f"/></linearGradient>
+<linearGradient id="bandasg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ece3c6"/><stop offset=".35" stop-color="#f4ecd2"/><stop offset=".7" stop-color="#ece3c6"/><stop offset="1" stop-color="#f4ecd2"/></linearGradient>
+<filter id="difuso" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="34"/></filter>
+<filter id="grano"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="10"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .08 0"/></filter>
+</defs>
+<rect width="600" height="700" fill="url(#fondo)"/>
+<g fill="none" stroke-width="7"><path d="M-10 60l30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26" stroke="#a93935"/><path d="M-10 84l30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26" stroke="#324b4e"/><path d="M-10 616l30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26" stroke="#324b4e"/><path d="M-10 640l30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26 30 26 30-26" stroke="#a93935"/></g><g filter="url(#difuso)"><ellipse cx="170" cy="210" rx="190" ry="230" fill="#f4ecd2" opacity=".55"/><ellipse cx="450" cy="520" rx="200" ry="200" fill="#a93935" opacity=".3"/></g>
+<rect width="600" height="700" filter="url(#grano)"/>
+
+<g fill="none" stroke="#324b4e" color="#a93935" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(300 350) scale(1.35) rotate(-18) translate(-300 -406)"><rect x="100" y="378" width="206" height="56" rx="26"/><path d="M300 384H492Q516 384 510 406L498 434H300Z"/><circle cx="300" cy="406" r="9"/><path d="M130 406h130" opacity=".45"/><path d="M330 400H470" opacity=".45"/></g></g>
+</svg>

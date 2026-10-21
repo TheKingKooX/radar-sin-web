@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700" role="img" aria-label="Ilustración referencial">
+<defs>
+<linearGradient id="fondo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#080808"/><stop offset="1" stop-color="#262626"/></linearGradient>
+<linearGradient id="bandasg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#080808"/><stop offset=".35" stop-color="#444444"/><stop offset=".7" stop-color="#080808"/><stop offset="1" stop-color="#444444"/></linearGradient>
+<filter id="difuso" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="34"/></filter>
+<filter id="grano"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="12"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .08 0"/></filter>
+</defs>
+<rect width="600" height="700" fill="url(#fondo)"/>
+<rect width="600" height="700" fill="url(#bandasg)"/>
+<rect width="600" height="700" filter="url(#grano)"/>
+<path d="M30 90V30H90M510 30h60v60M570 610v60H510M90 670H30v-60" fill="none" stroke="#f3f3f3" stroke-width="2.4" opacity=".7"/>
+<g fill="none" stroke="#f3f3f3" color="#f3f3f3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(300 350) scale(1.35) rotate(-18) translate(-300 -406)"><rect x="100" y="378" width="206" height="56" rx="26"/><path d="M300 384H492Q516 384 510 406L498 434H300Z"/><circle cx="300" cy="406" r="9"/><path d="M130 406h130" opacity=".45"/><path d="M330 400H470" opacity=".45"/></g></g>
+</svg>

@@ -24,6 +24,7 @@ body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-event
 .hero h1 .a { font-size: clamp(48px, 12vw, 150px); letter-spacing: .02em; }
 .hero h1 .b { font-size: clamp(22px, 4.4vw, 54px); letter-spacing: .5em; color: var(--acento); font-weight: 500; }
 .hero .aro { position: absolute; right: -6vw; top: 50%; width: min(52vw, 560px); transform: translateY(-50%); fill: none; stroke: var(--acento); stroke-width: .8; stroke-dasharray: 1; stroke-dashoffset: 0; opacity: .7; pointer-events: none; z-index: -1; }
+.top .marca::before, .top .marca::after { border-radius: 50%; }
 h2 { font-weight: 700; letter-spacing: .01em; }
 .sv span { font-family: "Playfair Display", serif; font-size: 22px; font-weight: 600; }
 .val .n { color: var(--acento); font-weight: 700; }

@@ -165,3 +165,12 @@
   cards.forEach(function (c) { c.querySelector(".sc-b").addEventListener("click", function () { if (!c.classList.contains("open")) abrir(c); }); });
   ciclo(cards[0]);
 })();
+
+/* Reposo: tras 1,5 s sin mover el puntero, tocar, teclear ni hacer scroll, y con la página arriba, html lleva la clase "quieto" (anima el logo del encabezado). */
+(function () {
+  var r = document.documentElement, t = null;
+  function quieto() { if ((window.scrollY || 0) < 80) r.classList.add("quieto"); }
+  function actividad() { r.classList.remove("quieto"); clearTimeout(t); t = setTimeout(quieto, 1500); }
+  ["pointermove", "pointerdown", "wheel", "keydown", "touchstart", "scroll"].forEach(function (e) { addEventListener(e, actividad, { passive: true }); });
+  actividad();
+})();

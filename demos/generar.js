@@ -1,5 +1,6 @@
 // Genera demos/<id>/index.html desde ../datos.json y marcas/<id>.js.  Uso: node demos/generar.js [id]
 const fs = require("fs");
+const ARTE = require("./arte.js");
 const path = require("path");
 
 const CONT = JSON.parse(fs.readFileSync(path.join(__dirname, "contenido.json"), "utf8"));
@@ -115,17 +116,21 @@ function pagina(d, m) {
   const valoracion = `<section id="valoracion"><div class="in-w">
   <span class="lbl rv">Opiniones en Google</span>
   <div class="val rv"><span class="n">${d.r.toFixed(1)} ★</span><p>${d.c} reseñas en Google Maps</p></div>
-  ${resenas ? `<div class="opin${m.cinta === false ? "" : " cinta"}${m.cintaManual ? " manual" : ""}"><p class="opin-h"><span class="vivo" aria-hidden="true"></span>Lo que dicen en Google Maps<button type="button" class="feed-ctl" aria-pressed="false">Pausar</button></p><ul class="feed">${resenas}</ul><a class="mas" href="${esc(d.m)}" target="_blank" rel="noopener">Ver todas las reseñas en Google Maps →</a></div>` : ""}
+  ${resenas ? `<div class="opin${m.cinta === false ? "" : " cinta"}${m.cintaManual === false ? "" : " manual"}"><p class="opin-h"><span class="vivo" aria-hidden="true"></span>Lo que dicen en Google Maps<button type="button" class="feed-ctl" aria-pressed="false">Pausar</button></p><ul class="feed">${resenas}</ul><a class="mas" href="${esc(d.m)}" target="_blank" rel="noopener">Ver todas las reseñas en Google Maps →</a></div>` : ""}
 </div></section>`;
   const galeria = `<section id="galeria"><div class="in-w">
   <span class="lbl rv">Galería</span><h2 class="rv">Nuestro trabajo</h2>
   <div class="gal">${mosaicos(d).map((x, i) => `<figure class="rv" style="--i:${i}">${icono(x.i, "ic big")}<figcaption>${esc(x.t)}</figcaption></figure>`).join("")}</div>
 </div></section>`;
   // Servicios y galería en tarjetas expandibles (opcional por marca: m.tarjetas = [{ img: [a, b], txt }] en el orden de d.sv)
-  const tarjetas = m.tarjetas && d.sv ? `
+  // Tarjetas: las de la marca (m.tarjetas, hechas a mano) o las automáticas con ilustraciones de demos/arte.js
+  const cards = m.tarjetas && d.sv
+    ? d.sv.map((s, k) => ({ titulo: s, detalle: "", txt: (m.tarjetas[k] || {}).txt || "", img: (m.tarjetas[k] || { img: [] }).img }))
+    : !m.tarjetas && ARTE.ESTILOS[d.id] && m.sinTarjetas !== true ? ARTE.tarjetasDe(d, ARTE.serviciosBase(d)) : null;
+  const tarjetas = cards ? `
 <section id="servicios"><div class="in-w">
   <span class="lbl rv">Servicios y galería</span><h2 class="rv">Lo que hacemos</h2>
-  <div class="sc-row rv">${d.sv.map((s, i) => { const t = m.tarjetas[i] || { img: [], txt: "" }; return `<article class="sc${i === 0 ? " open" : ""}"><button type="button" class="sc-b" id="sc-h${i}" aria-expanded="${i === 0}" aria-controls="sc-p${i}"><span class="sc-n">${String(i + 1).padStart(2, "0")}</span><span class="sc-t">${esc(s)}</span></button><div class="sc-media" id="sc-p${i}" role="region" aria-labelledby="sc-h${i}">${t.img.map((f, k) => `<img class="${k === 0 ? "a on" : "b"}" src="${esc(f)}" alt="Ilustración referencial de ${esc(s)}" loading="lazy">`).join("")}<p class="sc-d">${esc(t.txt)}</p></div></article>`; }).join("")}</div>
+  <div class="sc-row rv" style="--abierta:${cards.length >= 5 ? 3 : 4.2}">${cards.map((t, k) => `<article class="sc${k === 0 ? " open" : ""}"><button type="button" class="sc-b" id="sc-h${k}" aria-expanded="${k === 0}" aria-controls="sc-p${k}"><span class="sc-n">${String(k + 1).padStart(2, "0")}</span><span class="sc-t">${esc(t.titulo)}</span></button><div class="sc-media" id="sc-p${k}" role="region" aria-labelledby="sc-h${k}">${t.img.map((f, q) => `<img class="${q === 0 ? "a on" : "b"}" src="${esc(f)}" alt="Ilustración referencial de ${esc(t.titulo)}" loading="lazy">`).join("")}<p class="sc-d">${esc(t.txt)}${t.detalle ? ` <span class="sc-p">${esc(t.detalle)}</span>` : ""}</p></div></article>`).join("")}</div>
   <p class="nota-ref rv">Ilustraciones referenciales.</p>
 </div></section>` : "";
   const html = `<!doctype html>
@@ -160,7 +165,7 @@ ${m.efecto.css}
   <div class="why">${porque.map((p) => `<div class="rv">${icono(p[0])}<h3>${esc(p[1])}</h3><p>${esc(p[2])}</p></div>`).join("")}</div>
 </div></section>
 ${tarjetas || servicios}
-${m.tarjetas ? "" : galeria}
+${tarjetas ? "" : galeria}
 <section id="reservar"><div class="in-w">
   <span class="lbl rv">Reservar</span><h2 class="rv">Cómo reservar</h2>
   <ol class="pasos">${pasos.map((p, i) => `<li class="rv"><span class="num">${i + 1}</span>${icono(p[0])}<h3>${esc(p[1])}</h3><p>${esc(p[2])}</p></li>`).join("")}</ol>
@@ -174,7 +179,7 @@ ${m.tarjetas ? "" : galeria}
     <p class="err" role="alert"></p>
   </form>
 </div></section>
-${m.opinionesAlFinal ? "" : valoracion}
+${m.opinionesAlFinal === false ? valoracion : ""}
 ${sedes}
 <section id="faq"><div class="in-w">
   <span class="lbl rv">Preguntas frecuentes</span><h2 class="rv">Antes de venir</h2>
@@ -191,7 +196,7 @@ ${sedes}
   <p class="rv" style="color:var(--suave)">${esc(d.t)}</p>
   <div class="acc rv"><a class="btn" href="${esc(wa)}"${ext}>${icono(esWa ? "whatsapp" : "telefono")}<span>${esWa ? "Escríbenos por WhatsApp" : "Llamar ahora"}</span></a>${llamar}${red}</div>
 </div></section>
-${m.opinionesAlFinal ? valoracion : ""}
+${m.opinionesAlFinal === false ? "" : valoracion}
 </main>
 <footer><span>${esc(d.n)}</span><span>${esc(d.a)}, ${esc(d.z)}</span></footer>
 <script>window.CITA = ${cita}; window.RESENAS = ${resenasJson};</script>

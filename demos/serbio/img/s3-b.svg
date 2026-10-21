@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700" role="img" aria-label="Ilustración referencial">
+<defs>
+<linearGradient id="fondo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#131313"/><stop offset="1" stop-color="#2c2c2c"/></linearGradient>
+<linearGradient id="bandasg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#131313"/><stop offset=".35" stop-color="#555555"/><stop offset=".7" stop-color="#131313"/><stop offset="1" stop-color="#555555"/></linearGradient>
+<filter id="difuso" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="34"/></filter>
+<filter id="grano"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="9"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .08 0"/></filter>
+</defs>
+<rect width="600" height="700" fill="url(#fondo)"/>
+<g filter="url(#difuso)"><ellipse cx="150" cy="520" rx="220" ry="150" fill="#555555" opacity=".5"/><ellipse cx="470" cy="180" rx="200" ry="170" fill="#555555" opacity=".4"/><ellipse cx="520" cy="620" rx="110" ry="90" fill="#872728" opacity=".45"/></g>
+<rect width="600" height="700" filter="url(#grano)"/>
+<rect x="26" y="26" width="548" height="648" fill="none" stroke="#f1f1f1" stroke-width="1.4" opacity=".5"/>
+<g fill="none" stroke="#f1f1f1" color="#c6363c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="190" y="330" width="220" height="200" rx="24"/><rect x="178" y="286" width="244" height="50" rx="12"/><path d="M230 410h140M230 450h90" opacity=".5"/><path d="M430 200c50 14 76 50 70 96-50-8-76-44-70-96z" opacity=".8"/></g>
+</svg>

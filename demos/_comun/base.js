@@ -71,8 +71,15 @@
     li.innerHTML = '<span class="av2" aria-hidden="true">' + esc(r.a.charAt(0).toUpperCase()) + '</span><button type="button" class="bub" data-rv="' + (k % data.length) + '" aria-haspopup="dialog"><span class="rh"><b>' + esc(r.a) + '</b><span class="est" aria-label="' + r.e + ' de 5 estrellas">' + est(r.e) + '</span><span class="fe">' + esc(r.f) + '</span></span><span class="rtxt">' + esc(r.t) + '</span><span class="ver">Ver en Google ↗</span></button>';
     return li;
   }
+  var cinta = feed.parentNode.classList.contains("cinta");
+  var sync = function () { feed.classList.toggle("pausa", pausado || enModal); };
   feed.innerHTML = "";
-  for (var k = 0; k < VIS; k++) { var t0 = tarjeta(k); t0.classList.remove("entra"); feed.appendChild(t0); }
+  if (cinta) {
+    // Modo cinta: todas las reseñas dos veces en una columna que sube sin parar; los bordes se desvanecen por CSS.
+    var vp = document.createElement("div"); vp.className = "cinta-vp"; feed.parentNode.insertBefore(vp, feed); vp.appendChild(feed);
+    feed.classList.add("en-cinta"); feed.style.setProperty("--dur", data.length * 7 + "s");
+    for (var c = 0; c < 2 * data.length; c++) { var tc = tarjeta(c); tc.classList.remove("entra"); if (c >= data.length) tc.setAttribute("aria-hidden", "true"); feed.appendChild(tc); }
+  } else for (var k = 0; k < VIS; k++) { var t0 = tarjeta(k); t0.classList.remove("entra"); feed.appendChild(t0); }
 
   function avanzar() {
     if (pausado || enModal || encima || !visible || document.hidden || data.length <= VIS) return;
@@ -83,14 +90,14 @@
       if (primero) { if (lento) primero.remove(); else { primero.classList.add("sale"); setTimeout(function () { primero.remove(); }, 520); } }
     }, lento ? 200 : 1000);
   }
-  timer = setInterval(avanzar, lento ? 8000 : 5600);
+  if (!cinta) timer = setInterval(avanzar, lento ? 8000 : 5600);
   if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(feed);
   feed.addEventListener("mouseover", function () { encima = true; });
   feed.addEventListener("mouseout", function () { encima = false; });
   feed.addEventListener("focusin", function () { encima = true; });
   feed.addEventListener("focusout", function () { encima = false; });
   var ctl = document.querySelector(".feed-ctl");
-  if (ctl) ctl.addEventListener("click", function () { pausado = !pausado; ctl.setAttribute("aria-pressed", pausado ? "true" : "false"); ctl.textContent = pausado ? "Reanudar" : "Pausar"; });
+  if (ctl) ctl.addEventListener("click", function () { pausado = !pausado; ctl.setAttribute("aria-pressed", pausado ? "true" : "false"); ctl.textContent = pausado ? "Reanudar" : "Pausar"; sync(); });
 
   var modal = document.createElement("div");
   modal.className = "rv-modal"; modal.hidden = true; modal.setAttribute("role", "dialog"); modal.setAttribute("aria-modal", "true"); modal.setAttribute("aria-labelledby", "rvM-t");
@@ -100,9 +107,9 @@
   function abrir(k, btn) {
     var r = data[k]; ultimo = btn; modal.querySelector(".rv-q").textContent = r.t;
     modal.querySelector(".rv-by").textContent = "— " + r.a + " · " + est(r.e) + " · " + r.f;
-    go.href = r.u; modal.hidden = false; enModal = true; document.body.style.overflow = "hidden"; go.focus();
+    go.href = r.u; modal.hidden = false; enModal = true; sync(); document.body.style.overflow = "hidden"; go.focus();
   }
-  function cerrar() { modal.hidden = true; enModal = false; document.body.style.overflow = ""; if (ultimo && document.contains(ultimo)) ultimo.focus(); }
+  function cerrar() { modal.hidden = true; enModal = false; sync(); document.body.style.overflow = ""; if (ultimo && document.contains(ultimo)) ultimo.focus(); }
   feed.addEventListener("click", function (e) { var b = e.target.closest("[data-rv]"); if (b) abrir(+b.getAttribute("data-rv"), b); });
   go.addEventListener("click", function () { setTimeout(cerrar, 150); });
   no.addEventListener("click", cerrar);

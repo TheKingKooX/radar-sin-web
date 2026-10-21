@@ -184,3 +184,10 @@ button.bub:hover, button.bub:focus-visible { transform: translateY(-3px); border
 .rv-by { font-size: 13.5px; color: var(--suave); margin-bottom: 14px; }
 .rv-n { font-size: 14px; color: var(--suave); margin-bottom: 20px; }
 .rv-act { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* Modo cinta (opt-in con cinta: true en la marca): columna que sube sin parar y se desvanece arriba y abajo */
+.cinta-vp { height: min(540px, 72vh); overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 22%, #000 78%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 22%, #000 78%, transparent 100%); }
+.feed.en-cinta { min-height: 0; gap: 0; animation: cinta var(--dur, 140s) linear infinite; will-change: transform; }
+.feed.en-cinta > li { margin-bottom: 16px; }
+.feed.en-cinta.pausa, .cinta-vp:hover .feed.en-cinta, .feed.en-cinta:focus-within { animation-play-state: paused; }
+@keyframes cinta { to { transform: translateY(-50%); } }

@@ -117,6 +117,17 @@ function pagina(d, m) {
   <div class="val rv"><span class="n">${d.r.toFixed(1)} ★</span><p>${d.c} reseñas en Google Maps</p></div>
   ${resenas ? `<div class="opin${m.cinta === false ? "" : " cinta"}${m.cintaManual ? " manual" : ""}"><p class="opin-h"><span class="vivo" aria-hidden="true"></span>Lo que dicen en Google Maps<button type="button" class="feed-ctl" aria-pressed="false">Pausar</button></p><ul class="feed">${resenas}</ul><a class="mas" href="${esc(d.m)}" target="_blank" rel="noopener">Ver todas las reseñas en Google Maps →</a></div>` : ""}
 </div></section>`;
+  const galeria = `<section id="galeria"><div class="in-w">
+  <span class="lbl rv">Galería</span><h2 class="rv">Nuestro trabajo</h2>
+  <div class="gal">${mosaicos(d).map((x, i) => `<figure class="rv" style="--i:${i}">${icono(x.i, "ic big")}<figcaption>${esc(x.t)}</figcaption></figure>`).join("")}</div>
+</div></section>`;
+  // Servicios y galería en tarjetas expandibles (opcional por marca: m.tarjetas = [{ img: [a, b], txt }] en el orden de d.sv)
+  const tarjetas = m.tarjetas && d.sv ? `
+<section id="servicios"><div class="in-w">
+  <span class="lbl rv">Servicios y galería</span><h2 class="rv">Lo que hacemos</h2>
+  <div class="sc-row rv">${d.sv.map((s, i) => { const t = m.tarjetas[i] || { img: [], txt: "" }; return `<article class="sc${i === 0 ? " open" : ""}"><button type="button" class="sc-b" id="sc-h${i}" aria-expanded="${i === 0}" aria-controls="sc-p${i}"><span class="sc-n">${String(i + 1).padStart(2, "0")}</span><span class="sc-t">${esc(s)}</span></button><div class="sc-media" id="sc-p${i}" role="region" aria-labelledby="sc-h${i}">${t.img.map((f, k) => `<img class="${k === 0 ? "a on" : "b"}" src="${esc(f)}" alt="Ilustración referencial de ${esc(s)}" loading="lazy">`).join("")}<p class="sc-d">${esc(t.txt)}</p></div></article>`; }).join("")}</div>
+  <p class="nota-ref rv">Ilustraciones referenciales.</p>
+</div></section>` : "";
   const html = `<!doctype html>
 <html lang="es">
 <head>
@@ -148,11 +159,8 @@ ${m.efecto.css}
   <div class="about"><h2 class="rv">${esc(d.n)}</h2><p class="rv">${esc(sobre)}</p></div>
   <div class="why">${porque.map((p) => `<div class="rv">${icono(p[0])}<h3>${esc(p[1])}</h3><p>${esc(p[2])}</p></div>`).join("")}</div>
 </div></section>
-${servicios}
-<section id="galeria"><div class="in-w">
-  <span class="lbl rv">Galería</span><h2 class="rv">Nuestro trabajo</h2>
-  <div class="gal">${mosaicos(d).map((x, i) => `<figure class="rv" style="--i:${i}">${icono(x.i, "ic big")}<figcaption>${esc(x.t)}</figcaption></figure>`).join("")}</div>
-</div></section>
+${tarjetas || servicios}
+${m.tarjetas ? "" : galeria}
 <section id="reservar"><div class="in-w">
   <span class="lbl rv">Reservar</span><h2 class="rv">Cómo reservar</h2>
   <ol class="pasos">${pasos.map((p, i) => `<li class="rv"><span class="num">${i + 1}</span>${icono(p[0])}<h3>${esc(p[1])}</h3><p>${esc(p[2])}</p></li>`).join("")}</ol>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700" role="img" aria-label="Ilustración referencial">
+<defs>
+<linearGradient id="fondo6" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fdf3f3"/><stop offset="1" stop-color="#f2d9dc"/></linearGradient>
+<filter id="difuso6" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="30"/></filter>
+<filter id="grano6"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="6"/><feColorMatrix values="0 0 0 0 .53  0 0 0 0 .17  0 0 0 0 .22  0 0 0 .09 0"/></filter>
+</defs>
+<rect width="600" height="700" fill="url(#fondo6)"/>
+<g filter="url(#difuso6)"><ellipse cx="230" cy="280" rx="150" ry="150" fill="#872b39" opacity="0.35"/><ellipse cx="370" cy="300" rx="150" ry="150" fill="#e5b2b6" opacity="0.8"/><ellipse cx="300" cy="430" rx="150" ry="150" fill="#b2b2b2" opacity="0.4"/></g>
+<rect width="600" height="700" filter="url(#grano6)"/>
+<rect x="26" y="26" width="548" height="648" fill="none" stroke="#872b39" stroke-width="1" opacity=".45"/>
+<g fill="none" stroke="#872b39" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="235" cy="285" r="120"/><circle cx="365" cy="285" r="120"/><circle cx="300" cy="400" r="120"/><path d="M470 120 L360 250" stroke-width="5"/><path d="M360 250 c-22 6-30 26-22 42 c22 4 44-14 22-42z" fill="#872b39" opacity=".85" stroke="none"/><path d="M470 120 l22-26" stroke-width="8" opacity=".6"/></g>
+</svg>

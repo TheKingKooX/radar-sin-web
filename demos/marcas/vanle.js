@@ -1,6 +1,13 @@
 // Vanlé Salón San Miguel: blanco, granate y gris, Jost fino; el aro del logo se dibuja en la portada.
 module.exports = {
   id: "vanle",
+  // Servicios y galería en tarjetas expandibles (en el orden de los servicios); imágenes en estilo línea granate sobre acuarela rosa
+  tarjetas: [
+    { img: ["img/laceados-1.svg", "img/laceados-2.svg"], txt: "Cabello liso, suave y fácil de peinar con técnicas de laceado." },
+    { img: ["img/tratamientos-1.svg", "img/tratamientos-2.svg"], txt: "Hidratación y cuidado para devolver brillo y cuerpo al cabello." },
+    { img: ["img/color-1.svg", "img/color-2.svg"], txt: "Color, mechas y balayage con degradados a tu medida." },
+    { img: ["img/productos-1.svg", "img/productos-2.svg"], txt: "Productos para cuidar tu cabello en casa." }
+  ],
   opinionesAlFinal: true, // la sección de opiniones va al pie, después del contacto
   cintaManual: true, // la cinta de reseñas se puede desplazar a mano
   fuentes: ["Jost:wght@300;400;500;600"],

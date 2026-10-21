@@ -141,3 +141,27 @@
     if (e.key === "Tab") { var a = [go, no], j = a.indexOf(document.activeElement); e.preventDefault(); a[(j + (e.shiftKey ? -1 : 1) + a.length) % a.length].focus(); }
   });
 })();
+
+/* Servicios y galería en tarjetas expandibles: una abierta a la vez; la imagen se funde con la siguiente cada pocos segundos. */
+(function () {
+  var row = document.querySelector(".sc-row");
+  if (!row) return;
+  var cards = [].slice.call(row.querySelectorAll(".sc")), timer = null;
+  function ciclo(c) {
+    clearInterval(timer);
+    var im = [].slice.call(c.querySelectorAll(".sc-media img"));
+    im.forEach(function (e, i) { e.classList.toggle("on", i === 0); });
+    if (im.length < 2) return;
+    var k = 0;
+    timer = setInterval(function () {
+      if (document.hidden) return;
+      im[k].classList.remove("on"); k = (k + 1) % im.length; im[k].classList.add("on");
+    }, 3800);
+  }
+  function abrir(c) {
+    cards.forEach(function (x) { var o = x === c; x.classList.toggle("open", o); x.querySelector(".sc-b").setAttribute("aria-expanded", o ? "true" : "false"); });
+    ciclo(c);
+  }
+  cards.forEach(function (c) { c.querySelector(".sc-b").addEventListener("click", function () { if (!c.classList.contains("open")) abrir(c); }); });
+  ciclo(cards[0]);
+})();

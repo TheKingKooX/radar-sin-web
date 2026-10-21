@@ -217,3 +217,25 @@ button.bub:hover, button.bub:focus-visible { transform: translateY(-3px); border
 .cinta-vp.manual { overflow-y: auto; scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--fg) 35%, transparent) transparent; }
 .feed.cinta-m { min-height: 0; gap: 0; }
 .feed.cinta-m > li { margin-bottom: 16px; }
+
+/* Servicios y galería: tarjetas expandibles con crossfade de imágenes */
+.sc-row { display: flex; gap: 12px; height: clamp(440px, 64vh, 620px); margin-top: 34px; }
+.sc { position: relative; flex: 1 1 0; min-width: 0; overflow: hidden; border-radius: 22px; border: 1px solid color-mix(in srgb, var(--fg) 16%, transparent); background: color-mix(in srgb, var(--acento) 8%, var(--bg)); transition: flex-grow .6s var(--ease); }
+.sc.open { flex-grow: 4.2; }
+.sc-media { position: absolute; inset: 0; }
+.sc-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.12); filter: blur(7px) saturate(.7); transition: opacity .9s var(--ease), transform 1.4s var(--ease), filter .9s var(--ease); }
+.sc:not(.open) .sc-media img.a { opacity: .85; filter: blur(3px) saturate(.85); }
+.sc.open .sc-media img.on { opacity: 1; transform: scale(1); filter: none; }
+.sc-b { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; gap: 6px; padding: 22px; border: 0; margin: 0; cursor: pointer; text-align: left; font: inherit; color: var(--fg); background: linear-gradient(to top, color-mix(in srgb, var(--bg) 94%, transparent) 0, color-mix(in srgb, var(--bg) 82%, transparent) 36%, transparent 74%); }
+.sc-n { font-family: var(--f-titulo), sans-serif; font-size: 13px; letter-spacing: .12em; color: var(--acento); }
+.sc-t { font-family: var(--f-titulo), sans-serif; font-size: clamp(16px, 1.7vw, 24px); font-weight: 500; line-height: 1.15; transition: transform .6s var(--ease); }
+.sc-d { position: absolute; left: 22px; right: 22px; bottom: 84px; z-index: 3; pointer-events: none; max-width: 34ch; font-size: 15.5px; color: var(--fg); opacity: 0; transform: translateY(12px); transition: opacity .4s var(--ease), transform .5s var(--ease); }
+.sc.open .sc-d { opacity: 1; transform: none; transition-delay: .3s; }
+.sc:not(.open) .sc-b:hover .sc-t { transform: translateY(-3px); }
+.nota-ref { margin-top: 14px; font-size: 13px; color: var(--suave); }
+@media (max-width: 760px) {
+  .sc-row { flex-direction: column; height: auto; }
+  .sc { flex: none; height: 104px; transition: height .6s var(--ease); }
+  .sc.open { height: min(440px, 62vh); }
+  .sc-d { bottom: 76px; }
+}

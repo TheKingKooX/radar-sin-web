@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" font-family="Playfair Display, Georgia, serif">
+  <rect width="200" height="200" fill="#191d2e"/>
+  <circle cx="100" cy="100" r="86" fill="none" stroke="#b88e40" stroke-width="4"/>
+  <circle cx="100" cy="100" r="78" fill="none" stroke="#7b4c26" stroke-width="2"/>
+  <path d="M78 74 74 54l13 9 13-14 13 14 13-9-4 20Z" fill="#b88e40"/>
+  <text x="100" y="108" text-anchor="middle" font-size="22" font-weight="700" fill="#fdfdfd" letter-spacing="1">LIMA</text>
+  <text x="100" y="130" text-anchor="middle" font-size="15" font-weight="500" fill="#fdfdfd" letter-spacing="3">BARBER</text>
+  <text x="100" y="150" text-anchor="middle" font-size="13" font-weight="500" fill="#b88e40" letter-spacing="6">CLUB</text>
+</svg>

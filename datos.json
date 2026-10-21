@@ -483,7 +483,8 @@
    "e": "Escudo circular azul marino con coronas doradas y retrato de hombre con gafas, borde dorado y marrón. Estilo de club clásico, tipo insignia.",
    "v": "Como en las mejores barberías del mundo."
   },
-  "m": "https://maps.google.com/?cid=6887026952226413008"
+  "m": "https://maps.google.com/?cid=6887026952226413008",
+  "demo": "demos/limabarber/index.html"
  },
  {
   "id": "peru-style",
@@ -519,7 +520,8 @@
    "e": "Blanco sobre negro: «PERÚ STYLE» en sans de mayúsculas gruesas con «BARBERÍA» y un bigote. Directo y masculino.",
    "v": "Buenas charlas, atención personalizada y ambientes amenos."
   },
-  "m": "https://maps.google.com/?cid=11547771809539018786"
+  "m": "https://maps.google.com/?cid=11547771809539018786",
+  "demo": "demos/peru-style/index.html"
  },
  {
   "id": "blackfade",
@@ -550,7 +552,8 @@
    "e": "«BLACK» en letra gótica estilo grafiti, en blanco sobre negro, con «studio» debajo. Urbano y agresivo.",
    "v": "Mereces verte bien."
   },
-  "m": "https://maps.google.com/?cid=3272312623212937246"
+  "m": "https://maps.google.com/?cid=3272312623212937246",
+  "demo": "demos/blackfade/index.html"
  },
  {
   "id": "emys",
@@ -582,6 +585,7 @@
    "e": "Fondo rojo vivo con «Emy's» en blanco, de trazo cursivo, y «Salón & Spa». Incluye dirección y contacto en el mismo logo. Llamativo y cálido.",
    "v": "24 años de trayectoria en el rubro de la belleza."
   },
-  "m": "https://maps.google.com/?cid=8357353606332994377"
+  "m": "https://maps.google.com/?cid=8357353606332994377",
+  "demo": "demos/emys/index.html"
  }
 ]

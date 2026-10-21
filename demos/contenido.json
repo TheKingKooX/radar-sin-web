@@ -2352,5 +2352,706 @@
     "u": "https://maps.app.goo.gl/jG2vh4VbBAETLKug6"
    }
   ]
+ },
+ "limabarber": {
+  "horario": {
+   "lun": [
+    "10:00",
+    "21:00"
+   ],
+   "mar": [
+    "10:00",
+    "21:00"
+   ],
+   "mie": [
+    "10:00",
+    "21:00"
+   ],
+   "jue": [
+    "10:00",
+    "21:00"
+   ],
+   "vie": [
+    "10:00",
+    "21:00"
+   ],
+   "sab": [
+    "10:00",
+    "21:00"
+   ]
+  },
+  "resenas": [
+   {
+    "a": "Elías A.",
+    "e": 4,
+    "f": "Hace 2 años",
+    "t": "Un buen lugar para hacer un arreglo capilar y corrección de barba, nos atienden jóvenes que saben su oficio.",
+    "u": "https://maps.app.goo.gl/ngUdQn9g7pEHjDKr5"
+   },
+   {
+    "a": "Renato C.",
+    "e": 5,
+    "f": "Hace 7 años",
+    "t": "Barberia clásica ubicada en la esquina de Garzón. Excelente atención y dedicación al cliente. A la altura del gusto y las tendencias puedes elegir un corte de los que te muestran en la tablet al…",
+    "u": "https://maps.app.goo.gl/T7KquRMK8kNaWumz9"
+   },
+   {
+    "a": "Fabiola V.",
+    "e": 5,
+    "f": "Hace 4 años",
+    "t": "Excelente servicio. Nos atendió Ronald, mi hijo quedó contento con su corte y nosotros satisfechos por el trabajo profesional realizado por Ronald. 100% recomendable.",
+    "u": "https://maps.app.goo.gl/eCCFkhgPSDwHd2Ut5"
+   },
+   {
+    "a": "Matias S.",
+    "e": 4,
+    "f": "Hace un año",
+    "t": "La atención fue buena. El barbero que me tocó fue muy amable conmigo, me preguntó como me peino, que tipo de corte me interesaba de acuerdo a su catálogo, me ofreció bebida, me lavó el cabello y…",
+    "u": "https://maps.app.goo.gl/AQKkGYS2j6nvVvrz6"
+   },
+   {
+    "a": "Angela O.",
+    "e": 5,
+    "f": "Hace 2 años",
+    "t": "Le hicieron un corte a mi novio, quedó bonito 🤭 Buen servicio, calidad 10/10 y buena música 😌…",
+    "u": "https://maps.app.goo.gl/gU92SATd6Y6fyvQg9"
+   },
+   {
+    "a": "Antonio V.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Excelente sitio para un buen corte de cabello, espero siga mejorando somos clientes continuos",
+    "u": "https://maps.app.goo.gl/s8tKQ9Jn2RwaZmUb9"
+   },
+   {
+    "a": "Pedro C.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Muy buena barbería. Todo muy limpio y ordenado. Lo recomiendo 100% Ps. Te brindan una cerveza artesanal de cortesía muy buena.",
+    "u": "https://maps.app.goo.gl/nf4J9P9BPbhQRgDu9"
+   },
+   {
+    "a": "Omar L.",
+    "e": 5,
+    "f": "Hace 6 años",
+    "t": "Excelente servicio, he tenido el gusto de estar desde que inicio y no dudo en recomendarlo. Leo y los demás muchachos son buena onda, te permiten poner música a tu gusto y los fines de semana t dan…",
+    "u": "https://maps.app.goo.gl/Fx9TvKbV93aGQPah6"
+   },
+   {
+    "a": "Jorge G.",
+    "e": 4,
+    "f": "Hace 4 años",
+    "t": "Personal bastante amable y cuidadoso",
+    "u": "https://maps.app.goo.gl/3Wcuohwy8ZpB9oW88"
+   },
+   {
+    "a": "Antony P.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "100% recomendado excelente servicio por parte de los chicos y chicas de recepción 😁…",
+    "u": "https://maps.app.goo.gl/t7STc24DZsVxTY2p6"
+   },
+   {
+    "a": "Kelly J.",
+    "e": 5,
+    "f": "Hace 2 años",
+    "t": "Servicio excelente, para mí hijo , mucha paciencia y el servicio A1.. la atención es rápida y muy amables ..todos .. muchos éxitos !!",
+    "u": "https://maps.app.goo.gl/vrVvBXEHgrWQmRAy5"
+   },
+   {
+    "a": "Humberto A.",
+    "e": 4,
+    "f": "Hace 5 años",
+    "t": "Cordial y buen servicio, se cumplen los protocolos de bioseguridad. Espero que no bajen la guardia en este tema. Transacciones y facturación vía correo, disminuye el contacto físico; bien ahí!",
+    "u": "https://maps.app.goo.gl/TE1Hh6QdgxYM6ZRf8"
+   },
+   {
+    "a": "Nikel P.",
+    "e": 5,
+    "f": "Hace 3 años",
+    "t": "Excelente lugar, fui en una fecha especial a atenderme y me brindaron la asesoría necesaria para la ocasión, el corte fue A1 y la atención excelente.",
+    "u": "https://maps.app.goo.gl/iRT6pw87Q7uRgudf9"
+   },
+   {
+    "a": "Edison J.",
+    "e": 5,
+    "f": "Hace 2 años",
+    "t": "Todo perfecto y el trato de lo mejor. Pidan su cerveza catedral en el servicio Élite y el servicio con Ronald",
+    "u": "https://maps.app.goo.gl/iVRJeNPRUbDdeE556"
+   },
+   {
+    "a": "Adrián C.",
+    "e": 5,
+    "f": "Hace 6 años",
+    "t": "La atención de calidad. Chicos muy amables. Desde que fui por primera vez me gustó mucho. Así que cada vez que necesito un corte de cabello 💇🏻‍♂️ Lima Barber Club💈 es a dónde voy. Éxitos...…",
+    "u": "https://maps.app.goo.gl/5um8fqqGuvhdfeFY8"
+   },
+   {
+    "a": "Guillermo J.",
+    "e": 5,
+    "f": "Hace 4 años",
+    "t": "Excelente servicio 10/10, me atendió Leo, un capo del hair curt, gran ambiente,buena musica, grandes profesionales. Lo recomiendo.",
+    "u": "https://maps.app.goo.gl/Zdo58cAp1nTQFyHn8"
+   },
+   {
+    "a": "Víctor C.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Barbería 10/10, equipo profesional, bien capacitado, y con equipo de primera calidad. Asisto a esta barbería desde su fundación y nunca me ha decepcionado, el trato ya sea en la recepción o con el…",
+    "u": "https://maps.app.goo.gl/2wpkDqRVMHE8joTh6"
+   },
+   {
+    "a": "Alejandro P.",
+    "e": 5,
+    "f": "Hace 4 años",
+    "t": "Excelente servicio profesional, todos los meses mi hermano menor y yo nos cortamos aquí. 100% recomendado.",
+    "u": "https://maps.app.goo.gl/iGzx2oST31rvTU8V9"
+   },
+   {
+    "a": "Sebastián C.",
+    "e": 5,
+    "f": "Hace 3 años",
+    "t": "100% recomendado 👍. Formidable servicio profesional, breve espera de atención, descuentos, e infaltable música 🙂…",
+    "u": "https://maps.app.goo.gl/1YbpaR1pJRdkzmxu5"
+   },
+   {
+    "a": "Angel R.",
+    "e": 5,
+    "f": "Hace 3 años",
+    "t": "Excelente servicio por parte del barbero Christian Perea, muy paciente con los detalles del corte y presto a dar recomendaciones del cuidado del corte y escuchando lo que quiere el cliente. 5…",
+    "u": "https://maps.app.goo.gl/w53ZP3qdQoVLF6Y96"
+   }
+  ]
+ },
+ "peru-style": {
+  "horario": {
+   "lun": [
+    "10:00",
+    "22:00"
+   ],
+   "mar": [
+    "10:00",
+    "22:00"
+   ],
+   "mie": [
+    "10:00",
+    "22:00"
+   ],
+   "jue": [
+    "10:00",
+    "22:00"
+   ],
+   "vie": [
+    "10:00",
+    "22:00"
+   ],
+   "sab": [
+    "10:00",
+    "22:00"
+   ]
+  },
+  "resenas": [
+   {
+    "a": "J R.",
+    "e": 5,
+    "f": "Hace 8 meses",
+    "t": "Barbería con buen ambiente y aire acondicionado ahora para el verano, Fernando es un capo para los fades, se toma su tiempo para hacer un buen trabajo, recomendado al 100%",
+    "u": "https://maps.app.goo.gl/ARTc1yq436iWWYDVA"
+   },
+   {
+    "a": "Piero M.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "La buena vibra se siente y transmite todo el tiempo en el lugar. Muy recomendable, sus barberos están preocupados todo el tiempo por la comodidad del cliente y se anticipan a los pedidos de uno. En…",
+    "u": "https://maps.app.goo.gl/unMMF1jfnVULPK7F7"
+   },
+   {
+    "a": "Victor H.",
+    "e": 5,
+    "f": "Hace 4 años",
+    "t": "Excelente servicio. Super atentos y preciso con los detalles. Recomiendo a Jack para atención. 10 puntos su trabajo!",
+    "u": "https://maps.app.goo.gl/8CurQwT1tdDcYt859"
+   },
+   {
+    "a": "Jafet P.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Buen servicio en general, atención, corte, amabilidad al 100% Frankie fue lo máximo 💯💯…",
+    "u": "https://maps.app.goo.gl/J3xqNUY47pZrti5GA"
+   },
+   {
+    "a": "Juan D.",
+    "e": 5,
+    "f": "Hace 6 años",
+    "t": "Los felicito muy buena atención muy amables ya es mi tercera vez que regresó muy atentos estoy feliz con mi corte hasta la próxima lo recomiendo",
+    "u": "https://maps.app.goo.gl/GG4t3duqDXiVq7fYA"
+   },
+   {
+    "a": "Luciano C.",
+    "e": 5,
+    "f": "Hace 4 años",
+    "t": "Me atendí con Jack. Muy buen servicio, minucioso y dedicado además de buena onda. Super recomendado.",
+    "u": "https://maps.app.goo.gl/jvTP7PzeJZvwcFFi9"
+   },
+   {
+    "a": "Francisco A.",
+    "e": 5,
+    "f": "Hace 4 años",
+    "t": "He quedado muy contento y satisfecho con el corte de cabello que me realizó el barbero jack , dentro de 20 días vuelvo a ir a la barbería PERU Style, buen servicio",
+    "u": "https://maps.app.goo.gl/XZSMjr69ZfMndAXy6"
+   },
+   {
+    "a": "Victor D.",
+    "e": 5,
+    "f": "Hace 4 años",
+    "t": "Excelente servicio pregunten por Jack… cumplen con todas las medidas de higiene y para que no tengan inconvenientes hagan su reserva así no pierden tiempo.",
+    "u": "https://maps.app.goo.gl/poqw8TrYvgVZAFKG8"
+   },
+   {
+    "a": "Darwin I.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Excelente trato, con lugar para estacionarse, todo ok, volveré en 15 días.",
+    "u": "https://maps.app.goo.gl/9Q52rN2fMbxjhNe38"
+   },
+   {
+    "a": "Antonio V.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Excelente servicio de Guillermo, detallista y buen trato. Recomendado al 100%",
+    "u": "https://maps.app.goo.gl/GVApiXQ2N8MxjqAD9"
+   },
+   {
+    "a": "Luis E.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Esta vez me atendió Frankie, y todo super bien. Recomendado!",
+    "u": "https://maps.app.goo.gl/K32dkdnEvv5h1svJA"
+   },
+   {
+    "a": "Oscar R.",
+    "e": 5,
+    "f": "Hace 3 años",
+    "t": "Buen corte, pregunten por Sebastian (el descansa martes) Meticuloso y tiene paciencia para que quede el corte excelente",
+    "u": "https://maps.app.goo.gl/MM3QF7McFrs2ZbBK9"
+   },
+   {
+    "a": "Mathius M.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Buen servicio y trato hacia ala persona ... Nombre : Frankie Q",
+    "u": "https://maps.app.goo.gl/EmRcpKxJdzhYxZhU7"
+   },
+   {
+    "a": "Leonardo S.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "La puntualidad y la limpieza del local estuvo excelente, junto con el buen servicio y carisma de Franklin.",
+    "u": "https://maps.app.goo.gl/4fqdqomcgcnuEuS59"
+   },
+   {
+    "a": "Frank D.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Me atendió el joven frankie, a mi hijo de 7 años y muy buen servicio felicitaciones.",
+    "u": "https://maps.app.goo.gl/qJHhcpayEnFoBeh6A"
+   },
+   {
+    "a": "Dante R.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Buen trato y muy hospitalaria desde que se llegó hasta el final Frankie",
+    "u": "https://maps.app.goo.gl/LZvs4beT2b69iV9X9"
+   },
+   {
+    "a": "Alex A.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Excelente servicio. Frankie me atendió y todo excelente.",
+    "u": "https://maps.app.goo.gl/5Nx6H7xEu5EZELKB9"
+   },
+   {
+    "a": "Luchoparr",
+    "e": 5,
+    "f": "Hace 7 años",
+    "t": "Acogedor lugar, muy buena atención y personal calificado. Cuenta con buenas promociones en diferentes horarios.",
+    "u": "https://maps.app.goo.gl/zpGtUuE69oXPbJ9r6"
+   },
+   {
+    "a": "Raúl R.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Muy buen servicio, buen trabajo por parte de Guillermo!",
+    "u": "https://maps.app.goo.gl/gCqnPqBxKr5iMMxz7"
+   },
+   {
+    "a": "Jorge A.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Excelente servicio dinámico y muy bien atendido por frankie",
+    "u": "https://maps.app.goo.gl/MHSXoZV2x4UqSEBe9"
+   },
+   {
+    "a": "Lila C.",
+    "e": 5,
+    "f": "Hace 3 años",
+    "t": "Le encantó el corte moderno a mi hijo y muy buena atención.",
+    "u": "https://maps.app.goo.gl/WSM6pfbnfCjm3h8k9"
+   },
+   {
+    "a": "José C.",
+    "e": 5,
+    "f": "Hace 5 años",
+    "t": "Excelente servicio, Frankie y Guillermo unos capos",
+    "u": "https://maps.app.goo.gl/WQTkZgDjfk5twJmo6"
+   }
+  ]
+ },
+ "blackfade": {
+  "horario": {
+   "lun": [
+    "10:00",
+    "21:00"
+   ],
+   "mar": [
+    "10:00",
+    "21:00"
+   ],
+   "mie": [
+    "10:00",
+    "21:00"
+   ],
+   "jue": [
+    "10:00",
+    "21:00"
+   ],
+   "vie": [
+    "10:00",
+    "21:00"
+   ],
+   "sab": [
+    "10:00",
+    "21:00"
+   ]
+  },
+  "resenas": [
+   {
+    "a": "Juaquin D.",
+    "e": 5,
+    "f": "Hace un mes",
+    "t": "Muy buena barbería, el mejor corte que me han hecho. Sitio tranquilo, buena música, todo chévere. Leonardo un crack total, te da la confianza para preguntar lo que quieras, te da tips, te explica el…",
+    "u": "https://maps.app.goo.gl/KBWCp3Ys5ioiAd1a7"
+   },
+   {
+    "a": "Jamir G.",
+    "e": 4,
+    "f": "Hace 7 meses",
+    "t": "Excelente servicio. El barbero, Johander, es muy buena gente y me sentí muy cómodo durante todo el proceso. Lo mejor es que hizo un trabajo impecable con el corte, nada de errores. Muy recomendado",
+    "u": "https://maps.app.goo.gl/s2vNTRvquLXzwat46"
+   },
+   {
+    "a": "Jonathan R.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "Excelente lugar, gente profesional y amable. Desde que conocí a Johander y gean y vi su trabajo siempre regreso y ya llevo más de 1 año. Excelente trabajo.",
+    "u": "https://maps.app.goo.gl/96tuxCbKF1XiQGR18"
+   },
+   {
+    "a": "Pedro A.",
+    "e": 5,
+    "f": "Hace 3 meses",
+    "t": "El sitio es FANTÁSTICO y quien lo regenta MUY SIMPÁTICO Y PROFESIONAL. VOLVERÉ, SIN DUDA",
+    "u": "https://maps.app.goo.gl/8Jtjh8hkby5i94437"
+   },
+   {
+    "a": "El Y.",
+    "e": 5,
+    "f": "Hace 8 meses",
+    "t": "Black Fade Studios, es calidad, un sujeto y vibra agradable y un gran amigo puede ser. Con gente de buen ambiente laboral y sobre todo calidad en sus cortes de pelo.…",
+    "u": "https://maps.app.goo.gl/zgbgMZ8gT5SzB5MWA"
+   },
+   {
+    "a": "Raul E.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "Excelente!!! Buena atención!!! Atento a cada detalle!! Recomendadisimo!!",
+    "u": "https://maps.app.goo.gl/wRbo1BZRRudWXB1o6"
+   },
+   {
+    "a": "Jhonatan I.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "Buen corte , buena atención, se toman el tiempo para que quede bien. Superó la expectativa.",
+    "u": "https://maps.app.goo.gl/REnY48KTypZWX9K86"
+   },
+   {
+    "a": "Fabrizio F.",
+    "e": 5,
+    "f": "Hace 11 meses",
+    "t": "El lugar es bien chevere, es ordenado, limpio, etc. Los barberos son muy buena onda y poco a poco se convierten en tus barberos de confianza como a mí me pasó. Los cortes ahi son una brutalidad…",
+    "u": "https://maps.app.goo.gl/SZgkeMiu4FPZUaba9"
+   },
+   {
+    "a": "Luiggi G.",
+    "e": 5,
+    "f": "Hace 2 años",
+    "t": "100% RECOMENDADO Servicio A1 mucha calidad y la mejor experiencia.",
+    "u": "https://maps.app.goo.gl/qz32W8g9E7ZaVcxK9"
+   },
+   {
+    "a": "Fabrizio",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "10/10 Buenas atención, buena recomendacion",
+    "u": "https://maps.app.goo.gl/ESWgFEsW5PTf5rAe7"
+   },
+   {
+    "a": "Thomas C.",
+    "e": 5,
+    "f": "Hace 7 meses",
+    "t": "5/5 muy buena atención. Pregunten por Jean 🙌🏻…",
+    "u": "https://maps.app.goo.gl/EyoCKR1XgxLKLyKN7"
+   },
+   {
+    "a": "Eduardo C.",
+    "e": 5,
+    "f": "Hace 8 meses",
+    "t": "La mejor barberia que he ido hasta el momento, Desde que entras es una vibra chevere, te atienden bien y son muy buenos , Recomendado 100/100",
+    "u": "https://maps.app.goo.gl/eTwduPGKU3ZquLrm7"
+   },
+   {
+    "a": "Alexandra M.",
+    "e": 5,
+    "f": "Hace 11 meses",
+    "t": "Muy recomendado, es un espacio con productos de calidad y una atención amena.",
+    "u": "https://maps.app.goo.gl/qEQjsXmzXGaoYxE97"
+   },
+   {
+    "a": "Cliente",
+    "e": 5,
+    "f": "Hace 11 meses",
+    "t": "Excelente ambiente, me gustó la asesoría personalizada y el resultado de mi corte. 🌟…",
+    "u": "https://maps.app.goo.gl/ga9vVjyVDDkSVaaR9"
+   },
+   {
+    "a": "Desmond L.",
+    "e": 5,
+    "f": "Hace 8 meses",
+    "t": "Aparte de hacer buenos cortes, los barberos son muy amables. Te hacen sentir en casa.",
+    "u": "https://maps.app.goo.gl/bRdBvhYAZj2u29xQ9"
+   },
+   {
+    "a": "Isaac P.",
+    "e": 5,
+    "f": "Hace 11 meses",
+    "t": "Excelente trato, buen ambiente y servicio personalizado para cada tipo de persona.…",
+    "u": "https://maps.app.goo.gl/g8QGJgng11vbUdHQ8"
+   },
+   {
+    "a": "Jorge A.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Excelente servicio y atención. 100% recomendado por la paciencia y dedicación",
+    "u": "https://maps.app.goo.gl/sqfksPSYt3kkEhod7"
+   },
+   {
+    "a": "Johelis C.",
+    "e": 5,
+    "f": "Hace 3 años",
+    "t": "Amigo una vez más lo felicito por su excelente atención,un cambio total con mi nuevo look,pronto llevaré mis hijos para q les haga su corte,es ud un excelente barbero.",
+    "u": "https://maps.app.goo.gl/bHq5GDgeMyyhkAWQ9"
+   },
+   {
+    "a": "Eduardo A.",
+    "e": 5,
+    "f": "Hace 3 años",
+    "t": "Muy buena atención un lugar agradable y muy higiénico el personal conoce su oficio. Lo recomiendo.",
+    "u": "https://maps.app.goo.gl/ugN28X5zGMxaREPn8"
+   },
+   {
+    "a": "Carina B.",
+    "e": 5,
+    "f": "Hace 4 años",
+    "t": "Mis hijos son sus caseritos. Excelente atención y servicio de primera. Gracias por ser tan profesional Johander",
+    "u": "https://maps.app.goo.gl/o72EUC5TjCDVQmDN6"
+   },
+   {
+    "a": "Jose M.",
+    "e": 5,
+    "f": "Hace 4 años",
+    "t": "excelente servicio , hace cortes muy bueno , recomendado al 100% promociones y ofertas al dia",
+    "u": "https://maps.app.goo.gl/LxLUEAu7Vj6bmHtC9"
+   }
+  ]
+ },
+ "emys": {
+  "horario": {
+   "lun": [
+    "10:00",
+    "21:00"
+   ],
+   "mar": [
+    "10:00",
+    "21:00"
+   ],
+   "mie": [
+    "10:00",
+    "21:00"
+   ],
+   "jue": [
+    "10:00",
+    "21:00"
+   ],
+   "vie": [
+    "10:00",
+    "21:00"
+   ],
+   "sab": [
+    "10:00",
+    "21:00"
+   ]
+  },
+  "resenas": [
+   {
+    "a": "Karen E.",
+    "e": 4,
+    "f": "Hace un año",
+    "t": "He tenido muy buena experiencia siempre que he venido para realizarme laceados, recomiendo la atención con Julio César. Además, el servicio de maquillaje profesional y peinados me ha gustado mucho.…",
+    "u": "https://maps.app.goo.gl/37rUcuVnJ4qvnjis5"
+   },
+   {
+    "a": "Jacqueline M.",
+    "e": 5,
+    "f": "Hace 3 meses",
+    "t": "Siempre que llegó a su salón solo me siento, y Emy hace su magia..yo siempre salgo contenta",
+    "u": "https://maps.app.goo.gl/q8rpkLLT4WE2CRoT8"
+   },
+   {
+    "a": "Corina R.",
+    "e": 5,
+    "f": "Hace 4 meses",
+    "t": "Maravilloso, me cambia de look. Muchas gracias amiguitas",
+    "u": "https://maps.app.goo.gl/WSd6VfLV87tCeVRBA"
+   },
+   {
+    "a": "Alicia L.",
+    "e": 5,
+    "f": "Hace 5 meses",
+    "t": "Me quedo excelente. Me voy feliz.",
+    "u": "https://maps.app.goo.gl/2Bbhgtm79ARSAn946"
+   },
+   {
+    "a": "Patricia G.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Emy es muy buena, te aseora y te guia en el proceso para hacerte un buen laceado, estoy feliz con el resultado. Les recomiendo venir aquí",
+    "u": "https://maps.app.goo.gl/kmM6cesjDEZjzC1q8"
+   },
+   {
+    "a": "Madeley M.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Muy buena atención de todos, un ambiente muy lindo y me gustó mucho los resultados, lo recomiendo siempre que quieran un resultado profesional 🍒🩷…",
+    "u": "https://maps.app.goo.gl/9dAGukmFVJPjjXmx9"
+   },
+   {
+    "a": "Claudia M.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Excelente atencion. Un trabajo muy profesional. Estoy muy contenta con los resultados.",
+    "u": "https://maps.app.goo.gl/p7p3CB4Q2t7bExCeA"
+   },
+   {
+    "a": "Gloria C.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Visitar el salón Emy's siempre será una gran satisfacción, primero por el bellísimo trato por la profesional en el tema Emilia, seguido de los buenísimos productos de calidad que usa para engreir tu…",
+    "u": "https://maps.app.goo.gl/FWFfqQ5Nq19cYKaX8"
+   },
+   {
+    "a": "Flora L.",
+    "e": 5,
+    "f": "Hace 2 años",
+    "t": "Emys Salón encantada más de un año con ustedes ahora mi laciado una maravilloso, regio muy recomendable ,a atención excelente unas tromen, yo mi cabello afro Huy muy crespo termine lacia no lo puedo…",
+    "u": "https://maps.app.goo.gl/ZqNzx3cSwaeZSZUC9"
+   },
+   {
+    "a": "Pamela L.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Estoy contenta con su servicio, pone esmero en su trabajo y de garantía. Es muy profesional en su trabajo y te orienta lo que te va a quedar mejor, cada vez que vengo a atenderme salgo contenta y con…",
+    "u": "https://maps.app.goo.gl/69fS8o4RjTW4sG3H8"
+   },
+   {
+    "a": "Yrma R.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Emys salón te cambia la vida en minutos, sales llena de energía, renovada y sobre todo feliz que es lo más importante. Gracias gracias gracias",
+    "u": "https://maps.app.goo.gl/SUDoMv26baMhFvjh9"
+   },
+   {
+    "a": "Paulina A.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Saludarle a Sra Emita del Salón de Belleza Emys y felicitarle por el trabajo Exelente que Realiza yo particularmente me siento Muy contenta porque veo la Diferencia y calidad en su trabajo.",
+    "u": "https://maps.app.goo.gl/FWbiTWxVbNDThVsz8"
+   },
+   {
+    "a": "Sara",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Una experiencia muy linda me gustó mucho lo que hicieron a mi cabello espero volver pronto recomendado!!!",
+    "u": "https://maps.app.goo.gl/pFnMqMMa1e6uqRPWA"
+   },
+   {
+    "a": "Susana M.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Una experiencia excelente y muy recomendado, por su gran experiencia ☺️",
+    "u": "https://maps.app.goo.gl/crx4JX2AEjD1VeQZ8"
+   },
+   {
+    "a": "Ana C.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Muy buena atención y excelente trabajo",
+    "u": "https://maps.app.goo.gl/YxVGzbD7ddbaAGUf9"
+   },
+   {
+    "a": "Ana A.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Muy buena atención.. el cambio de look muy bien acertado.. los productos utilizados de primera..",
+    "u": "https://maps.app.goo.gl/aWk5q8T5p9cyZk7y7"
+   },
+   {
+    "a": "Luis F.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Me gustó atención respetuosa y amigable y salí con un buen corte para caballero",
+    "u": "https://maps.app.goo.gl/Gt5ERimkSf1bpnz6A"
+   },
+   {
+    "a": "Rosa P.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Estoy muy contenta con la experiencia de Emys Salon , excelente atención me gustó el laceado que me hicieron , Felices",
+    "u": "https://maps.app.goo.gl/8ALojtwYrXoo2aicA"
+   },
+   {
+    "a": "Ketty C.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Siempre que vengo salgo feliz con los resultados, son unos capos!",
+    "u": "https://maps.app.goo.gl/VFjdZQWjD9CsaAbh9"
+   },
+   {
+    "a": "Esther G.",
+    "e": 5,
+    "f": "Hace un año",
+    "t": "Buena atención si lo recomiendo es la mejor...",
+    "u": "https://maps.app.goo.gl/vLFFNtQVYqTWQ3oX9"
+   }
+  ]
  }
 }

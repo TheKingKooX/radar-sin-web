@@ -29,7 +29,24 @@ body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-even
 @media (prefers-reduced-motion: no-preference) {
   .hero .ring { stroke-dashoffset: 1; animation: aro 2.8s .2s cubic-bezier(.4, 0, .2, 1) forwards; }
   @keyframes aro { to { stroke-dashoffset: 0; } }
+/* Logo del encabezado: un destello rosa recorre el aro granate (3,6 s en bucle) solo cuando la persona está quieta y la página está arriba */
+.marca svg .barrido { fill: none; stroke: #e5b2b6; stroke-width: 5; stroke-linecap: round; stroke-dasharray: .16 .84; stroke-dashoffset: 0; opacity: 0; transform: rotate(-90deg); transform-origin: 100px 100px; transition: opacity .35s ease; }
+html.quieto .marca svg .barrido { opacity: 1; animation: barrido 3.6s cubic-bezier(.45, 0, .25, 1) infinite; }
+html.quieto .marca svg path { animation: latido 3.6s ease-in-out infinite; transform-origin: 100px 100px; }
+@keyframes barrido { to { stroke-dashoffset: -1; } }
+@keyframes latido { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
 }`,
-    js: ""
+    js: `(function () {
+  var logo = document.querySelector(".marca svg"), r = document.documentElement, t = null;
+  if (!logo) return;
+  var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  c.setAttribute("class", "barrido"); c.setAttribute("cx", "100"); c.setAttribute("cy", "100"); c.setAttribute("r", "96"); c.setAttribute("pathLength", "1");
+  logo.appendChild(c);
+  function arriba() { return (window.scrollY || 0) < 80; }
+  function quieto() { if (arriba()) r.classList.add("quieto"); }
+  function actividad() { r.classList.remove("quieto"); clearTimeout(t); t = setTimeout(quieto, 1500); }
+  ["pointermove", "pointerdown", "wheel", "keydown", "touchstart", "scroll"].forEach(function (e) { addEventListener(e, actividad, { passive: true }); });
+  actividad();
+})();`
   }
 };

@@ -87,7 +87,7 @@
 
   // Las dos fotos de la portada se desplazan un poco distinto al bajar
   function initParallax() {
-    if (!window.gsap || !window.ScrollTrigger) return;
+    if (!window.gsap || !window.ScrollTrigger || window.innerWidth < 900) return;
     window.gsap.registerPlugin(window.ScrollTrigger);
     [[".ph.p1", -40], [".ph.p2", 34]].forEach(function (c) {
       var el = $(c[0]); if (!el) return;
@@ -223,7 +223,20 @@
     if (v) window.gsap.fromTo(v, { rotate: -1.2 }, { rotate: 0, ease: "none", scrollTrigger: { trigger: v, start: "top 90%", end: "top 40%", scrub: 0.6 } });
   }
 
+  // Barra de reserva del celular: aparece al pasar la portada y se esconde sobre el formulario
+  function initBarra() {
+    var barra = $("#barra"), res = $("#reserva"), hero = $(".hero");
+    if (!barra) return;
+    function on() {
+      var past = hero ? hero.getBoundingClientRect().bottom < 120 : window.scrollY > 500, r = res ? res.getBoundingClientRect() : null;
+      var sobreForm = r && r.top < window.innerHeight * 0.7 && r.bottom > window.innerHeight * 0.2;
+      barra.classList.toggle("off", !past || sobreForm);
+    }
+    on(); window.addEventListener("scroll", on, { passive: true }); window.addEventListener("resize", on);
+  }
+
   function boot() {
+    safe(initBarra, "initBarra");
     safe(initFondo, "initFondo");
     safe(initScroll, "initScroll");
     safe(initNav, "initNav");

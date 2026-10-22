@@ -255,3 +255,87 @@ address { font-style: normal; font-family: var(--disp); font-weight: 500; font-s
 .soc.mini a { min-height: 44px; padding: 0; width: 44px; justify-content: center; }
 .soc.mini .tx { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 @media (max-width: 900px) { .visita .soc { justify-content: center; } }
+
+/* Miniaturas y reserva por fila: solo en celular */
+.it .th, .rb, .barra { display: none; }
+
+/* ===== Celular: rediseño ===== */
+@media (max-width: 900px) {
+  body { font-size: 17px; }
+  .sec { padding: 64px 0; }
+  .sec-h { margin-bottom: 30px; }
+  .sec-h h2, .promesa h2 { font-size: clamp(34px, 10vw, 44px); }
+  .wrap { width: calc(100% - 36px); }
+
+  /* Portada: texto primero y las dos fotos ordenadas, sin encimarse */
+  .hero { min-height: auto; padding: 96px 0 56px; }
+  .hero h1 { margin: 14px 0 18px; }
+  .hero h1 .a { font-size: 14px; letter-spacing: .42em; }
+  .hero h1 .b { font-size: clamp(60px, 19vw, 92px); }
+  .lede { font-size: 18px; }
+  .hero-cta { margin-top: 22px; gap: 10px; }
+  .hero-cta .btn { min-height: 52px; }
+  .hero-meta { margin-top: 20px; gap: 10px; }
+  .hero-ph { height: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; margin-top: 12px; padding-bottom: 34px; }
+  .ph { position: relative; inset: auto; width: auto; height: auto; border-radius: 22px; aspect-ratio: 3 / 4; }
+  .ph.p1, .ph.p2 { top: auto; right: auto; bottom: auto; left: auto; width: auto; height: auto; }
+  .ph.p1 { grid-column: 1; }
+  .ph.p2 { grid-column: 2; margin-top: 30px; }
+  .medal { right: auto; left: 50%; bottom: 0; width: 76px; margin-left: -38px; }
+  .scroll { display: none; }
+
+  /* La carta: lista táctil con miniatura; la fila elegida muestra su botón */
+  .vista { display: none; }
+  .menu { gap: 8px; }
+  .menu li { display: grid; }
+  .it { grid-template-columns: 64px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 10px 14px 10px 10px; min-height: 84px; background: var(--glass); border-color: var(--line); border-radius: 18px; }
+  .it .n, .it .dots { display: none; }
+  .it .th { display: block; width: 64px; height: 64px; border-radius: 14px; object-fit: cover; }
+  .it .t { font-size: 22px; }
+  .it .t small { font-size: 13px; }
+  .it .p { font-size: 24px; align-self: center; }
+  .it.on { border-color: rgba(236, 220, 166, .5); background: var(--glass-h); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+  .rb { display: none; align-items: center; justify-content: center; min-height: 48px; padding: 0 16px; border: 1px solid rgba(236, 220, 166, .5); border-top: 0; border-radius: 0 0 18px 18px; background: linear-gradient(135deg, rgba(236, 220, 166, .95), rgba(204, 168, 96, .92)); color: #1a1311; font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
+  .it.on + .rb { display: flex; }
+  .nota { font-size: 14px; }
+
+  /* Línea del tiempo más compacta */
+  .steps li { grid-template-columns: 48px 1fr; gap: 18px; }
+  .steps li b { width: 48px; height: 48px; font-size: 17px; }
+  .rail { left: 23px; }
+  .steps h3 { font-size: 26px; padding-top: 6px; }
+
+  /* Galería y cifras */
+  .mosaic { gap: 10px; }
+  .mosaic figure { border-radius: 18px; }
+  .row { gap: 8px; }
+  .row > div { padding: 18px 6px; border-radius: 16px; }
+  .row b { font-size: 40px; }
+  .row span { font-size: 12px; letter-spacing: .02em; display: block; line-height: 1.3; }
+
+  /* Reserva */
+  .book { padding: 20px 16px; border-radius: 22px; gap: 20px; }
+  .days { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .day { min-height: 64px; }
+  .slots { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .slot { min-height: 48px; }
+  select { min-height: 54px; font-size: 16px; }
+
+  /* Reseñas */
+  .carril { padding-inline: 18px; gap: 14px; }
+  .card { flex-basis: 84vw; padding: 24px; }
+
+  /* Visítanos */
+  .contact { display: none; }
+  address { font-size: 28px; }
+  .visita .soc { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .visita .soc a { justify-content: center; min-height: 52px; padding: 0 12px; }
+  .mapa, .mapa iframe { min-height: 280px; }
+  .foot { padding-bottom: 110px; }
+
+  /* Barra inferior de reserva en lugar del botón flotante */
+  .fab { display: none; }
+  .barra { display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 45; padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); background: rgba(13, 10, 9, .82); border-top: 1px solid var(--line); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); transition: transform .45s cubic-bezier(.2, .7, .2, 1); }
+  .barra.off { transform: translateY(110%); }
+  .barra .btn { min-height: 50px; }
+}

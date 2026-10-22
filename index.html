@@ -291,10 +291,42 @@ body[data-modo="exp"] .banner { display: none; }
 @media (min-width: 1180px) {
   body[data-modo="exp"] .wrap { display: grid; grid-template-columns: minmax(380px, 430px) minmax(0, 1fr); column-gap: 24px; align-items: start; }
   body[data-modo="exp"] .seg { grid-column: 1 / -1; }
-  body[data-modo="exp"] #explorar { grid-column: 1; grid-row: 2 / span 5; position: sticky; top: 12px; max-height: calc(100dvh - var(--bar-h) - 100px); overflow-y: auto; padding-right: 4px; }
+  body[data-modo="exp"] #explorar { grid-column: 1; grid-row: 4 / span 5; position: sticky; top: 12px; max-height: calc(100dvh - var(--bar-h) - 100px); overflow-y: auto; padding-right: 4px; }
   body[data-modo="exp"] .sum, body[data-modo="exp"] #listaExp, body[data-modo="exp"] .note { grid-column: 2; }
   body[data-modo="exp"] .list { grid-template-columns: 1fr; }
 }
+/* Filtros: barra discreta y panel desplegable con crossfade */
+.shell { grid-template-columns: 1fr !important; }
+.ftb { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; min-height: 44px; }
+.ftb-b { position: relative; flex: none; display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 12px 0 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: inherit; font: inherit; font-weight: 600; cursor: pointer; transition: border-color .2s, background .2s; }
+.ftb-b:hover { border-color: var(--accent); }
+.ftb-b svg { width: 18px; height: 18px; flex: none; }
+.ftb-l { display: inline-grid; }
+.ftb-l > span { grid-area: 1 / 1; transition: opacity .3s ease, transform .35s var(--ease); }
+.ftb-l .b { opacity: 0; transform: translateY(8px); }
+.ftb.open .ftb-l .a { opacity: 0; transform: translateY(-8px); }
+.ftb.open .ftb-l .b { opacity: 1; transform: none; }
+.ftb-n { font-style: normal; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 10px; background: var(--accent); color: var(--on-accent); font-size: 12px; font-weight: 700; display: grid; place-items: center; }
+.ftb-n[hidden] { display: none; }
+.ftb-b .chev { width: 16px; height: 16px; transition: transform .4s var(--ease); }
+.ftb.open .chev { transform: rotate(180deg); }
+.ftb-s { flex: 1; min-width: 0; display: flex; align-items: center; gap: 6px; overflow-x: auto; scrollbar-width: none; transition: opacity .3s ease; }
+.ftb-s::-webkit-scrollbar { display: none; }
+.ftb.open .ftb-s { opacity: 0; pointer-events: none; }
+.ftb-s .vacio { color: var(--muted); font-size: 13px; white-space: nowrap; }
+.fchip { flex: none; display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 8px 0 12px; border: 1px solid var(--accent); border-radius: 999px; background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent-text); font: inherit; font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer; }
+.fchip span { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-size: 14px; line-height: 1; background: color-mix(in srgb, var(--accent) 20%, transparent); }
+.fx-wrap { display: grid; grid-template-rows: 0fr; margin-bottom: 0; visibility: hidden; transition: grid-template-rows .45s var(--ease), margin .45s var(--ease), visibility 0s .45s; }
+.fx-wrap.open { grid-template-rows: 1fr; margin-bottom: 14px; visibility: visible; transition: grid-template-rows .45s var(--ease), margin .45s var(--ease), visibility 0s; }
+.fx-in { overflow: hidden; min-height: 0; }
+.fgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2px 24px; padding: 16px 18px 12px; max-height: min(60dvh, 520px); overflow-y: auto; overscroll-behavior: contain; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); opacity: 0; transform: translateY(-10px); transition: opacity .25s ease, transform .4s var(--ease); }
+.fx-wrap.open .fgrid { opacity: 1; transform: none; transition: opacity .35s ease .12s, transform .45s var(--ease) .1s; }
+.fgrid .group { margin: 0 0 14px; }
+.fgrid .group[data-solo] { }
+.fgrid .ffoot, .fgrid .quitadas { grid-column: 1 / -1; }
+.ffoot { display: flex; justify-content: flex-end; }
+@media (prefers-reduced-motion: reduce) { .fx-wrap, .fx-wrap.open, .fgrid, .fx-wrap.open .fgrid, .ftb-l > span, .ftb-s, .ftb-b .chev { transition: none !important; } }
+body[data-modo="exp"] .ftb, body[data-modo="exp"] .fx-wrap { grid-column: 1 / -1; }
 </style>
 </head>
 <body>
@@ -316,10 +348,17 @@ body[data-modo="exp"] .banner { display: none; }
   </header>
 
   <div class="shell">
-    <section class="panel" id="filtros" role="dialog" aria-modal="true" aria-labelledby="fT">
-      <div class="grab" aria-hidden="true"></div>
-      <div class="sh-h"><b id="fT">Filtros</b><button class="btn pri" type="button" id="cerrarFiltros">Listo</button></div>
-      <div class="group" data-solo="lista"><span class="lbl">Zona</span><div class="chips">
+    
+
+    <main class="main" id="main">
+      <div class="wrap">
+        <div class="seg" role="tablist" aria-label="Modo"><button id="modoLista" role="tab" type="button" aria-selected="true">Mi lista</button><button id="modoExp" role="tab" type="button" aria-selected="false">Explorar</button></div>
+        <div class="ftb" id="ftb">
+          <button class="ftb-b" id="btnFiltros" type="button" aria-expanded="false" aria-controls="filtros"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><span class="ftb-l"><span class="a">Filtros</span><span class="b">Ocultar</span></span><i class="ftb-n" id="ftbN" hidden></i><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="ftb-s" id="fresumen" aria-live="polite"></div>
+        </div>
+        <div class="fx-wrap" id="filtros" aria-hidden="true" inert><div class="fx-in"><div class="fgrid">
+          <div class="group" data-solo="lista"><span class="lbl">Zona</span><div class="chips">
         <button class="chip" data-z="todas" aria-pressed="true">Todas</button>
         <button class="chip" data-z="San Miguel" aria-pressed="false">San Miguel</button>
         <button class="chip" data-z="Magdalena del Mar" aria-pressed="false">Magdalena del Mar</button>
@@ -346,12 +385,9 @@ body[data-modo="exp"] .banner { display: none; }
         <button class="chip" data-o="rating" aria-pressed="false">Mejor puntaje</button>
         <button class="chip" data-o="sucursales" aria-pressed="false">Más sucursales</button>
         <button class="chip" data-o="cerca" aria-pressed="false" hidden>Más cercanos</button></div></div>
-      <details class="quitadas" id="removed" hidden></details>
-    </section>
-
-    <main class="main" id="main">
-      <div class="wrap">
-        <div class="seg" role="tablist" aria-label="Modo"><button id="modoLista" role="tab" type="button" aria-selected="true">Mi lista</button><button id="modoExp" role="tab" type="button" aria-selected="false">Explorar</button></div>
+          <div class="ffoot"><button class="btn" type="button" id="limpiarF">Limpiar filtros</button></div>
+          <details class="quitadas" id="removed" hidden></details>
+        </div></div></div>
         <a class="banner" id="banner" href="demos/valea/index.html" target="_blank" rel="noopener">
           <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M5 17c5 0 7 5 12 5s7-5 12-5 7 0 14 0M5 27c5 0 7 5 12 5s7-5 12-5 7 0 14 0M5 37c5 0 7 5 12 5s7-5 12-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
           <span class="t"><em>Ejemplo terminado</em><b>Valea · Barbería &amp; Spa</b><span>Así podría quedar una página trabajada al 100%.</span></span>
@@ -669,7 +705,7 @@ function abrirHoja(el, desde) {
   hojaActual = el; retorno = desde || document.activeElement;
   el.classList.add("on"); $("scrim").classList.add("on");
   try { history.pushState({ hoja: 1 }, ""); } catch (e) {}
-  var f = el.querySelector("[data-cerrar], #cerrarFiltros"); if (f) setTimeout(function () { f.focus({ preventScroll: true }); }, 60);
+  var f = el.querySelector("[data-cerrar]"); if (f) setTimeout(function () { f.focus({ preventScroll: true }); }, 60);
 }
 function cerrarHojas(sinHistoria) {
   if (!hojaActual) return;
@@ -729,11 +765,34 @@ function actualizarRuta() {
 }
 
 /* ---------- Pestañas, filtros y render ---------- */
+var filtrosAbiertos = false;
+function alternarFiltros(v) {
+  filtrosAbiertos = v === undefined ? !filtrosAbiertos : v;
+  $("filtros").classList.toggle("open", filtrosAbiertos); $("ftb").classList.toggle("open", filtrosAbiertos);
+  $("filtros").inert = !filtrosAbiertos; $("filtros").setAttribute("aria-hidden", filtrosAbiertos ? "false" : "true");
+  $("btnFiltros").setAttribute("aria-expanded", filtrosAbiertos ? "true" : "false");
+  tabs();
+}
+// Filtros activos como chips junto al botón (con × para quitar cada uno); cada grupo vuelve a su opción por defecto
+var FDEF = [["data-z", "todas"], ["data-k", "todos"], ["data-f", "todas"], ["data-r", "0"], ["data-p", "0"], ["data-s", "todas"], ["data-o", "reviews"]];
+function pintarResumenFiltros() {
+  var chips = [];
+  FDEF.forEach(function (d, i) {
+    var el = document.querySelector("#filtros [" + d[0] + '][aria-pressed="true"]');
+    if (!el || el.getAttribute(d[0]) === d[1]) return;
+    var solo = el.closest("[data-solo]"); if (solo && solo.getAttribute("data-solo") !== modo) return;
+    var g = el.closest(".group"), lbl = g ? g.querySelector(".lbl").textContent : "";
+    chips.push('<button class="fchip" type="button" data-fq="' + i + '" aria-label="Quitar filtro ' + esc(lbl) + ': ' + esc(el.textContent) + '">' + esc(lbl.replace("(enlace)", "").replace(/ mínim[ao]s?/, "").trim()) + ': ' + esc(el.textContent) + '<span aria-hidden="true">×</span></button>');
+  });
+  $("fresumen").innerHTML = chips.length ? chips.join("") : '<span class="vacio">Sin filtros activos</span>';
+  $("ftbN").hidden = !chips.length; $("ftbN").textContent = chips.length;
+}
+function limpiarFiltros() { FDEF.forEach(function (d) { var el = document.querySelector("#filtros [" + d[0] + '="' + d[1] + '"]'); if (el && !(el.closest("[data-solo]") && el.closest("[data-solo]").getAttribute("data-solo") !== modo)) el.click(); }); }
 function hayFiltros() { return zona !== "todas" || tipo !== "todos" || filtro !== "todas" || orden !== "reviews" || minRes > 0 || minRat > 0 || red !== "todas"; }
 function tabs() {
   $("dotf").hidden = !hayFiltros();
   $("tabNeg").setAttribute("aria-current", hojaActual ? "false" : "page");
-  $("tabFil").classList.toggle("act", hojaActual === $("filtros"));
+  $("tabFil").classList.toggle("act", filtrosAbiertos);
   $("tabRuta").classList.toggle("act", hojaActual === $("rutaSheet"));
 }
 function render() {
@@ -759,7 +818,7 @@ function render() {
   var txt = rows.length + (rows.length === 1 ? " negocio" : " negocios");
   $("count").textContent = txt;
   $("sum").innerHTML = '<b>' + txt + '</b>' + (modo === "lista" && zona !== "todas" ? '<span>· ' + esc(zona) + '</span>' : '') + (modo === "exp" && pendientes ? '<span>' + (EXP.length > pendientes ? 'de ' + EXP.length + ' encontrados, ' + (EXP.length - pendientes) + ' ya en tu lista' : 'encontrados') + '</span>' : '') + (rows.length ? '<button class="chip" type="button" id="selVis">Seleccionar todos para la ruta</button>' : '') + (modo === "exp" && rows.length ? '<button class="chip" type="button" id="guardarVis">Agregar todos a mi lista</button>' : '');
-  tabs(); actualizarRuta();
+  tabs(); actualizarRuta(); pintarResumenFiltros();
   var q = quitadas.map(byId).filter(Boolean);
   removed.hidden = q.length === 0;
   removed.innerHTML = '<summary>Quitadas (' + q.length + ')</summary><ul>' + q.map(function (d) {
@@ -1010,10 +1069,13 @@ $("explorar").addEventListener("change", function (e) {
 });
 
 $("tabNeg").addEventListener("click", function () { cerrarHojas(); $("main").scrollTo({ top: 0 }); });
-$("tabFil").addEventListener("click", function () { hojaActual === $("filtros") ? cerrarHojas() : abrirHoja($("filtros"), $("tabFil")); tabs(); });
+$("tabFil").addEventListener("click", function () { cerrarHojas(); alternarFiltros(); if (filtrosAbiertos) $("main").scrollTo({ top: 0, behavior: "smooth" }); });
+$("btnFiltros").addEventListener("click", function () { alternarFiltros(); });
+$("fresumen").addEventListener("click", function (e) { var b = e.target.closest("[data-fq]"); if (!b) return; var d = FDEF[+b.getAttribute("data-fq")], el = document.querySelector("#filtros [" + d[0] + '="' + d[1] + '"]'); if (el) el.click(); });
+$("limpiarF").addEventListener("click", limpiarFiltros);
+addEventListener("keydown", function (e) { if (e.key === "Escape" && filtrosAbiertos && !hojaActual) alternarFiltros(false); });
 $("tabRuta").addEventListener("click", function () { hojaActual === $("rutaSheet") ? cerrarHojas() : (pintarRuta(), abrirHoja($("rutaSheet"), $("tabRuta"))); tabs(); });
 $("fab").addEventListener("click", function () { pintarRuta(); abrirHoja($("rutaSheet"), $("fab")); });
-$("cerrarFiltros").addEventListener("click", function () { cerrarHojas(); });
 
 function guardarItem(id, lote) {
   var d = byId(id); if (!d || esGuardado(id)) return false;

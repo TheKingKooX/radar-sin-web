@@ -251,6 +251,25 @@ textarea.tin { height: auto; padding: 10px 12px; resize: vertical; line-height: 
 .row-f { padding: 0 12px 12px 78px; }
 .row-f .btn { min-height: 36px; padding: 0 14px; font-size: 13px; }
 @media (max-width: 420px) { .row-f { padding-left: 12px; } .row-f .btn { width: 100%; } }
+/* Explorar: pasos plegables y barra fija de inicio */
+#busq > summary { font-size: 17px; }
+.paso { border-top: 1px solid var(--line); margin-top: 10px; padding-top: 4px; }
+.paso > summary { display: flex; align-items: center; gap: 10px; padding: 10px 0; font-size: 15px; }
+.paso > summary b { font-weight: 600; }
+.pn { flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--surface2); color: var(--muted); font-size: 12px; font-weight: 700; }
+.paso[open] > summary .pn { background: var(--accent); color: var(--on-accent); }
+.paso .res { margin-left: auto; min-width: 0; color: var(--muted); font-size: 13px; font-weight: 400; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.paso[open] > summary .res { display: none; }
+.paso .xg:first-of-type { margin-top: 4px; }
+.paso { padding-bottom: 2px; }
+.paso[open] { padding-bottom: 8px; }
+.go-bar { position: sticky; bottom: 12px; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin: 0 0 12px; padding: 12px 14px; background: color-mix(in srgb, var(--surface) 94%, transparent); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 16px 30px -22px rgba(0, 0, 0, .6); }
+.go-t { display: grid; gap: 2px; min-width: 0; flex: 1 1 260px; }
+.go-t b { font-size: 14px; font-weight: 600; overflow-wrap: anywhere; }
+.go-t span { color: var(--muted); font-size: 12.5px; }
+.go-a { display: flex; gap: 8px; flex: 0 0 auto; }
+.go-a .btn { min-height: 44px; padding: 0 20px; }
+@media (max-width: 899px) { .go-bar { bottom: calc(76px + env(safe-area-inset-bottom)); } .go-a { flex: 1 1 100%; } .go-a .btn { flex: 1; } .go-t span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } }
 </style>
 </head>
 <body>
@@ -316,24 +335,34 @@ textarea.tin { height: auto; padding: 10px 12px; resize: vertical; line-height: 
         <section id="explorar" hidden>
           <div class="xcard" id="conexion"></div>
           <details class="xcard" id="busq" open>
-            <summary>Buscador</summary>
-            <div class="xg"><span class="lbl">Dónde buscar</span><div class="chips" id="modoB"></div></div>
-            <div class="xg" id="grpDist" hidden><span class="lbl">Distritos</span><div class="chips" id="distritos"></div>
-              <p class="hint">Se recorre cada distrito elegido y solo se guardan los negocios cuya dirección sea de ese distrito.</p></div>
-            <div class="xg" id="grpCentro"><span class="lbl">Centro de la búsqueda</span>
-              <div class="krow"><input id="centroIn" type="search" placeholder="Dirección, o latitud,longitud" autocomplete="off" aria-label="Centro de la búsqueda"><button class="btn" id="btnUbic" type="button">Mi ubicación</button></div></div>
-            <div class="xg" id="grpRadio"><span class="lbl">Radio: <b id="radioT"></b></span><input id="radio" class="rng" type="range" min="0.5" max="25" step="0.5" value="5" aria-label="Radio en kilómetros"></div>
-            <div class="xg"><span class="lbl">Rubros</span><div class="chips" id="rubros"></div>
-              <label class="lbl2" for="consultas">Búsquedas (una por línea o separadas por comas). Puedes editarlas, quitar o agregar.</label>
-              <textarea id="consultas" class="tin" rows="4" spellcheck="false"></textarea></div>
-            <div class="xg"><span class="lbl">Reseñas mínimas</span><div class="chips" id="resMin"></div></div>
-            <div class="xg"><span class="lbl">Presencia web</span><div class="chips" id="webT"></div>
-              <p class="hint">Guarda solo los negocios cuyo enlace en Google sea de estos tipos. Se sabe al abrir su ficha, por eso un filtro más estricto no acelera la búsqueda.</p></div>
-            <div class="xg"><span class="lbl">Negocios por rubro</span><div class="chips" id="maxRub"></div>
-              <p class="hint">Deja de abrir fichas de un rubro cuando ya tiene esa cantidad de negocios que cumplen el filtro. Ahorra tiempo.</p></div>
-            <div class="xg"><span class="lbl">Cobertura</span><div class="chips" id="cobert"></div>
-              <p class="hint">Cuántas zonas del círculo se recorren por cada búsqueda. Más zonas encuentran más negocios pero tardan más.</p></div>
-            <details class="avz"><summary>Opciones avanzadas</summary>
+            <summary>Configurar búsqueda</summary>
+            <details class="paso" id="paso1" open>
+              <summary><span class="pn">1</span><b>Dónde</b><span class="res" id="res1"></span></summary>
+              <div class="xg"><div class="chips" id="modoB"></div></div>
+              <div class="xg" id="grpDist" hidden><span class="lbl">Distritos</span><div class="chips" id="distritos"></div>
+                <p class="hint">Se recorre cada distrito elegido y solo se guardan los negocios cuya dirección sea de ese distrito.</p></div>
+              <div class="xg" id="grpCentro"><span class="lbl">Centro de la búsqueda</span>
+                <div class="krow"><input id="centroIn" type="search" placeholder="Dirección, o latitud,longitud" autocomplete="off" aria-label="Centro de la búsqueda"><button class="btn" id="btnUbic" type="button">Mi ubicación</button></div></div>
+              <div class="xg" id="grpRadio"><span class="lbl">Radio: <b id="radioT"></b></span><input id="radio" class="rng" type="range" min="0.5" max="25" step="0.5" value="5" aria-label="Radio en kilómetros"></div>
+            </details>
+            <details class="paso" id="paso2">
+              <summary><span class="pn">2</span><b>Qué</b><span class="res" id="res2"></span></summary>
+              <div class="xg"><span class="lbl">Rubros</span><div class="chips" id="rubros"></div>
+                <label class="lbl2" for="consultas">Búsquedas (una por línea o separadas por comas). Puedes editarlas, quitar o agregar.</label>
+                <textarea id="consultas" class="tin" rows="4" spellcheck="false"></textarea></div>
+            </details>
+            <details class="paso" id="paso3">
+              <summary><span class="pn">3</span><b>Filtros</b><span class="res" id="res3"></span></summary>
+              <div class="xg"><span class="lbl">Reseñas mínimas</span><div class="chips" id="resMin"></div></div>
+              <div class="xg"><span class="lbl">Presencia web</span><div class="chips" id="webT"></div>
+                <p class="hint">Guarda solo los negocios cuyo enlace en Google sea de estos tipos. Se sabe al abrir su ficha, por eso un filtro más estricto no acelera la búsqueda.</p></div>
+              <div class="xg"><span class="lbl">Negocios por rubro</span><div class="chips" id="maxRub"></div>
+                <p class="hint">Deja de abrir fichas de un rubro cuando ya tiene esa cantidad de negocios que cumplen el filtro. Ahorra tiempo.</p></div>
+            </details>
+            <details class="paso" id="paso4">
+              <summary><span class="pn">+</span><b>Opciones avanzadas</b><span class="res" id="res4"></span></summary>
+              <div class="xg"><span class="lbl">Cobertura</span><div class="chips" id="cobert"></div>
+                <p class="hint">Cuántas zonas del círculo se recorren por cada búsqueda. Más zonas encuentran más negocios pero tardan más.</p></div>
               <div class="xg"><span class="lbl">Velocidad (pausa entre páginas)</span><div class="chips" id="vel"></div></div>
               <div class="xg"><label class="lbl2" for="limite">Leer como máximo (fichas; 0 = todas, útil para probar)</label><input id="limite" class="tin" type="number" min="0" max="500" value="0"></div>
               <label class="opt"><input type="checkbox" id="oConocidos"> Incluir los negocios que ya están en Mi lista</label>
@@ -341,9 +370,11 @@ textarea.tin { height: auto; padding: 10px 12px; resize: vertical; line-height: 
               <label class="opt"><input type="checkbox" id="oVerif" checked> Buscar el nombre de cada negocio en Google para detectar webs que Maps no muestra (más lento)</label>
               <label class="opt"><input type="checkbox" id="oVer"> Mostrar la ventana del navegador mientras busca</label>
             </details>
-            <p class="hint" id="plan"></p>
-            <div class="acts"><button class="btn go" type="button" id="btnBuscar" disabled>Iniciar búsqueda</button><button class="btn" type="button" id="btnParar" hidden>Detener</button></div>
           </details>
+          <div class="go-bar" id="goBar">
+            <div class="go-t"><b id="resumen"></b><span id="plan"></span></div>
+            <div class="go-a"><button class="btn go" type="button" id="btnBuscar" disabled>Iniciar búsqueda</button><button class="btn" type="button" id="btnParar" hidden>Detener</button></div>
+          </div>
           <div class="xcard" id="progreso" hidden>
             <div class="ptop"><b id="pEtapa">Preparando…</b><span class="muted" id="pConteo"></span></div>
             <div class="pbar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pBar"><i id="pFill"></i></div>
@@ -793,13 +824,24 @@ function pintarForm() {
   $("limite").value = cfg.limite; $("oConocidos").checked = cfg.conocidos; $("oReemplazar").checked = cfg.reemplazar; $("oVer").checked = cfg.ver; $("oVerif").checked = cfg.verif;
   pintarChips(); pintarPlan();
 }
+function nombreRubro(k) { var r = RUB.filter(function (x) { return x[0] === k; })[0]; return r ? r[1] : k; }
+function etiqueta(id, v) { var c = CHIPS[id].filter(function (x) { return x[0] === v; })[0]; return c ? c[1] : v; }
+function tiempo(min) { return min >= 90 ? (Math.round(min / 6) / 10).toString().replace(".", ",") + " h" : min + " min"; }
 function pintarPlan() {
-  var nz = cfg.modo === "distritos" ? Math.max(cfg.distritos.length, 1) : 1, q = listaConsultas().length, bus = q * cfg.cob * nz, min = Math.round(bus * 0.95);
+  var dis = cfg.modo === "distritos", nz = dis ? Math.max(cfg.distritos.length, 1) : 1, q = listaConsultas().length, bus = q * cfg.cob * nz, min = Math.round(bus * 0.95);
   $("radioT").textContent = cfg.radio + " km";
-  $("plan").textContent = q ? ("Hará unas " + bus + " búsquedas en Google Maps (" + q + " × " + cfg.cob + " zonas" + (nz > 1 ? " × " + nz + " distritos" : "") + "), unos " + min + " minutos, más abrir las fichas (unos 10 segundos cada una)" + (cfg.verif ? " y, por cada negocio que cumpla, buscarlo en Google (unos 10 segundos más)" : "") + (cfg.maxRub ? ", como máximo " + cfg.maxRub + " negocios por rubro" : "") + ". Puedes detenerla cuando quieras y se guarda lo avanzado.") : "Elige al menos un rubro o escribe una búsqueda.";
+  var donde = dis ? (cfg.distritos.length ? cfg.distritos.slice(0, 2).join(", ") + (cfg.distritos.length > 2 ? " +" + (cfg.distritos.length - 2) : "") : "Sin distritos") : (($("centroIn").value.trim() || "Sin dirección").split(",")[0] + " · " + cfg.radio + " km");
+  var que = cfg.rubros.length ? (cfg.rubros.length > 2 ? cfg.rubros.length + " rubros" : cfg.rubros.map(nombreRubro).join(", ")) : "Sin rubros";
+  var webs = cfg.web.length === 4 ? "cualquier web" : cfg.web.length ? cfg.web.map(function (w) { return etiqueta("webT", w).toLowerCase(); }).join(", ") : "sin tipos de web";
+  var rese = cfg.minRes ? cfg.minRes + "+ reseñas" : "todas las reseñas";
+  $("res1").textContent = donde; $("res2").textContent = que + " · " + q + (q === 1 ? " búsqueda" : " búsquedas");
+  $("res3").textContent = rese + " · " + webs + " · " + (cfg.maxRub ? "hasta " + cfg.maxRub + " por rubro" : "sin tope");
+  $("res4").textContent = "Cobertura " + etiqueta("cobert", cfg.cob).toLowerCase() + " · velocidad " + etiqueta("vel", cfg.vel).toLowerCase() + (cfg.verif ? " · con verificación" : "");
+  $("resumen").textContent = donde + " · " + que + " · " + rese;
+  $("plan").textContent = q ? ("Unas " + bus + " búsquedas (~" + tiempo(min) + "), más las fichas" + (cfg.verif ? " y la verificación en Google" : "") + ". Puedes detenerla cuando quieras.") : "Elige al menos un rubro o escribe una búsqueda.";
   if (q && !cfg.web.length) $("plan").textContent = "Elige al menos un tipo de presencia web.";
-  if (q && cfg.modo === "distritos" && !cfg.distritos.length) $("plan").textContent = "Elige al menos un distrito.";
-  $("btnBuscar").disabled = !conectado || buscando || !q || !cfg.web.length || (cfg.modo === "distritos" ? !cfg.distritos.length : !$("centroIn").value.trim());
+  if (q && dis && !cfg.distritos.length) $("plan").textContent = "Elige al menos un distrito.";
+  $("btnBuscar").disabled = !conectado || buscando || !q || !cfg.web.length || (dis ? !cfg.distritos.length : !$("centroIn").value.trim());
 }
 function pintarConexion(ok, detalle) {
   conectado = ok;

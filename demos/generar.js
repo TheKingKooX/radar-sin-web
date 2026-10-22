@@ -253,7 +253,7 @@ ${m.efecto.css}
 </style>
 <noscript><style>.rv { opacity: 1 !important; transform: none !important; }</style></noscript>
 </head>
-<body>
+<body${m.animaciones ? ' class="anim"' : ""}>
 <header class="top">
   <a class="marca" href="#inicio">${logoHtml(d, m)}</a>
   <nav><a href="#servicios">Servicios</a><a href="#ubicacion">Ubicación</a><a href="#contacto">Contacto</a><a class="cta" href="${esc(wa)}"${ext}>${icono(esWa ? "whatsapp" : "telefono")}<span>Reservar</span></a></nav>

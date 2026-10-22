@@ -2,7 +2,7 @@
 const zig = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='40'%3E%3Cpath d='M0 30 20 10 40 30 60 10 80 30' fill='none' stroke='%23a93935' stroke-width='6'/%3E%3Cpath d='M0 40 20 20 40 40 60 20 80 40' fill='none' stroke='%23324b4e' stroke-width='6'/%3E%3C/svg%3E\")";
 module.exports = {
   id: "lapynta",
-  extras: true, antesDespues: true, divisor: true,
+  extras: true, antesDespues: true, divisor: true, animaciones: true,
   // Datos de ejemplo (referenciales) para la calculadora, el equipo, la promoción y la tarjeta de sellos
   precios: [{ n: "Corte para caballeros", p: 25, m: 45 }, { n: "Barba", p: 15, m: 20 }, { n: "Corte + barba", p: 35, m: 60 }, { n: "Perfilado de cejas", p: 8, m: 10 }],
   equipo: [{ n: "Mauro", r: "Maestro barbero", e: "Cortes clásicos y navaja" }, { n: "Diego", r: "Barbero", e: "Fade y degradados" }, { n: "Joaquín", r: "Barbero", e: "Diseño de barba" }],

@@ -5,10 +5,39 @@
     els.forEach(function (e) { e.classList.add("in"); });
     return;
   }
+  // Con body.anim, los hermanos .rv de una misma cuadrícula entran uno tras otro (90 ms de diferencia).
+  if (document.body.classList.contains("anim")) {
+    document.querySelectorAll(".why, .cifras, .eq, .svs, .pasos, .gal, .sedes, .calc-l").forEach(function (g) {
+      [].forEach.call(g.children, function (h, i) { if (h.classList.contains("rv") || g.classList.contains("calc-l")) h.style.setProperty("--d", i * 90 + "ms"); });
+    });
+    document.querySelectorAll(".calc-l li").forEach(function (li) { li.classList.add("rv"); });
+  }
   var io = new IntersectionObserver(function (es) {
-    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("in"); io.unobserve(e.target);
+      if (e.target.style.getPropertyValue("--d")) setTimeout(function () { e.target.style.removeProperty("--d"); }, 1500); // el retraso no debe afectar al hover
+    });
   }, { threshold: .15 });
+  els = document.querySelectorAll(".rv");
   els.forEach(function (e) { io.observe(e); });
+})();
+
+/* Título de la portada letra por letra (solo con body.anim y sin movimiento reducido). */
+(function () {
+  var h = document.querySelector(".hero h1");
+  if (!h || !document.body.classList.contains("anim") || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var i = 0;
+  (h.children.length ? [].slice.call(h.children) : [h]).forEach(function (sp) {
+    var t = sp.textContent; sp.textContent = "";
+    t.split(" ").forEach(function (w, k) {
+      if (k) sp.appendChild(document.createTextNode(" "));
+      var pal = document.createElement("span"); pal.className = "pal";
+      w.split("").forEach(function (c) { var s = document.createElement("span"); s.className = "ch"; s.textContent = c; s.style.setProperty("--i", i++); pal.appendChild(s); });
+      sp.appendChild(pal);
+    });
+  });
+  h.classList.add("letras");
 })();
 
 /* Posición del cursor en --mx y --my, para los fondos interactivos. */

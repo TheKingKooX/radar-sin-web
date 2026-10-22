@@ -349,3 +349,15 @@ html.quieto .top .marca::after { animation: onda 3.6s 1.8s cubic-bezier(.23, 1, 
 .btn:disabled { opacity: .45; cursor: not-allowed; }
 
 .divisor { height: 40px; pointer-events: none; }
+
+/* Animaciones (body.anim): título por letras, entrada escalonada y respuesta de los botones */
+@media (prefers-reduced-motion: no-preference) {
+  .rv { transition-delay: var(--d, 0ms); }
+  .pal { display: inline-block; white-space: nowrap; }
+  .letras .ch { display: inline-block; animation: letra .7s var(--ease) both; animation-delay: calc(var(--i) * 60ms + 150ms); }
+  @keyframes letra { from { opacity: 0; transform: translateY(.45em) rotate(-5deg); } to { opacity: 1; transform: none; } }
+  .anim .btn, .anim .cta { position: relative; overflow: hidden; }
+  .anim .btn::after, .anim .cta::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .38) 50%, transparent 65%); transform: translateX(-130%); }
+  .anim .btn:hover::after, .anim .cta:hover::after { transform: translateX(130%); transition: transform .65s var(--ease); }
+  .anim .btn:active:not(:disabled), .anim .cta:active { transform: translateY(0) scale(.95); transition-duration: .08s; }
+}

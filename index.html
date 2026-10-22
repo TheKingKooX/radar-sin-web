@@ -317,9 +317,12 @@ textarea.tin { height: auto; padding: 10px 12px; resize: vertical; line-height: 
           <div class="xcard" id="conexion"></div>
           <details class="xcard" id="busq" open>
             <summary>Buscador</summary>
-            <div class="xg"><span class="lbl">Centro de la búsqueda</span>
+            <div class="xg"><span class="lbl">Dónde buscar</span><div class="chips" id="modoB"></div></div>
+            <div class="xg" id="grpDist" hidden><span class="lbl">Distritos</span><div class="chips" id="distritos"></div>
+              <p class="hint">Se recorre cada distrito elegido y solo se guardan los negocios cuya dirección sea de ese distrito.</p></div>
+            <div class="xg" id="grpCentro"><span class="lbl">Centro de la búsqueda</span>
               <div class="krow"><input id="centroIn" type="search" placeholder="Dirección, o latitud,longitud" autocomplete="off" aria-label="Centro de la búsqueda"><button class="btn" id="btnUbic" type="button">Mi ubicación</button></div></div>
-            <div class="xg"><span class="lbl">Radio: <b id="radioT"></b></span><input id="radio" class="rng" type="range" min="0.5" max="25" step="0.5" value="5" aria-label="Radio en kilómetros"></div>
+            <div class="xg" id="grpRadio"><span class="lbl">Radio: <b id="radioT"></b></span><input id="radio" class="rng" type="range" min="0.5" max="25" step="0.5" value="5" aria-label="Radio en kilómetros"></div>
             <div class="xg"><span class="lbl">Rubros</span><div class="chips" id="rubros"></div>
               <label class="lbl2" for="consultas">Búsquedas (una por línea o separadas por comas). Puedes editarlas, quitar o agregar.</label>
               <textarea id="consultas" class="tin" rows="4" spellcheck="false"></textarea></div>
@@ -741,6 +744,7 @@ $("modoLista").addEventListener("click", function () { ponerModo("lista"); });
 $("modoExp").addEventListener("click", function () { ponerModo("exp"); });
 
 /* ---------- Explorar: buscador local (herramientas/servidor.js) ---------- */
+var DIST = ["San Miguel", "Magdalena del Mar", "Pueblo Libre", "Jesús María", "Lince", "Breña", "Cercado de Lima", "La Victoria", "Rímac", "San Isidro", "Miraflores", "Surquillo", "Barranco", "San Borja", "Santiago de Surco", "San Luis", "Chorrillos", "San Martín de Porres", "Los Olivos", "Callao", "Bellavista", "La Perla", "La Punta"];
 var RUB = [["belleza", "Belleza"], ["comida", "Comida"], ["salud", "Salud"], ["fitness", "Fitness"], ["tiendas", "Tiendas"], ["hogar", "Hogar"], ["auto", "Automotriz"], ["profesional", "Profesionales"], ["educacion", "Educación"], ["mascotas", "Mascotas"], ["turismo", "Turismo"], ["ocio", "Ocio"]];
 var RUBQ = {
   belleza: ["barbería", "peluquería", "salón de belleza", "spa", "uñas manicure", "centro de estética"],
@@ -756,7 +760,7 @@ var RUBQ = {
   turismo: ["hotel", "hostal", "agencia de viajes", "salón de eventos"],
   ocio: ["discoteca", "karaoke", "cine", "salón de juegos"]
 };
-var cfg = { centro: "", radio: 5, rubros: ["belleza"], consultas: "", minRes: 100, web: ["sin enlace", "solo red social", "solo reservas"], maxRub: 10, cob: 5, vel: 1800, limite: 0, conocidos: false, reemplazar: true, ver: false, verif: true };
+var cfg = { centro: "", radio: 5, rubros: ["belleza"], consultas: "", minRes: 100, web: ["sin enlace", "solo red social", "solo reservas"], maxRub: 10, cob: 5, vel: 1800, limite: 0, conocidos: false, reemplazar: true, ver: false, verif: true, modo: "radio", distritos: [] };
 var CHIPS = { resMin: [[0, "Todas"], [50, "50+"], [100, "100+"], [250, "250+"], [500, "500+"]], webT: [["sin enlace", "Sin enlace"], ["solo red social", "Solo red social"], ["solo reservas", "Solo reservas"], ["web propia", "Web propia"]], maxRub: [[0, "Sin tope"], [5, "5"], [10, "10"], [20, "20"], [30, "30"], [50, "50"]], cobert: [[1, "Rápida"], [5, "Amplia"], [9, "Máxima"]], vel: [[1800, "Normal"], [3200, "Lenta"], [5500, "Muy lenta"]] };
 (function () { var g = leer(BU, null); if (g) Object.keys(g).forEach(function (k) { if (k in cfg) cfg[k] = g[k]; }); })();
 function guardarCfg() { poner_(BU, cfg); }
@@ -775,6 +779,9 @@ function consultasDeRubros() {
 }
 function listaConsultas() { return String($("consultas").value || "").split(/[,\n]/).map(function (s) { return s.trim(); }).filter(Boolean); }
 function pintarChips() {
+  $("modoB").innerHTML = [["radio", "Alrededor de una dirección"], ["distritos", "Por distritos"]].map(function (m) { return '<button class="chip" type="button" data-modoB="' + m[0] + '" aria-pressed="' + (cfg.modo === m[0]) + '">' + m[1] + '</button>'; }).join("");
+  $("distritos").innerHTML = DIST.map(function (n) { return '<button class="chip" type="button" data-dist="' + esc(n) + '" aria-pressed="' + (cfg.distritos.indexOf(n) > -1) + '">' + esc(n) + '</button>'; }).join("");
+  $("grpDist").hidden = cfg.modo !== "distritos"; $("grpCentro").hidden = $("grpRadio").hidden = cfg.modo === "distritos";
   $("rubros").innerHTML = RUB.map(function (r) { return '<button class="chip" type="button" data-rub="' + r[0] + '" aria-pressed="' + (cfg.rubros.indexOf(r[0]) > -1) + '">' + r[1] + '</button>'; }).join("") + '<button class="chip" type="button" data-rub="*" aria-pressed="false">Todos</button>';
   ["resMin", "cobert", "vel", "webT", "maxRub"].forEach(function (id) {
     var cur = id === "resMin" ? cfg.minRes : id === "cobert" ? cfg.cob : id === "maxRub" ? cfg.maxRub : cfg.vel;
@@ -787,11 +794,12 @@ function pintarForm() {
   pintarChips(); pintarPlan();
 }
 function pintarPlan() {
-  var q = listaConsultas().length, bus = q * cfg.cob, min = Math.round(bus * 0.95);
+  var nz = cfg.modo === "distritos" ? Math.max(cfg.distritos.length, 1) : 1, q = listaConsultas().length, bus = q * cfg.cob * nz, min = Math.round(bus * 0.95);
   $("radioT").textContent = cfg.radio + " km";
-  $("plan").textContent = q ? ("Hará unas " + bus + " búsquedas en Google Maps (" + q + " × " + cfg.cob + " zonas), unos " + min + " minutos, más abrir las fichas (unos 10 segundos cada una)" + (cfg.verif ? " y, por cada negocio que cumpla, buscarlo en Google (unos 10 segundos más)" : "") + (cfg.maxRub ? ", como máximo " + cfg.maxRub + " negocios por rubro" : "") + ". Puedes detenerla cuando quieras y se guarda lo avanzado.") : "Elige al menos un rubro o escribe una búsqueda.";
+  $("plan").textContent = q ? ("Hará unas " + bus + " búsquedas en Google Maps (" + q + " × " + cfg.cob + " zonas" + (nz > 1 ? " × " + nz + " distritos" : "") + "), unos " + min + " minutos, más abrir las fichas (unos 10 segundos cada una)" + (cfg.verif ? " y, por cada negocio que cumpla, buscarlo en Google (unos 10 segundos más)" : "") + (cfg.maxRub ? ", como máximo " + cfg.maxRub + " negocios por rubro" : "") + ". Puedes detenerla cuando quieras y se guarda lo avanzado.") : "Elige al menos un rubro o escribe una búsqueda.";
   if (q && !cfg.web.length) $("plan").textContent = "Elige al menos un tipo de presencia web.";
-  $("btnBuscar").disabled = !conectado || buscando || !q || !cfg.web.length || !$("centroIn").value.trim();
+  if (q && cfg.modo === "distritos" && !cfg.distritos.length) $("plan").textContent = "Elige al menos un distrito.";
+  $("btnBuscar").disabled = !conectado || buscando || !q || !cfg.web.length || (cfg.modo === "distritos" ? !cfg.distritos.length : !$("centroIn").value.trim());
 }
 function pintarConexion(ok, detalle) {
   conectado = ok;
@@ -872,7 +880,7 @@ function iniciarBusqueda() {
   cfg.centro = $("centroIn").value.trim(); cfg.consultas = q.join("\n"); guardarCfg();
   if (cfg.reemplazar) { EXP = []; centro = null; }
   $("reg").textContent = ""; $("progreso").hidden = false; $("pEtapa").textContent = "Preparando…"; $("pConteo").textContent = ""; $("pDetalle").textContent = ""; $("pFill").style.width = "0%";
-  fetch(API + "/api/buscar", { method: "POST", headers: { "Content-Type": "application/json", "X-Radar": "1" }, body: JSON.stringify({ grupos: gruposDe(q), web: cfg.web, maxPorRubro: cfg.maxRub, centro: cfg.centro, radio: cfg.radio, consultas: q, minResenas: cfg.minRes, teselas: cfg.cob, pausa: cfg.vel, limite: cfg.limite, conocidos: cfg.conocidos, ver: cfg.ver, verificarWeb: cfg.verif }) })
+  fetch(API + "/api/buscar", { method: "POST", headers: { "Content-Type": "application/json", "X-Radar": "1" }, body: JSON.stringify({ distritos: cfg.modo === "distritos" ? cfg.distritos : undefined, grupos: gruposDe(q), web: cfg.web, maxPorRubro: cfg.maxRub, centro: cfg.centro, radio: cfg.radio, consultas: q, minResenas: cfg.minRes, teselas: cfg.cob, pausa: cfg.vel, limite: cfg.limite, conocidos: cfg.conocidos, ver: cfg.ver, verificarWeb: cfg.verif }) })
     .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || "No se pudo iniciar"); }); })
     .then(function () { buscando = true; $("btnParar").hidden = false; $("btnBuscar").hidden = true; $("busq").open = false; render(); })
     .catch(function (e) { $("pEtapa").textContent = "No se pudo iniciar"; $("pDetalle").textContent = e.message; });
@@ -896,6 +904,8 @@ $("explorar").addEventListener("click", function (e) {
     cfg.consultas = ""; $("consultas").value = consultasDeRubros().join("\n"); pintarChips(); pintarPlan(); guardarCfg(); return;
   }
   if ((el = t.closest("[data-resMin]"))) { cfg.minRes = +el.getAttribute("data-resMin"); pintarChips(); guardarCfg(); return; }
+  if ((el = t.closest("[data-modoB]"))) { cfg.modo = el.getAttribute("data-modoB"); pintarChips(); pintarPlan(); guardarCfg(); return; }
+  if ((el = t.closest("[data-dist]"))) { var dn = el.getAttribute("data-dist"), di = cfg.distritos.indexOf(dn); if (di > -1) cfg.distritos.splice(di, 1); else cfg.distritos.push(dn); pintarChips(); pintarPlan(); guardarCfg(); return; }
   if ((el = t.closest("[data-webT]"))) {
     var tw = el.getAttribute("data-webT"), iw = cfg.web.indexOf(tw);
     if (iw > -1) cfg.web.splice(iw, 1); else cfg.web.push(tw);

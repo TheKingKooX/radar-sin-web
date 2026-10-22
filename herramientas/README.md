@@ -17,6 +17,7 @@ node herramientas/mapas.js --centro "Av. La Mar 2591, San Miguel" --radio 5 --ru
 
 - `--centro` dirección o `lat,lng`.
 - `--radio` en km (hasta 25).
+- `--distritos "San Miguel,Pueblo Libre"` busca por distritos en vez de un círculo (cada uno desde su centro, con su propio radio). Solo guarda negocios cuya dirección sea de esos distritos. No hace falta `--centro`. Distritos: San Miguel, Magdalena del Mar, Pueblo Libre, Jesús María, Lince, Breña, Cercado de Lima, La Victoria, Rímac, San Isidro, Miraflores, Surquillo, Barranco, San Borja, Santiago de Surco, San Luis, Chorrillos, San Martín de Porres, Los Olivos, Callao, Bellavista, La Perla, La Punta.
 - `--rubro` grupo de búsquedas: `belleza`, `comida`, `salud`, `fitness`, `tiendas`, `hogar`, `auto`, `profesional`, `educacion`, `mascotas`, `turismo`, `ocio` o `todos`. Se pueden juntar con comas (`belleza,comida`).
 - `--consultas "ferretería,taller mecánico"` para buscar otras cosas en vez de un rubro.
 - `--min-resenas` reseñas mínimas (por defecto 100).

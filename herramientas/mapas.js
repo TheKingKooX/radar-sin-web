@@ -53,6 +53,7 @@ function leerArgs() {
     const k = a[i], v = () => a[++i];
     if (k === "--ayuda" || k === "-h") { ayuda(); process.exit(0); }
     else if (k === "--centro") o.centro = v();
+    else if (k === "--distritos") o.distritos = v();
     else if (k === "--radio") o.radio = parseFloat(v());
     else if (k === "--rubro") o.rubro = v();
     else if (k === "--consultas") o.consultas = v().split(",").map((s) => s.trim()).filter(Boolean);
@@ -70,7 +71,7 @@ function leerArgs() {
     else if (k === "--ver") o.ver = true;
     else { console.error("Opción desconocida: " + k); process.exit(1); }
   }
-  if (!o.centro) { console.error('Falta --centro. Ejemplo: --centro "Av. La Mar 2591, San Miguel"'); process.exit(1); }
+  if (!o.centro && !o.distritos) { console.error('Falta --centro o --distritos. Ejemplo: --centro "Av. La Mar 2591, San Miguel"'); process.exit(1); }
   if (!(o.radio > 0 && o.radio <= 25)) { console.error("El radio debe estar entre 0 y 25 km."); process.exit(1); }
   if (![1, 5, 9].includes(o.teselas)) { console.error("--teselas debe ser 1, 5 o 9."); process.exit(1); }
   if (!o.consultas) {
@@ -231,12 +232,28 @@ function filaDe(x, f, pw, verificado) {
 
 // Valida y completa las opciones (la usa el servidor del buscador de la app)
 const TIPOS_WEB = ["sin enlace", "solo red social", "solo reservas", "web propia"]; // lo que devuelve tipoWeb()
+// Distritos de Lima y Callao: centro aproximado y radio (km) que alcanza para cubrirlos. La dirección de cada ficha decide si el negocio es del distrito.
+const DISTRITOS = {
+  "San Miguel": { la: -12.0770, lo: -77.0900, r: 2 }, "Magdalena del Mar": { la: -12.0900, lo: -77.0720, r: 1.6 }, "Pueblo Libre": { la: -12.0720, lo: -77.0630, r: 1.6 },
+  "Jesús María": { la: -12.0710, lo: -77.0510, r: 1.5 }, "Lince": { la: -12.0850, lo: -77.0340, r: 1.2 }, "Breña": { la: -12.0580, lo: -77.0510, r: 1.4 },
+  "Cercado de Lima": { la: -12.0464, lo: -77.0428, r: 3 }, "La Victoria": { la: -12.0650, lo: -77.0150, r: 2.4 }, "Rímac": { la: -12.0300, lo: -77.0330, r: 2.5 },
+  "San Isidro": { la: -12.0980, lo: -77.0370, r: 2 }, "Miraflores": { la: -12.1190, lo: -77.0300, r: 2.2 }, "Surquillo": { la: -12.1110, lo: -77.0140, r: 1.5 },
+  "Barranco": { la: -12.1400, lo: -77.0200, r: 1.6 }, "San Borja": { la: -12.1010, lo: -76.9990, r: 2.5 }, "Santiago de Surco": { la: -12.1450, lo: -76.9930, r: 4.5 },
+  "San Luis": { la: -12.0750, lo: -76.9950, r: 1.3 }, "Chorrillos": { la: -12.1700, lo: -77.0100, r: 3.5 }, "San Martín de Porres": { la: -12.0000, lo: -77.0850, r: 4.5 },
+  "Los Olivos": { la: -11.9700, lo: -77.0700, r: 4 }, "Callao": { la: -12.0560, lo: -77.1180, r: 3.5 }, "Bellavista": { la: -12.0630, lo: -77.1000, r: 1.5 },
+  "La Perla": { la: -12.0700, lo: -77.1110, r: 1.3 }, "La Punta": { la: -12.0720, lo: -77.1640, r: 1 }
+};
+const clave = (s) => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
 function completar(raw) {
   const o = { radio: 5, minResenas: 100, teselas: 5, limite: 0, pausa: 1800, conocidos: false, app: false, ver: false, ...raw };
-  o.centro = String(o.centro || "").trim();
-  if (!o.centro) throw new Error("Falta el centro de la búsqueda.");
+  const pedidos = (typeof o.distritos === "string" ? o.distritos.split(",") : o.distritos || []).map(clave).filter(Boolean);
+  const dist = Object.keys(DISTRITOS).filter((n) => pedidos.includes(clave(n)));
+  if (pedidos.length && !dist.length) throw new Error("No reconozco esos distritos. Opciones: " + Object.keys(DISTRITOS).join(", ") + ".");
+  o.distritos = dist.length ? dist : null;
+  o.centro = o.distritos ? o.distritos.join(", ") : String(o.centro || "").trim();
+  if (!o.centro) throw new Error("Falta el centro de la búsqueda o elige distritos.");
   o.radio = parseFloat(o.radio); o.minResenas = parseInt(o.minResenas, 10) || 0; o.teselas = parseInt(o.teselas, 10); o.limite = parseInt(o.limite, 10) || 0; o.pausa = Math.max(1000, parseInt(o.pausa, 10) || 1800);
-  if (!(o.radio > 0 && o.radio <= 25)) throw new Error("El radio debe estar entre 0 y 25 km.");
+  if (!o.distritos && !(o.radio > 0 && o.radio <= 25)) throw new Error("El radio debe estar entre 0 y 25 km.");
   if (![1, 5, 9].includes(o.teselas)) throw new Error("La cobertura debe ser 1, 5 o 9 zonas.");
   const lista = (v) => (typeof v === "string" ? v.split(/[,\n]/) : v || []).map((s) => String(s).trim()).filter(Boolean);
   // Rubros: cada grupo {k, consultas}; el tope (maxPorRubro) se aplica a cada grupo por separado.
@@ -320,9 +337,12 @@ async function ejecutar(o, hooks = {}) {
   let centro = null, parado = false;
   const nombreCentro = o.centro;
   try {
+    // Zonas de búsqueda: un círculo alrededor del centro, o uno por distrito elegido
+    const areas = o.distritos ? o.distritos.map((nombre) => ({ nombre, centro: { la: DISTRITOS[nombre].la, lo: DISTRITOS[nombre].lo }, radio: DISTRITOS[nombre].r })) : [{ nombre: null, centro: null, radio: o.radio }];
     // 1) Centro
     const ll = o.centro.match(/^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/);
-    if (ll) { centro = { la: +ll[1], lo: +ll[2] }; }
+    if (o.distritos) { centro = areas[0].centro; }
+    else if (ll) { centro = { la: +ll[1], lo: +ll[2] }; }
     else {
       h.etapa("centro", 0, 1);
       await p.ir("https://www.google.com/maps/search/" + encodeURIComponent(o.centro) + "?hl=es"); await verificar(p, o, "centro");
@@ -333,25 +353,26 @@ async function ejecutar(o, hooks = {}) {
       }
       if (!centro) throw new Error("No pude ubicar «" + o.centro + "». Prueba con una dirección más completa o con coordenadas (lat,lng).");
     }
-    if (h.centro) h.centro({ nombre: nombreCentro, la: centro.la, lo: centro.lo, radioKm: o.radio });
-    h.log("Centro: " + nombreCentro + " (" + centro.la.toFixed(5) + ", " + centro.lo.toFixed(5) + "), radio " + o.radio + " km");
+    areas[0].centro = areas[0].centro || centro;
+    if (h.centro) h.centro({ nombre: nombreCentro, la: centro.la, lo: centro.lo, radioKm: areas[0].radio });
+    h.log(o.distritos ? "Distritos: " + nombreCentro : "Centro: " + nombreCentro + " (" + centro.la.toFixed(5) + ", " + centro.lo.toFixed(5) + "), radio " + o.radio + " km");
 
     // 2) Búsquedas por rubro y zona
-    const zonas = teselas(centro, o.radio, o.teselas), zoom = zoomPara(o.radio), encontrados = {};
-    const total = o.consultas.length * zonas.length; let hecho = 0;
+    const encontrados = {}, zonasDe = areas.map((a) => ({ a, zs: teselas(a.centro, a.radio, o.teselas), zoom: zoomPara(a.radio) }));
+    const total = o.consultas.length * zonasDe.reduce((s, x) => s + x.zs.length, 0); let hecho = 0;
     const qgrupo = {}; o.grupos.forEach((g) => g.consultas.forEach((q) => { if (!(q in qgrupo)) qgrupo[q] = g.k; }));
-    const urlBusqueda = (q, z) => "https://www.google.com/maps/search/" + encodeURIComponent(q) + "/@" + z.la.toFixed(6) + "," + z.lo.toFixed(6) + "," + zoom + "z?hl=es&entry=ttu";
-    busquedas: for (const q of o.consultas) for (const z of zonas) {
+    const urlBusqueda = (q, z, zoom) => "https://www.google.com/maps/search/" + encodeURIComponent(q) + "/@" + z.la.toFixed(6) + "," + z.lo.toFixed(6) + "," + zoom + "z?hl=es&entry=ttu";
+    busquedas: for (const q of o.consultas) for (const zd of zonasDe) for (const z of zd.zs) {
       if (h.parar()) { parado = true; break busquedas; }
       hecho++; h.etapa("busquedas", hecho, total, q);
-      const pre = "[" + hecho + "/" + total + "] «" + q + "» en " + z.la.toFixed(3) + "," + z.lo.toFixed(3) + " … ";
-      await p.ir(urlBusqueda(q, z)); await verificar(p, o, "búsqueda");
+      const pre = "[" + hecho + "/" + total + "] «" + q + "» " + (zd.a.nombre ? "en " + zd.a.nombre + " " : "en ") + z.la.toFixed(3) + "," + z.lo.toFixed(3) + " … ";
+      await p.ir(urlBusqueda(q, z, zd.zoom)); await verificar(p, o, "búsqueda");
       let r = await p.evaluar("(" + paginaLista + ")()");
-      if (r.error || !r.items.length) { await dormir(4000); await p.ir(urlBusqueda(q, z)); await verificar(p, o, "búsqueda"); r = await p.evaluar("(" + paginaLista + ")()"); } // un reintento si vino vacía
+      if (r.error || !r.items.length) { await dormir(4000); await p.ir(urlBusqueda(q, z, zd.zoom)); await verificar(p, o, "búsqueda"); r = await p.evaluar("(" + paginaLista + ")()"); } // un reintento si vino vacía
       if (r.error) { if (BLOQUEO.test(r.texto || "")) throw new Error("Google mostró una verificación (" + q + "). Espera un rato y vuelve a intentar."); h.log(pre + "sin resultados"); }
       else {
         let nuevos = 0;
-        r.items.forEach((it) => { if (it.cid && !encontrados[it.cid]) { encontrados[it.cid] = { ...it, g: qgrupo[q] }; nuevos++; } });
+        r.items.forEach((it) => { if (it.cid && !encontrados[it.cid]) { encontrados[it.cid] = { ...it, g: qgrupo[q], ar: zd.a }; nuevos++; } });
         h.log(pre + r.items.length + " locales, " + nuevos + " nuevos");
       }
       await dormir(o.pausa + azar(0, 900));
@@ -362,10 +383,10 @@ async function ejecutar(o, hooks = {}) {
     if (!o.conocidos) {
       try { for (const x of JSON.parse(fs.readFileSync(path.join(RAIZ, "datos.json"), "utf8"))) { const m = String(x.m || "").match(/cid=(\d+)/); if (m) conocidos.add(m[1]); } } catch (e) {}
     }
-    let cand = Object.values(encontrados).map((x) => ({ ...x, d: dkm(centro, x) }))
-      .filter((x) => x.d <= o.radio * 1.01 && x.c >= o.minResenas && !conocidos.has(x.cid))
+    let cand = Object.values(encontrados).map((x) => ({ ...x, d: dkm(x.ar.centro, x) }))
+      .filter((x) => x.d <= x.ar.radio * 1.01 && x.c >= o.minResenas && !conocidos.has(x.cid))
       .sort((a, b) => b.c - a.c);
-    h.log("Encontrados: " + Object.keys(encontrados).length + "; en " + o.radio + " km con " + o.minResenas + "+ reseñas" + (o.conocidos ? "" : " y que no están en tu lista") + ": " + cand.length);
+    h.log("Encontrados: " + Object.keys(encontrados).length + "; " + (o.distritos ? "cerca de los distritos elegidos" : "en " + o.radio + " km") + " con " + o.minResenas + "+ reseñas" + (o.conocidos ? "" : " y que no están en tu lista") + ": " + cand.length);
 
     // 4) Abrir las fichas, rubro por rubro (de más a menos reseñas), y quedarse con las que cumplen el filtro de web.
     // Con tope por rubro se deja de leer ese rubro cuando ya hay suficientes negocios que cumplen.
@@ -391,7 +412,11 @@ async function ejecutar(o, hooks = {}) {
           fichas[x.cid] = d; guardarFichas();
           h.log(pre + (d.ok ? tipoWeb(d.web) : "sin datos"));
         }
-        if (d.ok && o.web.includes(tipoWeb(d.web))) {
+        // Con distritos elegidos, la dirección de la ficha decide: si menciona otro distrito conocido, se descarta; si no menciona ninguno, se acepta.
+        const dirN = clave(d.dir), mencionados = Object.keys(DISTRITOS).filter((nm) => dirN.includes(clave(nm)));
+        const enDistrito = !d.ok || !o.distritos || !mencionados.length || mencionados.some((nm) => o.distritos.includes(nm));
+        if (d.ok && !enDistrito) h.log("   fuera de los distritos elegidos (" + d.dir + ")");
+        else if (d.ok && o.web.includes(tipoWeb(d.web))) {
           let pw = null, verificado = null; // verificado: true = se buscó en Google, false = no se pudo, null = no corresponde
           // Maps no muestra una web propia: se busca el nombre en Google por si existe una que Maps no enlaza.
           if (verifActiva && tipoWeb(d.web) !== "web propia") {
@@ -445,11 +470,11 @@ async function ejecutar(o, hooks = {}) {
   } finally { await cerrar(); }
 }
 
-module.exports = { ejecutar, completar, RUBROS, tipoWeb, buscarNavegador, elegirWeb, palabrasDeNombre };
+module.exports = { ejecutar, completar, DISTRITOS, RUBROS, tipoWeb, buscarNavegador, elegirWeb, palabrasDeNombre };
 
 if (require.main === module) {
   const o = leerArgs();
   let parar = false;
   process.on("SIGINT", () => { if (parar) process.exit(130); parar = true; console.log("\nDeteniendo y guardando lo avanzado… (Ctrl+C otra vez para salir ya)"); });
-  ejecutar(o, { log: (t) => console.log(t), parar: () => parar }).catch((e) => { console.error("\nError: " + e.message); process.exit(1); });
+  ejecutar(completar(o), { log: (t) => console.log(t), parar: () => parar }).catch((e) => { console.error("\nError: " + e.message); process.exit(1); });
 }

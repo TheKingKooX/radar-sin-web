@@ -247,6 +247,9 @@ textarea.tin { height: auto; padding: 10px 12px; resize: vertical; line-height: 
 .qr svg { width: 100%; height: auto; display: block; }
 .qr div { display: grid; gap: 4px; min-width: 0; }
 .qr code { font-size: 11.5px; color: var(--muted); overflow-wrap: anywhere; }
+.row-f { padding: 0 12px 12px 78px; }
+.row-f .btn { min-height: 36px; padding: 0 14px; font-size: 13px; }
+@media (max-width: 420px) { .row-f { padding-left: 12px; } .row-f .btn { width: 100%; } }
 </style>
 </head>
 <body>
@@ -473,7 +476,8 @@ function fila(d, i) {
       '<span class="rt"><span class="nm">' + esc(d.n) + '</span><span class="sub">' + esc(d.k) + (d.z ? ' · ' + esc(d.z) : '') + dist + '</span>' +
       '<span class="meta">' + (d.r ? '<span class="star">★ ' + d.r.toFixed(1) + '</span>' : '') + '<span class="muted">' + d.c + ' reseñas</span><span class="pill ' + d.s + '">' + esc(d.pl || LABEL[d.s]) + '</span>' +
       (redesDe(d).length ? '<span class="pill demo">' + esc(redesDe(d).join(" · ")) + '</span>' : '') + (d.demo ? '<span class="pill demo">Demo</span>' : '') + (modo === "exp" && esGuardado(d.id) ? '<span class="pill demo">Guardado</span>' : '') + '</span></span></button>' +
-    '<label class="pick" title="Añadir a la ruta"><input type="checkbox" data-pick="' + id + '"' + (ruta.indexOf(d.id) > -1 ? " checked" : "") + ' aria-label="Añadir ' + esc(d.n) + ' a la ruta"><span aria-hidden="true"></span></label></li>';
+    '<label class="pick" title="Añadir a la ruta"><input type="checkbox" data-pick="' + id + '"' + (ruta.indexOf(d.id) > -1 ? " checked" : "") + ' aria-label="Añadir ' + esc(d.n) + ' a la ruta"><span aria-hidden="true"></span></label>' +
+    (modo === "exp" && d.g ? '<div class="row-f">' + (esGuardado(d.id) ? '<button class="btn" type="button" disabled>' + IC.save + 'En mi lista</button>' : '<button class="btn pri" type="button" data-guardar="' + id + '">' + IC.save + 'Agregar a mi lista</button>') + '</div>' : '') + '</li>';
 }
 function descr(d) {
   return d.k + (d.z ? " en " + d.z : "") + (d.r ? ", con " + d.r.toFixed(1) + " de puntaje y " : ", con ") + d.c + " reseñas en Google. Presencia web: " + (d.pl || LABEL[d.s]).toLowerCase() + (d.lt ? " (" + d.lt + ")" : "") + ".";
@@ -674,7 +678,7 @@ function render() {
   primera = false;
   var txt = rows.length + (rows.length === 1 ? " negocio" : " negocios");
   $("count").textContent = txt;
-  $("sum").innerHTML = '<b>' + txt + '</b>' + (modo === "lista" && zona !== "todas" ? '<span>· ' + esc(zona) + '</span>' : '') + (modo === "exp" && EXP.length ? '<span>de ' + EXP.length + ' encontrados</span>' : '') + (rows.length ? '<button class="chip" type="button" id="selVis">Seleccionar todos para la ruta</button>' : '');
+  $("sum").innerHTML = '<b>' + txt + '</b>' + (modo === "lista" && zona !== "todas" ? '<span>· ' + esc(zona) + '</span>' : '') + (modo === "exp" && EXP.length ? '<span>de ' + EXP.length + ' encontrados</span>' : '') + (rows.length ? '<button class="chip" type="button" id="selVis">Seleccionar todos para la ruta</button>' : '') + (modo === "exp" && rows.length ? '<button class="chip" type="button" id="guardarVis">Agregar todos a mi lista</button>' : '');
   tabs(); actualizarRuta();
   var q = quitadas.map(byId).filter(Boolean);
   removed.hidden = q.length === 0;
@@ -910,10 +914,16 @@ $("tabRuta").addEventListener("click", function () { hojaActual === $("rutaSheet
 $("fab").addEventListener("click", function () { pintarRuta(); abrirHoja($("rutaSheet"), $("fab")); });
 $("cerrarFiltros").addEventListener("click", function () { cerrarHojas(); });
 
-function guardarItem(id) {
-  var d = byId(id); if (!d || esGuardado(id)) return;
+function guardarItem(id, lote) {
+  var d = byId(id); if (!d || esGuardado(id)) return false;
   var c = JSON.parse(JSON.stringify(d)); delete c.dist; c.guardadoEn = Date.now(); GUARD.push(c); guardar();
-  aviso("Guardado en tu lista: " + d.n + "."); $("detalle").innerHTML = detalle(d); render();
+  if (lote) return true;
+  aviso("Guardado en tu lista: " + d.n + "."); if (hojaActual === $("detalle") && abierta === id) $("detalle").innerHTML = detalle(d); render();
+  return true;
+}
+function guardarTodos() {
+  var n = 0; visibles.forEach(function (id) { if (guardarItem(id, true)) n++; });
+  aviso(n ? "Agregaste " + n + (n === 1 ? " negocio" : " negocios") + " a tu lista." : "Todos los que ves ya están en tu lista."); render();
 }
 document.addEventListener("click", function (e) {
   var t = e.target, el;
@@ -925,6 +935,7 @@ document.addEventListener("click", function (e) {
   if ((el = t.closest("[data-restaurar]"))) { restaurar(el.getAttribute("data-restaurar")); render(); return; }
   if ((el = t.closest("[data-pickd]"))) { var pid = el.getAttribute("data-pickd"); poner(pid, ruta.indexOf(pid) < 0); render(); var dd = byId(pid); if (dd && hojaActual === $("detalle")) $("detalle").innerHTML = detalle(dd); return; }
   if ((el = t.closest("[data-unpick]"))) { poner(el.getAttribute("data-unpick"), false); render(); return; }
+  if (t.closest("#guardarVis")) { guardarTodos(); return; }
   if (t.closest("#selVis")) { visibles.forEach(function (id) { poner(id, true); }); render(); return; }
   if (t.closest("#rbClear")) { ruta = []; render(); return; }
   if (t.closest("#rbGo") && t.closest("#rbGo").getAttribute("aria-disabled") === "true") { e.preventDefault(); return; }

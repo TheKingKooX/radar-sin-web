@@ -327,6 +327,21 @@ body[data-modo="exp"] .banner { display: none; }
 .ffoot { display: flex; justify-content: flex-end; }
 @media (prefers-reduced-motion: reduce) { .fx-wrap, .fx-wrap.open, .fgrid, .fx-wrap.open .fgrid, .ftb-l > span, .ftb-s, .ftb-b .chev { transition: none !important; } }
 body[data-modo="exp"] .ftb, body[data-modo="exp"] .fx-wrap { grid-column: 1 / -1; }
+/* Pestaña Ejemplos */
+body[data-modo="ej"] .ftb, body[data-modo="ej"] .fx-wrap, body[data-modo="ej"] #sum, body[data-modo="ej"] .note { display: none; }
+.ej-i { margin: 0 0 12px; color: var(--muted); font-size: 14px; }
+.ej .banner { max-width: none; padding: 18px 20px; margin-bottom: 20px; }
+.ej .banner .t > span { display: block; }
+.ej-t { margin: 4px 0 10px; color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.ej-t span { margin-left: 6px; color: var(--fg); }
+.ej-g { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 10px; }
+.ej-c { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; transition: border-color .2s, transform .18s var(--ease); }
+.ej-c:active { transform: scale(.985); }
+@media (hover: hover) and (pointer: fine) { .ej-c:hover { border-color: var(--accent); } }
+.ej-a { display: flex; align-items: center; gap: 14px; padding: 14px; text-decoration: none; color: inherit; }
+.ej-go { margin-left: auto; color: var(--accent-text); font-weight: 600; font-size: 13px; white-space: nowrap; }
+.ej-f { display: flex; gap: 8px; padding: 0 14px 14px; }
+.ej-f .btn { min-height: 36px; font-size: 13px; }
 </style>
 </head>
 <body>
@@ -352,7 +367,7 @@ body[data-modo="exp"] .ftb, body[data-modo="exp"] .fx-wrap { grid-column: 1 / -1
 
     <main class="main" id="main">
       <div class="wrap">
-        <div class="seg" role="tablist" aria-label="Modo"><button id="modoLista" role="tab" type="button" aria-selected="true">Mi lista</button><button id="modoExp" role="tab" type="button" aria-selected="false">Explorar</button></div>
+        <div class="seg" role="tablist" aria-label="Modo"><button id="modoLista" role="tab" type="button" aria-selected="true">Mi lista</button><button id="modoExp" role="tab" type="button" aria-selected="false">Explorar</button><button id="modoEj" role="tab" type="button" aria-selected="false">Ejemplos</button></div>
         <div class="ftb" id="ftb">
           <button class="ftb-b" id="btnFiltros" type="button" aria-expanded="false" aria-controls="filtros"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><span class="ftb-l"><span class="a">Filtros</span><span class="b">Ocultar</span></span><i class="ftb-n" id="ftbN" hidden></i><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
           <div class="ftb-s" id="fresumen" aria-live="polite"></div>
@@ -388,11 +403,16 @@ body[data-modo="exp"] .ftb, body[data-modo="exp"] .fx-wrap { grid-column: 1 / -1
           <div class="ffoot"><button class="btn" type="button" id="limpiarF">Limpiar filtros</button></div>
           <details class="quitadas" id="removed" hidden></details>
         </div></div></div>
-        <a class="banner" id="banner" href="demos/valea/index.html" target="_blank" rel="noopener">
+        <section class="ej" id="ejemplos" hidden>
+          <p class="ej-i">Páginas ya terminadas para mostrarle a cada negocio cómo podría quedar su web.</p>
+          <a class="banner" href="demos/valea/index.html" target="_blank" rel="noopener">
           <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M5 17c5 0 7 5 12 5s7-5 12-5 7 0 14 0M5 27c5 0 7 5 12 5s7-5 12-5 7 0 14 0M5 37c5 0 7 5 12 5s7-5 12-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
           <span class="t"><em>Ejemplo terminado</em><b>Valea · Barbería &amp; Spa</b><span>Así podría quedar una página trabajada al 100%.</span></span>
           <span class="go" aria-hidden="true">Ver →</span>
         </a>
+          <h3 class="ej-t">Demos de negocios reales <span id="ejN"></span></h3>
+          <ul class="ej-g" id="ejLista"></ul>
+        </section>
         <section id="explorar" hidden>
           <div class="xcard" id="conexion"></div>
           <details class="xcard" id="busq" open>
@@ -455,7 +475,7 @@ body[data-modo="exp"] .ftb, body[data-modo="exp"] .fx-wrap { grid-column: 1 / -1
     <button class="tab" id="tabNeg" type="button" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Negocios</button>
     <button class="tab" id="tabFil" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>Filtros<i class="dotf" id="dotf" hidden></i></button>
     <button class="tab" id="tabRuta" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ruta<i class="badge" id="badge" hidden>0</i></button>
-    <a class="tab" href="demos/valea/index.html" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9c3 0 4 3 7 3s4-3 7-3 3 0 4 0M3 15c3 0 4 3 7 3s4-3 7-3 3 0 4 0"/></svg>Ejemplo</a>
+    <button class="tab" id="tabEj" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9c3 0 4 3 7 3s4-3 7-3 3 0 4 0M3 15c3 0 4 3 7 3s4-3 7-3 3 0 4 0"/></svg>Ejemplos</button>
   </nav>
 </div>
 
@@ -791,11 +811,23 @@ function limpiarFiltros() { FDEF.forEach(function (d) { var el = document.queryS
 function hayFiltros() { return zona !== "todas" || tipo !== "todos" || filtro !== "todas" || orden !== "reviews" || minRes > 0 || minRat > 0 || red !== "todas"; }
 function tabs() {
   $("dotf").hidden = !hayFiltros();
-  $("tabNeg").setAttribute("aria-current", hojaActual ? "false" : "page");
+  $("tabNeg").setAttribute("aria-current", hojaActual || modo === "ej" ? "false" : "page");
+  $("tabEj").classList.toggle("act", modo === "ej" && !hojaActual);
   $("tabFil").classList.toggle("act", filtrosAbiertos);
   $("tabRuta").classList.toggle("act", hojaActual === $("rutaSheet"));
 }
+// Pestaña Ejemplos: las demos terminadas de los negocios (la búsqueda de arriba también las filtra)
+function pintarEjemplos() {
+  var q = norm(buscar.trim()), rows = DATA.filter(function (d) { return d.demo && (!q || norm([d.n, d.z, d.k].join(" ")).indexOf(q) > -1); });
+  $("ejN").textContent = rows.length; $("count").textContent = rows.length + (rows.length === 1 ? " ejemplo" : " ejemplos");
+  $("ejLista").innerHTML = rows.length ? rows.map(function (d) {
+    var id = esc(d.id);
+    return '<li class="ej-c"><a class="ej-a" href="' + esc(d.demo) + '" target="_blank" rel="noopener">' + avatar(d) + '<span class="rt"><span class="nm">' + esc(d.n) + '</span><span class="sub">' + esc(d.k) + (d.z ? ' · ' + esc(d.z) : '') + '</span></span><span class="ej-go" aria-hidden="true">Ver →</span></a>' +
+      '<div class="ej-f"><button class="btn" type="button" data-abrir="' + id + '">Ficha y QR</button></div></li>';
+  }).join("") : '<li class="empty">No hay ejemplos con esa búsqueda.</li>';
+}
 function render() {
+  if (modo === "ej") { pintarEjemplos(); tabs(); return; }
   var rows = filtradas();
   function ns(d) { return d.su ? d.su.length : 0; }
   rows.sort(function (x, y) {
@@ -859,8 +891,8 @@ function restaurar(id) { quitadas = id === "*" ? [] : quitadas.filter(function (
 function ponerModo(m) {
   modo = m;
   document.body.setAttribute("data-modo", m);
-  $("modoLista").setAttribute("aria-selected", m === "lista"); $("modoExp").setAttribute("aria-selected", m === "exp");
-  $("explorar").hidden = m !== "exp"; $("banner").hidden = m !== "lista";
+  $("modoLista").setAttribute("aria-selected", m === "lista"); $("modoExp").setAttribute("aria-selected", m === "exp"); $("modoEj").setAttribute("aria-selected", m === "ej");
+  $("explorar").hidden = m !== "exp"; $("ejemplos").hidden = m !== "ej";
   list.hidden = m !== "lista"; listaExp.hidden = m !== "exp";
   document.querySelectorAll("[data-o='cerca']").forEach(function (b) { b.hidden = m !== "exp"; });
   if (m === "lista" && orden === "cerca") { orden = "reviews"; document.querySelectorAll("[data-o]").forEach(function (x) { x.setAttribute("aria-pressed", x.getAttribute("data-o") === "reviews" ? "true" : "false"); }); }
@@ -868,6 +900,8 @@ function ponerModo(m) {
 }
 $("modoLista").addEventListener("click", function () { ponerModo("lista"); });
 $("modoExp").addEventListener("click", function () { ponerModo("exp"); });
+$("modoEj").addEventListener("click", function () { ponerModo("ej"); });
+$("tabEj").addEventListener("click", function () { cerrarHojas(); alternarFiltros(false); ponerModo("ej"); });
 
 /* ---------- Explorar: buscador local (herramientas/servidor.js) ---------- */
 var DIST = ["San Miguel", "Magdalena del Mar", "Pueblo Libre", "Jesús María", "Lince", "Breña", "Cercado de Lima", "La Victoria", "Rímac", "San Isidro", "Miraflores", "Surquillo", "Barranco", "San Borja", "Santiago de Surco", "San Luis", "Chorrillos", "San Martín de Porres", "Los Olivos", "Callao", "Bellavista", "La Perla", "La Punta"];
@@ -1068,7 +1102,7 @@ $("explorar").addEventListener("change", function (e) {
   guardarCfg();
 });
 
-$("tabNeg").addEventListener("click", function () { cerrarHojas(); $("main").scrollTo({ top: 0 }); });
+$("tabNeg").addEventListener("click", function () { cerrarHojas(); if (modo === "ej") ponerModo("lista"); $("main").scrollTo({ top: 0 }); });
 $("tabFil").addEventListener("click", function () { cerrarHojas(); alternarFiltros(); if (filtrosAbiertos) $("main").scrollTo({ top: 0, behavior: "smooth" }); });
 $("btnFiltros").addEventListener("click", function () { alternarFiltros(); });
 $("fresumen").addEventListener("click", function (e) { var b = e.target.closest("[data-fq]"); if (!b) return; var d = FDEF[+b.getAttribute("data-fq")], el = document.querySelector("#filtros [" + d[0] + '="' + d[1] + '"]'); if (el) el.click(); });

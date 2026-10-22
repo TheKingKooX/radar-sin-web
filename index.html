@@ -110,6 +110,10 @@ a { color: var(--accent-text); text-underline-offset: 3px; }
 .pill { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--accent); white-space: nowrap; }
 .pill.none { background: var(--accent); color: var(--on-accent); }
 .pill.social { color: var(--accent-text); }
+.pill.nueva { background: var(--accent); color: var(--on-accent); }
+.list .grp { list-style: none; display: flex; align-items: baseline; justify-content: space-between; padding: 14px 4px 0; color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.list .grp:first-child { padding-top: 2px; }
+.list .grp span { font-weight: 700; }
 .pill.warn { border-color: var(--warn); color: var(--warn); }
 .pill.demo { border-color: var(--line); color: var(--muted); }
 .pick { position: absolute; right: 8px; top: 50%; translate: 0 -50%; width: 48px; height: 48px; display: grid; place-items: center; cursor: pointer; }
@@ -489,7 +493,9 @@ function fmtDist(km) { return km < 1 ? Math.round(km * 1000 / 10) * 10 + " m" : 
 
 
 /* ---------- Filtros y orden ---------- */
-function fuente() { return modo === "lista" ? DATA.concat(GUARD) : EXP; }
+function fuente() { return modo === "lista" ? DATA.concat(GUARD) : sinGuardar(); }
+// Lo que ya está en Mi lista no se muestra entre los resultados de Explorar
+function sinGuardar() { return EXP.filter(function (d) { return !esGuardado(d.id); }); }
 function pasa(d) {
   var q = norm(buscar.trim());
   if (quitadas.indexOf(d.id) > -1) return false;
@@ -511,7 +517,7 @@ function fila(d, i) {
     '<button class="row-b" type="button" data-abrir="' + id + '">' + avatar(d) +
       '<span class="rt"><span class="nm">' + esc(d.n) + '</span><span class="sub">' + esc(d.k) + (d.z ? ' · ' + esc(d.z) : '') + dist + '</span>' +
       '<span class="meta">' + (d.r ? '<span class="star">★ ' + d.r.toFixed(1) + '</span>' : '') + '<span class="muted">' + d.c + ' reseñas</span><span class="pill ' + d.s + '">' + esc(d.pl || LABEL[d.s]) + '</span>' +
-      (redesDe(d).length ? '<span class="pill demo">' + esc(redesDe(d).join(" · ")) + '</span>' : '') + (d.demo ? '<span class="pill demo">Demo</span>' : '') + (d.pw ? '<span class="pill warn">Posible web</span>' : (d.g && d.vw === false && d.s !== "web" ? '<span class="pill demo">Sin verificar</span>' : '')) + (modo === "exp" && esGuardado(d.id) ? '<span class="pill demo">Guardado</span>' : '') + '</span></span></button>' +
+      (redesDe(d).length ? '<span class="pill demo">' + esc(redesDe(d).join(" · ")) + '</span>' : '') + (d.demo ? '<span class="pill demo">Demo</span>' : '') + (modo === "lista" && d.guardadoEn ? '<span class="pill nueva">Nueva</span>' : '') + (d.pw ? '<span class="pill warn">Posible web</span>' : (d.g && d.vw === false && d.s !== "web" ? '<span class="pill demo">Sin verificar</span>' : '')) + (modo === "exp" && esGuardado(d.id) ? '<span class="pill demo">Guardado</span>' : '') + '</span></span></button>' +
     '<label class="pick" title="Añadir a la ruta"><input type="checkbox" data-pick="' + id + '"' + (ruta.indexOf(d.id) > -1 ? " checked" : "") + ' aria-label="Añadir ' + esc(d.n) + ' a la ruta"><span aria-hidden="true"></span></label>' +
     (modo === "exp" && d.g ? '<div class="row-f">' + (esGuardado(d.id) ? '<button class="btn" type="button" disabled>' + IC.save + 'En mi lista</button>' : '<button class="btn pri" type="button" data-guardar="' + id + '">' + IC.save + 'Agregar a mi lista</button>') + '</div>' : '') + '</li>';
 }
@@ -715,14 +721,23 @@ function render() {
   rows.sort(function (x, y) {
     return orden === "rating" ? (y.r - x.r) || (y.c - x.c) : orden === "sucursales" ? (ns(y) - ns(x)) || (y.c - x.c) : orden === "cerca" ? ((x.dist || 0) - (y.dist || 0)) : (y.c - x.c);
   });
+  var destino = modo === "lista" ? list : listaExp, html = "";
+  var pendientes = sinGuardar().length;
+  var vacio = modo === "exp" && !EXP.length ? "Configura la búsqueda y toca «Buscar locales»." : modo === "exp" && !pendientes ? "Ya agregaste todos los resultados a tu lista." : "No hay negocios con estos filtros.";
+  if (modo === "lista" && rows.length) {
+    // Mi lista en grupos: lo recién agregado (lo último primero), lo que ya tiene demo y el resto
+    var nuevas = rows.filter(function (d) { return d.guardadoEn; }).sort(function (x, y) { return y.guardadoEn - x.guardadoEn; });
+    var conDemo = rows.filter(function (d) { return !d.guardadoEn && d.demo; }), sinDemo = rows.filter(function (d) { return !d.guardadoEn && !d.demo; }), n = 0;
+    var grupo = function (titulo, arr) { return arr.length ? '<li class="grp"><b>' + titulo + '</b><span>' + arr.length + '</span></li>' + arr.map(function (d) { return fila(d, n++); }).join("") : ""; };
+    html = grupo("Recién agregadas", nuevas) + grupo("Con demo", conDemo) + grupo("Sin demo", sinDemo);
+    rows = nuevas.concat(conDemo, sinDemo);
+  } else html = rows.map(fila).join("");
   visibles = rows.map(function (d) { return d.id; });
-  var destino = modo === "lista" ? list : listaExp;
-  var vacio = modo === "exp" && !EXP.length ? "Configura la búsqueda y toca «Buscar locales»." : "No hay negocios con estos filtros.";
-  destino.innerHTML = rows.length ? rows.map(fila).join("") : '<li class="empty">' + vacio + '</li>';
+  destino.innerHTML = rows.length ? html : '<li class="empty">' + vacio + '</li>';
   primera = false;
   var txt = rows.length + (rows.length === 1 ? " negocio" : " negocios");
   $("count").textContent = txt;
-  $("sum").innerHTML = '<b>' + txt + '</b>' + (modo === "lista" && zona !== "todas" ? '<span>· ' + esc(zona) + '</span>' : '') + (modo === "exp" && EXP.length ? '<span>de ' + EXP.length + ' encontrados</span>' : '') + (rows.length ? '<button class="chip" type="button" id="selVis">Seleccionar todos para la ruta</button>' : '') + (modo === "exp" && rows.length ? '<button class="chip" type="button" id="guardarVis">Agregar todos a mi lista</button>' : '');
+  $("sum").innerHTML = '<b>' + txt + '</b>' + (modo === "lista" && zona !== "todas" ? '<span>· ' + esc(zona) + '</span>' : '') + (modo === "exp" && pendientes ? '<span>' + (EXP.length > pendientes ? 'de ' + EXP.length + ' encontrados, ' + (EXP.length - pendientes) + ' ya en tu lista' : 'encontrados') + '</span>' : '') + (rows.length ? '<button class="chip" type="button" id="selVis">Seleccionar todos para la ruta</button>' : '') + (modo === "exp" && rows.length ? '<button class="chip" type="button" id="guardarVis">Agregar todos a mi lista</button>' : '');
   tabs(); actualizarRuta();
   var q = quitadas.map(byId).filter(Boolean);
   removed.hidden = q.length === 0;

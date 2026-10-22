@@ -587,5 +587,44 @@
   },
   "m": "https://maps.google.com/?cid=8357353606332994377",
   "demo": "demos/emys/index.html"
+ },
+ {
+  "id": "torero",
+  "z": "San Miguel",
+  "k": "Salón",
+  "n": "Torero Estética Sede San Miguel",
+  "a": "Hermanos Catari 227",
+  "r": 4.4,
+  "c": 531,
+  "t": "+51 933 970 617",
+  "s": "social",
+  "pl": "Solo red social",
+  "l": "https://www.instagram.com/torero.estetica/",
+  "lt": "Instagram",
+  "la": -12.076795,
+  "lo": -77.09696,
+  "lg": "img/torero.svg",
+  "sv": [
+   "Bótox capilar y alisados",
+   "Balayage y color",
+   "Corte de cabello",
+   "Manicura, pedicura y acrílicas en gel",
+   "Hydrafacial y facial con punta de diamante",
+   "Laminado de cejas y depilación facial"
+  ],
+  "su": [
+   "Torero Estética Sede Jesús María (misma marca, indicada en su Instagram y en Google Maps)"
+  ],
+  "vi": {
+   "c": [
+    "#0aa6c2",
+    "#0b3a4a",
+    "#ffffff"
+   ],
+   "e": "«Torero» en letra cursiva turquesa con «estética» en minúsculas espaciadas debajo, sobre blanco. Fresco, limpio y juvenil.",
+   "v": "Belleza y cuidado personal para hombres y mujeres."
+  },
+  "m": "https://maps.google.com/?cid=3561263541250524025",
+  "demo": "demos/torero/index.html"
  }
 ]

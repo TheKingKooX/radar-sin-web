@@ -358,6 +358,10 @@ async function ejecutar(o, hooks = {}) {
     h.log(o.distritos ? "Distritos: " + nombreCentro : "Centro: " + nombreCentro + " (" + centro.la.toFixed(5) + ", " + centro.lo.toFixed(5) + "), radio " + o.radio + " km");
 
     // 2) Búsquedas por rubro y zona
+    const conocidos = new Set();
+    if (!o.conocidos) {
+      try { for (const x of JSON.parse(fs.readFileSync(path.join(RAIZ, "datos.json"), "utf8"))) { const m = String(x.m || "").match(/cid=(\d+)/); if (m) conocidos.add(m[1]); } } catch (e) {}
+    }
     const encontrados = {}, zonasDe = areas.map((a) => ({ a, zs: teselas(a.centro, a.radio, o.teselas), zoom: zoomPara(a.radio) }));
     const total = o.consultas.length * zonasDe.reduce((s, x) => s + x.zs.length, 0); let hecho = 0;
     const qgrupo = {}; o.grupos.forEach((g) => g.consultas.forEach((q) => { if (!(q in qgrupo)) qgrupo[q] = g.k; }));
@@ -372,17 +376,18 @@ async function ejecutar(o, hooks = {}) {
       if (r.error) { if (BLOQUEO.test(r.texto || "")) throw new Error("Google mostró una verificación (" + q + "). Espera un rato y vuelve a intentar."); h.log(pre + "sin resultados"); }
       else {
         let nuevos = 0;
-        r.items.forEach((it) => { if (it.cid && !encontrados[it.cid]) { encontrados[it.cid] = { ...it, g: qgrupo[q], ar: zd.a }; nuevos++; } });
+        r.items.forEach((it) => {
+          if (!it.cid || encontrados[it.cid]) return;
+          const e = (encontrados[it.cid] = { ...it, g: qgrupo[q], ar: zd.a }); nuevos++;
+          // Candidato en vivo: aún sin leer su ficha, así que no se sabe su web
+          if (h.cand && e.c >= o.minResenas && !conocidos.has(e.cid) && dkm(zd.a.centro, e) <= zd.a.radio * 1.01) h.cand(filaDe(e, {}, null, null));
+        });
         h.log(pre + r.items.length + " locales, " + nuevos + " nuevos");
       }
       await dormir(o.pausa + azar(0, 900));
     }
 
     // 3) Filtrar por radio y reseñas, y excluir los conocidos
-    const conocidos = new Set();
-    if (!o.conocidos) {
-      try { for (const x of JSON.parse(fs.readFileSync(path.join(RAIZ, "datos.json"), "utf8"))) { const m = String(x.m || "").match(/cid=(\d+)/); if (m) conocidos.add(m[1]); } } catch (e) {}
-    }
     let cand = Object.values(encontrados).map((x) => ({ ...x, d: dkm(x.ar.centro, x) }))
       .filter((x) => x.d <= x.ar.radio * 1.01 && x.c >= o.minResenas && !conocidos.has(x.cid))
       .sort((a, b) => b.c - a.c);
@@ -393,6 +398,7 @@ async function ejecutar(o, hooks = {}) {
     const porGrupo = {}; cand.forEach((x) => { (porGrupo[x.g] = porGrupo[x.g] || []).push(x); });
     const tope = (n) => (o.maxPorRubro > 0 ? Math.min(n, o.maxPorRubro) : n);
     const aLeer = o.grupos.reduce((s, g) => s + tope((porGrupo[g.k] || []).length), 0);
+    if (h.quitar && o.maxPorRubro > 0) for (const g of o.grupos) (porGrupo[g.k] || []).slice(o.maxPorRubro).forEach((x) => h.quitar(x.cid)); // sobran del tope: no se leerán
     let i = 0, leidas = 0; const negocios = [];
     grupos: if (!parado) for (const g of o.grupos) {
       let n = 0;
@@ -415,6 +421,7 @@ async function ejecutar(o, hooks = {}) {
         // Con distritos elegidos, la dirección de la ficha decide: si menciona otro distrito conocido, se descarta; si no menciona ninguno, se acepta.
         const dirN = clave(d.dir), mencionados = Object.keys(DISTRITOS).filter((nm) => dirN.includes(clave(nm)));
         const enDistrito = !d.ok || !o.distritos || !mencionados.length || mencionados.some((nm) => o.distritos.includes(nm));
+        if (!(d.ok && enDistrito && o.web.includes(tipoWeb(d.web))) && h.quitar) h.quitar(x.cid);
         if (d.ok && !enDistrito) h.log("   fuera de los distritos elegidos (" + d.dir + ")");
         else if (d.ok && o.web.includes(tipoWeb(d.web))) {
           let pw = null, verificado = null; // verificado: true = se buscó en Google, false = no se pudo, null = no corresponde

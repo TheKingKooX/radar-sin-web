@@ -18,23 +18,25 @@ const PERMITIDOS = ["https://thekingkoox.github.io"]; // páginas de internet qu
 const BLOQUEADOS = /(^|\/)(\.|herramientas\/|node_modules\/|docs\/)/;
 
 /* ---------- Estado del trabajo en curso (uno a la vez) ---------- */
-const job = { corriendo: false, parar: false, etapa: null, log: [], filas: [], centro: null, resultado: null, error: null, inicio: 0 };
+const job = { corriendo: false, parar: false, etapa: null, log: [], filas: [], cands: new Map(), centro: null, resultado: null, error: null, inicio: 0 };
 const clientes = new Set();
 function emitir(tipo, datos) {
   const msg = "event: " + tipo + "\ndata: " + JSON.stringify(datos) + "\n\n";
   for (const r of clientes) { try { r.write(msg); } catch (e) { clientes.delete(r); } }
 }
-function snapshot() { return { corriendo: job.corriendo, etapa: job.etapa, log: job.log.slice(-300), filas: job.filas, centro: job.centro, resultado: job.resultado, error: job.error }; }
+function snapshot() { return { corriendo: job.corriendo, etapa: job.etapa, log: job.log.slice(-300), filas: job.filas, cands: [...job.cands.values()], centro: job.centro, resultado: job.resultado, error: job.error }; }
 
 async function iniciar(opciones) {
-  Object.assign(job, { corriendo: true, parar: false, etapa: { nombre: "inicio", i: 0, n: 1 }, log: [], filas: [], centro: null, resultado: null, error: null, inicio: Date.now() });
+  Object.assign(job, { corriendo: true, parar: false, etapa: { nombre: "inicio", i: 0, n: 1 }, log: [], filas: [], cands: new Map(), centro: null, resultado: null, error: null, inicio: Date.now() });
   emitir("estado", snapshot());
   try {
     const res = await buscador.ejecutar(opciones, {
       log: (t) => { job.log.push(t); if (job.log.length > 2000) job.log.shift(); emitir("log", t); },
       etapa: (nombre, i, n, detalle) => { job.etapa = { nombre, i, n, detalle }; emitir("etapa", job.etapa); },
       centro: (c) => { job.centro = c; emitir("centro", c); },
-      fila: (f) => { job.filas.push(f); emitir("fila", f); },
+      fila: (f) => { job.filas.push(f); job.cands.delete(String(f[9])); emitir("fila", f); },
+      cand: (f) => { job.cands.set(String(f[9]), f); emitir("cand", f); },
+      quitar: (cid) => { job.cands.delete(String(cid)); emitir("quitar", String(cid)); },
       parar: () => job.parar
     });
     job.resultado = { archivo: path.relative(RAIZ, res.salida), cuenta: res.cuenta, parado: res.parado, total: res.datos.negocios.length };

@@ -1,0 +1,81 @@
+{
+ "centro": {
+  "nombre": "San Miguel, Magdalena del Mar",
+  "la": -12.077,
+  "lo": -77.09,
+  "radioKm": 2
+ },
+ "nota": "Recolectado de Google Maps el 2026-10-22 (restaurante, cafetería, bar); 100+ reseñas dentro de 2 km; web: sin enlace, solo red social, solo reservas; hasta 5 por rubro. Filas: [nombre, puntaje, reseñas, categoría, dirección, teléfono, enlace web de Google, latitud, longitud, cid].",
+ "negocios": [
+  [
+   "El Tronco",
+   4.1,
+   5534,
+   "Restaurante",
+   "Avenida La Marina, 3491 Maranga",
+   "935 383 122",
+   "https://www.facebook.com/pages/category/Peruvian-Restaurant/Restaurant-El-Tronco-500753233288399/",
+   -12.073305,
+   -77.102509,
+   "9336387341915931551",
+   null,
+   null
+  ],
+  [
+   "RESTAURANTE QUE RICO",
+   3.7,
+   4402,
+   "Restaurante",
+   "Av. Universitaria 860",
+   "927 003 266",
+   "",
+   -12.079316,
+   -77.081493,
+   "6669240224699455619",
+   null,
+   null
+  ],
+  [
+   "La Bodega de la Trattoria - Plaza San Miguel",
+   4.3,
+   3208,
+   "Restaurante italiano",
+   "CC, Centro Comercial Plaza, Av. de la Marina 2000",
+   "(01) 4120731",
+   "",
+   -12.076391,
+   -77.082525,
+   "8039749956772471607",
+   null,
+   null
+  ],
+  [
+   "Puro Corazón Parrillada Peruana",
+   4.1,
+   1957,
+   "Restaurante",
+   "Parque Principal 155",
+   "(01) 2635058",
+   "",
+   -12.092075,
+   -77.080153,
+   "10033637259414985180",
+   null,
+   null
+  ],
+  [
+   "Picantería La Paisana 2",
+   4.3,
+   1855,
+   "Restaurante",
+   "Jr. Libertad 1412",
+   "992 840 637",
+   "https://www.facebook.com/picanterialapaisana/",
+   -12.086107,
+   -77.06714,
+   "8048985334107986304",
+   null,
+   null
+  ]
+ ]
+}

@@ -1,0 +1,95 @@
+{
+ "centro": {
+  "nombre": "San Miguel",
+  "la": -12.077,
+  "lo": -77.09,
+  "radioKm": 3
+ },
+ "nota": "Recolectado de Google Maps el 2026-10-22 (barbería); 50+ reseñas dentro de 3 km; web: sin enlace, solo red social, solo reservas; hasta 10 por rubro. Filas: [nombre, puntaje, reseñas, categoría, dirección, teléfono, enlace web de Google, latitud, longitud, cid].",
+ "negocios": [
+  [
+   "BARBERIA EMMANUEL",
+   5,
+   247,
+   "Barbería",
+   "Jr, Calle Miguel de Unamuno 166",
+   "900 505 503",
+   "",
+   -12.081032,
+   -77.076222,
+   "16547947929153913721",
+   null,
+   false
+  ],
+  [
+   "La Barbería - Men´s Club",
+   4.4,
+   243,
+   "Barbería",
+   "Av. Rafael Escardó 723",
+   "960 706 851",
+   "",
+   -12.073707,
+   -77.092196,
+   "16618686729091458036",
+   null,
+   false
+  ],
+  [
+   "EL SERBIO BARBERSHOP",
+   4.6,
+   220,
+   "Barbería",
+   "Av. de la Marina 3281",
+   "955 633 252",
+   "https://www.facebook.com/marina305",
+   -12.074557,
+   -77.100026,
+   "5645825449709646759",
+   null,
+   false
+  ],
+  [
+   "HIGHCUTS BARBER SHOP",
+   4.9,
+   118,
+   "Barbería",
+   "Av.",
+   "980 864 616",
+   "https://www.facebook.com/highcutsbarbershop/",
+   -12.089095,
+   -77.079293,
+   "11693123645377821144",
+   null,
+   false
+  ],
+  [
+   "Elite barberia",
+   4.8,
+   111,
+   "Barbería",
+   "Mercedes Gallagher de Parks 295",
+   "940 122 950",
+   "https://instagram.com/elitebarberia295_",
+   -12.078997,
+   -77.084309,
+   "4228776580342397615",
+   null,
+   false
+  ],
+  [
+   "Bermoney Barber Studio",
+   5,
+   92,
+   "Barbería",
+   "Av. La Mar 2275",
+   "960 304 799",
+   "https://wa.me/51960304799?text=Hola%2C+buenas+%F0%9F%91%8B+Encontr%C3%A9+Bermoney+en+Google+Maps+y+me+gustar%C3%ADa+reservar+una+cita.+%C2%BFQu%C3%A9+horarios+tienen+disponibles%3F",
+   -12.074792,
+   -77.082192,
+   "7038684733493718241",
+   null,
+   false
+  ]
+ ]
+}

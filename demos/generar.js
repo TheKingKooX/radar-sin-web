@@ -70,8 +70,53 @@ function logoHtml(d, m) {
   return svg.replace("<svg", `<svg role="img" aria-label="${esc(m.logoAlt)}"${vb ? ` width="${vb[1]}" height="${vb[2]}"` : ""}`);
 }
 
+// Ilustración referencial de un servicio de salón (cabello largo, antes y después).
+function ilusSalon(t, despues) {
+  const pelo = "#3b2a23", piel = "#e0b896";
+  const fondo = despues
+    ? '<path d="M122 120C100 170 110 235 92 285h216c-18-50-8-115-30-165 2-58-40-80-78-80s-80 22-78 80z" fill="' + pelo + '"/><path d="M150 70c-22 50-14 120-30 205" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".22"/>'
+    : '<path d="M118 120C86 150 96 215 62 282l14 6h248l12-8c-30-60-18-130-52-160 4-54-44-86-82-86s-84 30-82 86z" fill="' + pelo + '"/><path d="M96 168c-10 14-8 30-16 44M306 172c8 14 10 28 20 40M110 250c-6 8-8 16-14 24M296 252c6 8 10 16 16 24M150 44c-4-10 6-18 14-12M236 42c6-10 18-4 14 8" fill="none" stroke="' + pelo + '" stroke-width="7" stroke-linecap="round"/>';
+  const flequillo = despues
+    ? '<path d="M138 112C146 74 178 64 206 66c30 2 52 18 56 50-22-26-60-34-124-4z" fill="' + pelo + '"/>'
+    : '<path d="M136 116c-4-30 14-54 40-58-8 8-6 22 6 30 4-14 18-22 32-22-6 10-2 22 10 26 8-10 22-12 34-6-2 12 2 22 8 28-34-30-92-28-130 2z" fill="' + pelo + '"/>';
+  return '<svg viewBox="0 0 400 300" role="img" aria-label="' + (despues ? "Después: cabello liso, suave y con brillo" : "Antes: cabello opaco y sin forma") + '"><rect width="400" height="300" fill="' + t.acento + '" opacity=".12"/>' +
+    fondo + '<path d="M50 300c8-52 40-62 100-66h100c60 4 92 14 100 66z" fill="' + t.suave + '"/><rect x="176" y="204" width="48" height="54" rx="14" fill="' + piel + '"/>' +
+    '<ellipse cx="200" cy="150" rx="58" ry="74" fill="' + piel + '"/>' + flequillo +
+    '<g fill="' + pelo + '"><circle cx="178" cy="150" r="4.5"/><circle cx="222" cy="150" r="4.5"/></g><path d="M184 188q16 10 32 0" fill="none" stroke="' + t.acento + '" stroke-width="4" stroke-linecap="round"/></svg>';
+}
+
+// Datos de ejemplo (referenciales) para la calculadora, el equipo, la promoción y la tarjeta de sellos.
+// Una marca puede definir los suyos en marcas/<id>.js; los precios reales de la ficha de Google (S/ y min) se respetan.
+const NOMBRES = { b: ["Mauro", "Diego", "Joaquín", "Renzo", "Andrés", "Fabián", "Sebastián", "Álvaro", "Matías"], s: ["Valeria", "Camila", "Lucía", "Daniela", "Andrea", "Fiorella", "Paola", "Carla", "Rocío"] };
+function precioDe(s) {
+  s = s.toLowerCase();
+  const tabla = [[/tinte|color|balayage|mecha|platin/, [90, 120]], [/tratamiento|keratina|alisado|laceado|botox/, [70, 60]], [/barba|afeit/, [15, 20]], [/ceja|perfil/, [8, 10]], [/u[ñn]as|manicur|pedicur|nail/, [35, 50]], [/facial|limpieza|masaje|spa/, [40, 40]], [/peinado|ondula|planch|secado/, [35, 40]], [/ni[ñn]|kids|infantil/, [18, 30]], [/corte|fade|cabello|peluquer/, [25, 45]]];
+  const t = tabla.find((x) => x[0].test(s));
+  return t ? t[1] : [30, 45];
+}
+function defaultsMarca(d) {
+  const barberia = d.k === "Barbería", spa = d.k === "Spa";
+  const genericos = barberia ? ["Corte", "Barba", "Corte + barba", "Perfilado de cejas"] : spa ? ["Masaje relajante", "Limpieza facial", "Manicure", "Pedicure"] : ["Corte de cabello", "Peinado", "Tinte", "Tratamiento capilar"];
+  const precios = [];
+  (d.sv || []).forEach((s) => {
+    if (precios.length >= 4 || /venta|asesor|belleza y cuidado|looks|^barbería$|^cabello$|^peluquería$/i.test(s)) return;
+    const [p0, m0] = precioDe(s), pr = s.match(/S\/\s*(\d+)/), mi = s.match(/(\d+)\s*min/);
+    precios.push({ n: s.replace(/\s*\(.*?\)/g, "").trim(), p: pr ? +pr[1] : p0, m: mi ? +mi[1] : m0 });
+  });
+  genericos.forEach((n) => { if (precios.length < 4 && !precios.some((x) => x.n.toLowerCase().startsWith(n.toLowerCase().split(" ")[0]))) { const [p, m] = precioDe(n); precios.push({ n, p, m }); } });
+  const pool = NOMBRES[barberia ? "b" : "s"], h0 = [...d.id].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7) % pool.length;
+  const roles = barberia ? [["Maestro barbero", "Cortes clásicos y navaja"], ["Barbero", "Fade y degradados"], ["Barbero", "Diseño de barba"]] : spa ? [["Terapeuta", "Masajes"], ["Esteticista", "Cuidado facial"], ["Terapeuta", "Relajación"]] : [["Estilista", "Corte y peinado"], ["Colorista", "Tinte y mechas"], ["Especialista capilar", "Tratamientos"]];
+  return {
+    precios,
+    equipo: roles.map((r, i) => ({ n: pool[(h0 + i * 3) % pool.length], r: r[0], e: r[1] })),
+    promo: barberia ? { t: "Corte + barba", d: "Llévate el combo completo a precio especial durante este mes.", precio: "S/ 30" } : spa ? { t: "Masaje + facial", d: "Un momento de relax a precio especial durante este mes.", precio: "S/ 80" } : { t: "Corte + tratamiento", d: "Cuida tu cabello con un precio especial durante este mes.", precio: "S/ 70" },
+    fidelidad: { n: 5, premio: barberia ? "Corte gratis" : "Servicio de cortesía" }
+  };
+}
+
 // Ilustración referencial de un corte (antes o después) con los colores de la marca.
-function ilusCorte(t, despues) {
+function ilusCorte(t, despues, salon) {
+  if (salon) return ilusSalon(t, despues);
   const pelo = "#2d2825", piel = "#d9ae8a";
   const cabello = despues
     ? '<path d="M139 124C139 82 168 70 200 70s61 12 61 54c-12-20-32-27-61-27s-49 7-61 27z" fill="' + pelo + '"/><ellipse cx="141" cy="140" rx="7" ry="22" fill="' + pelo + '" opacity=".22"/><ellipse cx="259" cy="140" rx="7" ry="22" fill="' + pelo + '" opacity=".22"/>'
@@ -86,12 +131,15 @@ function ilusCorte(t, despues) {
 }
 
 // Divisor de marca entre secciones (m.divisor): la portada ya trae el suyo.
-function conDivisores(html) {
+function conDivisores(html, cls) {
   let n = 0;
-  return html.replace(/<\/section>\s*(?=<section)/g, (x) => (n++ === 0 ? x : x + '<div class="divisor" aria-hidden="true"></div>\n'));
+  return html.replace(/<\/section>\s*(?=<section)/g, (x) => (n++ === 0 ? x : x + '<div class="' + cls + '" aria-hidden="true"></div>\n'));
 }
 
 function pagina(d, m) {
+  // Por defecto todas las demos llevan los extras, con datos de ejemplo según el tipo de negocio; la marca puede cambiarlos.
+  m = Object.assign({ extras: true, animaciones: true, antesDespues: true, divisor: "orn" }, defaultsMarca(d), m);
+  const salon = d.k !== "Barbería";
   const wa = whatsapp(d.t, "Hola, quiero reservar en " + d.n);
   const esWa = wa.startsWith("https://wa.me");
   const ext = esWa ? ' target="_blank" rel="noopener"' : "";
@@ -184,10 +232,10 @@ function pagina(d, m) {
   const antes = m.extras && m.antesDespues ? `
 <section id="resultado"><div class="in-w">
   <span class="lbl rv">Resultado</span><h2 class="rv">Antes y después</h2>
-  <p class="rv" style="color:var(--suave);margin-top:10px">Desliza para ver la diferencia de un buen corte.</p>
+  <p class="rv" style="color:var(--suave);margin-top:10px">Desliza para ver la diferencia de ${salon ? "un buen servicio" : "un buen corte"}.</p>
   <div class="ba rv" style="--p:50%">
-    <div class="ba-i">${ilusCorte(t, true)}</div>
-    <div class="ba-i ba-b">${ilusCorte(t, false)}</div>
+    <div class="ba-i">${ilusCorte(t, true, salon)}</div>
+    <div class="ba-i ba-b">${ilusCorte(t, false, salon)}</div>
     <span class="ba-t ba-tb">Antes</span><span class="ba-t ba-ta">Después</span>
     <span class="ba-l" aria-hidden="true"><i></i></span>
     <input type="range" min="0" max="100" value="50" aria-label="Comparar antes y después">
@@ -316,7 +364,7 @@ ${barra}
 </html>
 `;
   // Botones solo con ícono: el texto pasa a aria-label y title (accesibilidad y tooltip).
-  return (m.divisor ? conDivisores(html) : html).replace(/<a class="([^"]*)"([^>]*)>(<svg class="ic"[\s\S]*?<\/svg>)<span>([^<]*)<\/span><\/a>/g,
+  return (m.divisor ? conDivisores(html, m.divisor === true ? "divisor" : "divisor orn") : html).replace(/<a class="([^"]*)"([^>]*)>(<svg class="ic"[\s\S]*?<\/svg>)<span>([^<]*)<\/span><\/a>/g,
     (m, cls, att, svg, txt) => `<a class="${cls} ico"${att} aria-label="${txt}" title="${txt}">${svg}</a>`);
 }
 

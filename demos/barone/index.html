@@ -31,7 +31,7 @@ h2 { font-weight: 600; letter-spacing: .04em; }
 </style>
 <noscript><style>.rv { opacity: 1 !important; transform: none !important; }</style></noscript>
 </head>
-<body>
+<body class="anim">
 <header class="top">
   <a class="marca" href="#inicio"><svg role="img" aria-label="Logo de Barone Barbería Premium" width="200" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" font-family="Cinzel, Georgia, serif">
   <rect width="200" height="200" fill="#010101"/>
@@ -44,9 +44,10 @@ h2 { font-weight: 600; letter-spacing: .04em; }
 </header>
 <main>
 <section id="inicio" class="hero"><div class="hero-in">
-  <h1 aria-label="Barone Barbería Premium"><svg class="corona" viewBox="0 0 120 70" aria-hidden="true"><path pathLength="1" d="M10 58 6 18l26 20 28-30 28 30 26-20-4 40Z"/><path pathLength="1" d="M10 66h100"/></svg>
+  <h1 aria-label="Barone Barbería Premium" data-par style="--kx:1;--ky:.14"><svg class="corona" viewBox="0 0 120 70" aria-hidden="true"><path pathLength="1" d="M10 58 6 18l26 20 28-30 28 30 26-20-4 40Z"/><path pathLength="1" d="M10 66h100"/></svg>
     <span class="a">BARONE</span><span class="b">BARBERÍA PREMIUM</span></h1>
-  <p class="baja">Valora tu tiempo en la silla, conoce tu estilo.</p>
+  <p class="baja" data-par style="--kx:.5;--ky:.07">Valora tu tiempo en la silla, conoce tu estilo.</p>
+  <p class="ahora" data-ahora hidden></p>
   <div class="acc"><a class="btn ico" href="tel:+5115044437" aria-label="Llamar para reservar" title="Llamar para reservar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a><a class="btn sec ico" href="#ubicacion" aria-label="Cómo llegar" title="Cómo llegar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></a></div>
 </div></section>
 <section id="nosotros"><div class="in-w">
@@ -55,12 +56,79 @@ h2 { font-weight: 600; letter-spacing: .04em; }
   <div class="why"><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg><h3>4.9 ★ en Google</h3><p>Calificación basada en 133 reseñas de clientes en Google Maps.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Reserva por teléfono</h3><p>Llámanos y agenda tu cita.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>En Magdalena del Mar</h3><p>Av. del Ejército 1180. Fácil de encontrar.</p></div></div>
 </div></section>
 
+<div class="divisor orn" aria-hidden="true"></div>
+<section id="cifras"><div class="in-w">
+  <div class="cifras">
+    <div class="cifra rv"><b data-n="4.9" data-dec="1">4.9</b><span>de puntaje en Google ★</span></div>
+    <div class="cifra rv"><b data-n="133">133</b><span>reseñas de clientes</span></div>
+    <div class="cifra rv"><b data-n="7">7</b><span>días de atención a la semana</span></div>
+  </div>
+</div></section>
+
+<div class="divisor orn" aria-hidden="true"></div>
+<section id="promo"><div class="in-w">
+  <div class="promo rv">
+    <div class="promo-i"><span class="lbl">Promoción del mes</span><h3>Corte + barba</h3><p>Llévate el combo completo a precio especial durante este mes.</p><p class="promo-p">S/ 30</p></div>
+    <div class="cuenta" id="cuenta" role="timer" aria-label="Tiempo que queda de la promoción"><span><b data-u="d">--</b>días</span><span><b data-u="h">--</b>horas</span><span><b data-u="m">--</b>min</span><span><b data-u="s">--</b>seg</span></div>
+    <a class="btn" href="tel:+5115044437">Quiero la promo</a>
+  </div>
+  <p class="nota-ref rv">Promoción de ejemplo. Termina el último día del mes.</p>
+</div></section>
+
+<div class="divisor orn" aria-hidden="true"></div>
+<section id="equipo"><div class="in-w">
+  <span class="lbl rv">Equipo</span><h2 class="rv">Quién te atiende</h2>
+  <div class="eq"><article class="rv"><span class="eq-av" aria-hidden="true">R</span><h3>Renzo</h3><p class="eq-r">Maestro barbero</p><p class="eq-e">Cortes clásicos y navaja</p><a class="btn sec" href="tel:+5115044437">Reservar con Renzo</a></article><article class="rv"><span class="eq-av" aria-hidden="true">S</span><h3>Sebastián</h3><p class="eq-r">Barbero</p><p class="eq-e">Fade y degradados</p><a class="btn sec" href="tel:+5115044437">Reservar con Sebastián</a></article><article class="rv"><span class="eq-av" aria-hidden="true">M</span><h3>Mauro</h3><p class="eq-r">Barbero</p><p class="eq-e">Diseño de barba</p><a class="btn sec" href="tel:+5115044437">Reservar con Mauro</a></article></div>
+  <p class="nota-ref rv">Equipo referencial.</p>
+</div></section>
+
+<div class="divisor orn" aria-hidden="true"></div>
 <section id="servicios"><div class="in-w">
   <span class="lbl rv">Servicios y galería</span><h2 class="rv">Lo que hacemos</h2>
   <div class="sc-row rv" style="--abierta:3"><article class="sc open"><button type="button" class="sc-b" id="sc-h0" aria-expanded="true" aria-controls="sc-p0"><span class="sc-n">01</span><span class="sc-t">Corte de cabello</span></button><div class="sc-media" id="sc-p0" role="region" aria-labelledby="sc-h0"><img class="a on" src="img/s1-a.svg" alt="Ilustración referencial de Corte de cabello" loading="lazy"><img class="b" src="img/s1-b.svg" alt="Ilustración referencial de Corte de cabello" loading="lazy"><p class="sc-d">Cortes precisos, a tu estilo.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h1" aria-expanded="false" aria-controls="sc-p1"><span class="sc-n">02</span><span class="sc-t">Camuflaje de canas</span></button><div class="sc-media" id="sc-p1" role="region" aria-labelledby="sc-h1"><img class="a on" src="img/s2-a.svg" alt="Ilustración referencial de Camuflaje de canas" loading="lazy"><img class="b" src="img/s2-b.svg" alt="Ilustración referencial de Camuflaje de canas" loading="lazy"><p class="sc-d">Detalles y diseños hechos con precisión.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h2" aria-expanded="false" aria-controls="sc-p2"><span class="sc-n">03</span><span class="sc-t">Ocultar entradas</span></button><div class="sc-media" id="sc-p2" role="region" aria-labelledby="sc-h2"><img class="a on" src="img/s3-a.svg" alt="Ilustración referencial de Ocultar entradas" loading="lazy"><img class="b" src="img/s3-b.svg" alt="Ilustración referencial de Ocultar entradas" loading="lazy"><p class="sc-d">Detalles y diseños hechos con precisión.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h3" aria-expanded="false" aria-controls="sc-p3"><span class="sc-n">04</span><span class="sc-t">Ondulaciones</span></button><div class="sc-media" id="sc-p3" role="region" aria-labelledby="sc-h3"><img class="a on" src="img/s4-a.svg" alt="Ilustración referencial de Ondulaciones" loading="lazy"><img class="b" src="img/s4-b.svg" alt="Ilustración referencial de Ondulaciones" loading="lazy"><p class="sc-d">Ondas definidas y con movimiento.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h4" aria-expanded="false" aria-controls="sc-p4"><span class="sc-n">05</span><span class="sc-t">Looks y asesoría</span></button><div class="sc-media" id="sc-p4" role="region" aria-labelledby="sc-h4"><img class="a on" src="img/s5-a.svg" alt="Ilustración referencial de Looks y asesoría" loading="lazy"><img class="b" src="img/s5-b.svg" alt="Ilustración referencial de Looks y asesoría" loading="lazy"><p class="sc-d">Asesoría para encontrar tu estilo.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h5" aria-expanded="false" aria-controls="sc-p5"><span class="sc-n">06</span><span class="sc-t">Cortes</span></button><div class="sc-media" id="sc-p5" role="region" aria-labelledby="sc-h5"><img class="a on" src="img/s6-a.svg" alt="Ilustración referencial de Cortes" loading="lazy"><img class="b" src="img/s6-b.svg" alt="Ilustración referencial de Cortes" loading="lazy"><p class="sc-d">Cortes precisos, a tu estilo.</p></div></article></div>
   <p class="nota-ref rv">Ilustraciones referenciales.</p>
 </div></section>
 
+
+<div class="divisor orn" aria-hidden="true"></div>
+<section id="resultado"><div class="in-w">
+  <span class="lbl rv">Resultado</span><h2 class="rv">Antes y después</h2>
+  <p class="rv" style="color:var(--suave);margin-top:10px">Desliza para ver la diferencia de un buen corte.</p>
+  <div class="ba rv" style="--p:50%">
+    <div class="ba-i"><svg viewBox="0 0 400 300" role="img" aria-label="Después: corte limpio y definido"><rect width="400" height="300" fill="#e2ad49" opacity=".12"/><path d="M50 300c8-52 40-62 100-66h100c60 4 92 14 100 66z" fill="#b79a5e"/><rect x="176" y="204" width="48" height="54" rx="14" fill="#d9ae8a"/><ellipse cx="200" cy="148" rx="62" ry="78" fill="#d9ae8a"/><path d="M139 124C139 82 168 70 200 70s61 12 61 54c-12-20-32-27-61-27s-49 7-61 27z" fill="#2d2825"/><ellipse cx="141" cy="140" rx="7" ry="22" fill="#2d2825" opacity=".22"/><ellipse cx="259" cy="140" rx="7" ry="22" fill="#2d2825" opacity=".22"/><path d="M146 168c4 36 26 52 54 52s50-16 54-52c-10 22-28 30-54 30s-44-8-54-30z" fill="#2d2825" opacity=".85"/><path d="M146 168c4 36 26 52 54 52s50-16 54-52" fill="none" stroke="#e2ad49" stroke-width="2" opacity=".7"/><g fill="#2d2825"><circle cx="177" cy="146" r="4.5"/><circle cx="223" cy="146" r="4.5"/></g><path d="M186 186q14 8 28 0" fill="none" stroke="#2d2825" stroke-width="3" stroke-linecap="round"/></svg></div>
+    <div class="ba-i ba-b"><svg viewBox="0 0 400 300" role="img" aria-label="Antes: cabello y barba sin arreglar"><rect width="400" height="300" fill="#e2ad49" opacity=".12"/><path d="M50 300c8-52 40-62 100-66h100c60 4 92 14 100 66z" fill="#b79a5e"/><rect x="176" y="204" width="48" height="54" rx="14" fill="#d9ae8a"/><ellipse cx="200" cy="148" rx="62" ry="78" fill="#d9ae8a"/><path d="M124 150C96 84 140 36 200 42s104 44 76 108c8-34-14-56-40-60-12 10-24 14-36 14s-24-4-36-14c-26 4-48 26-40 60z" fill="#2d2825"/><path d="M118 100c-12-6-14-22-2-30M284 96c12-6 16-22 4-30M170 40c-6-14 8-24 18-18M224 40c10-12 24-4 20 10" fill="none" stroke="#2d2825" stroke-width="9" stroke-linecap="round"/><path d="M142 166c2 44 28 62 58 62s56-18 58-62c-14 16-24 36-58 34-34 2-44-18-58-34z" fill="#2d2825" opacity=".55"/><g stroke="#2d2825" stroke-width="2" stroke-linecap="round" opacity=".6"><path d="M150 186l-6 6M162 204l-6 8M246 206l6 8M256 188l6 6M200 232v8"/></g><g fill="#2d2825"><circle cx="177" cy="146" r="4.5"/><circle cx="223" cy="146" r="4.5"/></g><path d="M186 186q14 8 28 0" fill="none" stroke="#2d2825" stroke-width="3" stroke-linecap="round"/></svg></div>
+    <span class="ba-t ba-tb">Antes</span><span class="ba-t ba-ta">Después</span>
+    <span class="ba-l" aria-hidden="true"><i></i></span>
+    <input type="range" min="0" max="100" value="50" aria-label="Comparar antes y después">
+  </div>
+  <p class="nota-ref rv">Ilustración referencial.</p>
+</div></section>
+
+<div class="divisor orn" aria-hidden="true"></div>
+<section id="calcula"><div class="in-w">
+  <span class="lbl rv">Tu cita</span><h2 class="rv">Arma tu servicio</h2>
+  <form class="calc rv" id="calc" onsubmit="return false">
+    <ul class="calc-l"><li><label><input type="checkbox" data-p="25" data-m="45" data-n="Corte de cabello"><span class="ck" aria-hidden="true"></span><span class="nm">Corte de cabello</span><span class="du">45 min</span><b>S/ 25</b></label></li><li><label><input type="checkbox" data-p="30" data-m="45" data-n="Camuflaje de canas"><span class="ck" aria-hidden="true"></span><span class="nm">Camuflaje de canas</span><span class="du">45 min</span><b>S/ 30</b></label></li><li><label><input type="checkbox" data-p="30" data-m="45" data-n="Ocultar entradas"><span class="ck" aria-hidden="true"></span><span class="nm">Ocultar entradas</span><span class="du">45 min</span><b>S/ 30</b></label></li><li><label><input type="checkbox" data-p="35" data-m="40" data-n="Ondulaciones"><span class="ck" aria-hidden="true"></span><span class="nm">Ondulaciones</span><span class="du">40 min</span><b>S/ 35</b></label></li></ul>
+    <div class="calc-t">
+      <div><span>Total estimado</span><b id="calcTotal">S/ 0</b></div>
+      <div><span>Duración</span><b id="calcMin">0 min</b></div>
+      <a class="btn" id="calcBtn" href="tel:+5115044437">Pedir por WhatsApp</a>
+    </div>
+    <p class="nota-ref">Precios y duraciones referenciales.</p>
+  </form>
+</div></section>
+
+<div class="divisor orn" aria-hidden="true"></div>
+<section id="fidelidad"><div class="in-w">
+  <span class="lbl rv">Fidelidad</span><h2 class="rv">Tu tarjeta de sellos</h2>
+  <div class="fid rv" id="fid" data-n="5" data-k="fid-barone" data-premio="Corte gratis">
+    <ol class="fid-s"><li><span>1</span></li><li><span>2</span></li><li><span>3</span></li><li><span>4</span></li><li><span>5</span></li></ol>
+    <p class="fid-t" id="fidT" aria-live="polite">Cada visita suma un sello. A la visita 5: corte gratis.</p>
+    <div class="acc"><button class="btn" type="button" id="fidBtn">Marcar una visita</button><button class="btn sec" type="button" id="fidReset">Reiniciar</button></div>
+  </div>
+  <p class="nota-ref rv">Demostración: se guarda solo en este dispositivo.</p>
+</div></section>
+<div class="divisor orn" aria-hidden="true"></div>
 <section id="reservar"><div class="in-w">
   <span class="lbl rv">Reservar</span><h2 class="rv">Cómo reservar</h2>
   <ol class="pasos"><li class="rv"><span class="num">1</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Llámanos</h3><p>Comunícate por teléfono.</p></li><li class="rv"><span class="num">2</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><h3>Elige tu horario</h3><p>Dinos el servicio que quieres y cuándo te viene mejor.</p></li><li class="rv"><span class="num">3</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>Ven al local</h3><p>Te esperamos en Av. del Ejército 1180, Magdalena del Mar.</p></li></ol>
@@ -79,6 +147,7 @@ h2 { font-weight: 600; letter-spacing: .04em; }
 
 
 
+<div class="divisor orn" aria-hidden="true"></div>
 <section id="ubicacion" class="fus"><div class="in-w">
   <span class="lbl rv">Ubicación y opiniones</span><h2 class="rv">Visítanos y mira lo que dicen</h2>
   <div class="fus-g">
@@ -91,6 +160,7 @@ h2 { font-weight: 600; letter-spacing: .04em; }
 </div>
   </div>
 </div></section>
+<div class="divisor orn" aria-hidden="true"></div>
 <section id="contacto" class="cont"><div class="in-w">
   <h2 class="rv">Reserva tu cita</h2>
   <p class="rv" style="color:var(--suave)">+51 1 5044437</p>
@@ -98,6 +168,7 @@ h2 { font-weight: 600; letter-spacing: .04em; }
 </div></section>
 </main>
 <footer><span>Barone Barbería Premium</span><span>Av. del Ejército 1180, Magdalena del Mar</span></footer>
+<div class="barra-res" id="barraRes"><span class="ahora" data-ahora hidden></span><a class="btn" href="tel:+5115044437">Reservar</a></div>
 <script>window.CITA = {"wa":"tel:+5115044437","n":"Barone Barbería Premium","h":{"lun":["09:00","21:00"],"mar":["09:00","21:00"],"mie":["09:00","21:00"],"jue":["09:00","21:00"],"vie":["09:00","21:00"],"sab":["09:00","21:00"],"dom":["10:00","19:00"]},"ant":2}; window.RESENAS = [{"a":"Jorge L.","e":5,"f":"Hace 3 meses","t":"He ido a muchas barberias en Lima, hasta el momento esta es Top 1!! Me he cortado con varios barberos y todo excelente pero mi barbero estrella es Joseph, no hay fallo!!","u":"https://maps.app.goo.gl/Zryt6SXE8Da4weU36"},{"a":"Uma Z.","e":5,"f":"Hace 3 meses","t":"Llevé a mi sobrino y quedamos muy contentos. Lo atendieron con mucha paciencia, el corte quedó excelente y el trato fue muy amable. ¡Totalmente recomendado!","u":"https://maps.app.goo.gl/o3zCG63qpuq4XkeC6"},{"a":"Estrella G.","e":5,"f":"Hace 3 meses","t":"Fui con mi novio y la atención fue excelente. Le hicieron un corte de cabello impecable, justo como lo pidió. El personal fue muy amable y el ambiente agradable. ¡Sin duda volveremos!","u":"https://maps.app.goo.gl/A1i8mSHXKsjRoqcY8"},{"a":"Greisbely E.","e":5,"f":"Hace 3 meses","t":"Lleve a mi hermanito pequeño para que le cortaran el cabello y la atención fue súper buena y el ambiente nos gustó mucho","u":"https://maps.app.goo.gl/FxyqofgGTZwyXjny9"},{"a":"Dalia S.","e":5,"f":"Hace un año","t":"Excelente el servicio desde la atención y el corte de cabello, mi hijo tuvo una buena experiencia con el barbero Joseph Ponce, recomendado!","u":"https://maps.app.goo.gl/vpwvFURwaB6CqfBL8"},{"a":"Xiomara E.","e":5,"f":"Hace un año","t":"Súper recomendado. Llevé a mi hermanito y le dejaron el corte 10/10. Muy buena atención de parte del barbero Joseph, un verdadero capo en lo que hace. 👌💈…","u":"https://maps.app.goo.gl/Qd4TrgdrMVT3K2gu8"},{"a":"Emiliano C.","e":5,"f":"Hace 6 meses","t":"Fui a Carppone y me atendieron muy bien, me atendió Junior y el servicio fue increíble el nivel de detalle se nota, el chico corta muy bien y diseña un estilo cien porciento recomendado.","u":"https://maps.app.goo.gl/GeDkJbr6XhaiKkGF8"},{"a":"Cecilia L.","e":5,"f":"Hace 4 meses","t":"Vengo con mi hijo todos los meses y la atención es muy buena, la srta es muy amable y tambien los chicos.","u":"https://maps.app.goo.gl/6fRKKyNLHoceojJs6"},{"a":"Giselle A.","e":5,"f":"Hace 5 meses","t":"Excelente atención desde la llegada, la recepción y los Barberos súper profesionales siempre. Súper recomendado.","u":"https://maps.app.goo.gl/kbocYKBwLuefFjuX7"},{"a":"Cristhian C.","e":5,"f":"Hace un año","t":"Voy a Carppone desde hace más de un año y siempre me corto con Josep. Es un excelente barbero y una gran persona. El servicio es personalizado, de muy buena calidad y siempre se genera una charla muy…","u":"https://maps.app.goo.gl/345JnpY3SX8CWEFz7"},{"a":"Josue","e":5,"f":"Hace 5 meses","t":"Excelente servicio de principio a fin, buen trato al cliente y cuentan con muy buenos barberos con experiencia.","u":"https://maps.app.goo.gl/AabsYJ4M6ZXLvYyZ8"},{"a":"Aaron L.","e":5,"f":"Hace un año","t":"Excelente atención desde que entró la señorita de recepción muy amable y los barberos son muy profesionales se nota su dedicación , en mi caso yo tengo un barbero que para mí corta espectacular su…","u":"https://maps.app.goo.gl/ah2wjfzgkhxxwE2U7"},{"a":"Jose R.","e":5,"f":"Hace 7 meses","t":"Muy buen lugar, recomendado, Joseph hizo un gran trabajo. El lugar muy agradable y la atención también muy buena. 5 estrellas.","u":"https://maps.app.goo.gl/mqyuZBjiwsZzTPtN6"},{"a":"Kate C.","e":5,"f":"Hace 3 meses","t":"Fui con mi papá y la atención 10/10 limpios y ordenados todo muy bonito 🫶🏽…","u":"https://maps.app.goo.gl/HXFspBmqcmq3qyXz8"},{"a":"Osnaider C.","e":5,"f":"Hace un año","t":"Mi lugar ideal para cortarme el cabello. Siempre busco a Zepol, excelente profesional, no hay manera en que me deje cortar por otro barbero, insuperable. Sus recomendaciones siempre son acertadas y…","u":"https://maps.app.goo.gl/zGc1WVqPGUNENM2o9"},{"a":"Cesar C.","e":5,"f":"Hace un año","t":"Hola desde que voy a Carppone me va muy bien con mi look. Mi barbero es Andrés, quien es muy responsable y profesional con su trabajo. Realmente lo recomiendo es excelente y además siempre nos da…","u":"https://maps.app.goo.gl/wEP2tLUDUtvvc6us7"},{"a":"Gonzalo R.","e":5,"f":"Hace 7 meses","t":"Muy buen servicio, excelente corte lo esperado , nada que agregarle , 10 puntos","u":"https://maps.app.goo.gl/zB4uosizs2fTbvYw9"},{"a":"Cliente","e":5,"f":"Hace 10 meses","t":"Me atiendo siempre con Johan, es un tipo estupendo, se fija siempre en cada detalle de corte de cabello, no se le escapa nada, muy profesional, muy buen trato, muy amable. Lo recomiendo 100/100.","u":"https://maps.app.goo.gl/SGW2YVuYkTfZdbyQ7"},{"a":"Diego A.","e":5,"f":"Hace un año","t":"Recomiendo al 100% esta barbería 💈. El ambiente es superchévere y la atención de mi barbero Jhosep es de otro nivel 🙌. Se nota su dedicación, siempre cuida cada detalle y deja los cortes impecables…","u":"https://maps.app.goo.gl/2v7zMsGnoqMr5S6t5"},{"a":"Manuel A.","e":4,"f":"Hace un año","t":"Muy buena atención! La relación precio / calidad es justa. Mientras te cortan puedes disfrutas de unas cervezas bien heladas! Tienen buenas promociones. Pregunte por Joseph Ponce, es un maestro!…","u":"https://maps.app.goo.gl/5eP5otCTKnxq3EKr6"},{"a":"Anderson M.","e":5,"f":"Hace un año","t":"Excelente barbería, muy buen ambiente y atención de primera. Andrés Hernández es un capo, siempre detallista con los cortes y sabe exactamente lo que uno busca. Totalmente recomendado, se nota la…","u":"https://maps.app.goo.gl/EWd7wRWRpcxNVtAs8"},{"a":"Matías A.","e":5,"f":"Hace un año","t":"Excelente barbería, muy buena atención. Me encanto que te dieran una bebida de cortesía y el ambiente me parece bueno. Los cortes son 10/10 especialmente de el barbero Andres q ya llevo casi un año…","u":"https://maps.app.goo.gl/dYPRnCJPCYqRzpVo8"}];</script>
 <script src="../_comun/base.js"></script>
 <script></script>

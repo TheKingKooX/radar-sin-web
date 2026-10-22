@@ -23,21 +23,24 @@
   els.forEach(function (e) { io.observe(e); });
 })();
 
-/* Título de la portada letra por letra (solo con body.anim y sin movimiento reducido). */
+/* Título de la portada letra por letra (solo con body.anim y sin movimiento reducido). Solo toca el texto visible: ignora svg, imágenes y lo marcado aria-hidden. */
 (function () {
   var h = document.querySelector(".hero h1");
   if (!h || !document.body.classList.contains("anim") || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  var i = 0;
-  (h.children.length ? [].slice.call(h.children) : [h]).forEach(function (sp) {
-    var t = sp.textContent; sp.textContent = "";
-    t.split(" ").forEach(function (w, k) {
-      if (k) sp.appendChild(document.createTextNode(" "));
+  var i = 0, nodos = [], w = document.createTreeWalker(h, NodeFilter.SHOW_TEXT);
+  while (w.nextNode()) { var n = w.currentNode; if (n.nodeValue.trim() && !(n.parentNode.closest && n.parentNode.closest("svg, [aria-hidden='true']"))) nodos.push(n); }
+  nodos.forEach(function (n) {
+    var f = document.createDocumentFragment();
+    n.nodeValue.split(/(\s+)/).forEach(function (w) {
+      if (!w) return;
+      if (/^\s+$/.test(w)) { f.appendChild(document.createTextNode(" ")); return; }
       var pal = document.createElement("span"); pal.className = "pal";
       w.split("").forEach(function (c) { var s = document.createElement("span"); s.className = "ch"; s.textContent = c; s.style.setProperty("--i", i++); pal.appendChild(s); });
-      sp.appendChild(pal);
+      f.appendChild(pal);
     });
+    n.parentNode.replaceChild(f, n);
   });
-  h.classList.add("letras");
+  if (i) h.classList.add("letras");
 })();
 
 /* Posición del cursor en --mx y --my, para los fondos interactivos. */

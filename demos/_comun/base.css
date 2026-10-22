@@ -266,7 +266,7 @@ html.quieto .top .marca::after { animation: onda 3.6s 1.8s cubic-bezier(.23, 1, 
 .cifra b { font-family: var(--f-titulo), sans-serif; font-weight: 400; font-size: clamp(48px, 8vw, 88px); line-height: 1; letter-spacing: -.03em; color: var(--acento); font-variant-numeric: tabular-nums; }
 .cifra span { color: var(--suave); font-size: 15px; }
 
-.ba { position: relative; margin-top: 28px; aspect-ratio: 4 / 3; max-width: 640px; border-radius: var(--radio, 16px); overflow: hidden; border: 1px solid color-mix(in srgb, var(--fg) 22%, transparent); --p: 50%; touch-action: pan-y; }
+.ba { position: relative; margin-top: 28px; aspect-ratio: 4 / 3; max-width: 640px; border-radius: min(var(--radio, 16px), 24px); overflow: hidden; border: 1px solid color-mix(in srgb, var(--fg) 22%, transparent); --p: 50%; touch-action: pan-y; }
 .ba-i { position: absolute; inset: 0; }
 .ba-i svg { width: 100%; height: 100%; display: block; }
 .ba-b { clip-path: inset(0 calc(100% - var(--p)) 0 0); }
@@ -290,7 +290,7 @@ html.quieto .top .marca::after { animation: onda 3.6s 1.8s cubic-bezier(.23, 1, 
 
 .barra-res { display: none; }
 @media (max-width: 760px) {
-  .barra-res { position: fixed; z-index: 30; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 10px 10px 16px; border-radius: var(--radio, 16px); background: var(--bg); border: 1px solid color-mix(in srgb, var(--fg) 25%, transparent); box-shadow: 0 10px 30px -12px rgba(0, 0, 0, .45); transform: translateY(140%); visibility: hidden; transition: transform .4s var(--ease), visibility 0s .4s; }
+  .barra-res { position: fixed; z-index: 30; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 10px 10px 16px; border-radius: min(var(--radio, 16px), 24px); background: var(--bg); border: 1px solid color-mix(in srgb, var(--fg) 25%, transparent); box-shadow: 0 10px 30px -12px rgba(0, 0, 0, .45); transform: translateY(140%); visibility: hidden; transition: transform .4s var(--ease), visibility 0s .4s; }
   .barra-res.on { transform: none; visibility: visible; transition: transform .4s var(--ease), visibility 0s; }
   .barra-res .ahora { font-size: 13px; min-width: 0; }
   .barra-res .btn { padding: 11px 22px; }
@@ -300,7 +300,7 @@ html.quieto .top .marca::after { animation: onda 3.6s 1.8s cubic-bezier(.23, 1, 
 /* Extras 2 (opcionales) */
 .calc { margin-top: 28px; max-width: 760px; }
 .calc-l { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-.calc-l label { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 6px 14px; padding: 16px 18px; border: 1px solid color-mix(in srgb, var(--fg) 20%, transparent); border-radius: var(--radio, 14px); cursor: pointer; transition: border-color .2s, background .2s; }
+.calc-l label { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 6px 14px; padding: 16px 18px; border: 1px solid color-mix(in srgb, var(--fg) 20%, transparent); border-radius: min(var(--radio, 14px), 24px); cursor: pointer; transition: border-color .2s, background .2s; }
 .calc-l label:hover { border-color: var(--acento); }
 .calc-l label:has(input:checked) { border-color: var(--acento); background: color-mix(in srgb, var(--acento) 9%, transparent); }
 .calc-l label:has(input:focus-visible) { outline: 2px solid var(--acento); outline-offset: 3px; }
@@ -320,14 +320,14 @@ html.quieto .top .marca::after { animation: onda 3.6s 1.8s cubic-bezier(.23, 1, 
 @media (max-width: 520px) { .calc-l label { grid-template-columns: auto 1fr auto; } .calc-l .du { grid-column: 2; grid-row: 2; } .calc-t .btn { margin-left: 0; width: 100%; } }
 
 .eq { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin-top: 30px; }
-.eq article { border: 1px solid color-mix(in srgb, var(--fg) 18%, transparent); border-radius: var(--radio, 16px); padding: 26px 22px; display: grid; gap: 6px; justify-items: start; }
+.eq article { border: 1px solid color-mix(in srgb, var(--fg) 18%, transparent); border-radius: min(var(--radio, 16px), 24px); padding: 26px 22px; display: grid; gap: 6px; justify-items: start; }
 .eq-av { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: var(--acento); color: var(--bg); font-family: var(--f-titulo), sans-serif; font-size: 28px; margin-bottom: 8px; }
 .eq h3 { font-size: 26px; font-weight: 400; }
 .eq-r { font-weight: 600; color: var(--acento); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; }
 .eq-e { color: var(--suave); margin-bottom: 12px; }
 
 #promo { padding-top: clamp(24px, 4vw, 48px); padding-bottom: clamp(24px, 4vw, 48px); }
-.promo { display: grid; grid-template-columns: 1.3fr auto auto; align-items: center; gap: 22px 36px; padding: clamp(24px, 4vw, 40px); border-radius: var(--radio, 18px); background: var(--acento); color: var(--bg); }
+.promo { display: grid; grid-template-columns: 1.3fr auto auto; align-items: center; gap: 22px 36px; padding: clamp(24px, 4vw, 40px); border-radius: min(var(--radio, 18px), 24px); background: var(--acento); color: var(--bg); }
 .promo .lbl { color: inherit; opacity: .85; margin-bottom: 8px; }
 .promo h3 { font-size: clamp(30px, 5vw, 48px); font-weight: 400; }
 .promo-i p { margin-top: 6px; opacity: .92; }
@@ -361,3 +361,8 @@ html.quieto .top .marca::after { animation: onda 3.6s 1.8s cubic-bezier(.23, 1, 
   .anim .btn:hover::after, .anim .cta:hover::after { transform: translateX(130%); transition: transform .65s var(--ease); }
   .anim .btn:active:not(:disabled), .anim .cta:active { transform: translateY(0) scale(.95); transition-duration: .08s; }
 }
+
+/* Divisor ornamental por defecto (marcas sin divisor propio): línea con el color de acento y un rombo al centro */
+.divisor.orn { height: 56px; display: grid; place-items: center; position: relative; }
+.divisor.orn::before { content: ""; position: absolute; left: clamp(20px, 6vw, 72px); right: clamp(20px, 6vw, 72px); top: 50%; height: 1px; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--acento) 60%, transparent) 18%, color-mix(in srgb, var(--acento) 60%, transparent) 82%, transparent); }
+.divisor.orn::after { content: ""; position: relative; width: 11px; height: 11px; background: var(--acento); transform: rotate(45deg); box-shadow: 0 0 0 9px var(--bg); }

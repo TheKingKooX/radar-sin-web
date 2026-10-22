@@ -59,6 +59,8 @@ function leerArgs() {
     else if (k === "--teselas") o.teselas = parseInt(v(), 10);
     else if (k === "--salida") o.salida = v();
     else if (k === "--limite") o.limite = parseInt(v(), 10);
+    else if (k === "--max-por-rubro") o.maxPorRubro = parseInt(v(), 10);
+    else if (k === "--web") o.web = v();
     else if (k === "--pausa") o.pausa = parseInt(v(), 10);
     else if (k === "--navegador") o.navegador = v();
     else if (k === "--app") o.app = true;
@@ -73,6 +75,7 @@ function leerArgs() {
     const claves = o.rubro === "todos" ? Object.keys(RUBROS) : o.rubro.split(",");
     for (const c of claves) if (!RUBROS[c]) { console.error("Rubro desconocido: " + c); process.exit(1); }
     o.consultas = claves.flatMap((c) => RUBROS[c]);
+    o.grupos = claves.map((c) => ({ k: c, consultas: RUBROS[c] }));
   }
   return o;
 }
@@ -225,6 +228,7 @@ function filaDe(x, f) {
 }
 
 // Valida y completa las opciones (la usa el servidor del buscador de la app)
+const TIPOS_WEB = ["sin enlace", "solo red social", "solo reservas", "web propia"]; // lo que devuelve tipoWeb()
 function completar(raw) {
   const o = { radio: 5, minResenas: 100, teselas: 5, limite: 0, pausa: 1800, conocidos: false, app: false, ver: false, ...raw };
   o.centro = String(o.centro || "").trim();
@@ -232,11 +236,17 @@ function completar(raw) {
   o.radio = parseFloat(o.radio); o.minResenas = parseInt(o.minResenas, 10) || 0; o.teselas = parseInt(o.teselas, 10); o.limite = parseInt(o.limite, 10) || 0; o.pausa = Math.max(1000, parseInt(o.pausa, 10) || 1800);
   if (!(o.radio > 0 && o.radio <= 25)) throw new Error("El radio debe estar entre 0 y 25 km.");
   if (![1, 5, 9].includes(o.teselas)) throw new Error("La cobertura debe ser 1, 5 o 9 zonas.");
-  let c = o.consultas;
-  if (typeof c === "string") c = c.split(/[,\n]/);
-  c = (c || []).map((s) => String(s).trim()).filter(Boolean).slice(0, 60);
-  if (!c.length) throw new Error("Elige al menos un rubro o escribe una búsqueda.");
-  o.consultas = c;
+  const lista = (v) => (typeof v === "string" ? v.split(/[,\n]/) : v || []).map((s) => String(s).trim()).filter(Boolean);
+  // Rubros: cada grupo {k, consultas}; el tope (maxPorRubro) se aplica a cada grupo por separado.
+  let grupos = Array.isArray(o.grupos) ? o.grupos.map((g) => ({ k: String(g.k || "otros"), consultas: lista(g.consultas) })).filter((g) => g.consultas.length) : [];
+  if (!grupos.length) grupos = [{ k: "todo", consultas: lista(o.consultas) }];
+  const c = [...new Set(grupos.flatMap((g) => g.consultas))].slice(0, 60);
+  if (!c.length || !grupos[0].consultas.length) throw new Error("Elige al menos un rubro o escribe una búsqueda.");
+  o.consultas = c; o.grupos = grupos;
+  o.maxPorRubro = Math.max(0, parseInt(o.maxPorRubro, 10) || 0);
+  const w = lista(o.web).map((s) => s.toLowerCase()).filter((s) => TIPOS_WEB.includes(s));
+  if (o.web !== undefined && !w.length) throw new Error("Elige al menos un tipo de presencia web.");
+  o.web = w.length ? w : TIPOS_WEB.slice();
   return o;
 }
 
@@ -269,6 +279,7 @@ async function ejecutar(o, hooks = {}) {
     // 2) Búsquedas por rubro y zona
     const zonas = teselas(centro, o.radio, o.teselas), zoom = zoomPara(o.radio), encontrados = {};
     const total = o.consultas.length * zonas.length; let hecho = 0;
+    const qgrupo = {}; o.grupos.forEach((g) => g.consultas.forEach((q) => { if (!(q in qgrupo)) qgrupo[q] = g.k; }));
     const urlBusqueda = (q, z) => "https://www.google.com/maps/search/" + encodeURIComponent(q) + "/@" + z.la.toFixed(6) + "," + z.lo.toFixed(6) + "," + zoom + "z?hl=es&entry=ttu";
     busquedas: for (const q of o.consultas) for (const z of zonas) {
       if (h.parar()) { parado = true; break busquedas; }
@@ -280,7 +291,7 @@ async function ejecutar(o, hooks = {}) {
       if (r.error) { if (BLOQUEO.test(r.texto || "")) throw new Error("Google mostró una verificación (" + q + "). Espera un rato y vuelve a intentar."); h.log(pre + "sin resultados"); }
       else {
         let nuevos = 0;
-        r.items.forEach((it) => { if (it.cid && !encontrados[it.cid]) { encontrados[it.cid] = it; nuevos++; } });
+        r.items.forEach((it) => { if (it.cid && !encontrados[it.cid]) { encontrados[it.cid] = { ...it, g: qgrupo[q] }; nuevos++; } });
         h.log(pre + r.items.length + " locales, " + nuevos + " nuevos");
       }
       await dormir(o.pausa + azar(0, 900));
@@ -295,30 +306,42 @@ async function ejecutar(o, hooks = {}) {
       .filter((x) => x.d <= o.radio * 1.01 && x.c >= o.minResenas && !conocidos.has(x.cid))
       .sort((a, b) => b.c - a.c);
     h.log("Encontrados: " + Object.keys(encontrados).length + "; en " + o.radio + " km con " + o.minResenas + "+ reseñas" + (o.conocidos ? "" : " y que no están en tu lista") + ": " + cand.length);
-    if (o.limite > 0) cand = cand.slice(0, o.limite);
 
-    // 4) Abrir cada ficha
-    let i = 0;
-    if (!parado) for (const x of cand) {
-      if (h.parar()) { parado = true; break; }
-      i++; h.etapa("fichas", i, cand.length, x.n);
-      const pre = "[" + i + "/" + cand.length + "] " + x.n + " … ";
-      if (fichas[x.cid] && fichas[x.cid].ok) { h.log(pre + "(ya leída)"); h.fila(filaDe(x, fichas[x.cid])); continue; }
-      await p.ir("https://www.google.com/maps?cid=" + x.cid + "&hl=es"); await verificar(p, o, "ficha");
-      const d = await p.evaluar("(" + paginaDetalle + ")()");
-      if (!d.ok && BLOQUEO.test(d.texto || "")) { guardarFichas(); throw new Error("Google mostró una verificación en una ficha. Lo avanzado quedó guardado; vuelve a intentar más tarde."); }
-      fichas[x.cid] = d; guardarFichas();
-      h.log(pre + (d.ok ? tipoWeb(d.web) : "sin datos"));
-      if (d.ok) h.fila(filaDe(x, d));
-      await dormir(o.pausa + azar(0, 900));
+    // 4) Abrir las fichas, rubro por rubro (de más a menos reseñas), y quedarse con las que cumplen el filtro de web.
+    // Con tope por rubro se deja de leer ese rubro cuando ya hay suficientes negocios que cumplen.
+    const porGrupo = {}; cand.forEach((x) => { (porGrupo[x.g] = porGrupo[x.g] || []).push(x); });
+    const tope = (n) => (o.maxPorRubro > 0 ? Math.min(n, o.maxPorRubro) : n);
+    const aLeer = o.grupos.reduce((s, g) => s + tope((porGrupo[g.k] || []).length), 0);
+    let i = 0, leidas = 0; const negocios = [];
+    grupos: if (!parado) for (const g of o.grupos) {
+      let n = 0;
+      for (const x of porGrupo[g.k] || []) {
+        if (o.maxPorRubro > 0 && n >= o.maxPorRubro) break;
+        if (h.parar()) { parado = true; break grupos; }
+        if (o.limite > 0 && leidas >= o.limite) break grupos;
+        i++; leidas++; h.etapa("fichas", i, Math.max(aLeer, i), x.n);
+        const pre = "[" + i + "/" + Math.max(aLeer, i) + "] " + x.n + " … ";
+        let d = fichas[x.cid];
+        const enCache = !!(d && d.ok);
+        if (enCache) h.log(pre + "(ya leída)");
+        else {
+          await p.ir("https://www.google.com/maps?cid=" + x.cid + "&hl=es"); await verificar(p, o, "ficha");
+          d = await p.evaluar("(" + paginaDetalle + ")()");
+          if (!d.ok && BLOQUEO.test(d.texto || "")) { guardarFichas(); throw new Error("Google mostró una verificación en una ficha. Lo avanzado quedó guardado; vuelve a intentar más tarde."); }
+          fichas[x.cid] = d; guardarFichas();
+          h.log(pre + (d.ok ? tipoWeb(d.web) : "sin datos"));
+        }
+        if (d.ok && o.web.includes(tipoWeb(d.web))) { const fila = filaDe(x, d); negocios.push(fila); n++; h.fila(fila); }
+        else if (d.ok) h.log("   descartado por el filtro de web (" + tipoWeb(d.web) + ")");
+        if (!enCache) await dormir(o.pausa + azar(0, 900));
+      }
     }
 
-    // 5) Resultados (solo las fichas leídas bien)
-    const negocios = cand.filter((x) => fichas[x.cid] && fichas[x.cid].ok).map((x) => filaDe(x, fichas[x.cid]));
+    // 5) Resultados (solo las fichas leídas bien que cumplen el filtro)
     const slug = o.centro.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40);
     const salida = path.resolve(RAIZ, o.salida || "zona-" + slug + ".json");
     const datos = { centro: { nombre: nombreCentro, la: centro.la, lo: centro.lo, radioKm: o.radio },
-      nota: "Recolectado de Google Maps el " + new Date().toISOString().slice(0, 10) + " (" + o.consultas.join(", ") + "); " + o.minResenas + "+ reseñas dentro de " + o.radio + " km" + (parado ? " (búsqueda detenida antes de terminar)" : "") + ". Filas: [nombre, puntaje, reseñas, categoría, dirección, teléfono, enlace web de Google, latitud, longitud, cid].",
+      nota: "Recolectado de Google Maps el " + new Date().toISOString().slice(0, 10) + " (" + o.consultas.join(", ") + "); " + o.minResenas + "+ reseñas dentro de " + o.radio + " km; web: " + o.web.join(", ") + (o.maxPorRubro ? "; hasta " + o.maxPorRubro + " por rubro" : "") + (parado ? " (búsqueda detenida antes de terminar)" : "") + ". Filas: [nombre, puntaje, reseñas, categoría, dirección, teléfono, enlace web de Google, latitud, longitud, cid].",
       negocios };
     fs.writeFileSync(salida, JSON.stringify(datos, null, 1));
     const cuenta = { "sin enlace": 0, "solo red social": 0, "solo reservas": 0, "web propia": 0 };

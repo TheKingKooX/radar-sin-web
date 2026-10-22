@@ -22,6 +22,8 @@ node herramientas/mapas.js --centro "Av. La Mar 2591, San Miguel" --radio 5 --ru
 - `--min-resenas` reseñas mínimas (por defecto 100).
 - `--teselas 1|5|9` en cuántas zonas se repite cada búsqueda dentro del círculo. 5 es un buen equilibrio; 9 encuentra más y tarda más.
 - `--app` deja los resultados cargados en Explorar (`index.html`). Sin esto solo se escribe el archivo `zona-<centro>.json`.
+- `--web "sin enlace,solo red social"` guarda solo negocios con esa presencia web (opciones: sin enlace, solo red social, solo reservas, web propia; por defecto todas).
+- `--max-por-rubro 10` deja de abrir fichas de un rubro al reunir 10 negocios que cumplen el filtro (0 = sin tope).
 - `--limite 5` abre solo 5 fichas, para probar.
 - `--ver` muestra la ventana del navegador (por defecto se abre fuera de pantalla).
 - `--incluir-conocidos` también trae los que ya están en `datos.json`.

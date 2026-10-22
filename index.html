@@ -320,6 +320,10 @@ textarea.tin { height: auto; padding: 10px 12px; resize: vertical; line-height: 
               <label class="lbl2" for="consultas">Búsquedas (una por línea o separadas por comas). Puedes editarlas, quitar o agregar.</label>
               <textarea id="consultas" class="tin" rows="4" spellcheck="false"></textarea></div>
             <div class="xg"><span class="lbl">Reseñas mínimas</span><div class="chips" id="resMin"></div></div>
+            <div class="xg"><span class="lbl">Presencia web</span><div class="chips" id="webT"></div>
+              <p class="hint">Guarda solo los negocios cuyo enlace en Google sea de estos tipos. Se sabe al abrir su ficha, por eso un filtro más estricto no acelera la búsqueda.</p></div>
+            <div class="xg"><span class="lbl">Negocios por rubro</span><div class="chips" id="maxRub"></div>
+              <p class="hint">Deja de abrir fichas de un rubro cuando ya tiene esa cantidad de negocios que cumplen el filtro. Ahorra tiempo.</p></div>
             <div class="xg"><span class="lbl">Cobertura</span><div class="chips" id="cobert"></div>
               <p class="hint">Cuántas zonas del círculo se recorren por cada búsqueda. Más zonas encuentran más negocios pero tardan más.</p></div>
             <details class="avz"><summary>Opciones avanzadas</summary>
@@ -738,8 +742,8 @@ var RUBQ = {
   turismo: ["hotel", "hostal", "agencia de viajes", "salón de eventos"],
   ocio: ["discoteca", "karaoke", "cine", "salón de juegos"]
 };
-var cfg = { centro: "", radio: 5, rubros: ["belleza"], consultas: "", minRes: 100, cob: 5, vel: 1800, limite: 0, conocidos: false, reemplazar: true, ver: false };
-var CHIPS = { resMin: [[0, "Todas"], [50, "50+"], [100, "100+"], [250, "250+"], [500, "500+"]], cobert: [[1, "Rápida"], [5, "Amplia"], [9, "Máxima"]], vel: [[1800, "Normal"], [3200, "Lenta"], [5500, "Muy lenta"]] };
+var cfg = { centro: "", radio: 5, rubros: ["belleza"], consultas: "", minRes: 100, web: ["sin enlace", "solo red social", "solo reservas"], maxRub: 10, cob: 5, vel: 1800, limite: 0, conocidos: false, reemplazar: true, ver: false };
+var CHIPS = { resMin: [[0, "Todas"], [50, "50+"], [100, "100+"], [250, "250+"], [500, "500+"]], webT: [["sin enlace", "Sin enlace"], ["solo red social", "Solo red social"], ["solo reservas", "Solo reservas"], ["web propia", "Web propia"]], maxRub: [[0, "Sin tope"], [5, "5"], [10, "10"], [20, "20"], [30, "30"], [50, "50"]], cobert: [[1, "Rápida"], [5, "Amplia"], [9, "Máxima"]], vel: [[1800, "Normal"], [3200, "Lenta"], [5500, "Muy lenta"]] };
 (function () { var g = leer(BU, null); if (g) Object.keys(g).forEach(function (k) { if (k in cfg) cfg[k] = g[k]; }); })();
 function guardarCfg() { poner_(BU, cfg); }
 
@@ -756,9 +760,9 @@ function consultasDeRubros() {
 function listaConsultas() { return String($("consultas").value || "").split(/[,\n]/).map(function (s) { return s.trim(); }).filter(Boolean); }
 function pintarChips() {
   $("rubros").innerHTML = RUB.map(function (r) { return '<button class="chip" type="button" data-rub="' + r[0] + '" aria-pressed="' + (cfg.rubros.indexOf(r[0]) > -1) + '">' + r[1] + '</button>'; }).join("") + '<button class="chip" type="button" data-rub="*" aria-pressed="false">Todos</button>';
-  ["resMin", "cobert", "vel"].forEach(function (id) {
-    var cur = id === "resMin" ? cfg.minRes : id === "cobert" ? cfg.cob : cfg.vel;
-    $(id).innerHTML = CHIPS[id].map(function (c) { return '<button class="chip" type="button" data-' + id + '="' + c[0] + '" aria-pressed="' + (c[0] === cur) + '">' + c[1] + '</button>'; }).join("");
+  ["resMin", "cobert", "vel", "webT", "maxRub"].forEach(function (id) {
+    var cur = id === "resMin" ? cfg.minRes : id === "cobert" ? cfg.cob : id === "maxRub" ? cfg.maxRub : cfg.vel;
+    $(id).innerHTML = CHIPS[id].map(function (c) { return '<button class="chip" type="button" data-' + id + '="' + c[0] + '" aria-pressed="' + (id === "webT" ? cfg.web.indexOf(c[0]) > -1 : c[0] === cur) + '">' + c[1] + '</button>'; }).join("");
   });
 }
 function pintarForm() {
@@ -769,8 +773,9 @@ function pintarForm() {
 function pintarPlan() {
   var q = listaConsultas().length, bus = q * cfg.cob, min = Math.round(bus * 0.95);
   $("radioT").textContent = cfg.radio + " km";
-  $("plan").textContent = q ? ("Hará unas " + bus + " búsquedas en Google Maps (" + q + " × " + cfg.cob + " zonas), unos " + min + " minutos, más abrir cada negocio que cumpla (unos 10 segundos cada uno). Puedes detenerla cuando quieras y se guarda lo avanzado.") : "Elige al menos un rubro o escribe una búsqueda.";
-  $("btnBuscar").disabled = !conectado || buscando || !q || !$("centroIn").value.trim();
+  $("plan").textContent = q ? ("Hará unas " + bus + " búsquedas en Google Maps (" + q + " × " + cfg.cob + " zonas), unos " + min + " minutos, más abrir las fichas (unos 10 segundos cada una)" + (cfg.maxRub ? ", como máximo " + cfg.maxRub + " negocios por rubro" : "") + ". Puedes detenerla cuando quieras y se guarda lo avanzado.") : "Elige al menos un rubro o escribe una búsqueda.";
+  if (q && !cfg.web.length) $("plan").textContent = "Elige al menos un tipo de presencia web.";
+  $("btnBuscar").disabled = !conectado || buscando || !q || !cfg.web.length || !$("centroIn").value.trim();
 }
 function pintarConexion(ok, detalle) {
   conectado = ok;
@@ -834,12 +839,24 @@ function finDe(f) {
   if (EXP.length) poner_(UL, { centro: centro, filas: EXP.map(function (d) { return [d.n, d.r, d.c, d.k, d.a, d.t, d.l || "", d.la, d.lo, String(d.id).slice(2)]; }) });
   render();
 }
+// Reparte las búsquedas escritas entre los rubros elegidos (las que no son de ningún rubro van a «extra»).
+function gruposDe(q) {
+  var g = [], usadas = {};
+  cfg.rubros.forEach(function (k) {
+    var c = (RUBQ[k] || []).filter(function (x) { return q.indexOf(x) > -1 && !usadas[x]; });
+    c.forEach(function (x) { usadas[x] = 1; });
+    if (c.length) g.push({ k: k, consultas: c });
+  });
+  var resto = q.filter(function (x) { return !usadas[x]; });
+  if (resto.length) g.push({ k: "extra", consultas: resto });
+  return g;
+}
 function iniciarBusqueda() {
   var q = listaConsultas();
   cfg.centro = $("centroIn").value.trim(); cfg.consultas = q.join("\n"); guardarCfg();
   if (cfg.reemplazar) { EXP = []; centro = null; }
   $("reg").textContent = ""; $("progreso").hidden = false; $("pEtapa").textContent = "Preparando…"; $("pConteo").textContent = ""; $("pDetalle").textContent = ""; $("pFill").style.width = "0%";
-  fetch(API + "/api/buscar", { method: "POST", headers: { "Content-Type": "application/json", "X-Radar": "1" }, body: JSON.stringify({ centro: cfg.centro, radio: cfg.radio, consultas: q, minResenas: cfg.minRes, teselas: cfg.cob, pausa: cfg.vel, limite: cfg.limite, conocidos: cfg.conocidos, ver: cfg.ver }) })
+  fetch(API + "/api/buscar", { method: "POST", headers: { "Content-Type": "application/json", "X-Radar": "1" }, body: JSON.stringify({ grupos: gruposDe(q), web: cfg.web, maxPorRubro: cfg.maxRub, centro: cfg.centro, radio: cfg.radio, consultas: q, minResenas: cfg.minRes, teselas: cfg.cob, pausa: cfg.vel, limite: cfg.limite, conocidos: cfg.conocidos, ver: cfg.ver }) })
     .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || "No se pudo iniciar"); }); })
     .then(function () { buscando = true; $("btnParar").hidden = false; $("btnBuscar").hidden = true; $("busq").open = false; render(); })
     .catch(function (e) { $("pEtapa").textContent = "No se pudo iniciar"; $("pDetalle").textContent = e.message; });
@@ -863,6 +880,12 @@ $("explorar").addEventListener("click", function (e) {
     cfg.consultas = ""; $("consultas").value = consultasDeRubros().join("\n"); pintarChips(); pintarPlan(); guardarCfg(); return;
   }
   if ((el = t.closest("[data-resMin]"))) { cfg.minRes = +el.getAttribute("data-resMin"); pintarChips(); guardarCfg(); return; }
+  if ((el = t.closest("[data-webT]"))) {
+    var tw = el.getAttribute("data-webT"), iw = cfg.web.indexOf(tw);
+    if (iw > -1) cfg.web.splice(iw, 1); else cfg.web.push(tw);
+    pintarChips(); pintarPlan(); guardarCfg(); return;
+  }
+  if ((el = t.closest("[data-maxRub]"))) { cfg.maxRub = +el.getAttribute("data-maxRub"); pintarChips(); pintarPlan(); guardarCfg(); return; }
   if ((el = t.closest("[data-cobert]"))) { cfg.cob = +el.getAttribute("data-cobert"); pintarChips(); pintarPlan(); guardarCfg(); return; }
   if ((el = t.closest("[data-vel]"))) { cfg.vel = +el.getAttribute("data-vel"); pintarChips(); guardarCfg(); }
 });

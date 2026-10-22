@@ -19,10 +19,12 @@ body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-event
 .hero h1 .a { font-size: clamp(54px, 14vw, 180px); color: var(--acento); letter-spacing: .02em; }
 .hero h1 .b { font-family: "Josefin Sans", sans-serif; font-size: clamp(16px, 3vw, 32px); letter-spacing: .5em; font-weight: 600; color: #324b4e; }
 h2 { font-weight: 400; letter-spacing: .01em; }
+.divisor { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='40'%3E%3Cpath d='M0 30 20 10 40 30 60 10 80 30' fill='none' stroke='%23a93935' stroke-width='6'/%3E%3Cpath d='M0 40 20 20 40 40 60 20 80 40' fill='none' stroke='%23324b4e' stroke-width='6'/%3E%3C/svg%3E") 0 0 / 80px 40px repeat-x; opacity: .85; }
 .sv span { font-weight: 600; }
 .val .n { color: var(--acento); font-weight: 400; }
 .marca img { box-shadow: 0 0 0 2px #324b4e; }
 @media (prefers-reduced-motion: no-preference) {
+  .divisor { animation: zig 14s linear infinite; }
   .hero::before { animation: zig 6s linear infinite; } .hero::after { animation: zig 6s linear infinite reverse; }
   @keyframes zig { to { background-position: 80px 0; } }
 }
@@ -47,6 +49,7 @@ h2 { font-weight: 400; letter-spacing: .01em; }
   <div class="why"><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg><h3>5.0 ★ en Google</h3><p>Calificación basada en 101 reseñas de clientes en Google Maps.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Reserva fácil</h3><p>Agenda tu cita por WhatsApp en pocos minutos.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>En Magdalena del Mar</h3><p>Jr. San Martín 793. Fácil de encontrar.</p></div></div>
 </div></section>
 
+<div class="divisor" aria-hidden="true"></div>
 <section id="cifras"><div class="in-w">
   <div class="cifras">
     <div class="cifra rv"><b data-n="5.0" data-dec="1">5.0</b><span>de puntaje en Google ★</span></div>
@@ -55,6 +58,24 @@ h2 { font-weight: 400; letter-spacing: .01em; }
   </div>
 </div></section>
 
+<div class="divisor" aria-hidden="true"></div>
+<section id="promo"><div class="in-w">
+  <div class="promo rv">
+    <div class="promo-i"><span class="lbl">Promoción del mes</span><h3>Corte + barba</h3><p>Llévate el combo completo a precio especial durante este mes.</p><p class="promo-p">S/ 30</p></div>
+    <div class="cuenta" id="cuenta" role="timer" aria-label="Tiempo que queda de la promoción"><span><b data-u="d">--</b>días</span><span><b data-u="h">--</b>horas</span><span><b data-u="m">--</b>min</span><span><b data-u="s">--</b>seg</span></div>
+    <a class="btn" href="https://wa.me/51999119911?text=Hola%2C%20quiero%20la%20promoci%C3%B3n%3A%20Corte%20%2B%20barba" target="_blank" rel="noopener">Quiero la promo</a>
+  </div>
+  <p class="nota-ref rv">Promoción de ejemplo. Termina el último día del mes.</p>
+</div></section>
+
+<div class="divisor" aria-hidden="true"></div>
+<section id="equipo"><div class="in-w">
+  <span class="lbl rv">Equipo</span><h2 class="rv">Quién te atiende</h2>
+  <div class="eq"><article class="rv"><span class="eq-av" aria-hidden="true">M</span><h3>Mauro</h3><p class="eq-r">Maestro barbero</p><p class="eq-e">Cortes clásicos y navaja</p><a class="btn sec" href="https://wa.me/51999119911?text=Hola%2C%20quiero%20reservar%20con%20Mauro%20en%20Lapynta%20Barber%C3%ADa" target="_blank" rel="noopener">Reservar con Mauro</a></article><article class="rv"><span class="eq-av" aria-hidden="true">D</span><h3>Diego</h3><p class="eq-r">Barbero</p><p class="eq-e">Fade y degradados</p><a class="btn sec" href="https://wa.me/51999119911?text=Hola%2C%20quiero%20reservar%20con%20Diego%20en%20Lapynta%20Barber%C3%ADa" target="_blank" rel="noopener">Reservar con Diego</a></article><article class="rv"><span class="eq-av" aria-hidden="true">J</span><h3>Joaquín</h3><p class="eq-r">Barbero</p><p class="eq-e">Diseño de barba</p><a class="btn sec" href="https://wa.me/51999119911?text=Hola%2C%20quiero%20reservar%20con%20Joaqu%C3%ADn%20en%20Lapynta%20Barber%C3%ADa" target="_blank" rel="noopener">Reservar con Joaquín</a></article></div>
+  <p class="nota-ref rv">Equipo referencial.</p>
+</div></section>
+
+<div class="divisor" aria-hidden="true"></div>
 <section id="servicios"><div class="in-w">
   <span class="lbl rv">Servicios y galería</span><h2 class="rv">Lo que hacemos</h2>
   <div class="sc-row rv" style="--abierta:4.2"><article class="sc open"><button type="button" class="sc-b" id="sc-h0" aria-expanded="true" aria-controls="sc-p0"><span class="sc-n">01</span><span class="sc-t">Corte para caballeros</span></button><div class="sc-media" id="sc-p0" role="region" aria-labelledby="sc-h0"><img class="a on" src="img/s1-a.svg" alt="Ilustración referencial de Corte para caballeros" loading="lazy"><img class="b" src="img/s1-b.svg" alt="Ilustración referencial de Corte para caballeros" loading="lazy"><p class="sc-d">Cortes precisos, a tu estilo.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h1" aria-expanded="false" aria-controls="sc-p1"><span class="sc-n">02</span><span class="sc-t">Cortes</span></button><div class="sc-media" id="sc-p1" role="region" aria-labelledby="sc-h1"><img class="a on" src="img/s2-a.svg" alt="Ilustración referencial de Cortes" loading="lazy"><img class="b" src="img/s2-b.svg" alt="Ilustración referencial de Cortes" loading="lazy"><p class="sc-d">Cortes precisos, a tu estilo.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h2" aria-expanded="false" aria-controls="sc-p2"><span class="sc-n">03</span><span class="sc-t">Barba</span></button><div class="sc-media" id="sc-p2" role="region" aria-labelledby="sc-h2"><img class="a on" src="img/s3-a.svg" alt="Ilustración referencial de Barba" loading="lazy"><img class="b" src="img/s3-b.svg" alt="Ilustración referencial de Barba" loading="lazy"><p class="sc-d">Perfilado y arreglo de barba.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h3" aria-expanded="false" aria-controls="sc-p3"><span class="sc-n">04</span><span class="sc-t">Estilo</span></button><div class="sc-media" id="sc-p3" role="region" aria-labelledby="sc-h3"><img class="a on" src="img/s4-a.svg" alt="Ilustración referencial de Estilo" loading="lazy"><img class="b" src="img/s4-b.svg" alt="Ilustración referencial de Estilo" loading="lazy"><p class="sc-d">Asesoría para encontrar tu estilo.</p></div></article></div>
@@ -62,6 +83,7 @@ h2 { font-weight: 400; letter-spacing: .01em; }
 </div></section>
 
 
+<div class="divisor" aria-hidden="true"></div>
 <section id="resultado"><div class="in-w">
   <span class="lbl rv">Resultado</span><h2 class="rv">Antes y después</h2>
   <p class="rv" style="color:var(--suave);margin-top:10px">Desliza para ver la diferencia de un buen corte.</p>
@@ -74,6 +96,32 @@ h2 { font-weight: 400; letter-spacing: .01em; }
   </div>
   <p class="nota-ref rv">Ilustración referencial.</p>
 </div></section>
+
+<div class="divisor" aria-hidden="true"></div>
+<section id="calcula"><div class="in-w">
+  <span class="lbl rv">Tu cita</span><h2 class="rv">Arma tu servicio</h2>
+  <form class="calc rv" id="calc" onsubmit="return false">
+    <ul class="calc-l"><li><label><input type="checkbox" data-p="25" data-m="45" data-n="Corte para caballeros"><span class="ck" aria-hidden="true"></span><span class="nm">Corte para caballeros</span><span class="du">45 min</span><b>S/ 25</b></label></li><li><label><input type="checkbox" data-p="15" data-m="20" data-n="Barba"><span class="ck" aria-hidden="true"></span><span class="nm">Barba</span><span class="du">20 min</span><b>S/ 15</b></label></li><li><label><input type="checkbox" data-p="35" data-m="60" data-n="Corte + barba"><span class="ck" aria-hidden="true"></span><span class="nm">Corte + barba</span><span class="du">60 min</span><b>S/ 35</b></label></li><li><label><input type="checkbox" data-p="8" data-m="10" data-n="Perfilado de cejas"><span class="ck" aria-hidden="true"></span><span class="nm">Perfilado de cejas</span><span class="du">10 min</span><b>S/ 8</b></label></li></ul>
+    <div class="calc-t">
+      <div><span>Total estimado</span><b id="calcTotal">S/ 0</b></div>
+      <div><span>Duración</span><b id="calcMin">0 min</b></div>
+      <a class="btn" id="calcBtn" href="https://wa.me/51999119911?text=Hola%2C%20quiero%20reservar%20en%20Lapynta%20Barber%C3%ADa" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+    </div>
+    <p class="nota-ref">Precios y duraciones referenciales.</p>
+  </form>
+</div></section>
+
+<div class="divisor" aria-hidden="true"></div>
+<section id="fidelidad"><div class="in-w">
+  <span class="lbl rv">Fidelidad</span><h2 class="rv">Tu tarjeta de sellos</h2>
+  <div class="fid rv" id="fid" data-n="5" data-k="fid-lapynta" data-premio="Corte gratis">
+    <ol class="fid-s"><li><span>1</span></li><li><span>2</span></li><li><span>3</span></li><li><span>4</span></li><li><span>5</span></li></ol>
+    <p class="fid-t" id="fidT" aria-live="polite">Cada visita suma un sello. A la visita 5: corte gratis.</p>
+    <div class="acc"><button class="btn" type="button" id="fidBtn">Marcar una visita</button><button class="btn sec" type="button" id="fidReset">Reiniciar</button></div>
+  </div>
+  <p class="nota-ref rv">Demostración: se guarda solo en este dispositivo.</p>
+</div></section>
+<div class="divisor" aria-hidden="true"></div>
 <section id="reservar"><div class="in-w">
   <span class="lbl rv">Reservar</span><h2 class="rv">Cómo reservar</h2>
   <ol class="pasos"><li class="rv"><span class="num">1</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Escríbenos</h3><p>Envíanos un mensaje por WhatsApp.</p></li><li class="rv"><span class="num">2</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><h3>Elige tu horario</h3><p>Dinos el servicio que quieres y cuándo te viene mejor.</p></li><li class="rv"><span class="num">3</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>Ven al local</h3><p>Te esperamos en Jr. San Martín 793, Magdalena del Mar.</p></li></ol>
@@ -89,6 +137,7 @@ h2 { font-weight: 400; letter-spacing: .01em; }
 </div></section>
 
 
+<div class="divisor" aria-hidden="true"></div>
 <section id="sedes"><div class="in-w">
   <span class="lbl rv">Sedes</span><h2 class="rv">Dónde encontrarnos</h2>
   <ul class="sedes"><li class="rv">Lapynta Salón: Jr. San Martín 791, Magdalena del Mar (mismo nombre y misma cuadra)</li></ul>
@@ -96,6 +145,7 @@ h2 { font-weight: 400; letter-spacing: .01em; }
 
 
 
+<div class="divisor" aria-hidden="true"></div>
 <section id="ubicacion" class="fus"><div class="in-w">
   <span class="lbl rv">Ubicación y opiniones</span><h2 class="rv">Visítanos y mira lo que dicen</h2>
   <div class="fus-g">
@@ -108,6 +158,7 @@ h2 { font-weight: 400; letter-spacing: .01em; }
 </div>
   </div>
 </div></section>
+<div class="divisor" aria-hidden="true"></div>
 <section id="contacto" class="cont"><div class="in-w">
   <h2 class="rv">Reserva tu cita</h2>
   <p class="rv" style="color:var(--suave)">+51 999 119 911</p>

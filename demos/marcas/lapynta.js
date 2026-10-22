@@ -2,7 +2,13 @@
 const zig = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='40'%3E%3Cpath d='M0 30 20 10 40 30 60 10 80 30' fill='none' stroke='%23a93935' stroke-width='6'/%3E%3Cpath d='M0 40 20 20 40 40 60 20 80 40' fill='none' stroke='%23324b4e' stroke-width='6'/%3E%3C/svg%3E\")";
 module.exports = {
   id: "lapynta",
-  extras: true, antesDespues: true, // cifras animadas, antes y después, "abierto ahora", barra de reserva y paralaje
+  extras: true, antesDespues: true, divisor: true,
+  // Datos de ejemplo (referenciales) para la calculadora, el equipo, la promoción y la tarjeta de sellos
+  precios: [{ n: "Corte para caballeros", p: 25, m: 45 }, { n: "Barba", p: 15, m: 20 }, { n: "Corte + barba", p: 35, m: 60 }, { n: "Perfilado de cejas", p: 8, m: 10 }],
+  equipo: [{ n: "Mauro", r: "Maestro barbero", e: "Cortes clásicos y navaja" }, { n: "Diego", r: "Barbero", e: "Fade y degradados" }, { n: "Joaquín", r: "Barbero", e: "Diseño de barba" }],
+  promo: { t: "Corte + barba", d: "Llévate el combo completo a precio especial durante este mes.", precio: "S/ 30" },
+  fidelidad: { n: 5, premio: "Corte gratis" },
+  // // cifras animadas, antes y después, "abierto ahora", barra de reserva y paralaje
   // la cinta de reseñas es la opción por defecto; cinta: false la desactiva
   fuentes: ["Rye", "Josefin Sans:wght@300;400;600"],
   tema: { bg: "#ece3c6", fg: "#2a3335", acento: "#a93935", suave: "#4b5d5f", titulo: '"Rye", Georgia, serif', texto: '"Josefin Sans"', esquema: "light", radio: "4px", trazo: 1.8 },
@@ -24,10 +30,12 @@ body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-event
 .hero h1 .a { font-size: clamp(54px, 14vw, 180px); color: var(--acento); letter-spacing: .02em; }
 .hero h1 .b { font-family: "Josefin Sans", sans-serif; font-size: clamp(16px, 3vw, 32px); letter-spacing: .5em; font-weight: 600; color: #324b4e; }
 h2 { font-weight: 400; letter-spacing: .01em; }
+.divisor { background: ${zig} 0 0 / 80px 40px repeat-x; opacity: .85; }
 .sv span { font-weight: 600; }
 .val .n { color: var(--acento); font-weight: 400; }
 .marca img { box-shadow: 0 0 0 2px #324b4e; }
 @media (prefers-reduced-motion: no-preference) {
+  .divisor { animation: zig 14s linear infinite; }
   .hero::before { animation: zig 6s linear infinite; } .hero::after { animation: zig 6s linear infinite reverse; }
   @keyframes zig { to { background-position: 80px 0; } }
 }`,

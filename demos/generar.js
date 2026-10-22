@@ -85,6 +85,12 @@ function ilusCorte(t, despues) {
     '<g fill="' + pelo + '"><circle cx="177" cy="146" r="4.5"/><circle cx="223" cy="146" r="4.5"/></g><path d="M186 186q14 8 28 0" fill="none" stroke="' + pelo + '" stroke-width="3" stroke-linecap="round"/></svg>';
 }
 
+// Divisor de marca entre secciones (m.divisor): la portada ya trae el suyo.
+function conDivisores(html) {
+  let n = 0;
+  return html.replace(/<\/section>\s*(?=<section)/g, (x) => (n++ === 0 ? x : x + '<div class="divisor" aria-hidden="true"></div>\n'));
+}
+
 function pagina(d, m) {
   const wa = whatsapp(d.t, "Hola, quiero reservar en " + d.n);
   const esWa = wa.startsWith("https://wa.me");
@@ -189,6 +195,49 @@ function pagina(d, m) {
   <p class="nota-ref rv">Ilustración referencial.</p>
 </div></section>` : "";
   const barra = m.extras ? `<div class="barra-res" id="barraRes"><span class="ahora" data-ahora hidden></span><a class="btn" href="${esc(wa)}"${ext}>Reservar</a></div>` : "";
+  // Más extras opcionales de la marca: calculadora (m.precios), equipo (m.equipo), promoción (m.promo) y tarjeta de sellos (m.fidelidad).
+  const px = m.precios || [];
+  const calc = m.extras && px.length ? `
+<section id="calcula"><div class="in-w">
+  <span class="lbl rv">Tu cita</span><h2 class="rv">Arma tu servicio</h2>
+  <form class="calc rv" id="calc" onsubmit="return false">
+    <ul class="calc-l">${px.map((x) => `<li><label><input type="checkbox" data-p="${x.p}" data-m="${x.m}" data-n="${esc(x.n)}"><span class="ck" aria-hidden="true"></span><span class="nm">${esc(x.n)}</span><span class="du">${x.m} min</span><b>S/ ${x.p}</b></label></li>`).join("")}</ul>
+    <div class="calc-t">
+      <div><span>Total estimado</span><b id="calcTotal">S/ 0</b></div>
+      <div><span>Duración</span><b id="calcMin">0 min</b></div>
+      <a class="btn" id="calcBtn" href="${esc(wa)}"${ext}>Pedir por WhatsApp</a>
+    </div>
+    <p class="nota-ref">Precios y duraciones referenciales.</p>
+  </form>
+</div></section>` : "";
+  const eq = m.equipo || [];
+  const equipo = m.extras && eq.length ? `
+<section id="equipo"><div class="in-w">
+  <span class="lbl rv">Equipo</span><h2 class="rv">Quién te atiende</h2>
+  <div class="eq">${eq.map((x) => `<article class="rv"><span class="eq-av" aria-hidden="true">${esc(x.n.charAt(0))}</span><h3>${esc(x.n)}</h3><p class="eq-r">${esc(x.r)}</p><p class="eq-e">${esc(x.e)}</p><a class="btn sec" href="${esc(whatsapp(d.t, "Hola, quiero reservar con " + x.n + " en " + d.n))}"${ext}>Reservar con ${esc(x.n)}</a></article>`).join("")}</div>
+  <p class="nota-ref rv">Equipo referencial.</p>
+</div></section>` : "";
+  const pr = m.promo;
+  const promo = m.extras && pr ? `
+<section id="promo"><div class="in-w">
+  <div class="promo rv">
+    <div class="promo-i"><span class="lbl">Promoción del mes</span><h3>${esc(pr.t)}</h3><p>${esc(pr.d)}</p><p class="promo-p">${esc(pr.precio)}</p></div>
+    <div class="cuenta" id="cuenta" role="timer" aria-label="Tiempo que queda de la promoción"><span><b data-u="d">--</b>días</span><span><b data-u="h">--</b>horas</span><span><b data-u="m">--</b>min</span><span><b data-u="s">--</b>seg</span></div>
+    <a class="btn" href="${esc(whatsapp(d.t, "Hola, quiero la promoción: " + pr.t))}"${ext}>Quiero la promo</a>
+  </div>
+  <p class="nota-ref rv">Promoción de ejemplo. Termina el último día del mes.</p>
+</div></section>` : "";
+  const fd = m.fidelidad;
+  const fidel = m.extras && fd ? `
+<section id="fidelidad"><div class="in-w">
+  <span class="lbl rv">Fidelidad</span><h2 class="rv">Tu tarjeta de sellos</h2>
+  <div class="fid rv" id="fid" data-n="${fd.n}" data-k="fid-${esc(d.id)}" data-premio="${esc(fd.premio)}">
+    <ol class="fid-s">${Array.from({ length: fd.n }, (_, i) => `<li><span>${i + 1}</span></li>`).join("")}</ol>
+    <p class="fid-t" id="fidT" aria-live="polite">Cada visita suma un sello. A la visita ${fd.n}: ${esc(fd.premio.toLowerCase())}.</p>
+    <div class="acc"><button class="btn" type="button" id="fidBtn">Marcar una visita</button><button class="btn sec" type="button" id="fidReset">Reiniciar</button></div>
+  </div>
+  <p class="nota-ref rv">Demostración: se guarda solo en este dispositivo.</p>
+</div></section>` : "";
   const html = `<!doctype html>
 <html lang="es">
 <head>
@@ -222,9 +271,13 @@ ${m.efecto.css}
   <div class="why">${porque.map((p) => `<div class="rv">${icono(p[0])}<h3>${esc(p[1])}</h3><p>${esc(p[2])}</p></div>`).join("")}</div>
 </div></section>
 ${cifras}
+${promo}
+${equipo}
 ${tarjetas || servicios}
 ${tarjetas ? "" : galeria}
 ${antes}
+${calc}
+${fidel}
 <section id="reservar"><div class="in-w">
   <span class="lbl rv">Reservar</span><h2 class="rv">Cómo reservar</h2>
   <ol class="pasos">${pasos.map((p, i) => `<li class="rv"><span class="num">${i + 1}</span>${icono(p[0])}<h3>${esc(p[1])}</h3><p>${esc(p[2])}</p></li>`).join("")}</ol>
@@ -263,7 +316,7 @@ ${barra}
 </html>
 `;
   // Botones solo con ícono: el texto pasa a aria-label y title (accesibilidad y tooltip).
-  return html.replace(/<a class="([^"]*)"([^>]*)>(<svg class="ic"[\s\S]*?<\/svg>)<span>([^<]*)<\/span><\/a>/g,
+  return (m.divisor ? conDivisores(html) : html).replace(/<a class="([^"]*)"([^>]*)>(<svg class="ic"[\s\S]*?<\/svg>)<span>([^<]*)<\/span><\/a>/g,
     (m, cls, att, svg, txt) => `<a class="${cls} ico"${att} aria-label="${txt}" title="${txt}">${svg}</a>`);
 }
 

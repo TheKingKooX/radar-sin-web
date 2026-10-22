@@ -259,3 +259,55 @@
     addEventListener("pointermove", function (e) { px = (e.clientX / innerWidth - .5) * 18; plan(); }, { passive: true });
   }
 })();
+
+/* Extras 2 (opcionales): calculadora de servicios, cuenta regresiva de la promoción y tarjeta de sellos. */
+(function () {
+  var reducido = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Calculadora: suma precio y duración y arma el mensaje de WhatsApp con lo elegido.
+  var calc = document.getElementById("calc");
+  if (calc && window.CITA) {
+    var tot = document.getElementById("calcTotal"), dur = document.getElementById("calcMin"), btn = document.getElementById("calcBtn");
+    var horas = function (m) { return m >= 60 ? Math.floor(m / 60) + " h" + (m % 60 ? " " + (m % 60) + " min" : "") : m + " min"; };
+    var calcular = function () {
+      var p = 0, m = 0, n = [];
+      calc.querySelectorAll("input:checked").forEach(function (i) { p += +i.getAttribute("data-p"); m += +i.getAttribute("data-m"); n.push(i.getAttribute("data-n")); });
+      tot.textContent = "S/ " + p; dur.textContent = horas(m);
+      var msg = n.length ? "Hola, quiero reservar en " + window.CITA.n + ": " + n.join(" + ") + " (total estimado S/ " + p + ", unos " + horas(m) + "). ¿Qué horarios tienen?" : "Hola, quiero reservar en " + window.CITA.n;
+      btn.href = (window.CITA.wa.indexOf("wa.me") > -1 ? window.CITA.wa + "?text=" : window.CITA.wa + "?text=") + encodeURIComponent(msg);
+      btn.classList.toggle("vacio", !n.length);
+    };
+    calc.addEventListener("change", calcular); calcular();
+  }
+
+  // Cuenta regresiva hasta el último día del mes (hora de Lima, UTC-5 sin horario de verano).
+  var cuenta = document.getElementById("cuenta");
+  if (cuenta) {
+    var u = {}; cuenta.querySelectorAll("[data-u]").forEach(function (b) { u[b.getAttribute("data-u")] = b; });
+    var pad = function (n) { return String(n).padStart(2, "0"); };
+    var tic = function () {
+      var p = {}; new Intl.DateTimeFormat("en-US", { timeZone: "America/Lima", year: "numeric", month: "numeric" }).formatToParts(new Date()).forEach(function (x) { p[x.type] = +x.value; });
+      var fin = Date.UTC(p.year, p.month, 1, 5, 0, 0), resto = Math.max(0, Math.floor((fin - Date.now()) / 1000));
+      u.d.textContent = Math.floor(resto / 86400); u.h.textContent = pad(Math.floor(resto % 86400 / 3600)); u.m.textContent = pad(Math.floor(resto % 3600 / 60)); u.s.textContent = pad(resto % 60);
+    };
+    tic(); setInterval(tic, 1000);
+  }
+
+  // Tarjeta de sellos: guarda en este dispositivo cuántas visitas lleva.
+  var fid = document.getElementById("fid");
+  if (fid) {
+    var N = +fid.getAttribute("data-n"), K = fid.getAttribute("data-k"), premio = fid.getAttribute("data-premio"), sellos = fid.querySelectorAll(".fid-s li"), txt = document.getElementById("fidT"), boton = document.getElementById("fidBtn");
+    var cuantos = function () { try { return Math.min(N, +localStorage.getItem(K) || 0); } catch (e) { return 0; } };
+    var guardar = function (v) { try { localStorage.setItem(K, v); } catch (e) {} };
+    var pintar = function (nuevo) {
+      var k = cuantos();
+      sellos.forEach(function (li, i) { li.classList.toggle("on", i < k); li.classList.toggle("nuevo", !!nuevo && i === k - 1 && !reducido); });
+      var listo = k >= N;
+      txt.textContent = listo ? "¡Completaste la tarjeta! " + premio + " en tu próxima visita." : "Llevas " + k + " de " + N + " visitas. Te faltan " + (N - k) + " para: " + premio.toLowerCase() + ".";
+      boton.disabled = listo; fid.classList.toggle("completa", listo);
+    };
+    boton.addEventListener("click", function () { guardar(cuantos() + 1); pintar(true); });
+    document.getElementById("fidReset").addEventListener("click", function () { guardar(0); pintar(false); });
+    pintar(false);
+  }
+})();

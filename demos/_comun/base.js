@@ -174,3 +174,88 @@
   ["pointermove", "pointerdown", "wheel", "keydown", "touchstart", "scroll"].forEach(function (e) { addEventListener(e, actividad, { passive: true }); });
   actividad();
 })();
+
+/* Extras opcionales (solo si la página tiene el marcado): cifras que suben, comparador, "abierto ahora", barra de reserva y paralaje. */
+(function () {
+  var reducido = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Cifras: cuentan de cero al valor cuando entran en pantalla (el HTML ya trae el valor final).
+  var cifras = document.querySelectorAll(".cifra b[data-n]");
+  if (cifras.length && "IntersectionObserver" in window && !reducido) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        var b = e.target, fin = parseFloat(b.getAttribute("data-n")), dec = +b.getAttribute("data-dec") || 0, t0 = null;
+        (function paso(t) {
+          t0 = t0 || t; var p = Math.min((t - t0) / 1400, 1), v = fin * (1 - Math.pow(1 - p, 3));
+          b.textContent = v.toFixed(dec); if (p < 1) requestAnimationFrame(paso); else b.textContent = fin.toFixed(dec);
+        })(t0);
+      });
+    }, { threshold: .6 });
+    cifras.forEach(function (b) { b.textContent = (0).toFixed(+b.getAttribute("data-dec") || 0); io.observe(b); });
+  }
+
+  // Comparador antes y después.
+  var ba = document.querySelector(".ba");
+  if (ba) {
+    var rg = ba.querySelector("input"), fijar = function (v) { ba.style.setProperty("--p", v + "%"); };
+    var tocado = false;
+    ["pointerdown", "keydown", "touchstart"].forEach(function (ev) { rg.addEventListener(ev, function () { tocado = true; }, { passive: true }); });
+    rg.addEventListener("input", function () { fijar(rg.value); });
+    if ("IntersectionObserver" in window && !reducido) {
+      new IntersectionObserver(function (es, o) {
+        if (!es[0].isIntersecting) return; o.disconnect();
+        var t0 = null, ruta = [50, 25, 75, 50];
+        (function paso(t) {
+          t0 = t0 || t; var k = (t - t0) / 700, i = Math.min(Math.floor(k), 2), f = Math.min(k - i, 1), e = f * f * (3 - 2 * f);
+          var v = ruta[i] + (ruta[i + 1] - ruta[i]) * e; rg.value = v; fijar(v);
+          if (k < 3 && !tocado) requestAnimationFrame(paso);
+        })(t0);
+      }, { threshold: .6 }).observe(ba);
+    }
+  }
+
+  // "Abierto ahora" con la hora de Lima y el horario de la página.
+  var ahora = document.querySelectorAll("[data-ahora]");
+  if (ahora.length && window.CITA && window.CITA.h) {
+    var H = window.CITA.h, DIAS = ["dom", "lun", "mar", "mie", "jue", "vie", "sab"], NOM = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+    var min = function (hm) { var p = hm.split(":"); return +p[0] * 60 + +p[1]; };
+    var lindo = function (m) { var h = Math.floor(m / 60), mm = m % 60, s = h >= 12 ? "p. m." : "a. m."; h = h % 12 || 12; return h + (mm ? ":" + String(mm).padStart(2, "0") : "") + " " + s; };
+    var pintar = function () {
+      var p = {}; new Intl.DateTimeFormat("en-US", { timeZone: "America/Lima", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+      var dia = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(p.weekday), m = +p.hour * 60 + +p.minute, r = H[DIAS[dia]], abierto = !!r && m >= min(r[0]) && m < min(r[1]), txt;
+      if (abierto) txt = "Abierto ahora · hasta las " + lindo(min(r[1]));
+      else {
+        txt = "Cerrado";
+        for (var k = 0; k < 8; k++) {
+          var d2 = (dia + k) % 7, r2 = H[DIAS[d2]];
+          if (r2 && (k > 0 || m < min(r2[0]))) { txt += " · abre " + (k === 0 ? "hoy" : k === 1 ? "mañana" : "el " + NOM[d2]) + " a las " + lindo(min(r2[0])); break; }
+        }
+      }
+      ahora.forEach(function (e) { e.hidden = false; e.classList.toggle("abierto", abierto); e.innerHTML = '<i class="pto" aria-hidden="true"></i>' + txt; });
+    };
+    pintar(); setInterval(pintar, 60000);
+  }
+
+  // Barra de reserva en el celular: aparece al pasar la portada y se esconde cuando ya se ve la reserva.
+  var barra = document.getElementById("barraRes"), hero = document.getElementById("inicio");
+  if (barra && hero && "IntersectionObserver" in window) {
+    var fuera = false, enReserva = false, mostrar = function () { barra.classList.toggle("on", fuera && !enReserva); };
+    document.body.classList.add("con-barra");
+    new IntersectionObserver(function (es) { fuera = !es[0].isIntersecting; mostrar(); }, { threshold: .15 }).observe(hero);
+    var ver = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target._v = e.isIntersecting; }); enReserva = [].some.call(document.querySelectorAll("#reservar, #contacto"), function (n) { return n._v; }); mostrar(); }, { threshold: .2 });
+    document.querySelectorAll("#reservar, #contacto").forEach(function (n) { ver.observe(n); });
+  }
+
+  // Paralaje suave en la portada: el título baja más lento que el scroll y se mueve un poco con el puntero.
+  var par = document.querySelectorAll("[data-par]");
+  if (par.length && !reducido) {
+    var r = document.documentElement, sy = 0, px = 0, pend = false, plan = function () {
+      if (pend) return; pend = true;
+      requestAnimationFrame(function () { pend = false; r.style.setProperty("--sy", Math.min(sy, 700) + "px"); r.style.setProperty("--px", px.toFixed(1) + "px"); });
+    };
+    addEventListener("scroll", function () { sy = window.scrollY || 0; plan(); }, { passive: true });
+    addEventListener("pointermove", function (e) { px = (e.clientX / innerWidth - .5) * 18; plan(); }, { passive: true });
+  }
+})();

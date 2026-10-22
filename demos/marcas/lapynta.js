@@ -2,6 +2,7 @@
 const zig = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='40'%3E%3Cpath d='M0 30 20 10 40 30 60 10 80 30' fill='none' stroke='%23a93935' stroke-width='6'/%3E%3Cpath d='M0 40 20 20 40 40 60 20 80 40' fill='none' stroke='%23324b4e' stroke-width='6'/%3E%3C/svg%3E\")";
 module.exports = {
   id: "lapynta",
+  extras: true, antesDespues: true, // cifras animadas, antes y después, "abierto ahora", barra de reserva y paralaje
   // la cinta de reseñas es la opción por defecto; cinta: false la desactiva
   fuentes: ["Rye", "Josefin Sans:wght@300;400;600"],
   tema: { bg: "#ece3c6", fg: "#2a3335", acento: "#a93935", suave: "#4b5d5f", titulo: '"Rye", Georgia, serif', texto: '"Josefin Sans"', esquema: "light", radio: "4px", trazo: 1.8 },

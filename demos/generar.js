@@ -70,6 +70,21 @@ function logoHtml(d, m) {
   return svg.replace("<svg", `<svg role="img" aria-label="${esc(m.logoAlt)}"${vb ? ` width="${vb[1]}" height="${vb[2]}"` : ""}`);
 }
 
+// Ilustración referencial de un corte (antes o después) con los colores de la marca.
+function ilusCorte(t, despues) {
+  const pelo = "#2d2825", piel = "#d9ae8a";
+  const cabello = despues
+    ? '<path d="M139 124C139 82 168 70 200 70s61 12 61 54c-12-20-32-27-61-27s-49 7-61 27z" fill="' + pelo + '"/><ellipse cx="141" cy="140" rx="7" ry="22" fill="' + pelo + '" opacity=".22"/><ellipse cx="259" cy="140" rx="7" ry="22" fill="' + pelo + '" opacity=".22"/>'
+    : '<path d="M124 150C96 84 140 36 200 42s104 44 76 108c8-34-14-56-40-60-12 10-24 14-36 14s-24-4-36-14c-26 4-48 26-40 60z" fill="' + pelo + '"/><path d="M118 100c-12-6-14-22-2-30M284 96c12-6 16-22 4-30M170 40c-6-14 8-24 18-18M224 40c10-12 24-4 20 10" fill="none" stroke="' + pelo + '" stroke-width="9" stroke-linecap="round"/>';
+  const barba = despues
+    ? '<path d="M146 168c4 36 26 52 54 52s50-16 54-52c-10 22-28 30-54 30s-44-8-54-30z" fill="' + pelo + '" opacity=".85"/><path d="M146 168c4 36 26 52 54 52s50-16 54-52" fill="none" stroke="' + t.acento + '" stroke-width="2" opacity=".7"/>'
+    : '<path d="M142 166c2 44 28 62 58 62s56-18 58-62c-14 16-24 36-58 34-34 2-44-18-58-34z" fill="' + pelo + '" opacity=".55"/><g stroke="' + pelo + '" stroke-width="2" stroke-linecap="round" opacity=".6"><path d="M150 186l-6 6M162 204l-6 8M246 206l6 8M256 188l6 6M200 232v8"/></g>';
+  return '<svg viewBox="0 0 400 300" role="img" aria-label="' + (despues ? "Después: corte limpio y definido" : "Antes: cabello y barba sin arreglar") + '"><rect width="400" height="300" fill="' + t.acento + '" opacity=".12"/>' +
+    '<path d="M50 300c8-52 40-62 100-66h100c60 4 92 14 100 66z" fill="' + t.suave + '"/><rect x="176" y="204" width="48" height="54" rx="14" fill="' + piel + '"/>' +
+    '<ellipse cx="200" cy="148" rx="62" ry="78" fill="' + piel + '"/>' + cabello + barba +
+    '<g fill="' + pelo + '"><circle cx="177" cy="146" r="4.5"/><circle cx="223" cy="146" r="4.5"/></g><path d="M186 186q14 8 28 0" fill="none" stroke="' + pelo + '" stroke-width="3" stroke-linecap="round"/></svg>';
+}
+
 function pagina(d, m) {
   const wa = whatsapp(d.t, "Hola, quiero reservar en " + d.n);
   const esWa = wa.startsWith("https://wa.me");
@@ -150,6 +165,30 @@ function pagina(d, m) {
   <div class="sc-row rv" style="--abierta:${cards.length >= 5 ? 3 : 4.2}">${cards.map((t, k) => `<article class="sc${k === 0 ? " open" : ""}"><button type="button" class="sc-b" id="sc-h${k}" aria-expanded="${k === 0}" aria-controls="sc-p${k}"><span class="sc-n">${String(k + 1).padStart(2, "0")}</span><span class="sc-t">${esc(t.titulo)}</span></button><div class="sc-media" id="sc-p${k}" role="region" aria-labelledby="sc-h${k}">${t.img.map((f, q) => `<img class="${q === 0 ? "a on" : "b"}" src="${esc(f)}" alt="Ilustración referencial de ${esc(t.titulo)}" loading="lazy">`).join("")}<p class="sc-d">${esc(t.txt)}${t.detalle ? ` <span class="sc-p">${esc(t.detalle)}</span>` : ""}</p></div></article>`).join("")}</div>
   <p class="nota-ref rv">Ilustraciones referenciales.</p>
 </div></section>` : "";
+  // Extras opcionales (m.extras): cifras animadas, antes y después, "abierto ahora" y barra de reserva en el celular.
+  const dias = c.horario ? Object.keys(c.horario).filter((k) => c.horario[k]).length : 0;
+  const cifras = m.extras ? `
+<section id="cifras"><div class="in-w">
+  <div class="cifras">
+    <div class="cifra rv"><b data-n="${d.r.toFixed(1)}" data-dec="1">${d.r.toFixed(1)}</b><span>de puntaje en Google ★</span></div>
+    <div class="cifra rv"><b data-n="${d.c}">${d.c}</b><span>reseñas de clientes</span></div>
+    ${dias ? `<div class="cifra rv"><b data-n="${dias}">${dias}</b><span>días de atención a la semana</span></div>` : ""}
+  </div>
+</div></section>` : "";
+  const antes = m.extras && m.antesDespues ? `
+<section id="resultado"><div class="in-w">
+  <span class="lbl rv">Resultado</span><h2 class="rv">Antes y después</h2>
+  <p class="rv" style="color:var(--suave);margin-top:10px">Desliza para ver la diferencia de un buen corte.</p>
+  <div class="ba rv" style="--p:50%">
+    <div class="ba-i">${ilusCorte(t, true)}</div>
+    <div class="ba-i ba-b">${ilusCorte(t, false)}</div>
+    <span class="ba-t ba-tb">Antes</span><span class="ba-t ba-ta">Después</span>
+    <span class="ba-l" aria-hidden="true"><i></i></span>
+    <input type="range" min="0" max="100" value="50" aria-label="Comparar antes y después">
+  </div>
+  <p class="nota-ref rv">Ilustración referencial.</p>
+</div></section>` : "";
+  const barra = m.extras ? `<div class="barra-res" id="barraRes"><span class="ahora" data-ahora hidden></span><a class="btn" href="${esc(wa)}"${ext}>Reservar</a></div>` : "";
   const html = `<!doctype html>
 <html lang="es">
 <head>
@@ -172,8 +211,9 @@ ${m.efecto.css}
 </header>
 <main>
 <section id="inicio" class="hero"><div class="hero-in">
-  <h1 aria-label="${esc(d.n)}">${m.hero.titulo}</h1>
-  <p class="baja">${esc(m.hero.bajada)}</p>
+  <h1 aria-label="${esc(d.n)}"${m.extras ? ' data-par style="--kx:1;--ky:.14"' : ""}>${m.hero.titulo}</h1>
+  <p class="baja"${m.extras ? ' data-par style="--kx:.5;--ky:.07"' : ""}>${esc(m.hero.bajada)}</p>
+  ${m.extras ? '<p class="ahora" data-ahora hidden></p>' : ""}
   <div class="acc"><a class="btn" href="${esc(wa)}"${ext}>${icono(esWa ? "whatsapp" : "telefono")}<span>${esWa ? "Reservar por WhatsApp" : "Llamar para reservar"}</span></a><a class="btn sec" href="#ubicacion">${icono("pin")}<span>Cómo llegar</span></a></div>
 </div></section>
 <section id="nosotros"><div class="in-w">
@@ -181,8 +221,10 @@ ${m.efecto.css}
   <div class="about"><h2 class="rv">${esc(d.n)}</h2><p class="rv">${esc(sobre)}</p></div>
   <div class="why">${porque.map((p) => `<div class="rv">${icono(p[0])}<h3>${esc(p[1])}</h3><p>${esc(p[2])}</p></div>`).join("")}</div>
 </div></section>
+${cifras}
 ${tarjetas || servicios}
 ${tarjetas ? "" : galeria}
+${antes}
 <section id="reservar"><div class="in-w">
   <span class="lbl rv">Reservar</span><h2 class="rv">Cómo reservar</h2>
   <ol class="pasos">${pasos.map((p, i) => `<li class="rv"><span class="num">${i + 1}</span>${icono(p[0])}<h3>${esc(p[1])}</h3><p>${esc(p[2])}</p></li>`).join("")}</ol>
@@ -213,6 +255,7 @@ ${m.fusionUbicacion !== false ? fusion : m.opinionesAlFinal === false ? "" : val
 ${m.contactoAlFinal !== false ? contacto : ""}
 </main>
 <footer><span>${esc(d.n)}</span><span>${esc(d.a)}, ${esc(d.z)}</span></footer>
+${barra}
 <script>window.CITA = ${cita}; window.RESENAS = ${resenasJson};</script>
 <script src="../_comun/base.js"></script>
 <script>${m.efecto.js}</script>

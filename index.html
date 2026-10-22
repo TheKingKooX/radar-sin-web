@@ -19,13 +19,13 @@
    lista de filas, detalle en hoja (celular) o cajón (escritorio), pestañas inferiores y ruta en Google Maps. */
 :root {
   --bg: #f6f8ff; --surface: #ffffff; --surface2: #eef1fb; --fg: #0a0a0f; --muted: #5b6070; --line: #dfe3f2;
-  --accent: #4169e1; --accent-text: #2a4fc4; --on-accent: #ffffff; --glow: rgba(65, 105, 225, .18);
+  --warn: #8a5a00; --accent: #4169e1; --accent-text: #2a4fc4; --on-accent: #ffffff; --glow: rgba(65, 105, 225, .18);
   --ease: cubic-bezier(.23, 1, .32, 1); --sheet: cubic-bezier(.32, .72, 0, 1);
   --bar-h: 62px; --tabs-h: 64px;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
-  :root { --bg: #05060d; --surface: #0f1220; --surface2: #151a2e; --fg: #f4f6ff; --muted: #9aa1b8; --line: #22273d; --accent-text: #7c9bff; --glow: rgba(65, 105, 225, .3); color-scheme: dark; }
+  :root { --warn: #e0b050; --bg: #05060d; --surface: #0f1220; --surface2: #151a2e; --fg: #f4f6ff; --muted: #9aa1b8; --line: #22273d; --accent-text: #7c9bff; --glow: rgba(65, 105, 225, .3); color-scheme: dark; }
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
@@ -110,6 +110,7 @@ a { color: var(--accent-text); text-underline-offset: 3px; }
 .pill { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--accent); white-space: nowrap; }
 .pill.none { background: var(--accent); color: var(--on-accent); }
 .pill.social { color: var(--accent-text); }
+.pill.warn { border-color: var(--warn); color: var(--warn); }
 .pill.demo { border-color: var(--line); color: var(--muted); }
 .pick { position: absolute; right: 8px; top: 50%; translate: 0 -50%; width: 48px; height: 48px; display: grid; place-items: center; cursor: pointer; }
 .pick input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
@@ -334,6 +335,7 @@ textarea.tin { height: auto; padding: 10px 12px; resize: vertical; line-height: 
               <div class="xg"><label class="lbl2" for="limite">Leer como máximo (fichas; 0 = todas, útil para probar)</label><input id="limite" class="tin" type="number" min="0" max="500" value="0"></div>
               <label class="opt"><input type="checkbox" id="oConocidos"> Incluir los negocios que ya están en Mi lista</label>
               <label class="opt"><input type="checkbox" id="oReemplazar" checked> Reemplazar los resultados anteriores</label>
+              <label class="opt"><input type="checkbox" id="oVerif" checked> Buscar el nombre de cada negocio en Google para detectar webs que Maps no muestra (más lento)</label>
               <label class="opt"><input type="checkbox" id="oVer"> Mostrar la ventana del navegador mientras busca</label>
             </details>
             <p class="hint" id="plan"></p>
@@ -475,7 +477,7 @@ function fila(d, i) {
     '<button class="row-b" type="button" data-abrir="' + id + '">' + avatar(d) +
       '<span class="rt"><span class="nm">' + esc(d.n) + '</span><span class="sub">' + esc(d.k) + (d.z ? ' · ' + esc(d.z) : '') + dist + '</span>' +
       '<span class="meta">' + (d.r ? '<span class="star">★ ' + d.r.toFixed(1) + '</span>' : '') + '<span class="muted">' + d.c + ' reseñas</span><span class="pill ' + d.s + '">' + esc(d.pl || LABEL[d.s]) + '</span>' +
-      (redesDe(d).length ? '<span class="pill demo">' + esc(redesDe(d).join(" · ")) + '</span>' : '') + (d.demo ? '<span class="pill demo">Demo</span>' : '') + (modo === "exp" && esGuardado(d.id) ? '<span class="pill demo">Guardado</span>' : '') + '</span></span></button>' +
+      (redesDe(d).length ? '<span class="pill demo">' + esc(redesDe(d).join(" · ")) + '</span>' : '') + (d.demo ? '<span class="pill demo">Demo</span>' : '') + (d.pw ? '<span class="pill warn">Posible web</span>' : (d.g && d.vw === false && d.s !== "web" ? '<span class="pill demo">Sin verificar</span>' : '')) + (modo === "exp" && esGuardado(d.id) ? '<span class="pill demo">Guardado</span>' : '') + '</span></span></button>' +
     '<label class="pick" title="Añadir a la ruta"><input type="checkbox" data-pick="' + id + '"' + (ruta.indexOf(d.id) > -1 ? " checked" : "") + ' aria-label="Añadir ' + esc(d.n) + ' a la ruta"><span aria-hidden="true"></span></label>' +
     (modo === "exp" && d.g ? '<div class="row-f">' + (esGuardado(d.id) ? '<button class="btn" type="button" disabled>' + IC.save + 'En mi lista</button>' : '<button class="btn pri" type="button" data-guardar="' + id + '">' + IC.save + 'Agregar a mi lista</button>') + '</div>' : '') + '</li>';
 }
@@ -554,6 +556,13 @@ function qrSvg(text) {
 
 var PUBLICA = "https://thekingkoox.github.io/radar-sin-web/";
 function demoUrl(d) { return PUBLICA + d.demo; }
+// Resultado de buscar el nombre en Google (solo negocios de Explorar sin web propia en Maps)
+function verifHtml(d) {
+  if (d.pw) { var host = d.pw.u.replace("https://", "").replace("http://", ""); if (host.slice(-1) === "/") host = host.slice(0, -1); return '<span class="pill warn">Posible web</span> <a href="' + esc(d.pw.u) + '" target="_blank" rel="noopener">' + esc(host) + '</a><p class="muted" style="margin:6px 0 0">Coincidencia ' + esc(d.pw.c) + ': ' + esc(d.pw.m.charAt(0).toLowerCase() + d.pw.m.slice(1)) + '. Confirma que sea de este negocio antes de ofrecerle una página.</p>'; }
+  if (d.vw === true) return '<span class="muted">No se encontró una web en Google.</span>';
+  if (d.vw === false) return '<span class="muted">No se pudo verificar (Google pidió verificación). Vuelve a buscar más tarde.</span>';
+  return '<span class="muted">Sin verificar.</span>';
+}
 function fx(l, v) { return '<div><span class="lbl">' + l + '</span>' + v + '</div>'; }
 function detalle(d) {
   var id = esc(d.id), wa = movil(d.t), ig = igDe(d), tieneTel = !!String(d.t || "").replace(/\D/g, "");
@@ -577,6 +586,7 @@ function detalle(d) {
       '<div class="fx">' +
         fx("Puntaje", (d.r ? '<b class="big">' + d.r.toFixed(1) + ' ★</b> ' : '') + '<span class="muted">' + d.c + ' reseñas</span><div class="bar2"><i style="width:' + Math.min(100, Math.round(d.c / 250 * 100)) + '%"></i></div>') +
         (d.demo ? fx("Demo", '<div class="qr"><a href="' + esc(d.demo) + '" target="_blank" rel="noopener" aria-label="Abrir la demo">' + qrSvg(demoUrl(d)) + '</a><div><b>Escanea para abrir la demo</b><span class="muted">Con la cámara del celular. Se abre la página ya hecha para este negocio.</span><code>' + esc(demoUrl(d).replace("https://", "")) + '</code></div></div>') : '') +
+        (d.g && d.s !== "web" ? fx("Verificación en Google", verifHtml(d)) : '') +
         fx("Estado de web", '<span class="pill ' + d.s + '">' + esc(d.pl || LABEL[d.s]) + '</span> ' + link) +
         fx("Dirección", esc(d.a || "Ver en Google Maps") + (d.z ? ', ' + esc(d.z) : '')) +
         (tieneTel ? fx("Teléfono", '<b>' + esc(d.t) + '</b>') : '') +
@@ -746,7 +756,7 @@ var RUBQ = {
   turismo: ["hotel", "hostal", "agencia de viajes", "salón de eventos"],
   ocio: ["discoteca", "karaoke", "cine", "salón de juegos"]
 };
-var cfg = { centro: "", radio: 5, rubros: ["belleza"], consultas: "", minRes: 100, web: ["sin enlace", "solo red social", "solo reservas"], maxRub: 10, cob: 5, vel: 1800, limite: 0, conocidos: false, reemplazar: true, ver: false };
+var cfg = { centro: "", radio: 5, rubros: ["belleza"], consultas: "", minRes: 100, web: ["sin enlace", "solo red social", "solo reservas"], maxRub: 10, cob: 5, vel: 1800, limite: 0, conocidos: false, reemplazar: true, ver: false, verif: true };
 var CHIPS = { resMin: [[0, "Todas"], [50, "50+"], [100, "100+"], [250, "250+"], [500, "500+"]], webT: [["sin enlace", "Sin enlace"], ["solo red social", "Solo red social"], ["solo reservas", "Solo reservas"], ["web propia", "Web propia"]], maxRub: [[0, "Sin tope"], [5, "5"], [10, "10"], [20, "20"], [30, "30"], [50, "50"]], cobert: [[1, "Rápida"], [5, "Amplia"], [9, "Máxima"]], vel: [[1800, "Normal"], [3200, "Lenta"], [5500, "Muy lenta"]] };
 (function () { var g = leer(BU, null); if (g) Object.keys(g).forEach(function (k) { if (k in cfg) cfg[k] = g[k]; }); })();
 function guardarCfg() { poner_(BU, cfg); }
@@ -755,6 +765,8 @@ function itemDeFila(r) {
   var cl = clasificar(r[6]), it = { id: "g:" + r[9], g: true, n: r[0], r: r[1], c: r[2], k: r[3], a: r[4], z: "", t: r[5], s: cl.s, pl: cl.pl, redes: cl.redes, la: r[7], lo: r[8], m: "https://maps.google.com/?cid=" + r[9] };
   if (cl.l) { it.l = cl.l; it.lt = cl.lt; }
   if (cl.ig) it.ig = cl.ig;
+  if (r[10]) it.pw = r[10];
+  if (r[11] === true || r[11] === false) it.vw = r[11];
   if (centro) it.dist = dkm(centro, it);
   return it;
 }
@@ -771,13 +783,13 @@ function pintarChips() {
 }
 function pintarForm() {
   $("centroIn").value = cfg.centro; $("radio").value = cfg.radio; $("consultas").value = cfg.consultas || consultasDeRubros().join("\n");
-  $("limite").value = cfg.limite; $("oConocidos").checked = cfg.conocidos; $("oReemplazar").checked = cfg.reemplazar; $("oVer").checked = cfg.ver;
+  $("limite").value = cfg.limite; $("oConocidos").checked = cfg.conocidos; $("oReemplazar").checked = cfg.reemplazar; $("oVer").checked = cfg.ver; $("oVerif").checked = cfg.verif;
   pintarChips(); pintarPlan();
 }
 function pintarPlan() {
   var q = listaConsultas().length, bus = q * cfg.cob, min = Math.round(bus * 0.95);
   $("radioT").textContent = cfg.radio + " km";
-  $("plan").textContent = q ? ("Hará unas " + bus + " búsquedas en Google Maps (" + q + " × " + cfg.cob + " zonas), unos " + min + " minutos, más abrir las fichas (unos 10 segundos cada una)" + (cfg.maxRub ? ", como máximo " + cfg.maxRub + " negocios por rubro" : "") + ". Puedes detenerla cuando quieras y se guarda lo avanzado.") : "Elige al menos un rubro o escribe una búsqueda.";
+  $("plan").textContent = q ? ("Hará unas " + bus + " búsquedas en Google Maps (" + q + " × " + cfg.cob + " zonas), unos " + min + " minutos, más abrir las fichas (unos 10 segundos cada una)" + (cfg.verif ? " y, por cada negocio que cumpla, buscarlo en Google (unos 10 segundos más)" : "") + (cfg.maxRub ? ", como máximo " + cfg.maxRub + " negocios por rubro" : "") + ". Puedes detenerla cuando quieras y se guarda lo avanzado.") : "Elige al menos un rubro o escribe una búsqueda.";
   if (q && !cfg.web.length) $("plan").textContent = "Elige al menos un tipo de presencia web.";
   $("btnBuscar").disabled = !conectado || buscando || !q || !cfg.web.length || !$("centroIn").value.trim();
 }
@@ -840,7 +852,7 @@ function finDe(f) {
   $("pFill").style.width = "100%"; $("pEtapa").textContent = f.error ? "Se detuvo con un problema" : (f.resultado && f.resultado.parado ? "Búsqueda detenida" : "Búsqueda terminada");
   $("pDetalle").textContent = f.error ? f.error : (f.resultado ? f.resultado.total + " negocios guardados en " + f.resultado.archivo : "");
   $("busq").open = false;
-  if (EXP.length) poner_(UL, { centro: centro, filas: EXP.map(function (d) { return [d.n, d.r, d.c, d.k, d.a, d.t, d.l || "", d.la, d.lo, String(d.id).slice(2)]; }) });
+  if (EXP.length) poner_(UL, { centro: centro, filas: EXP.map(function (d) { return [d.n, d.r, d.c, d.k, d.a, d.t, d.l || "", d.la, d.lo, String(d.id).slice(2), d.pw || null, d.vw === undefined ? null : d.vw]; }) });
   render();
 }
 // Reparte las búsquedas escritas entre los rubros elegidos (las que no son de ningún rubro van a «extra»).
@@ -860,7 +872,7 @@ function iniciarBusqueda() {
   cfg.centro = $("centroIn").value.trim(); cfg.consultas = q.join("\n"); guardarCfg();
   if (cfg.reemplazar) { EXP = []; centro = null; }
   $("reg").textContent = ""; $("progreso").hidden = false; $("pEtapa").textContent = "Preparando…"; $("pConteo").textContent = ""; $("pDetalle").textContent = ""; $("pFill").style.width = "0%";
-  fetch(API + "/api/buscar", { method: "POST", headers: { "Content-Type": "application/json", "X-Radar": "1" }, body: JSON.stringify({ grupos: gruposDe(q), web: cfg.web, maxPorRubro: cfg.maxRub, centro: cfg.centro, radio: cfg.radio, consultas: q, minResenas: cfg.minRes, teselas: cfg.cob, pausa: cfg.vel, limite: cfg.limite, conocidos: cfg.conocidos, ver: cfg.ver }) })
+  fetch(API + "/api/buscar", { method: "POST", headers: { "Content-Type": "application/json", "X-Radar": "1" }, body: JSON.stringify({ grupos: gruposDe(q), web: cfg.web, maxPorRubro: cfg.maxRub, centro: cfg.centro, radio: cfg.radio, consultas: q, minResenas: cfg.minRes, teselas: cfg.cob, pausa: cfg.vel, limite: cfg.limite, conocidos: cfg.conocidos, ver: cfg.ver, verificarWeb: cfg.verif }) })
     .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || "No se pudo iniciar"); }); })
     .then(function () { buscando = true; $("btnParar").hidden = false; $("btnBuscar").hidden = true; $("busq").open = false; render(); })
     .catch(function (e) { $("pEtapa").textContent = "No se pudo iniciar"; $("pDetalle").textContent = e.message; });
@@ -905,6 +917,7 @@ $("explorar").addEventListener("change", function (e) {
   if (e.target.id === "oConocidos") cfg.conocidos = e.target.checked;
   if (e.target.id === "oReemplazar") cfg.reemplazar = e.target.checked;
   if (e.target.id === "oVer") cfg.ver = e.target.checked;
+  if (e.target.id === "oVerif") { cfg.verif = e.target.checked; pintarPlan(); }
   guardarCfg();
 });
 

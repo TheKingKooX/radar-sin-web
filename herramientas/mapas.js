@@ -40,6 +40,7 @@ Opciones:
   --limite 0                   Visitar como máximo N fichas (0 = todas); sirve para pruebas
   --ver                        Mostrar la ventana del navegador (por defecto se abre fuera de pantalla)
   --navegador ruta             Ejecutable de Chrome o Edge (o variable NAVEGADOR)
+  --sin-verificar              No buscar el nombre de cada negocio en Google para detectar webs que Maps no muestra
   --pausa 1800                 Pausa mínima entre páginas, en milisegundos
 
 Si Google muestra una verificación o un aviso de tráfico inusual, el programa se detiene y guarda lo avanzado:
@@ -61,6 +62,7 @@ function leerArgs() {
     else if (k === "--limite") o.limite = parseInt(v(), 10);
     else if (k === "--max-por-rubro") o.maxPorRubro = parseInt(v(), 10);
     else if (k === "--web") o.web = v();
+    else if (k === "--sin-verificar") o.verificarWeb = false;
     else if (k === "--pausa") o.pausa = parseInt(v(), 10);
     else if (k === "--navegador") o.navegador = v();
     else if (k === "--app") o.app = true;
@@ -221,10 +223,10 @@ async function verificar(p, o, etapa) {
 }
 
 /* ---------- Programa principal ---------- */
-function filaDe(x, f) {
+function filaDe(x, f, pw, verificado) {
   const partes = x.det.split("·").map((s) => s.trim()), cat = partes[0] || "";
   const dir = (f.dir || "").replace(/,?\s*(San Miguel|Magdalena del Mar|Jesús María|Pueblo Libre|Lima|San Isidro|Callao|Breña|Lince)\b.*$/i, "").trim() || partes.slice(1).join(", ");
-  return [x.n, x.r, x.c, cat, dir, f.tel || "", f.web ? limpiarUrl(f.web) : "", +x.la.toFixed(6), +x.lo.toFixed(6), x.cid];
+  return [x.n, x.r, x.c, cat, dir, f.tel || "", f.web ? limpiarUrl(f.web) : "", +x.la.toFixed(6), +x.lo.toFixed(6), x.cid, pw || null, verificado === undefined ? null : verificado];
 }
 
 // Valida y completa las opciones (la usa el servidor del buscador de la app)
@@ -243,11 +245,66 @@ function completar(raw) {
   const c = [...new Set(grupos.flatMap((g) => g.consultas))].slice(0, 60);
   if (!c.length || !grupos[0].consultas.length) throw new Error("Elige al menos un rubro o escribe una búsqueda.");
   o.consultas = c; o.grupos = grupos;
+  o.verificarWeb = raw.verificarWeb !== false;
   o.maxPorRubro = Math.max(0, parseInt(o.maxPorRubro, 10) || 0);
   const w = lista(o.web).map((s) => s.toLowerCase()).filter((s) => TIPOS_WEB.includes(s));
   if (o.web !== undefined && !w.length) throw new Error("Elige al menos un tipo de presencia web.");
   o.web = w.length ? w : TIPOS_WEB.slice();
   return o;
+}
+
+/* ---------- Verificación en Google: ¿el negocio tiene una web que Maps no muestra? ---------- */
+// Se ejecuta dentro de la página de resultados de Google: devuelve los resultados orgánicos y el sitio oficial del panel, si hay.
+function paginaBusqueda() {
+  const items = [], vistos = new Set();
+  // Google enlaza con /goto?url=… (redirección); la dirección real es la que muestra el <cite> bajo el título.
+  document.querySelectorAll("#search a, #rso a").forEach((a) => {
+    const h3 = a.querySelector("h3"); if (!h3) return;
+    const cite = a.querySelector("cite"), ct = cite ? cite.textContent.trim() : "";
+    let u = /^https?:\/\//.test(ct) ? ct.split(/\s›|\s…/)[0].trim() : (/^https?:/.test(a.href) && !/(^|\.)google\./.test(new URL(a.href).hostname) ? a.href : "");
+    if (!u || vistos.has(u)) return;
+    vistos.add(u);
+    const cont = a.closest("div.MjjYud, div.g, div[data-hveid]") || a.parentElement;
+    items.push({ u, t: h3.textContent.trim(), s: ((cont && cont.innerText) || "").slice(0, 500) });
+  });
+  // Botón «Sitio web» del panel del negocio (si Google lo muestra)
+  const pan = [...document.querySelectorAll("a")].find((a) => /^(sitio web|website)$/i.test((a.innerText || "").trim()) && /^https?:/.test(a.href) && !/(^|\.)google\./.test(new URL(a.href).hostname));
+  return { ok: !!document.querySelector("#search, #rso, #main"), hayResultados: items.length > 0, items: items.slice(0, 10), panel: pan ? pan.href : null, texto: (document.body.innerText || "").slice(0, 700) };
+}
+
+const normTxt = (s) => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
+const GENERICAS = new Set("barberia barberias barber barbershop barbero barberos shop salon salones spa peluqueria estetica studio estudio centro club de la el los las del y en for men mens by premium clasico clasica belleza unisex nails unas lima peru store sede".split(" "));
+const DIRECTORIOS = [...Object.keys(REDES), ...AGREG, ...RESERVAS, "google.com", "tripadvisor.com", "tripadvisor.pe", "yelp.com", "paginasamarillas.com.pe", "foursquare.com", "waze.com", "wikipedia.org", "linkedin.com", "pinterest.com", "mercadolibre.com.pe", "olx.pe", "cybo.com", "infoisinfo.com.pe", "cylex.com.pe", "booking.com", "rappi.pe", "pedidosya.com.pe", "glovoapp.com", "twitter.com", "x.com", "threads.net", "bing.com", "yahoo.com", "duckduckgo.com", "apple.com", "yellowpages.com", "guialocal.pe", "dateas.com", "bestbarbershops.com", "fresha.com"];
+
+// Palabras propias del nombre (sin «barbería», «salón», etc.)
+function palabrasDeNombre(nombre) {
+  const base = String(nombre).split(/\s[-–|·]\s|\(/)[0];
+  return normTxt(base).split(" ").filter((w) => w.length > 1 && !GENERICAS.has(w));
+}
+
+// Decide si algún resultado de Google parece la web del negocio. Devuelve { u, c: "alta"|"media", m } o null.
+function elegirWeb(x, d, r) {
+  const palabras = palabrasDeNombre(x.n);
+  if (!palabras.length) return null;
+  const tel = String(d.tel || "").replace(/\D/g, "").slice(-8), calle = normTxt(String(d.dir || "").replace(/^(av|avenida|jr|jiron|calle|ca|psje|pasaje)\.?\s+/i, "")).split(" ").slice(0, 2).join(" ");
+  const origen = (u) => { try { const x2 = new URL(u); return x2.origin + "/"; } catch (e) { return u; } };
+  const hostDe = (u) => { try { return new URL(u).hostname.toLowerCase().replace(/^www\./, ""); } catch (e) { return ""; } };
+  if (r.panel && !coincide(hostDe(r.panel), DIRECTORIOS)) return { u: origen(r.panel), c: "alta", m: "Sitio oficial que muestra Google" };
+  let mejor = null;
+  for (const it of r.items) {
+    const host = hostDe(it.u); if (!host || coincide(host, DIRECTORIOS)) continue;
+    const compacto = host.replace(/\.(com|net|org|pe|co|info|site|online|shop|store|app|lat|studio|biz)(\.[a-z]{2})?$/, "").replace(/[^a-z0-9]/g, "");
+    const texto = normTxt(it.t + " " + it.s), digitos = (it.t + " " + it.s).replace(/\D/g, "");
+    let puntos = 0, local = false; const motivos = [];
+    if (palabras.every((w) => compacto.includes(w))) { puntos += 3; motivos.push("el dominio lleva el nombre"); }
+    if (palabras.every((w) => texto.includes(w))) { puntos += 2; motivos.push("el título o texto lleva el nombre"); }
+    if (tel.length >= 8 && digitos.includes(tel)) { puntos += 3; motivos.push("aparece su teléfono"); local = true; }
+    if (calle && calle.length > 3 && texto.includes(calle)) { puntos += 2; motivos.push("aparece su dirección"); local = true; }
+    if (/\.pe$/.test(host) || /\b(lima|peru)\b/.test(texto)) { puntos += 1; local = true; motivos.push("es de Perú"); }
+    // Sin ninguna señal de que sea el mismo negocio (Perú, teléfono o dirección) se descarta: puede ser un homónimo de otro país.
+    if (puntos >= 4 && local && (!mejor || puntos > mejor.puntos)) mejor = { puntos, u: origen(it.u), c: puntos >= 6 ? "alta" : "media", m: motivos.join(", ") };
+  }
+  return mejor ? { u: mejor.u, c: mejor.c, m: mejor.m.charAt(0).toUpperCase() + mejor.m.slice(1) } : null;
 }
 
 async function ejecutar(o, hooks = {}) {
@@ -256,6 +313,9 @@ async function ejecutar(o, hooks = {}) {
   const archivoFichas = path.join(cache, "fichas.json");
   const fichas = fs.existsSync(archivoFichas) ? JSON.parse(fs.readFileSync(archivoFichas, "utf8")) : {};
   const guardarFichas = () => fs.writeFileSync(archivoFichas, JSON.stringify(fichas));
+  const archivoVerif = path.join(cache, "verificacion-web.json");
+  const verif = fs.existsSync(archivoVerif) ? JSON.parse(fs.readFileSync(archivoVerif, "utf8")) : {};
+  let verifActiva = o.verificarWeb;
   const { pagina: p, cerrar } = await abrirNavegador(o);
   let centro = null, parado = false;
   const nombreCentro = o.centro;
@@ -331,7 +391,28 @@ async function ejecutar(o, hooks = {}) {
           fichas[x.cid] = d; guardarFichas();
           h.log(pre + (d.ok ? tipoWeb(d.web) : "sin datos"));
         }
-        if (d.ok && o.web.includes(tipoWeb(d.web))) { const fila = filaDe(x, d); negocios.push(fila); n++; h.fila(fila); }
+        if (d.ok && o.web.includes(tipoWeb(d.web))) {
+          let pw = null, verificado = null; // verificado: true = se buscó en Google, false = no se pudo, null = no corresponde
+          // Maps no muestra una web propia: se busca el nombre en Google por si existe una que Maps no enlaza.
+          if (verifActiva && tipoWeb(d.web) !== "web propia") {
+            const vc = verif[x.cid];
+            if (vc && Date.now() - vc.t < 14 * 864e5) { pw = vc.pw; verificado = true; h.log("   verificación en Google: " + (pw ? "posible web " + pw.u + " (cache)" : "sin web (cache)")); }
+            else {
+              try {
+                const nombre = String(x.n).split(/\s[-–|·]\s|\(/)[0].trim();
+                const url = "https://www.google.com/search?q=" + encodeURIComponent('"' + nombre + '" Lima') + "&hl=es&gl=pe&num=10";
+                await p.ir(url); await verificar(p, o, "verificación web");
+                const r = await p.evaluar("(" + paginaBusqueda + ")()");
+                if (BLOQUEO.test(r.texto || "")) throw new Error("Google mostró una verificación de tráfico (verificación web).");
+                if (!r.hayResultados && !r.panel) h.log("   verificación en Google: la página no trajo resultados; no se pudo verificar", verificado = false);
+                else { verificado = true; pw = elegirWeb(x, d, r); verif[x.cid] = { pw, t: Date.now() }; fs.writeFileSync(archivoVerif, JSON.stringify(verif)); h.log("   verificación en Google: " + (pw ? "POSIBLE WEB " + pw.u + " (coincidencia " + pw.c + ": " + pw.m + ")" : "no se encontró una web")); }
+                await dormir(Math.max(o.pausa, 7000) + azar(0, 5000)); // Google Search es más sensible que Maps: ritmo lento a propósito
+              } catch (e) { verifActiva = false; verificado = false; h.log("   " + e.message + " Se omite la verificación en Google para el resto; los negocios siguen guardándose."); }
+            }
+          }
+          if (o.verificarWeb && tipoWeb(d.web) !== "web propia" && verificado === null) verificado = false;
+          const fila = filaDe(x, d, pw, verificado); negocios.push(fila); n++; h.fila(fila);
+        }
         else if (d.ok) h.log("   descartado por el filtro de web (" + tipoWeb(d.web) + ")");
         if (!enCache) await dormir(o.pausa + azar(0, 900));
       }
@@ -348,6 +429,7 @@ async function ejecutar(o, hooks = {}) {
     negocios.forEach((n) => { cuenta[tipoWeb(n[6])]++; });
     h.log((parado ? "Detenido: " : "Listo: ") + negocios.length + " negocios → " + path.relative(RAIZ, salida));
     h.log(Object.entries(cuenta).map(([k, v]) => k + ": " + v).join(" · "));
+    if (o.verificarWeb) h.log("posible web encontrada en Google: " + negocios.filter((n) => n[10]).length + " de " + negocios.length);
 
     if (o.app) {
       const idx = path.join(RAIZ, "index.html"); let html = fs.readFileSync(idx, "utf8");
@@ -363,7 +445,7 @@ async function ejecutar(o, hooks = {}) {
   } finally { await cerrar(); }
 }
 
-module.exports = { ejecutar, completar, RUBROS, tipoWeb, buscarNavegador };
+module.exports = { ejecutar, completar, RUBROS, tipoWeb, buscarNavegador, elegirWeb, palabrasDeNombre };
 
 if (require.main === module) {
   const o = leerArgs();

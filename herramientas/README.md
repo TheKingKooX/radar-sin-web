@@ -24,6 +24,7 @@ node herramientas/mapas.js --centro "Av. La Mar 2591, San Miguel" --radio 5 --ru
 - `--app` deja los resultados cargados en Explorar (`index.html`). Sin esto solo se escribe el archivo `zona-<centro>.json`.
 - `--web "sin enlace,solo red social"` guarda solo negocios con esa presencia web (opciones: sin enlace, solo red social, solo reservas, web propia; por defecto todas).
 - `--max-por-rubro 10` deja de abrir fichas de un rubro al reunir 10 negocios que cumplen el filtro (0 = sin tope).
+- `--sin-verificar` desactiva la verificación en Google (ver abajo).
 - `--limite 5` abre solo 5 fichas, para probar.
 - `--ver` muestra la ventana del navegador (por defecto se abre fuera de pantalla).
 - `--incluir-conocidos` también trae los que ya están en `datos.json`.
@@ -43,6 +44,12 @@ node herramientas/mapas.js --centro "-12.1219,-77.0297" --radio 2 --consultas "g
 4. Abre la ficha de cada negocio que queda y lee el enlace web, el teléfono y la dirección.
 5. Clasifica la web: **sin enlace**, **solo red social** (incluye Linktree y similares), **solo reservas** o **web propia**.
 6. Guarda el archivo y, con `--app`, actualiza Explorar.
+
+## Verificación en Google
+
+Maps a veces no muestra la web de un negocio que sí la tiene. Por cada negocio que cumple el filtro y no tiene web propia en Maps, el buscador busca su nombre en Google y revisa los resultados y el botón «Sitio web» del panel. Si encuentra una página que parece suya (el dominio o el título lleva el nombre y hay señales de que es de Perú, su teléfono o su dirección), la guarda como **posible web** con su dirección, el nivel de coincidencia (alta o media) y el motivo. Se descartan redes sociales, directorios y plataformas de reservas. Siempre conviene confirmarla a mano.
+
+Google Search es más sensible que Maps: se hace una búsqueda por negocio, con pausas de 7 a 12 segundos. Si Google pide verificación, el programa no la salta: omite la verificación del resto, sigue guardando los negocios y los marca como «Sin verificar». Los resultados verificados se guardan 14 días en `.cache-mapas/verificacion-web.json`.
 
 ## Cuánto tarda
 

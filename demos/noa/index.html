@@ -3,177 +3,167 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NOA Salón</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&display=swap">
-<link rel="stylesheet" href="../_comun/base.css">
-<style>
-:root { --bg: #0b0a08; --fg: #f4ead8; --acento: #cb964a; --suave: #a89a85; --f-titulo: "Jost"; --f-texto: "Jost"; --radio: 0; --trazo: 1.2; color-scheme: dark; }
-/* Fondo: luces doradas que derivan despacio y un brillo que sigue al cursor */
-body::before { content: ""; position: fixed; inset: -15%; z-index: -1; pointer-events: none;
-  background: radial-gradient(36% 36% at 18% 28%, rgba(203, 150, 74, .16), transparent 70%), radial-gradient(32% 32% at 82% 72%, rgba(172, 120, 53, .14), transparent 70%), radial-gradient(26% 26% at 64% 14%, rgba(203, 150, 74, .08), transparent 70%); }
-body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 30%), rgba(203, 150, 74, .13), transparent 70%); }
-@media (prefers-reduced-motion: no-preference) { body::before { animation: oro 24s ease-in-out infinite alternate; } @keyframes oro { to { transform: translate3d(5%, -4%, 0) scale(1.12); } } }
-.btn, .cta { text-transform: uppercase; letter-spacing: .22em; font-size: 12px; font-weight: 500; color: #0b0a08; }
-.hero h1 { display: grid; gap: 14px; font-weight: 200; line-height: 1; }
-.hero h1 .a { font-size: clamp(88px, 22vw, 280px); letter-spacing: .18em; margin-right: -.18em; color: var(--acento); }
-.hero h1 .b { font-size: clamp(14px, 2.4vw, 26px); letter-spacing: .9em; font-weight: 300; color: var(--fg); }
-.hero-in::after { content: ""; display: block; height: 1px; width: min(100%, 520px); background: var(--acento); transform-origin: left; opacity: .7; order: 3; }
-.hero .baja { letter-spacing: .08em; font-weight: 300; }
-.sv span { font-weight: 400; letter-spacing: .04em; }
-.val .n { font-weight: 200; color: var(--acento); }
-@media (prefers-reduced-motion: no-preference) {
-  .hero-in::after { animation: linea 1.8s .3s cubic-bezier(.2, .7, .2, 1) both; }
-  @keyframes linea { from { transform: scaleX(0); } }
-  .hero h1 .a { animation: ent 1.4s cubic-bezier(.2, .7, .2, 1) both; }
-  .hero h1 .b { animation: ent 1.4s .3s cubic-bezier(.2, .7, .2, 1) both; }
-  @keyframes ent { from { opacity: 0; letter-spacing: .5em; } }
-}
-</style>
-<noscript><style>.rv { opacity: 1 !important; transform: none !important; }</style></noscript>
+<title>NOA Salón · Peluquería en Magdalena del Mar</title>
+<meta name="description" content="NOA Salón en Magdalena del Mar, Lima: color con asesoría, corte, tratamientos, maquillaje y cambio de look. 4,5 en Google con 160 reseñas. Demo referencial.">
+<meta name="theme-color" content="#f5efe4">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20261024">
+<script>document.documentElement.classList.add("js")</script>
 </head>
-<body class="anim">
-<header class="top">
-  <a class="marca" href="#inicio"><svg role="img" aria-label="Logo de NOA Salón" width="220" height="120" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 120" font-family="Jost, Arial, sans-serif">
-  <rect width="220" height="120" fill="#010000"/>
-  <text x="110" y="68" text-anchor="middle" font-size="52" font-weight="300" letter-spacing="14" fill="#cb964a">NOA</text>
-  <text x="110" y="96" text-anchor="middle" font-size="11" font-weight="400" letter-spacing="9" fill="#ac7835">SALON</text>
-</svg></a>
-  <nav><a href="#servicios">Servicios</a><a href="#ubicacion">Ubicación</a><a href="#contacto">Contacto</a><a class="cta ico" href="https://wa.me/51994602534?text=Hola%2C%20quiero%20reservar%20en%20NOA%20Sal%C3%B3n" target="_blank" rel="noopener" aria-label="Reservar" title="Reservar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a></nav>
+<body>
+
+<div class="prog" id="prog" aria-hidden="true"></div>
+<div class="ring" id="ring" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <a class="logo" href="#inicio" aria-label="NOA Salón, inicio"><b>NOA</b><span>SALON</span></a>
+  <button class="burger" id="burger" type="button" aria-label="Abrir el menú" aria-expanded="false" aria-controls="links"><span></span><span></span></button>
+  <ul class="links" id="links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#salon">El salón</a></li>
+    <li><a href="#opiniones">Opiniones</a></li>
+    <li><a href="#locales">Locales</a></li>
+    <li><a class="btn sm" href="#reserva">Reservar</a></li>
+  </ul>
 </header>
+
 <main>
-<section id="inicio" class="hero"><div class="hero-in">
-  <h1 aria-label="NOA Salón" data-par style="--kx:1;--ky:.14"><span class="a">NOA</span><span class="b">SALON</span></h1>
-  <p class="baja" data-par style="--kx:.5;--ky:.07">Peluquería y belleza en Magdalena del Mar.</p>
-  <p class="ahora" data-ahora hidden></p>
-  <div class="acc"><a class="btn ico" href="https://wa.me/51994602534?text=Hola%2C%20quiero%20reservar%20en%20NOA%20Sal%C3%B3n" target="_blank" rel="noopener" aria-label="Reservar por WhatsApp" title="Reservar por WhatsApp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a><a class="btn sec ico" href="#ubicacion" aria-label="Cómo llegar" title="Cómo llegar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></a></div>
-</div></section>
-<section id="nosotros"><div class="in-w">
-  <span class="lbl rv">Nosotros</span>
-  <div class="about"><h2 class="rv">NOA Salón</h2><p class="rv">NOA Salón es un salón en Magdalena del Mar, con 4.5 de puntaje y 160 reseñas en Google. Ofrece peluquería y belleza y cuidado personal. Reserva tu cita y ven a conocernos.</p></div>
-  <div class="why"><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg><h3>4.5 ★ en Google</h3><p>Calificación basada en 160 reseñas de clientes en Google Maps.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Reserva fácil</h3><p>Agenda tu cita por WhatsApp en pocos minutos.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>En Magdalena del Mar</h3><p>Jr. Castilla 810. Fácil de encontrar.</p></div></div>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="cifras"><div class="in-w">
-  <div class="cifras">
-    <div class="cifra rv"><b data-n="4.5" data-dec="1">4.5</b><span>de puntaje en Google ★</span></div>
-    <div class="cifra rv"><b data-n="160">160</b><span>reseñas de clientes</span></div>
-    <div class="cifra rv"><b data-n="7">7</b><span>días de atención a la semana</span></div>
-  </div>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="promo"><div class="in-w">
-  <div class="promo rv">
-    <div class="promo-i"><span class="lbl">Promoción del mes</span><h3>Corte + tratamiento</h3><p>Cuida tu cabello con un precio especial durante este mes.</p><p class="promo-p">S/ 70</p></div>
-    <div class="cuenta" id="cuenta" role="timer" aria-label="Tiempo que queda de la promoción"><span><b data-u="d">--</b>días</span><span><b data-u="h">--</b>horas</span><span><b data-u="m">--</b>min</span><span><b data-u="s">--</b>seg</span></div>
-    <a class="btn" href="https://wa.me/51994602534?text=Hola%2C%20quiero%20la%20promoci%C3%B3n%3A%20Corte%20%2B%20tratamiento" target="_blank" rel="noopener">Quiero la promo</a>
-  </div>
-  <p class="nota-ref rv">Promoción de ejemplo. Termina el último día del mes.</p>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="equipo"><div class="in-w">
-  <span class="lbl rv">Equipo</span><h2 class="rv">Quién te atiende</h2>
-  <div class="eq"><article class="rv"><span class="eq-av" aria-hidden="true">A</span><h3>Andrea</h3><p class="eq-r">Estilista</p><p class="eq-e">Corte y peinado</p><a class="btn sec" href="https://wa.me/51994602534?text=Hola%2C%20quiero%20reservar%20con%20Andrea%20en%20NOA%20Sal%C3%B3n" target="_blank" rel="noopener">Reservar con Andrea</a></article><article class="rv"><span class="eq-av" aria-hidden="true">C</span><h3>Carla</h3><p class="eq-r">Colorista</p><p class="eq-e">Tinte y mechas</p><a class="btn sec" href="https://wa.me/51994602534?text=Hola%2C%20quiero%20reservar%20con%20Carla%20en%20NOA%20Sal%C3%B3n" target="_blank" rel="noopener">Reservar con Carla</a></article><article class="rv"><span class="eq-av" aria-hidden="true">C</span><h3>Camila</h3><p class="eq-r">Especialista capilar</p><p class="eq-e">Tratamientos</p><a class="btn sec" href="https://wa.me/51994602534?text=Hola%2C%20quiero%20reservar%20con%20Camila%20en%20NOA%20Sal%C3%B3n" target="_blank" rel="noopener">Reservar con Camila</a></article></div>
-  <p class="nota-ref rv">Equipo referencial.</p>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="servicios"><div class="in-w">
-  <span class="lbl rv">Servicios y galería</span><h2 class="rv">Lo que hacemos</h2>
-  <div class="sc-row rv" style="--abierta:3"><article class="sc open"><button type="button" class="sc-b" id="sc-h0" aria-expanded="true" aria-controls="sc-p0"><span class="sc-n">01</span><span class="sc-t">Peluquería</span></button><div class="sc-media" id="sc-p0" role="region" aria-labelledby="sc-h0"><img class="a on" src="img/s1-a.svg" alt="Ilustración referencial de Peluquería" loading="lazy"><img class="b" src="img/s1-b.svg" alt="Ilustración referencial de Peluquería" loading="lazy"><p class="sc-d">Cortes precisos, a tu estilo.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h1" aria-expanded="false" aria-controls="sc-p1"><span class="sc-n">02</span><span class="sc-t">Belleza y cuidado personal</span></button><div class="sc-media" id="sc-p1" role="region" aria-labelledby="sc-h1"><img class="a on" src="img/s2-a.svg" alt="Ilustración referencial de Belleza y cuidado personal" loading="lazy"><img class="b" src="img/s2-b.svg" alt="Ilustración referencial de Belleza y cuidado personal" loading="lazy"><p class="sc-d">Belleza y cuidado personal.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h2" aria-expanded="false" aria-controls="sc-p2"><span class="sc-n">03</span><span class="sc-t">Cabello</span></button><div class="sc-media" id="sc-p2" role="region" aria-labelledby="sc-h2"><img class="a on" src="img/s3-a.svg" alt="Ilustración referencial de Cabello" loading="lazy"><img class="b" src="img/s3-b.svg" alt="Ilustración referencial de Cabello" loading="lazy"><p class="sc-d">Cortes precisos, a tu estilo.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h3" aria-expanded="false" aria-controls="sc-p3"><span class="sc-n">04</span><span class="sc-t">Color</span></button><div class="sc-media" id="sc-p3" role="region" aria-labelledby="sc-h3"><img class="a on" src="img/s4-a.svg" alt="Ilustración referencial de Color" loading="lazy"><img class="b" src="img/s4-b.svg" alt="Ilustración referencial de Color" loading="lazy"><p class="sc-d">Color, mechas y degradados a tu medida.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h4" aria-expanded="false" aria-controls="sc-p4"><span class="sc-n">05</span><span class="sc-t">Tratamientos</span></button><div class="sc-media" id="sc-p4" role="region" aria-labelledby="sc-h4"><img class="a on" src="img/s5-a.svg" alt="Ilustración referencial de Tratamientos" loading="lazy"><img class="b" src="img/s5-b.svg" alt="Ilustración referencial de Tratamientos" loading="lazy"><p class="sc-d">Cuidado para devolver brillo y cuerpo.</p></div></article></div>
-  <p class="nota-ref rv">Ilustraciones referenciales.</p>
-</div></section>
-
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="resultado"><div class="in-w">
-  <span class="lbl rv">Resultado</span><h2 class="rv">Antes y después</h2>
-  <p class="rv" style="color:var(--suave);margin-top:10px">Desliza para ver la diferencia de un buen servicio.</p>
-  <div class="ba rv" style="--p:50%">
-    <div class="ba-i"><svg viewBox="0 0 400 300" role="img" aria-label="Después: cabello liso, suave y con brillo"><rect width="400" height="300" fill="#cb964a" opacity=".12"/><path d="M122 120C100 170 110 235 92 285h216c-18-50-8-115-30-165 2-58-40-80-78-80s-80 22-78 80z" fill="#3b2a23"/><path d="M150 70c-22 50-14 120-30 205" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".22"/><path d="M50 300c8-52 40-62 100-66h100c60 4 92 14 100 66z" fill="#a89a85"/><rect x="176" y="204" width="48" height="54" rx="14" fill="#e0b896"/><ellipse cx="200" cy="150" rx="58" ry="74" fill="#e0b896"/><path d="M138 112C146 74 178 64 206 66c30 2 52 18 56 50-22-26-60-34-124-4z" fill="#3b2a23"/><g fill="#3b2a23"><circle cx="178" cy="150" r="4.5"/><circle cx="222" cy="150" r="4.5"/></g><path d="M184 188q16 10 32 0" fill="none" stroke="#cb964a" stroke-width="4" stroke-linecap="round"/></svg></div>
-    <div class="ba-i ba-b"><svg viewBox="0 0 400 300" role="img" aria-label="Antes: cabello opaco y sin forma"><rect width="400" height="300" fill="#cb964a" opacity=".12"/><path d="M118 120C86 150 96 215 62 282l14 6h248l12-8c-30-60-18-130-52-160 4-54-44-86-82-86s-84 30-82 86z" fill="#3b2a23"/><path d="M96 168c-10 14-8 30-16 44M306 172c8 14 10 28 20 40M110 250c-6 8-8 16-14 24M296 252c6 8 10 16 16 24M150 44c-4-10 6-18 14-12M236 42c6-10 18-4 14 8" fill="none" stroke="#3b2a23" stroke-width="7" stroke-linecap="round"/><path d="M50 300c8-52 40-62 100-66h100c60 4 92 14 100 66z" fill="#a89a85"/><rect x="176" y="204" width="48" height="54" rx="14" fill="#e0b896"/><ellipse cx="200" cy="150" rx="58" ry="74" fill="#e0b896"/><path d="M136 116c-4-30 14-54 40-58-8 8-6 22 6 30 4-14 18-22 32-22-6 10-2 22 10 26 8-10 22-12 34-6-2 12 2 22 8 28-34-30-92-28-130 2z" fill="#3b2a23"/><g fill="#3b2a23"><circle cx="178" cy="150" r="4.5"/><circle cx="222" cy="150" r="4.5"/></g><path d="M184 188q16 10 32 0" fill="none" stroke="#cb964a" stroke-width="4" stroke-linecap="round"/></svg></div>
-    <span class="ba-t ba-tb">Antes</span><span class="ba-t ba-ta">Después</span>
-    <span class="ba-l" aria-hidden="true"><i></i></span>
-    <input type="range" min="0" max="100" value="50" aria-label="Comparar antes y después">
-  </div>
-  <p class="nota-ref rv">Ilustración referencial.</p>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="calcula"><div class="in-w">
-  <span class="lbl rv">Tu cita</span><h2 class="rv">Arma tu servicio</h2>
-  <form class="calc rv" id="calc" onsubmit="return false">
-    <ul class="calc-l"><li><label><input type="checkbox" data-p="25" data-m="45" data-n="Corte de cabello"><span class="ck" aria-hidden="true"></span><span class="nm">Corte de cabello</span><span class="du">45 min</span><b>S/ 25</b></label></li><li><label><input type="checkbox" data-p="35" data-m="40" data-n="Peinado"><span class="ck" aria-hidden="true"></span><span class="nm">Peinado</span><span class="du">40 min</span><b>S/ 35</b></label></li><li><label><input type="checkbox" data-p="90" data-m="120" data-n="Tinte"><span class="ck" aria-hidden="true"></span><span class="nm">Tinte</span><span class="du">120 min</span><b>S/ 90</b></label></li><li><label><input type="checkbox" data-p="70" data-m="60" data-n="Tratamiento capilar"><span class="ck" aria-hidden="true"></span><span class="nm">Tratamiento capilar</span><span class="du">60 min</span><b>S/ 70</b></label></li></ul>
-    <div class="calc-t">
-      <div><span>Total estimado</span><b id="calcTotal">S/ 0</b></div>
-      <div><span>Duración</span><b id="calcMin">0 min</b></div>
-      <a class="btn" id="calcBtn" href="https://wa.me/51994602534?text=Hola%2C%20quiero%20reservar%20en%20NOA%20Sal%C3%B3n" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+<section class="hero" id="inicio">
+  <div class="hero-t">
+    <p class="kicker">Peluquería · Magdalena del Mar</p>
+    <h1>Color, corte y cuidado, <em>con asesoría.</em></h1>
+    <p class="lede">En NOA te recomiendan lo que va con tu cabello y con tu estilo. Dos locales en Magdalena del Mar y más de 13 años de oficio.</p>
+    <div class="hero-cta">
+      <a class="btn" href="#reserva">Elegir mi hora</a>
+      <a class="btn ghost" href="#servicios">Ver servicios</a>
     </div>
-    <p class="nota-ref">Precios y duraciones referenciales.</p>
-  </form>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="fidelidad"><div class="in-w">
-  <span class="lbl rv">Fidelidad</span><h2 class="rv">Tu tarjeta de sellos</h2>
-  <div class="fid rv" id="fid" data-n="5" data-k="fid-noa" data-premio="Servicio de cortesía">
-    <ol class="fid-s"><li><span>1</span></li><li><span>2</span></li><li><span>3</span></li><li><span>4</span></li><li><span>5</span></li></ol>
-    <p class="fid-t" id="fidT" aria-live="polite">Cada visita suma un sello. A la visita 5: servicio de cortesía.</p>
-    <div class="acc"><button class="btn" type="button" id="fidBtn">Marcar una visita</button><button class="btn sec" type="button" id="fidReset">Reiniciar</button></div>
+    <div class="hero-meta">
+      <a class="rating" href="https://maps.google.com/?cid=754849118930892658" target="_blank" rel="noopener" aria-label="4,5 en Google Maps con 160 reseñas"><b data-count="4.5" data-dec="1">4,5</b><span>★★★★★ · <span data-count="160">160</span> reseñas en Google</span></a>
+      <span class="ahora" id="ahora" hidden></span>
+    </div>
   </div>
-  <p class="nota-ref rv">Demostración: se guarda solo en este dispositivo.</p>
-</div></section>
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="reservar"><div class="in-w">
-  <span class="lbl rv">Reservar</span><h2 class="rv">Cómo reservar</h2>
-  <ol class="pasos"><li class="rv"><span class="num">1</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Escríbenos</h3><p>Envíanos un mensaje por WhatsApp.</p></li><li class="rv"><span class="num">2</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><h3>Elige tu horario</h3><p>Dinos el servicio que quieres y cuándo te viene mejor.</p></li><li class="rv"><span class="num">3</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>Ven al local</h3><p>Te esperamos en Jr. Castilla 810, Magdalena del Mar.</p></li></ol>
-  <form id="cita" class="cita rv" novalidate>
-    <label>Servicio<select name="s"><option>Peluquería</option><option>Belleza y cuidado personal</option></select></label>
-    <label>Día<input type="date" name="d" required></label>
-    <label>Hora<select name="h" required></select></label>
-    <label>Tu nombre<input type="text" name="n" autocomplete="given-name" maxlength="40" required></label>
-    <button class="btn" type="submit">Solicitar cita</button>
-    <p class="nota">Horario referencial. El negocio confirma tu cita por WhatsApp.</p>
-    <p class="err" role="alert"></p>
-  </form>
-</div></section>
-
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="sedes"><div class="in-w">
-  <span class="lbl rv">Sedes</span><h2 class="rv">Dónde encontrarnos</h2>
-  <ul class="sedes"><li class="rv">Jr. San Martín 691, Magdalena del Mar</li></ul>
-</div></section>
-
-
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="ubicacion" class="fus"><div class="in-w">
-  <span class="lbl rv">Ubicación y opiniones</span><h2 class="rv">Visítanos y mira lo que dicen</h2>
-  <div class="fus-g">
-    <div class="fus-m rv"><address>Jr. Castilla 810<br>Magdalena del Mar, Lima</address>
-      <div class="mapa"><iframe title="Mapa de NOA Salón" loading="lazy" src="https://maps.google.com/maps?q=-12.0894418,-77.0730123&z=17&output=embed"></iframe></div>
-      <a class="btn sec ico" href="https://maps.google.com/?cid=754849118930892658" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></a></div>
-    <div class="fus-o">
-  <div class="val rv"><span class="n">4.5 ★</span><p>160 reseñas en Google Maps</p></div>
-  <div class="opin cinta manual"><p class="opin-h"><span class="vivo" aria-hidden="true"></span>Lo que dicen en Google Maps<button type="button" class="feed-ctl" aria-pressed="false">Pausar</button></p><ul class="feed"><li class="rev"><span class="av2" aria-hidden="true">L</span><button type="button" class="bub" data-rv="0" aria-haspopup="dialog"><span class="rh"><b>Leslie A.</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">Hace 11 meses</span></span><span class="rtxt">Mi cabello quedó hermoso, me hice balage con Raquel, es una excelente profesional, cuido mi cabello para que no se maltrate y me dio mucha confianza. Lo recomiendo 100%.</span><span class="ver">Ver en Google ↗</span></button></li><li class="rev"><span class="av2" aria-hidden="true">O</span><button type="button" class="bub" data-rv="1" aria-haspopup="dialog"><span class="rh"><b>Olenka V.</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">Hace 11 meses</span></span><span class="rtxt">Me encantó!!! Definitivamente volvería, muy profesionales, me realicé mechas color rose gold y quedó hermoso 💖…</span><span class="ver">Ver en Google ↗</span></button></li><li class="rev"><span class="av2" aria-hidden="true">M</span><button type="button" class="bub" data-rv="2" aria-haspopup="dialog"><span class="rh"><b>Marisa G.</b><span class="est" aria-label="4 de 5 estrellas">★★★★☆</span><span class="fe">Hace 7 años</span></span><span class="rtxt">Excelente administración, orden, limpieza y trato al público. Tienen un fan page que es muy dinámico y tienen muchas ofertas. El servicio es muy bueno, te recomiendan lo que se adecua a tu perfil.</span><span class="ver">Ver en Google ↗</span></button></li></ul><a class="mas" href="https://maps.google.com/?cid=754849118930892658" target="_blank" rel="noopener">Ver todas las reseñas en Google Maps →</a></div>
-</div>
+  <div class="hero-ph">
+    <figure class="arch"><img src="assets/img/capa.webp" width="903" height="903" alt="Clienta sonriendo con la capa dorada de NOA Salón"></figure>
+    <img class="badge" src="assets/img/logo.webp" width="150" height="75" alt="NOA Salon">
   </div>
-</div></section>
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="contacto" class="cont"><div class="in-w">
-  <h2 class="rv">Reserva tu cita</h2>
-  <p class="rv" style="color:var(--suave)">+51 994 602 534</p>
-  <div class="acc rv"><a class="btn ico" href="https://wa.me/51994602534?text=Hola%2C%20quiero%20reservar%20en%20NOA%20Sal%C3%B3n" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp" title="Escríbenos por WhatsApp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a><a class="btn sec ico" href="tel:+51994602534" aria-label="Llamar" title="Llamar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a><a class="btn sec ico" href="https://www.facebook.com/noasalonspa/" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a></div>
-</div></section>
+</section>
+
+<div class="marq" aria-hidden="true"><div><span>Peluquería</span><span>Color</span><span>Tratamientos</span><span>Maquillaje</span><span>Cambio de look</span><span>Podología</span><span>Peluquería</span><span>Color</span><span>Tratamientos</span><span>Maquillaje</span><span>Cambio de look</span><span>Podología</span></div></div>
+
+<section class="sec intro">
+  <div class="intro-g">
+    <p class="num rv">01</p>
+    <div class="rv">
+      <h2>Un salón donde <em>te sientes en casa.</em></h2>
+      <p>Así lo cuentan quienes se atienden aquí: atención personalizada, buenos productos y estilistas pacientes, incluso con el cabello rizado y grueso. Una clienta escribió que se atiende en NOA desde hace diez años.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec servicios" id="servicios">
+  <header class="sec-h rv"><p class="tag">02 · Servicios</p><h2>Lo que <em>hacemos</em></h2></header>
+  <div class="bento">
+    <article class="bc a rv" data-rv="zoom">
+      <img src="assets/img/capa.webp" width="903" height="903" alt="" loading="lazy">
+      <div class="bc-t"><h3>Color y asesoría</h3><p>Asesor colorista: mechas, balayage y cambios de color pensados para tu cabello.</p></div>
+    </article>
+    <article class="bc b rv"><h3>Corte y peinado</h3><p>Para cambiar de largo, de forma o solo renovar.</p></article>
+    <article class="bc c rv"><h3>Tratamientos</h3><p>Keratina, laceado japonés y cuidado con buenos productos.</p></article>
+    <article class="bc d rv" data-rv="zoom">
+      <img src="assets/img/maquillaje.webp" width="720" height="640" alt="" loading="lazy">
+      <div class="bc-t"><h3>Maquillaje</h3><p>Citas limitadas por fecha.</p></div>
+    </article>
+    <article class="bc e rv"><h3>Cambio de look</h3><p>Agenda tu cambio y transforma tu estilo.</p></article>
+    <article class="bc f rv"><h3>Podología</h3><p>NOA Podólogos: diagnóstico y servicio integral.</p></article>
+    <article class="bc g rv"><h3>Donación de cabello</h3><p>Una campaña que impulsaron desde su local de Castilla 810.</p></article>
+    <article class="bc h rv"><h3>Dos locales</h3><p>Jr. Castilla 810 y Jr. San Martín 691, en Magdalena del Mar.</p><a class="link" href="#locales">Ver cómo llegar →</a></article>
+  </div>
+  <p class="nota rv">Los precios se consultan por WhatsApp: su cuenta no tiene catálogo publicado.</p>
+</section>
+
+<section class="salon" id="salon">
+  <figure class="wide"><img src="assets/img/salon.webp" width="1450" height="725" alt="Estilistas atendiendo a dos clientas en NOA Salón" loading="lazy"></figure>
+  <div class="wide-t rv"><p class="tag">03 · El salón</p><p class="q">Así se vive en NOA.</p></div>
+</section>
+
+<section class="sec opiniones" id="opiniones">
+  <header class="sec-h rv"><p class="tag">04 · Opiniones</p><h2>Lo que dicen <em>sus clientas</em></h2><p class="sub">4,5 en Google con 160 reseñas · Recomendado por el 100 % en Facebook (32 opiniones)</p></header>
+  <div class="rev rv">
+    <figure class="rev-ph"><img src="assets/img/maquillaje.webp" width="720" height="640" alt="Maquillaje de ojos en tonos cobre" loading="lazy"></figure>
+    <div class="rev-b">
+      <div class="slides" id="slides" aria-live="polite">
+        <blockquote class="on"><p>Mi cabello quedó hermoso, me hice balayage con Raquel, es una excelente profesional, cuido mi cabello para que no se maltrate y me dio mucha confianza. Lo recomiendo 100 %.</p><cite>Leslie A. · hace 11 meses</cite></blockquote>
+        <blockquote><p>¡Me encantó! Definitivamente volvería, muy profesionales, me realicé mechas color rose gold y quedó hermoso.</p><cite>Olenka V. · hace 11 meses</cite></blockquote>
+        <blockquote><p>Noa salón es un buen lugar donde te puedes sentir en casa. Lo recomiendo y el servicio es A1.</p><cite>Dolphine G. · hace 2 años</cite></blockquote>
+        <blockquote><p>Muy buena atención y realizan el tratamiento con buenos productos.</p><cite>Lili Z. · hace 2 años</cite></blockquote>
+        <blockquote><p>Excelente servicio! Siempre salgo satisfecha con los resultados, Raquel es la mejor.</p><cite>Silvana Z. · hace 3 años</cite></blockquote>
+        <blockquote><p>Tengo el pelo rizado muy grueso y la señora que me cuidó fue muy paciente e hizo un trabajo increíble.</p><cite>Allie F. · hace 4 años</cite></blockquote>
+      </div>
+      <div class="rev-ctl"><div class="dots" id="dots" role="tablist" aria-label="Elegir opinión"></div><div class="arr"><button type="button" id="rPrev" aria-label="Opinión anterior">←</button><button type="button" id="rNext" aria-label="Opinión siguiente">→</button></div></div>
+      <a class="link" href="https://maps.google.com/?cid=754849118930892658" target="_blank" rel="noopener">Ver las 160 reseñas en Google Maps ↗</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec reserva" id="reserva">
+  <header class="sec-h rv"><p class="tag">05 · Reserva</p><h2>Elige <em>tu hora</em></h2></header>
+  <form class="book rv" id="book" onsubmit="return false">
+    <div class="f-row"><span class="lbl">Día</span><div class="days" id="days" role="group" aria-label="Día"></div></div>
+    <div class="f-row"><span class="lbl">Hora</span><div class="slots" id="slots" role="group" aria-label="Hora"></div><p class="left" id="left" aria-live="polite"></p></div>
+    <div class="f-2">
+      <div class="f-row"><label class="lbl" for="svc">Servicio</label>
+        <select id="svc"><option>Color o mechas</option><option>Corte y peinado</option><option>Tratamiento (keratina, laceado)</option><option>Maquillaje</option><option>Cambio de look</option><option>Podología</option></select></div>
+      <div class="f-row"><label class="lbl" for="loc">Local</label>
+        <select id="loc"><option>Jr. Castilla 810</option><option>Jr. San Martín 691</option></select></div>
+    </div>
+    <a class="btn big" id="bookBtn" href="https://wa.me/51994602534" target="_blank" rel="noopener"><span id="bookTxt">Reservar por WhatsApp</span></a>
+    <p class="fine">Horas libres de ejemplo para esta demo; el salón confirma por WhatsApp. Las horas respetan su horario real.</p>
+  </form>
+</section>
+
+<section class="sec locales" id="locales">
+  <header class="sec-h rv"><p class="tag">06 · Locales</p><h2>Dos locales, <em>un mismo estilo</em></h2></header>
+  <div class="loc-g">
+    <div class="rv">
+      <div class="lc"><p class="tag">Principal</p><h3>Jr. Castilla 810</h3><p>Magdalena del Mar, Lima</p></div>
+      <div class="lc"><p class="tag">Segundo local</p><h3>Jr. San Martín 691</h3><p>Magdalena del Mar, Lima</p></div>
+      <table class="hrs" id="hrs"><caption class="sr">Horario de atención</caption>
+        <tr data-d="1"><th>Lunes</th><td>08:00 – 22:00</td></tr>
+        <tr data-d="2"><th>Martes</th><td>08:00 – 22:00</td></tr>
+        <tr data-d="3"><th>Miércoles</th><td>08:00 – 22:00</td></tr>
+        <tr data-d="4"><th>Jueves</th><td>08:00 – 22:00</td></tr>
+        <tr data-d="5"><th>Viernes</th><td>08:00 – 22:00</td></tr>
+        <tr data-d="6"><th>Sábado</th><td>08:00 – 22:00</td></tr>
+        <tr data-d="0"><th>Domingo</th><td>09:00 – 20:00</td></tr>
+      </table>
+      <p class="fine">Fijo: 01-263 6723 · noasalonmagdalena@gmail.com</p>
+    </div>
+    <div class="mapa rv" data-rv="der"><iframe title="Mapa de NOA Salón, Jr. Castilla 810" loading="lazy" src="https://maps.google.com/maps?q=-12.0894418,-77.0730123&amp;z=17&amp;output=embed"></iframe></div>
+  </div>
+</section>
 </main>
-<footer><span>NOA Salón</span><span>Jr. Castilla 810, Magdalena del Mar</span></footer>
-<div class="barra-res" id="barraRes"><span class="ahora" data-ahora hidden></span><a class="btn" href="https://wa.me/51994602534?text=Hola%2C%20quiero%20reservar%20en%20NOA%20Sal%C3%B3n" target="_blank" rel="noopener">Reservar</a></div>
-<script>window.CITA = {"wa":"https://wa.me/51994602534","n":"NOA Salón","h":{"lun":["08:00","22:00"],"mar":["08:00","22:00"],"mie":["08:00","22:00"],"jue":["08:00","22:00"],"vie":["08:00","22:00"],"sab":["08:00","22:00"],"dom":["09:00","20:00"]},"ant":2}; window.RESENAS = [{"a":"Leslie A.","e":5,"f":"Hace 11 meses","t":"Mi cabello quedó hermoso, me hice balage con Raquel, es una excelente profesional, cuido mi cabello para que no se maltrate y me dio mucha confianza. Lo recomiendo 100%.","u":"https://maps.app.goo.gl/7p8TsCxoKQH98xuQ8"},{"a":"Olenka V.","e":5,"f":"Hace 11 meses","t":"Me encantó!!! Definitivamente volvería, muy profesionales, me realicé mechas color rose gold y quedó hermoso 💖…","u":"https://maps.app.goo.gl/r5V4ungpeQGqavbE9"},{"a":"Marisa G.","e":4,"f":"Hace 7 años","t":"Excelente administración, orden, limpieza y trato al público. Tienen un fan page que es muy dinámico y tienen muchas ofertas. El servicio es muy bueno, te recomiendan lo que se adecua a tu perfil.","u":"https://maps.app.goo.gl/bdLTQ6LcEDRLpTvV9"},{"a":"Jackeline E.","e":4,"f":"Hace 4 años","t":"No tengo palabras para describir esta pelu hace 10 años me atiendo aquí y la atención es muy buena y personalizada. Usan los mejores productos para el cabello. Además tienen dos locales, solo hay que…","u":"https://maps.app.goo.gl/a2qP4y8pidHREKLfA"},{"a":"Maria E.","e":5,"f":"Hace 3 años","t":"Excelente servicio. Super recomendado. Sobre todo Aracely, quien te atiende con toda la paciencia del caso y hace un excelente trabajo.","u":"https://maps.app.goo.gl/TCAcVKWNTqUKAJgSA"},{"a":"Dolphine G.","e":5,"f":"Hace 2 años","t":"Noa salón es un buen lugar donde te puedes sentir en casa . Lo recomiendo y el servicio es A1 . Les recomiendo preguntar x Raquel ella es muy atenta y muy servicial ❤️","u":"https://maps.app.goo.gl/oqEL9SFAbWurJNu76"},{"a":"Allie F.","e":5,"f":"Hace 4 años","t":"Personal muy asequible y amable, tengo el pelo rizado muy grueso y la señora que me cuidó fue muy paciente e hizo un trabajo increíble💗…","u":"https://maps.app.goo.gl/Vhti55MTAp3yGgLF8"},{"a":"Maria F.","e":5,"f":"Hace 7 años","t":"El mejor salón especialista de Magdalena. Con un grupo de excelentes coloristas y asesores para cada cliente. Tiene todos los servicios en sus dos locales.","u":"https://maps.app.goo.gl/BpM174THY7W1QXUb9"},{"a":"Alexandra P.","e":5,"f":"Hace 6 años","t":"Me encanto ❤ excelente trato, buena desinfección, local limpio, personas tratables amigables.","u":"https://maps.app.goo.gl/o61Ww7N7nyuDZ316A"},{"a":"Silvana Z.","e":5,"f":"Hace 3 años","t":"Excelente servicio! Siempre salgo satisfecha con los resultados, Raquel es la mejor ⭐️","u":"https://maps.app.goo.gl/mwMYBfmasWdu33bJA"},{"a":"Berenize","e":4,"f":"Hace 8 años","t":"Tiene buena atención, Wi-Fi gratis, buenos precios y variedad de tratamientos además de que tienen varias promociones.","u":"https://maps.app.goo.gl/yiY4FEbhk1TG7LHz5"},{"a":"Lili Z.","e":5,"f":"Hace 2 años","t":"Muy buena atención y realizan el tratamiento con buenos productos","u":"https://maps.app.goo.gl/ue7qPhi8jDkVPUjT9"},{"a":"Any L.","e":5,"f":"Hace 6 años","t":"Se a vuelto en mi Salón de belleza favorito. Tiene buenas ofertas y las puedes pagar con Yape. Me encanta!!","u":"https://maps.app.goo.gl/MEwuzX2Uv6pNF7Hv5"},{"a":"Irma E.","e":5,"f":"Hace 8 años","t":"Es una experiencia muy positiva, trabanjan muy bien con muy buenos productos, les recomiendo,","u":"https://maps.app.goo.gl/xUBYfUJeizUSr3F28"},{"a":"Isa S.","e":5,"f":"Hace 8 años","t":"Buenas promos en efectivo, excelente atencion. Me encanta :)","u":"https://maps.app.goo.gl/nvVV2j3Eqo241r7U8"},{"a":"Cecilia V.","e":4,"f":"Hace 5 años","t":"Buena atención, con los protocologos de higiene, acertados en cambiar look.","u":"https://maps.app.goo.gl/XUX3MxU1q8usDy6Q8"},{"a":"Maryorit H.","e":5,"f":"Hace 10 años","t":"Me hice el laceado japones y todo esta perfecto :3","u":"https://maps.app.goo.gl/oAGyszB3RUn4TrAT7"},{"a":"Lina C.","e":5,"f":"Hace 6 años","t":"Profesionales de excelente nivel, atención de primera.","u":"https://maps.app.goo.gl/ffaTNup11KTFD9AA8"},{"a":"Enrique G.","e":5,"f":"Hace 7 años","t":"Excelente lugar para atencion de Damas en lo que es Estetica y peinado.. etc","u":"https://maps.app.goo.gl/76HpMLn4uEPonx22A"},{"a":"Hilda E.","e":4,"f":"Hace 8 años","t":"Me encanta el trabajo que realizan, espectacular 😍…","u":"https://maps.app.goo.gl/2sbPUhQrLKQ56Jk98"},{"a":"Carlos A.","e":5,"f":"Hace 3 años","t":"Super salón, muy buena atención","u":"https://maps.app.goo.gl/FY5mRk7ZBESmgcv66"}];</script>
-<script src="../_comun/base.js"></script>
-<script></script>
+
+<footer class="foot">
+  <img class="flogo" src="assets/img/logo.webp" width="190" height="95" alt="NOA Salon">
+  <ul class="soc">
+    <li><a href="https://wa.me/51994602534" target="_blank" rel="noopener" aria-label="WhatsApp de NOA Salón"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.3-4.2A8 8 0 1 1 8.3 18.8Z"/><path d="M9 9.5c.3 2.2 2.3 4.3 4.8 5l1.3-1.3-1.8-.9-.9.6c-.8-.4-1.5-1.1-1.9-1.9l.6-.9-.9-1.8Z"/></svg>WhatsApp</a></li>
+    <li><a href="https://www.facebook.com/noasalonspa/" target="_blank" rel="noopener" aria-label="Facebook de NOA Salón"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 8h2.5V4.5H14c-2.2 0-3.5 1.5-3.5 3.7V10H8v3.5h2.5V20H14v-6.5h2.5L17 10h-3V8.3c0-.2.1-.3.3-.3Z"/></svg>Facebook</a></li>
+    <li><a href="https://www.instagram.com/noasalon/" target="_blank" rel="noopener" aria-label="Instagram de NOA Salón"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6" fill="currentColor"/></svg>Instagram</a></li>
+    <li><a href="https://maps.google.com/?cid=754849118930892658" target="_blank" rel="noopener" aria-label="NOA Salón en Google Maps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>Google Maps</a></li>
+    <li><a href="tel:+51994602534" aria-label="Llamar a NOA Salón"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>Llamar</a></li>
+  </ul>
+  <p>NOA Salón · Jr. Castilla 810 y Jr. San Martín 691, Magdalena del Mar</p>
+  <p class="demo">Demo referencial preparada como propuesta. Fotos y datos tomados de su Facebook y su ficha de Google.</p>
+</footer>
+
+<div class="barra off" id="barra"><a class="btn big" href="#reserva">Reservar mi hora</a></div>
+
+<script defer src="lib/gsap.min.js?v=20261024"></script>
+<script defer src="lib/ScrollTrigger.min.js?v=20261024"></script>
+<script defer src="lib/manifest.js?v=20261024"></script>
+<script defer src="main.js?v=20261024"></script>
 </body>
 </html>

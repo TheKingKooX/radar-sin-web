@@ -3,181 +3,171 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>La Barbería</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&display=swap">
-<link rel="stylesheet" href="../_comun/base.css">
-<style>
-:root { --bg: #0d0b0b; --fg: #ffffff; --acento: #ffffff; --suave: #a8a6a4; --f-titulo: "Montserrat"; --f-texto: "Montserrat"; --radio: 4px; --trazo: 2.2; color-scheme: dark; }
-/* Fondo: franjas de poste de barbero que avanzan despacio */
-body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  background: linear-gradient(135deg, rgba(255, 255, 255, .045) 25%, transparent 25% 50%, rgba(255, 255, 255, .045) 50% 75%, transparent 75%) 0 0 / 72px 72px; }
-body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 50% 0, transparent 30%, #0d0b0b 95%); }
-@media (prefers-reduced-motion: no-preference) { body::before { animation: poste 6s linear infinite; } @keyframes poste { to { background-position: 72px 0; } } }
-.btn, .cta { text-transform: uppercase; letter-spacing: .08em; font-size: 14px; }
-.hero h1 { display: grid; gap: 6px; font-weight: 800; line-height: .92; }
-.hero h1 .a { font-size: clamp(48px, 12vw, 150px); letter-spacing: -.02em; }
-.hero h1 .b { font-size: clamp(16px, 2.6vw, 30px); letter-spacing: .5em; font-weight: 500; color: var(--suave); }
-.hero .bg-b { width: clamp(120px, 22vw, 260px); margin-top: 12px; fill: none; stroke: #fff; stroke-width: 1.6; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
-.marq { overflow: hidden; border-block: 1px solid color-mix(in srgb, #fff 18%, transparent); padding: 16px 0; white-space: nowrap; }
-.marq div { display: inline-block; }
-.marq span { font-size: 22px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; margin: 0 28px; }
-.marq span::before { content: "✂"; margin-right: 28px; color: var(--suave); }
-@media (prefers-reduced-motion: no-preference) {
-  .hero .bg-b { stroke-dashoffset: 1; animation: traza 2.2s .3s ease forwards; }
-  @keyframes traza { to { stroke-dashoffset: 0; } }
-  .marq div { animation: corre 28s linear infinite; }
-  @keyframes corre { to { transform: translateX(-50%); } }
-}
-</style>
-<noscript><style>.rv { opacity: 1 !important; transform: none !important; }</style></noscript>
+<title>La Barbería Men's Club · San Miguel</title>
+<meta name="description" content="La Barbería Men's Club en San Miguel, Lima: corte de cabello, corte kids, barbas y faciales. 4,4 en Google con 243 reseñas. Demo referencial.">
+<meta name="theme-color" content="#0b0a0a">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20261024">
+<script>document.documentElement.classList.add("js")</script>
 </head>
-<body class="anim">
-<header class="top">
-  <a class="marca" href="#inicio"><svg role="img" aria-label="Logo de La Barbería Men's Club" width="360" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 200" font-family="Montserrat, Arial, sans-serif" fill="#ffffff">
-  <rect width="360" height="200" fill="#0d0b0b"/>
-  <text x="180" y="92" text-anchor="middle" font-size="54" font-weight="800" letter-spacing="1.5">LA BARBERIA</text>
-  <path d="M180 124c-6-9-18-10-30-4-8 4-17 5-26 3 8 13 24 18 36 11 6-4 12-7 20-10zm0 0c6-9 18-10 30-4 8 4 17 5 26 3-8 13-24 18-36 11-6-4-12-7-20-10z" fill="#ffffff"/>
-  <text x="180" y="178" text-anchor="middle" font-size="17" font-weight="500" letter-spacing="7" opacity=".85">MEN'S CLUB</text>
-</svg></a>
-  <nav><a href="#servicios">Servicios</a><a href="#ubicacion">Ubicación</a><a href="#contacto">Contacto</a><a class="cta ico" href="https://wa.me/51960706851?text=Hola%2C%20quiero%20reservar%20en%20La%20Barber%C3%ADa" target="_blank" rel="noopener" aria-label="Reservar" title="Reservar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a></nav>
+<body>
+
+<div class="prog" id="prog" aria-hidden="true"></div>
+<div class="coord mono" id="coord" aria-hidden="true">[0, 0]</div>
+
+<header class="nav" id="nav">
+  <a class="logo" href="#inicio" aria-label="La Barbería Men's Club, inicio">
+    <svg viewBox="124 112 112 30" aria-hidden="true"><path d="M180 124c-6-9-18-10-30-4-8 4-17 5-26 3 8 13 24 18 36 11 6-4 12-7 20-10zm0 0c6-9 18-10 30-4 8 4 17 5 26 3-8 13-24 18-36 11-6-4-12-7-20-10z"/></svg>
+    <span><b>La Barbería</b><small class="mono">Men's Club</small></span>
+  </a>
+  <button class="burger" id="burger" type="button" aria-label="Abrir el menú" aria-expanded="false" aria-controls="links"><span></span><span></span></button>
+  <ul class="links mono" id="links">
+    <li><a href="#servicios"><i>01</i> Servicios</a></li>
+    <li><a href="#trabajos"><i>02</i> Trabajos</a></li>
+    <li><a href="#reserva"><i>03</i> Reserva</a></li>
+    <li><a href="#resenas"><i>04</i> Opiniones</a></li>
+    <li><a href="#visita"><i>05</i> Visita</a></li>
+    <li><a class="cta" href="https://wa.me/51960706851?text=Hola%2C%20quiero%20reservar%20en%20La%20Barber%C3%ADa." target="_blank" rel="noopener">Reservar ↗</a></li>
+  </ul>
 </header>
+
 <main>
-<section id="inicio" class="hero"><div class="hero-in">
-  <h1 aria-label="La Barbería" data-par style="--kx:1;--ky:.14"><span class="a">LA BARBERIA</span><span class="b">MEN'S CLUB</span>
-    <svg class="bg-b" viewBox="0 0 120 40" aria-hidden="true"><path pathLength="1" d="M60 22c-7-10-20-12-34-5-9 5-19 6-24 4 9 16 26 21 40 12 7-4 12-8 18-11zm0 0c7-10 20-12 34-5 9 5 19 6 24 4-9 16-26 21-40 12-7-4-12-8-18-11z"/></svg></h1>
-  <p class="baja" data-par style="--kx:.5;--ky:.07">Creada para todo el público masculino, la mejor opción para un buen corte.</p>
-  <p class="ahora" data-ahora hidden></p>
-  <div class="acc"><a class="btn ico" href="https://wa.me/51960706851?text=Hola%2C%20quiero%20reservar%20en%20La%20Barber%C3%ADa" target="_blank" rel="noopener" aria-label="Reservar por WhatsApp" title="Reservar por WhatsApp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a><a class="btn sec ico" href="#ubicacion" aria-label="Cómo llegar" title="Cómo llegar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></a></div>
-</div></section>
-<section id="nosotros"><div class="in-w">
-  <span class="lbl rv">Nosotros</span>
-  <div class="about"><h2 class="rv">La Barbería</h2><p class="rv">La Barbería es una barbería en San Miguel, con 4.4 de puntaje y 243 reseñas en Google. Ofrece corte de cabello, corte kids, barbas y faciales. Reserva tu cita y ven a conocernos.</p></div>
-  <div class="why"><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg><h3>4.4 ★ en Google</h3><p>Calificación basada en 243 reseñas de clientes en Google Maps.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Reserva fácil</h3><p>Agenda tu cita por WhatsApp en pocos minutos.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>En San Miguel</h3><p>2do piso, Av. Rafael Escardó 723. Fácil de encontrar.</p></div></div>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="cifras"><div class="in-w">
-  <div class="cifras">
-    <div class="cifra rv"><b data-n="4.4" data-dec="1">4.4</b><span>de puntaje en Google ★</span></div>
-    <div class="cifra rv"><b data-n="243">243</b><span>reseñas de clientes</span></div>
-    <div class="cifra rv"><b data-n="7">7</b><span>días de atención a la semana</span></div>
+<section class="hero" id="inicio">
+  <div class="hero-top mono">
+    <span>Men's Club · San Miguel</span>
+    <span class="ahora" id="ahora" hidden></span>
+    <span>Av. Rafael Escardó 723 · 2.º piso</span>
   </div>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="promo"><div class="in-w">
-  <div class="promo rv">
-    <div class="promo-i"><span class="lbl">Promoción del mes</span><h3>Corte + barba</h3><p>Llévate el combo completo a precio especial durante este mes.</p><p class="promo-p">S/ 30</p></div>
-    <div class="cuenta" id="cuenta" role="timer" aria-label="Tiempo que queda de la promoción"><span><b data-u="d">--</b>días</span><span><b data-u="h">--</b>horas</span><span><b data-u="m">--</b>min</span><span><b data-u="s">--</b>seg</span></div>
-    <a class="btn" href="https://wa.me/51960706851?text=Hola%2C%20quiero%20la%20promoci%C3%B3n%3A%20Corte%20%2B%20barba" target="_blank" rel="noopener">Quiero la promo</a>
-  </div>
-  <p class="nota-ref rv">Promoción de ejemplo. Termina el último día del mes.</p>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="equipo"><div class="in-w">
-  <span class="lbl rv">Equipo</span><h2 class="rv">Quién te atiende</h2>
-  <div class="eq"><article class="rv"><span class="eq-av" aria-hidden="true">J</span><h3>Joaquín</h3><p class="eq-r">Maestro barbero</p><p class="eq-e">Cortes clásicos y navaja</p><a class="btn sec" href="https://wa.me/51960706851?text=Hola%2C%20quiero%20reservar%20con%20Joaqu%C3%ADn%20en%20La%20Barber%C3%ADa" target="_blank" rel="noopener">Reservar con Joaquín</a></article><article class="rv"><span class="eq-av" aria-hidden="true">F</span><h3>Fabián</h3><p class="eq-r">Barbero</p><p class="eq-e">Fade y degradados</p><a class="btn sec" href="https://wa.me/51960706851?text=Hola%2C%20quiero%20reservar%20con%20Fabi%C3%A1n%20en%20La%20Barber%C3%ADa" target="_blank" rel="noopener">Reservar con Fabián</a></article><article class="rv"><span class="eq-av" aria-hidden="true">M</span><h3>Matías</h3><p class="eq-r">Barbero</p><p class="eq-e">Diseño de barba</p><a class="btn sec" href="https://wa.me/51960706851?text=Hola%2C%20quiero%20reservar%20con%20Mat%C3%ADas%20en%20La%20Barber%C3%ADa" target="_blank" rel="noopener">Reservar con Matías</a></article></div>
-  <p class="nota-ref rv">Equipo referencial.</p>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="servicios"><div class="in-w">
-  <span class="lbl rv">Servicios y galería</span><h2 class="rv">Lo que hacemos</h2>
-  <div class="sc-row rv" style="--abierta:3"><article class="sc open"><button type="button" class="sc-b" id="sc-h0" aria-expanded="true" aria-controls="sc-p0"><span class="sc-n">01</span><span class="sc-t">Corte de cabello</span></button><div class="sc-media" id="sc-p0" role="region" aria-labelledby="sc-h0"><img class="a on" src="img/s1-a.svg" alt="Ilustración referencial de Corte de cabello" loading="lazy"><img class="b" src="img/s1-b.svg" alt="Ilustración referencial de Corte de cabello" loading="lazy"><p class="sc-d">Cortes precisos, a tu estilo.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h1" aria-expanded="false" aria-controls="sc-p1"><span class="sc-n">02</span><span class="sc-t">Corte kids</span></button><div class="sc-media" id="sc-p1" role="region" aria-labelledby="sc-h1"><img class="a on" src="img/s2-a.svg" alt="Ilustración referencial de Corte kids" loading="lazy"><img class="b" src="img/s2-b.svg" alt="Ilustración referencial de Corte kids" loading="lazy"><p class="sc-d">Cortes precisos, a tu estilo.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h2" aria-expanded="false" aria-controls="sc-p2"><span class="sc-n">03</span><span class="sc-t">Barbas</span></button><div class="sc-media" id="sc-p2" role="region" aria-labelledby="sc-h2"><img class="a on" src="img/s3-a.svg" alt="Ilustración referencial de Barbas" loading="lazy"><img class="b" src="img/s3-b.svg" alt="Ilustración referencial de Barbas" loading="lazy"><p class="sc-d">Perfilado y arreglo de barba.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h3" aria-expanded="false" aria-controls="sc-p3"><span class="sc-n">04</span><span class="sc-t">Faciales</span></button><div class="sc-media" id="sc-p3" role="region" aria-labelledby="sc-h3"><img class="a on" src="img/s4-a.svg" alt="Ilustración referencial de Faciales" loading="lazy"><img class="b" src="img/s4-b.svg" alt="Ilustración referencial de Faciales" loading="lazy"><p class="sc-d">Cuidado de la piel y un momento de relax.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h4" aria-expanded="false" aria-controls="sc-p4"><span class="sc-n">05</span><span class="sc-t">Cortes</span></button><div class="sc-media" id="sc-p4" role="region" aria-labelledby="sc-h4"><img class="a on" src="img/s5-a.svg" alt="Ilustración referencial de Cortes" loading="lazy"><img class="b" src="img/s5-b.svg" alt="Ilustración referencial de Cortes" loading="lazy"><p class="sc-d">Cortes precisos, a tu estilo.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h5" aria-expanded="false" aria-controls="sc-p5"><span class="sc-n">06</span><span class="sc-t">Barba</span></button><div class="sc-media" id="sc-p5" role="region" aria-labelledby="sc-h5"><img class="a on" src="img/s6-a.svg" alt="Ilustración referencial de Barba" loading="lazy"><img class="b" src="img/s6-b.svg" alt="Ilustración referencial de Barba" loading="lazy"><p class="sc-d">Perfilado y arreglo de barba.</p></div></article></div>
-  <p class="nota-ref rv">Ilustraciones referenciales.</p>
-</div></section>
-
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="resultado"><div class="in-w">
-  <span class="lbl rv">Resultado</span><h2 class="rv">Antes y después</h2>
-  <p class="rv" style="color:var(--suave);margin-top:10px">Desliza para ver la diferencia de un buen corte.</p>
-  <div class="ba rv" style="--p:50%">
-    <div class="ba-i"><svg viewBox="0 0 400 300" role="img" aria-label="Después: corte limpio y definido"><rect width="400" height="300" fill="#ffffff" opacity=".12"/><path d="M50 300c8-52 40-62 100-66h100c60 4 92 14 100 66z" fill="#a8a6a4"/><rect x="176" y="204" width="48" height="54" rx="14" fill="#d9ae8a"/><ellipse cx="200" cy="148" rx="62" ry="78" fill="#d9ae8a"/><path d="M139 124C139 82 168 70 200 70s61 12 61 54c-12-20-32-27-61-27s-49 7-61 27z" fill="#2d2825"/><ellipse cx="141" cy="140" rx="7" ry="22" fill="#2d2825" opacity=".22"/><ellipse cx="259" cy="140" rx="7" ry="22" fill="#2d2825" opacity=".22"/><path d="M146 168c4 36 26 52 54 52s50-16 54-52c-10 22-28 30-54 30s-44-8-54-30z" fill="#2d2825" opacity=".85"/><path d="M146 168c4 36 26 52 54 52s50-16 54-52" fill="none" stroke="#ffffff" stroke-width="2" opacity=".7"/><g fill="#2d2825"><circle cx="177" cy="146" r="4.5"/><circle cx="223" cy="146" r="4.5"/></g><path d="M186 186q14 8 28 0" fill="none" stroke="#2d2825" stroke-width="3" stroke-linecap="round"/></svg></div>
-    <div class="ba-i ba-b"><svg viewBox="0 0 400 300" role="img" aria-label="Antes: cabello y barba sin arreglar"><rect width="400" height="300" fill="#ffffff" opacity=".12"/><path d="M50 300c8-52 40-62 100-66h100c60 4 92 14 100 66z" fill="#a8a6a4"/><rect x="176" y="204" width="48" height="54" rx="14" fill="#d9ae8a"/><ellipse cx="200" cy="148" rx="62" ry="78" fill="#d9ae8a"/><path d="M124 150C96 84 140 36 200 42s104 44 76 108c8-34-14-56-40-60-12 10-24 14-36 14s-24-4-36-14c-26 4-48 26-40 60z" fill="#2d2825"/><path d="M118 100c-12-6-14-22-2-30M284 96c12-6 16-22 4-30M170 40c-6-14 8-24 18-18M224 40c10-12 24-4 20 10" fill="none" stroke="#2d2825" stroke-width="9" stroke-linecap="round"/><path d="M142 166c2 44 28 62 58 62s56-18 58-62c-14 16-24 36-58 34-34 2-44-18-58-34z" fill="#2d2825" opacity=".55"/><g stroke="#2d2825" stroke-width="2" stroke-linecap="round" opacity=".6"><path d="M150 186l-6 6M162 204l-6 8M246 206l6 8M256 188l6 6M200 232v8"/></g><g fill="#2d2825"><circle cx="177" cy="146" r="4.5"/><circle cx="223" cy="146" r="4.5"/></g><path d="M186 186q14 8 28 0" fill="none" stroke="#2d2825" stroke-width="3" stroke-linecap="round"/></svg></div>
-    <span class="ba-t ba-tb">Antes</span><span class="ba-t ba-ta">Después</span>
-    <span class="ba-l" aria-hidden="true"><i></i></span>
-    <input type="range" min="0" max="100" value="50" aria-label="Comparar antes y después">
-  </div>
-  <p class="nota-ref rv">Ilustración referencial.</p>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="calcula"><div class="in-w">
-  <span class="lbl rv">Tu cita</span><h2 class="rv">Arma tu servicio</h2>
-  <form class="calc rv" id="calc" onsubmit="return false">
-    <ul class="calc-l"><li><label><input type="checkbox" data-p="25" data-m="45" data-n="Corte de cabello"><span class="ck" aria-hidden="true"></span><span class="nm">Corte de cabello</span><span class="du">45 min</span><b>S/ 25</b></label></li><li><label><input type="checkbox" data-p="18" data-m="30" data-n="Corte kids"><span class="ck" aria-hidden="true"></span><span class="nm">Corte kids</span><span class="du">30 min</span><b>S/ 18</b></label></li><li><label><input type="checkbox" data-p="15" data-m="20" data-n="Barbas"><span class="ck" aria-hidden="true"></span><span class="nm">Barbas</span><span class="du">20 min</span><b>S/ 15</b></label></li><li><label><input type="checkbox" data-p="40" data-m="40" data-n="Faciales"><span class="ck" aria-hidden="true"></span><span class="nm">Faciales</span><span class="du">40 min</span><b>S/ 40</b></label></li></ul>
-    <div class="calc-t">
-      <div><span>Total estimado</span><b id="calcTotal">S/ 0</b></div>
-      <div><span>Duración</span><b id="calcMin">0 min</b></div>
-      <a class="btn" id="calcBtn" href="https://wa.me/51960706851?text=Hola%2C%20quiero%20reservar%20en%20La%20Barber%C3%ADa" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+  <h1 aria-label="La Barbería Men's Club"><span class="l1">LA&nbsp;</span><span class="l2">BARBERIA</span></h1>
+  <svg class="mus" viewBox="124 112 112 30" aria-hidden="true"><path pathLength="1" d="M180 124c-6-9-18-10-30-4-8 4-17 5-26 3 8 13 24 18 36 11 6-4 12-7 20-10zm0 0c6-9 18-10 30-4 8 4 17 5 26 3-8 13-24 18-36 11-6-4-12-7-20-10z"/></svg>
+  <div class="hero-row">
+    <div class="cell lede">
+      <p class="mono">/ Para todo el público masculino</p>
+      <p class="big-p">La mejor opción para un buen corte.</p>
+      <div class="hero-cta">
+        <a class="btn" href="#reserva">Elegir mi hora →</a>
+        <a class="btn ghost" href="#servicios">Ver servicios</a>
+      </div>
     </div>
-    <p class="nota-ref">Precios y duraciones referenciales.</p>
-  </form>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="fidelidad"><div class="in-w">
-  <span class="lbl rv">Fidelidad</span><h2 class="rv">Tu tarjeta de sellos</h2>
-  <div class="fid rv" id="fid" data-n="5" data-k="fid-labarberia" data-premio="Corte gratis">
-    <ol class="fid-s"><li><span>1</span></li><li><span>2</span></li><li><span>3</span></li><li><span>4</span></li><li><span>5</span></li></ol>
-    <p class="fid-t" id="fidT" aria-live="polite">Cada visita suma un sello. A la visita 5: corte gratis.</p>
-    <div class="acc"><button class="btn" type="button" id="fidBtn">Marcar una visita</button><button class="btn sec" type="button" id="fidReset">Reiniciar</button></div>
+    <figure class="cell ph">
+      <img src="assets/img/p3.webp" width="548" height="744" alt="Corte degradado en La Barbería, con las luces del local de fondo">
+      <figcaption class="mono">Fig. 01 — Desde su Instagram</figcaption>
+    </figure>
+    <a class="cell stat" href="https://maps.google.com/?cid=16618686729091458036" target="_blank" rel="noopener" aria-label="4,4 en Google Maps con 243 reseñas">
+      <span class="mono">/ Google Maps</span>
+      <b><span data-count="4.4" data-dec="1">4,4</span></b>
+      <span><span data-count="243">243</span> reseñas ↗</span>
+    </a>
   </div>
-  <p class="nota-ref rv">Demostración: se guarda solo en este dispositivo.</p>
-</div></section>
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="reservar"><div class="in-w">
-  <span class="lbl rv">Reservar</span><h2 class="rv">Cómo reservar</h2>
-  <ol class="pasos"><li class="rv"><span class="num">1</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Escríbenos</h3><p>Envíanos un mensaje por WhatsApp.</p></li><li class="rv"><span class="num">2</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><h3>Elige tu horario</h3><p>Dinos el servicio que quieres y cuándo te viene mejor.</p></li><li class="rv"><span class="num">3</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>Ven al local</h3><p>Te esperamos en 2do piso, Av. Rafael Escardó 723, San Miguel.</p></li></ol>
-  <form id="cita" class="cita rv" novalidate>
-    <label>Servicio<select name="s"><option>Corte de cabello</option><option>Corte kids</option><option>Barbas</option><option>Faciales</option></select></label>
-    <label>Día<input type="date" name="d" required></label>
-    <label>Hora<select name="h" required></select></label>
-    <label>Tu nombre<input type="text" name="n" autocomplete="given-name" maxlength="40" required></label>
-    <button class="btn" type="submit">Solicitar cita</button>
-    <p class="nota">Horario referencial. El negocio confirma tu cita por WhatsApp.</p>
-    <p class="err" role="alert"></p>
-  </form>
-</div></section>
+</section>
 
+<div class="marq" aria-hidden="true"><div><span>Corte de cabello</span><span>Corte kids</span><span>Barbas</span><span>Faciales</span><span>Corte de cabello</span><span>Corte kids</span><span>Barbas</span><span>Faciales</span></div></div>
 
+<section class="sec servicios" id="servicios">
+  <header class="sec-h rv"><p class="mono">01 — Servicios</p><h2>Cuatro servicios.<br>Sin vueltas.</h2></header>
+  <ul class="srvs">
+    <li class="rv"><a class="srv" href="https://wa.me/51960706851?text=Hola%2C%20quiero%20reservar%20un%20corte%20de%20cabello%20en%20La%20Barber%C3%ADa." target="_blank" rel="noopener"><i class="mono">01</i><b>Corte de cabello</b><span>Para todo el público masculino.</span><em class="mono">Consultar ↗</em></a></li>
+    <li class="rv"><a class="srv" href="https://wa.me/51960706851?text=Hola%2C%20quiero%20reservar%20un%20corte%20kids%20en%20La%20Barber%C3%ADa." target="_blank" rel="noopener"><i class="mono">02</i><b>Corte kids</b><span>Para los más chicos de la casa.</span><em class="mono">Consultar ↗</em></a></li>
+    <li class="rv"><a class="srv" href="https://wa.me/51960706851?text=Hola%2C%20quiero%20reservar%20barba%20en%20La%20Barber%C3%ADa." target="_blank" rel="noopener"><i class="mono">03</i><b>Barbas</b><span>Perfilado y cuidado de barba.</span><em class="mono">Consultar ↗</em></a></li>
+    <li class="rv"><a class="srv" href="https://wa.me/51960706851?text=Hola%2C%20quiero%20reservar%20un%20facial%20en%20La%20Barber%C3%ADa." target="_blank" rel="noopener"><i class="mono">04</i><b>Faciales</b><span>Limpieza facial, sola o con tu corte.</span><em class="mono">Consultar ↗</em></a></li>
+  </ul>
+  <p class="nota mono rv">Los precios se consultan por WhatsApp: su catálogo no estaba disponible al armar esta demo.</p>
+</section>
 
-
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="ubicacion" class="fus"><div class="in-w">
-  <span class="lbl rv">Ubicación y opiniones</span><h2 class="rv">Visítanos y mira lo que dicen</h2>
-  <div class="fus-g">
-    <div class="fus-m rv"><address>2do piso, Av. Rafael Escardó 723<br>San Miguel, Lima</address>
-      <div class="mapa"><iframe title="Mapa de La Barbería" loading="lazy" src="https://maps.google.com/maps?q=-12.0737072,-77.0921964&z=17&output=embed"></iframe></div>
-      <a class="btn sec ico" href="https://maps.google.com/?cid=16618686729091458036" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></a></div>
-    <div class="fus-o">
-  <div class="val rv"><span class="n">4.4 ★</span><p>243 reseñas en Google Maps</p></div>
-  <div class="opin cinta manual"><p class="opin-h"><span class="vivo" aria-hidden="true"></span>Lo que dicen en Google Maps<button type="button" class="feed-ctl" aria-pressed="false">Pausar</button></p><ul class="feed"><li class="rev"><span class="av2" aria-hidden="true">R</span><button type="button" class="bub" data-rv="0" aria-haspopup="dialog"><span class="rh"><b>Rodrigo M.</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">Hace 10 meses</span></span><span class="rtxt">Es una buena barbería, dentro de todo he visto que la mayoría de sus barberos dejan a sus clientes satisfechos. Particularmente mi barbero Jonathan es un capo y siempre me hace un buen trabajo. La…</span><span class="ver">Ver en Google ↗</span></button></li><li class="rev"><span class="av2" aria-hidden="true">M</span><button type="button" class="bub" data-rv="1" aria-haspopup="dialog"><span class="rh"><b>Mario M.</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">Hace 2 años</span></span><span class="rtxt">Opción de estacionar, 3 lugares regularmente disponibles. Muy buena atención en recepción.…</span><span class="ver">Ver en Google ↗</span></button></li><li class="rev"><span class="av2" aria-hidden="true">C</span><button type="button" class="bub" data-rv="2" aria-haspopup="dialog"><span class="rh"><b>Carolina P.</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">Hace 9 meses</span></span><span class="rtxt">Lleve a mi papá a hacerse un corte, la atención del barbero fue muy buena, muy amable y siempre atento a la comodidad de mi papá. Gracias 🫂…</span><span class="ver">Ver en Google ↗</span></button></li></ul><a class="mas" href="https://maps.google.com/?cid=16618686729091458036" target="_blank" rel="noopener">Ver todas las reseñas en Google Maps →</a></div>
-</div>
+<section class="promo" aria-label="Promoción">
+  <div class="promo-in rv">
+    <p class="mono">/ Visto en su Instagram</p>
+    <p class="promo-t"><span>30%</span> de descuento de lunes a miércoles</p>
+    <p class="promo-d">Corte + limpieza facial + bebida.</p>
+    <a class="btn inv" href="https://wa.me/51960706851?text=Hola%2C%20quiero%20la%20promo%20de%20corte%20%2B%20limpieza%20facial%20%2B%20bebida." target="_blank" rel="noopener">Pedir la promo →</a>
+    <p class="fine mono">Promoción publicada en su cuenta; confirma que siga vigente.</p>
   </div>
-</div></section>
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="contacto" class="cont"><div class="in-w">
-  <h2 class="rv">Reserva tu cita</h2>
-  <p class="rv" style="color:var(--suave)">+51 960 706 851</p>
-  <div class="acc rv"><a class="btn ico" href="https://wa.me/51960706851?text=Hola%2C%20quiero%20reservar%20en%20La%20Barber%C3%ADa" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp" title="Escríbenos por WhatsApp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a><a class="btn sec ico" href="tel:+51960706851" aria-label="Llamar" title="Llamar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a><a class="btn sec ico" href="https://www.instagram.com/labarberiamensclub/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
-</div></section>
+</section>
+
+<section class="sec trabajos" id="trabajos">
+  <header class="sec-h rv"><p class="mono">02 — Trabajos</p><h2>Así salen<br>de la silla.</h2></header>
+  <div class="grid5">
+    <figure class="rv"><div class="im"><img src="assets/img/p1.webp" width="556" height="744" alt="Degradado de perfil frente al letrero de la barbería" loading="lazy"></div><figcaption class="mono">01</figcaption></figure>
+    <figure class="rv"><div class="im"><img src="assets/img/p2.webp" width="552" height="744" alt="Degradado con capa blanca" loading="lazy"></div><figcaption class="mono">02</figcaption></figure>
+    <figure class="rv"><div class="im"><img src="assets/img/p3.webp" width="548" height="744" alt="Corte degradado de frente" loading="lazy"></div><figcaption class="mono">03</figcaption></figure>
+    <figure class="rv"><div class="im"><img src="assets/img/p4.webp" width="556" height="742" alt="Corte kids con degradado" loading="lazy"></div><figcaption class="mono">04</figcaption></figure>
+    <figure class="rv"><div class="im"><img src="assets/img/p5.webp" width="552" height="742" alt="Secado del cabello con guantes rosados" loading="lazy"></div><figcaption class="mono">05</figcaption></figure>
+  </div>
+  <p class="center rv"><a class="link mono" href="https://www.instagram.com/labarberiamensclub/" target="_blank" rel="noopener">Ver las 175 publicaciones en Instagram ↗</a></p>
+</section>
+
+<section class="sec reserva" id="reserva">
+  <header class="sec-h rv"><p class="mono">03 — Reserva</p><h2>Elige tu hora.</h2></header>
+  <form class="book rv" id="book" onsubmit="return false">
+    <div class="f-row"><span class="lbl mono">Día</span><div class="days" id="days" role="group" aria-label="Día"></div></div>
+    <div class="f-row"><span class="lbl mono">Hora</span><div class="slots" id="slots" role="group" aria-label="Hora"></div><p class="left mono" id="left" aria-live="polite"></p></div>
+    <div class="f-row">
+      <label class="lbl mono" for="svc">Servicio</label>
+      <select id="svc">
+        <option>Corte de cabello</option>
+        <option>Corte kids</option>
+        <option>Barbas</option>
+        <option>Faciales</option>
+        <option>Promo: corte + limpieza facial + bebida</option>
+      </select>
+    </div>
+    <a class="btn big" id="bookBtn" href="https://wa.me/51960706851" target="_blank" rel="noopener"><span id="bookTxt">Reservar por WhatsApp →</span></a>
+    <p class="fine mono">Horas libres de ejemplo para esta demo; el negocio confirma por WhatsApp. Las horas respetan su horario real.</p>
+  </form>
+</section>
+
+<section class="sec resenas" id="resenas">
+  <header class="sec-h rv"><p class="mono">04 — Opiniones</p><h2>Lo que dicen<br>en Google.</h2></header>
+  <ul class="rvs">
+    <li class="rv"><blockquote>Lleve a mi papá a hacerse un corte, la atención del barbero fue muy buena, muy amable y siempre atento a la comodidad de mi papá.</blockquote><p class="mono">Carolina P. · hace 9 meses · ★★★★★</p></li>
+    <li class="rv"><blockquote>El barbero David es muy bueno, tiene paciencia y profesionalismo.</blockquote><p class="mono">Aldo C. · hace un año · ★★★★★</p></li>
+    <li class="rv"><blockquote>Muy buen servicio, excelente atención y rapidez.</blockquote><p class="mono">Nelly R. · hace 2 años · ★★★★★</p></li>
+    <li class="rv"><blockquote>Opción de estacionar, 3 lugares regularmente disponibles. Muy buena atención en recepción.</blockquote><p class="mono">Mario M. · hace 2 años · ★★★★★</p></li>
+    <li class="rv"><blockquote>Muy buen lugar para cortarse el pelo. Excelentes barberos, amplio espacio y cordial atención.</blockquote><p class="mono">José A. · hace 3 años · ★★★★★</p></li>
+    <li class="rv"><blockquote>Se esmeran por brindar buena atención. Ambiente agradable.</blockquote><p class="mono">Liliana T. · hace 3 años · ★★★★★</p></li>
+  </ul>
+  <p class="center rv"><a class="link mono" href="https://maps.google.com/?cid=16618686729091458036" target="_blank" rel="noopener">Ver las 243 reseñas en Google Maps ↗</a></p>
+</section>
+
+<section class="sec visita" id="visita">
+  <div class="visita-g">
+    <div class="rv">
+      <header class="sec-h"><p class="mono">05 — Visita</p><h2>Segundo piso,<br>Escardó 723.</h2></header>
+      <address>2.º piso, Av. Rafael Escardó 723<br>San Miguel, Lima</address>
+      <table class="hrs mono" id="hrs"><caption class="sr">Horario de atención</caption>
+        <tr data-d="1"><th>Lunes</th><td>09:00 – 20:00</td></tr>
+        <tr data-d="2"><th>Martes</th><td>09:00 – 20:00</td></tr>
+        <tr data-d="3"><th>Miércoles</th><td>09:00 – 20:00</td></tr>
+        <tr data-d="4"><th>Jueves</th><td>09:00 – 20:00</td></tr>
+        <tr data-d="5"><th>Viernes</th><td>09:00 – 20:00</td></tr>
+        <tr data-d="6"><th>Sábado</th><td>09:00 – 20:00</td></tr>
+        <tr data-d="0"><th>Domingo</th><td>10:00 – 19:00</td></tr>
+      </table>
+      <ul class="soc mono">
+        <li><a href="https://www.instagram.com/labarberiamensclub/" target="_blank" rel="noopener" aria-label="Instagram de La Barbería"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6" fill="currentColor"/></svg>Instagram</a></li>
+        <li><a href="https://wa.me/51960706851" target="_blank" rel="noopener" aria-label="WhatsApp de La Barbería"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.3-4.2A8 8 0 1 1 8.3 18.8Z"/><path d="M9 9.5c.3 2.2 2.3 4.3 4.8 5l1.3-1.3-1.8-.9-.9.6c-.8-.4-1.5-1.1-1.9-1.9l.6-.9-.9-1.8Z"/></svg>WhatsApp</a></li>
+        <li><a href="https://maps.google.com/?cid=16618686729091458036" target="_blank" rel="noopener" aria-label="La Barbería en Google Maps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>Google Maps</a></li>
+        <li><a href="tel:+51960706851" aria-label="Llamar a La Barbería"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>Llamar</a></li>
+      </ul>
+    </div>
+    <div class="mapa rv"><iframe title="Mapa de La Barbería" loading="lazy" src="https://maps.google.com/maps?q=-12.0737072,-77.0921964&amp;z=17&amp;output=embed"></iframe></div>
+  </div>
+</section>
 </main>
-<footer><span>La Barbería</span><span>2do piso, Av. Rafael Escardó 723, San Miguel</span></footer>
-<div class="barra-res" id="barraRes"><span class="ahora" data-ahora hidden></span><a class="btn" href="https://wa.me/51960706851?text=Hola%2C%20quiero%20reservar%20en%20La%20Barber%C3%ADa" target="_blank" rel="noopener">Reservar</a></div>
-<script>window.CITA = {"wa":"https://wa.me/51960706851","n":"La Barbería","h":{"lun":["09:00","20:00"],"mar":["09:00","20:00"],"mie":["09:00","20:00"],"jue":["09:00","20:00"],"vie":["09:00","20:00"],"sab":["09:00","20:00"],"dom":["10:00","19:00"]},"ant":2}; window.RESENAS = [{"a":"Rodrigo M.","e":5,"f":"Hace 10 meses","t":"Es una buena barbería, dentro de todo he visto que la mayoría de sus barberos dejan a sus clientes satisfechos. Particularmente mi barbero Jonathan es un capo y siempre me hace un buen trabajo. La…","u":"https://maps.app.goo.gl/KkZLVUjEDQyBLaNq6"},{"a":"Mario M.","e":5,"f":"Hace 2 años","t":"Opción de estacionar, 3 lugares regularmente disponibles. Muy buena atención en recepción.…","u":"https://maps.app.goo.gl/MuS2FJQcgPZhJu9VA"},{"a":"Carolina P.","e":5,"f":"Hace 9 meses","t":"Lleve a mi papá a hacerse un corte, la atención del barbero fue muy buena, muy amable y siempre atento a la comodidad de mi papá. Gracias 🫂…","u":"https://maps.app.goo.gl/nWqHcSZ8dTrcRgyB9"},{"a":"Angel R.","e":5,"f":"Hace 2 años","t":"Gracias por la atención, excelente lugar lo recomiendo, no recuerdo el nombre del Barbero, pero es Venezolano. Una plática amena durante el corte. Se los recomiendo. Me asombró que me brindará de…","u":"https://maps.app.goo.gl/X7S6GbtkfPDrKPyz7"},{"a":"Wilson R.","e":5,"f":"Hace 4 años","t":"Exelente atención y servicio, la flaca de la recepción un top","u":"https://maps.app.goo.gl/cotLtz9VVUkJZfbNA"},{"a":"Pablo L.","e":5,"f":"Hace 5 años","t":"Uno de los mejores barberos gracias siempre un trabajo impecable.","u":"https://maps.app.goo.gl/PBN78iFghjxAQEdR8"},{"a":"Jorge L.","e":5,"f":"Hace 7 años","t":"Es un super lugar para darse un engreimiento ya que aparte de atender muy bien tiene los mejores barberos de lima y Sumandole el buen servicio te dan algún refresco o si gustas asta una cervecita de…","u":"https://maps.app.goo.gl/4CtjqWNxzJpM7btWA"},{"a":"Luis F.","e":5,"f":"Hace 8 años","t":"Muy buena atención y se preocupan porque el usuario después de atenderlo se retiren con la certeza de que regresen para otra oportunidad. Sigan así muchachos y lograrán sus objetivos y metas.","u":"https://maps.app.goo.gl/rfyYuWCiDfpqza749"},{"a":"Augusto C.","e":5,"f":"Hace 8 años","t":"Excelente servicio y precio. Te tratan como un cliente regular y te brindan bebidas calientes o frías. Definitivamente volveré.","u":"https://maps.app.goo.gl/Zkp4hypNJkip9Ae67"},{"a":"Top P.","e":5,"f":"Hace 4 años","t":"Muy buen servicio. Se nota que se esmeran en el trabajo que hacen","u":"https://maps.app.goo.gl/pF8nProp2FoiSDTe9"},{"a":"Javier B.","e":5,"f":"Hace 5 años","t":"Excelente atención, con todos los protocolos. Muy profesionales. Super recomendado","u":"https://maps.app.goo.gl/x2hpWiFvsfCsHQnB6"},{"a":"Nelly R.","e":5,"f":"Hace 2 años","t":"Muy buen servicio, excelente atención y rapidez.","u":"https://maps.app.goo.gl/H5P4k1eYoQqM4Z6z6"},{"a":"Liliana T.","e":4,"f":"Hace 3 años","t":"Se esmeran por brindar buena atención. Ambiente agradable.","u":"https://maps.app.goo.gl/SfJXDHKBYhjPc49L9"},{"a":"José","e":5,"f":"Hace 7 años","t":"Buena atención y asesoría, personal educado, conocen su negocio,local amplio y aseado. Fui para que me recorten la barba y el barbero William me orientó acertadamente, indicándome el tipo de corte…","u":"https://maps.app.goo.gl/A9bwrHNAfR5b1HxB8"},{"a":"Carlos A.","e":5,"f":"Hace 9 años","t":"La atención es muy buena, lugar que recomiendo para un buen corte. El trato del personal también es excelente.","u":"https://maps.app.goo.gl/fxubdk9jBBSfKuTK9"},{"a":"Ivonne P.","e":5,"f":"Hace 4 años","t":"Me gustó mucho la atención, es amplio y limpio cumplen con los protocolos.","u":"https://maps.app.goo.gl/9mnEhbYUb7hxGDZ87"},{"a":"Braulio R.","e":5,"f":"Hace 5 años","t":"Excelente servicio en buena zona y cómodo local. Plus: tiene estacionamiento.","u":"https://maps.app.goo.gl/7VPrcJ7ok9caG8wv6"},{"a":"Cliente","e":5,"f":"Hace 9 años","t":"El lugar es limpio y los chicos que trabajar ahí son muy atentos y habiles. Saben cortar el pelo muy bien y son todos jóvenes los precios Son razonables","u":"https://maps.app.goo.gl/du3Sj3ofDLjTqu5r7"},{"a":"Aldo C.","e":5,"f":"Hace un año","t":"El barbero David es muy bueno, tiene paciencia y profesionalismo","u":"https://maps.app.goo.gl/t9UZrAzz5zjySoXm6"},{"a":"José A.","e":5,"f":"Hace 3 años","t":"Muy buen lugar para cortarse el pelo. Excelentes barberos, amplio espacio y cordial atención.","u":"https://maps.app.goo.gl/uYG4VTV4RebDNNXf9"},{"a":"Cristian A.","e":5,"f":"Hace 9 años","t":"Buena atención. Todos realmente saben hacer cortes muy buenos.","u":"https://maps.app.goo.gl/fbevFr81PQKJDXDe8"}];</script>
-<script src="../_comun/base.js"></script>
-<script>(function () {
-  var s = [].map.call(document.querySelectorAll(".sv span"), function (e) { return e.textContent; });
-  if (!s.length) return;
-  var fila = s.concat(s, s, s).map(function (t) { return "<span>" + t + "</span>"; }).join("");
-  var m = document.createElement("div"); m.className = "marq"; m.setAttribute("aria-hidden", "true");
-  m.innerHTML = "<div>" + fila + fila + "</div>";
-  document.querySelector(".hero").after(m);
-})();</script>
+
+<footer class="foot mono">
+  <span>La Barbería Men's Club · Av. Rafael Escardó 723, 2.º piso, San Miguel</span>
+  <span>Demo referencial preparada como propuesta. Fotos y datos tomados de su Instagram y su ficha de Google.</span>
+</footer>
+
+<div class="barra off" id="barra"><a class="btn big" href="https://wa.me/51960706851?text=Hola%2C%20quiero%20reservar%20en%20La%20Barber%C3%ADa." target="_blank" rel="noopener">Reservar por WhatsApp →</a></div>
+
+<script defer src="lib/gsap.min.js?v=20261024"></script>
+<script defer src="lib/ScrollTrigger.min.js?v=20261024"></script>
+<script defer src="lib/manifest.js?v=20261024"></script>
+<script defer src="main.js?v=20261024"></script>
 </body>
 </html>

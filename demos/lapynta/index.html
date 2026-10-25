@@ -3,172 +3,158 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lapynta Barbería</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rye&family=Josefin+Sans:wght@300;400;600&display=swap">
-<link rel="stylesheet" href="../_comun/base.css">
-<style>
-:root { --bg: #ece3c6; --fg: #2a3335; --acento: #a93935; --suave: #4b5d5f; --f-titulo: "Rye", Georgia, serif; --f-texto: "Josefin Sans"; --radio: 4px; --trazo: 1.8; color-scheme: light; }
-/* Fondo: crema con grano suave y una luz que sigue al cursor */
-body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(40% 40% at 15% 20%, rgba(169, 57, 53, .10), transparent 70%), radial-gradient(40% 40% at 85% 80%, rgba(50, 75, 78, .14), transparent 70%); }
-body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 30%), rgba(255, 252, 240, .7), transparent 70%); }
-.btn, .cta { text-transform: uppercase; letter-spacing: .14em; font-size: 13px; font-weight: 600; color: #fff; }
-.hero::before, .hero::after { content: ""; position: absolute; left: 0; right: 0; height: 40px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='40'%3E%3Cpath d='M0 30 20 10 40 30 60 10 80 30' fill='none' stroke='%23a93935' stroke-width='6'/%3E%3Cpath d='M0 40 20 20 40 40 60 20 80 40' fill='none' stroke='%23324b4e' stroke-width='6'/%3E%3C/svg%3E") 0 0 / 80px 40px repeat-x; }
-.hero::before { top: 76px; } .hero::after { bottom: 0; }
-.hero h1 { display: grid; gap: 8px; line-height: 1; font-weight: 400; }
-.hero h1 .a { font-size: clamp(54px, 14vw, 180px); color: var(--acento); letter-spacing: .02em; }
-.hero h1 .b { font-family: "Josefin Sans", sans-serif; font-size: clamp(16px, 3vw, 32px); letter-spacing: .5em; font-weight: 600; color: #324b4e; }
-h2 { font-weight: 400; letter-spacing: .01em; }
-.divisor { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='40'%3E%3Cpath d='M0 30 20 10 40 30 60 10 80 30' fill='none' stroke='%23a93935' stroke-width='6'/%3E%3Cpath d='M0 40 20 20 40 40 60 20 80 40' fill='none' stroke='%23324b4e' stroke-width='6'/%3E%3C/svg%3E") 0 0 / 80px 40px repeat-x; opacity: .85; }
-.sv span { font-weight: 600; }
-.val .n { color: var(--acento); font-weight: 400; }
-.marca img { box-shadow: 0 0 0 2px #324b4e; }
-@media (prefers-reduced-motion: no-preference) {
-  .divisor { animation: zig 14s linear infinite; }
-  .hero::before { animation: zig 6s linear infinite; } .hero::after { animation: zig 6s linear infinite reverse; }
-  @keyframes zig { to { background-position: 80px 0; } }
-}
-</style>
-<noscript><style>.rv { opacity: 1 !important; transform: none !important; }</style></noscript>
+<title>Lapynta Barbería · Jr. San Martín 793, Magdalena del Mar</title>
+<meta name="description" content="Lapynta Barbería en Magdalena del Mar, Lima: barbería clásica con barberos especializados que te asesoran, cortes, barba, limpieza facial y tratamientos. 5,0 en Google con 101 reseñas. Demo referencial.">
+<meta name="theme-color" content="#ece3c6">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rye&family=Special+Elite&family=Zilla+Slab:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20261026">
+<script>document.documentElement.classList.add("js")</script>
 </head>
-<body class="anim">
-<header class="top">
-  <a class="marca" href="#inicio"><img src="logo.jpg" alt="Logo de Lapynta Barbería"></a>
-  <nav><a href="#servicios">Servicios</a><a href="#ubicacion">Ubicación</a><a href="#contacto">Contacto</a><a class="cta ico" href="https://wa.me/51999119911?text=Hola%2C%20quiero%20reservar%20en%20Lapynta%20Barber%C3%ADa" target="_blank" rel="noopener" aria-label="Reservar" title="Reservar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a></nav>
+<body>
+
+<div class="prog" id="prog" aria-hidden="true"></div>
+
+<header class="mast" id="mast">
+  <div class="mast-top tw">
+    <span>Edición Jr. San Martín 793</span>
+    <span id="fecha">Magdalena del Mar, Lima</span>
+    <span>Lunes a domingo · 10 a 20 h</span>
+  </div>
+  <div class="mast-main">
+    <img class="seal" src="assets/img/logo.webp" width="74" height="74" alt="Logo de Lapynta Barbería">
+    <a class="title" href="#inicio" aria-label="Lapynta Barbería, inicio"><span class="rye">LAPYNTA</span><small class="tw">Barbería · Staff de barberos profesionales a tu servicio</small></a>
+    <img class="seal r" src="assets/img/logo.webp" width="74" height="74" alt="" aria-hidden="true">
+    <button class="burger" id="burger" type="button" aria-label="Abrir el menú" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+  </div>
+  <i class="zig" aria-hidden="true"></i>
+  <nav class="menu tw" id="menu">
+    <a href="#servicios">Servicios</a>
+    <a href="#ambiente">El local</a>
+    <a href="#cartas">Cartas</a>
+    <a href="#reserva">Turnos</a>
+    <a href="#visita">Dónde estamos</a>
+    <a class="cta" href="#reserva">Reservar</a>
+  </nav>
 </header>
+
 <main>
-<section id="inicio" class="hero"><div class="hero-in">
-  <h1 aria-label="Lapynta Barbería" data-par style="--kx:1;--ky:.14"><span class="a">LAPYNTA</span><span class="b">BARBERÍA</span></h1>
-  <p class="baja" data-par style="--kx:.5;--ky:.07">Staff de barberos profesionales a tu servicio.</p>
-  <p class="ahora" data-ahora hidden></p>
-  <div class="acc"><a class="btn ico" href="https://wa.me/51999119911?text=Hola%2C%20quiero%20reservar%20en%20Lapynta%20Barber%C3%ADa" target="_blank" rel="noopener" aria-label="Reservar por WhatsApp" title="Reservar por WhatsApp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a><a class="btn sec ico" href="#ubicacion" aria-label="Cómo llegar" title="Cómo llegar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></a></div>
-</div></section>
-<section id="nosotros"><div class="in-w">
-  <span class="lbl rv">Nosotros</span>
-  <div class="about"><h2 class="rv">Lapynta Barbería</h2><p class="rv">Lapynta Barbería es una barbería en Magdalena del Mar, con 5.0 de puntaje y 101 reseñas en Google. Ofrece corte para caballeros. Reserva tu cita y ven a conocernos.</p></div>
-  <div class="why"><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg><h3>5.0 ★ en Google</h3><p>Calificación basada en 101 reseñas de clientes en Google Maps.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Reserva fácil</h3><p>Agenda tu cita por WhatsApp en pocos minutos.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>En Magdalena del Mar</h3><p>Jr. San Martín 793. Fácil de encontrar.</p></div></div>
-</div></section>
-
-<div class="divisor" aria-hidden="true"></div>
-<section id="cifras"><div class="in-w">
-  <div class="cifras">
-    <div class="cifra rv"><b data-n="5.0" data-dec="1">5.0</b><span>de puntaje en Google ★</span></div>
-    <div class="cifra rv"><b data-n="101">101</b><span>reseñas de clientes</span></div>
-    <div class="cifra rv"><b data-n="7">7</b><span>días de atención a la semana</span></div>
-  </div>
-</div></section>
-
-<div class="divisor" aria-hidden="true"></div>
-<section id="promo"><div class="in-w">
-  <div class="promo rv">
-    <div class="promo-i"><span class="lbl">Promoción del mes</span><h3>Corte + barba</h3><p>Llévate el combo completo a precio especial durante este mes.</p><p class="promo-p">S/ 30</p></div>
-    <div class="cuenta" id="cuenta" role="timer" aria-label="Tiempo que queda de la promoción"><span><b data-u="d">--</b>días</span><span><b data-u="h">--</b>horas</span><span><b data-u="m">--</b>min</span><span><b data-u="s">--</b>seg</span></div>
-    <a class="btn" href="https://wa.me/51999119911?text=Hola%2C%20quiero%20la%20promoci%C3%B3n%3A%20Corte%20%2B%20barba" target="_blank" rel="noopener">Quiero la promo</a>
-  </div>
-  <p class="nota-ref rv">Promoción de ejemplo. Termina el último día del mes.</p>
-</div></section>
-
-<div class="divisor" aria-hidden="true"></div>
-<section id="equipo"><div class="in-w">
-  <span class="lbl rv">Equipo</span><h2 class="rv">Quién te atiende</h2>
-  <div class="eq"><article class="rv"><span class="eq-av" aria-hidden="true">M</span><h3>Mauro</h3><p class="eq-r">Maestro barbero</p><p class="eq-e">Cortes clásicos y navaja</p><a class="btn sec" href="https://wa.me/51999119911?text=Hola%2C%20quiero%20reservar%20con%20Mauro%20en%20Lapynta%20Barber%C3%ADa" target="_blank" rel="noopener">Reservar con Mauro</a></article><article class="rv"><span class="eq-av" aria-hidden="true">D</span><h3>Diego</h3><p class="eq-r">Barbero</p><p class="eq-e">Fade y degradados</p><a class="btn sec" href="https://wa.me/51999119911?text=Hola%2C%20quiero%20reservar%20con%20Diego%20en%20Lapynta%20Barber%C3%ADa" target="_blank" rel="noopener">Reservar con Diego</a></article><article class="rv"><span class="eq-av" aria-hidden="true">J</span><h3>Joaquín</h3><p class="eq-r">Barbero</p><p class="eq-e">Diseño de barba</p><a class="btn sec" href="https://wa.me/51999119911?text=Hola%2C%20quiero%20reservar%20con%20Joaqu%C3%ADn%20en%20Lapynta%20Barber%C3%ADa" target="_blank" rel="noopener">Reservar con Joaquín</a></article></div>
-  <p class="nota-ref rv">Equipo referencial.</p>
-</div></section>
-
-<div class="divisor" aria-hidden="true"></div>
-<section id="servicios"><div class="in-w">
-  <span class="lbl rv">Servicios y galería</span><h2 class="rv">Lo que hacemos</h2>
-  <div class="sc-row rv" style="--abierta:4.2"><article class="sc open"><button type="button" class="sc-b" id="sc-h0" aria-expanded="true" aria-controls="sc-p0"><span class="sc-n">01</span><span class="sc-t">Corte para caballeros</span></button><div class="sc-media" id="sc-p0" role="region" aria-labelledby="sc-h0"><img class="a on" src="img/s1-a.svg" alt="Ilustración referencial de Corte para caballeros" loading="lazy"><img class="b" src="img/s1-b.svg" alt="Ilustración referencial de Corte para caballeros" loading="lazy"><p class="sc-d">Cortes precisos, a tu estilo.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h1" aria-expanded="false" aria-controls="sc-p1"><span class="sc-n">02</span><span class="sc-t">Cortes</span></button><div class="sc-media" id="sc-p1" role="region" aria-labelledby="sc-h1"><img class="a on" src="img/s2-a.svg" alt="Ilustración referencial de Cortes" loading="lazy"><img class="b" src="img/s2-b.svg" alt="Ilustración referencial de Cortes" loading="lazy"><p class="sc-d">Cortes precisos, a tu estilo.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h2" aria-expanded="false" aria-controls="sc-p2"><span class="sc-n">03</span><span class="sc-t">Barba</span></button><div class="sc-media" id="sc-p2" role="region" aria-labelledby="sc-h2"><img class="a on" src="img/s3-a.svg" alt="Ilustración referencial de Barba" loading="lazy"><img class="b" src="img/s3-b.svg" alt="Ilustración referencial de Barba" loading="lazy"><p class="sc-d">Perfilado y arreglo de barba.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h3" aria-expanded="false" aria-controls="sc-p3"><span class="sc-n">04</span><span class="sc-t">Estilo</span></button><div class="sc-media" id="sc-p3" role="region" aria-labelledby="sc-h3"><img class="a on" src="img/s4-a.svg" alt="Ilustración referencial de Estilo" loading="lazy"><img class="b" src="img/s4-b.svg" alt="Ilustración referencial de Estilo" loading="lazy"><p class="sc-d">Asesoría para encontrar tu estilo.</p></div></article></div>
-  <p class="nota-ref rv">Ilustraciones referenciales.</p>
-</div></section>
-
-
-<div class="divisor" aria-hidden="true"></div>
-<section id="resultado"><div class="in-w">
-  <span class="lbl rv">Resultado</span><h2 class="rv">Antes y después</h2>
-  <p class="rv" style="color:var(--suave);margin-top:10px">Desliza para ver la diferencia de un buen corte.</p>
-  <div class="ba rv" style="--p:50%">
-    <div class="ba-i"><svg viewBox="0 0 400 300" role="img" aria-label="Después: corte limpio y definido"><rect width="400" height="300" fill="#a93935" opacity=".12"/><path d="M50 300c8-52 40-62 100-66h100c60 4 92 14 100 66z" fill="#4b5d5f"/><rect x="176" y="204" width="48" height="54" rx="14" fill="#d9ae8a"/><ellipse cx="200" cy="148" rx="62" ry="78" fill="#d9ae8a"/><path d="M139 124C139 82 168 70 200 70s61 12 61 54c-12-20-32-27-61-27s-49 7-61 27z" fill="#2d2825"/><ellipse cx="141" cy="140" rx="7" ry="22" fill="#2d2825" opacity=".22"/><ellipse cx="259" cy="140" rx="7" ry="22" fill="#2d2825" opacity=".22"/><path d="M146 168c4 36 26 52 54 52s50-16 54-52c-10 22-28 30-54 30s-44-8-54-30z" fill="#2d2825" opacity=".85"/><path d="M146 168c4 36 26 52 54 52s50-16 54-52" fill="none" stroke="#a93935" stroke-width="2" opacity=".7"/><g fill="#2d2825"><circle cx="177" cy="146" r="4.5"/><circle cx="223" cy="146" r="4.5"/></g><path d="M186 186q14 8 28 0" fill="none" stroke="#2d2825" stroke-width="3" stroke-linecap="round"/></svg></div>
-    <div class="ba-i ba-b"><svg viewBox="0 0 400 300" role="img" aria-label="Antes: cabello y barba sin arreglar"><rect width="400" height="300" fill="#a93935" opacity=".12"/><path d="M50 300c8-52 40-62 100-66h100c60 4 92 14 100 66z" fill="#4b5d5f"/><rect x="176" y="204" width="48" height="54" rx="14" fill="#d9ae8a"/><ellipse cx="200" cy="148" rx="62" ry="78" fill="#d9ae8a"/><path d="M124 150C96 84 140 36 200 42s104 44 76 108c8-34-14-56-40-60-12 10-24 14-36 14s-24-4-36-14c-26 4-48 26-40 60z" fill="#2d2825"/><path d="M118 100c-12-6-14-22-2-30M284 96c12-6 16-22 4-30M170 40c-6-14 8-24 18-18M224 40c10-12 24-4 20 10" fill="none" stroke="#2d2825" stroke-width="9" stroke-linecap="round"/><path d="M142 166c2 44 28 62 58 62s56-18 58-62c-14 16-24 36-58 34-34 2-44-18-58-34z" fill="#2d2825" opacity=".55"/><g stroke="#2d2825" stroke-width="2" stroke-linecap="round" opacity=".6"><path d="M150 186l-6 6M162 204l-6 8M246 206l6 8M256 188l6 6M200 232v8"/></g><g fill="#2d2825"><circle cx="177" cy="146" r="4.5"/><circle cx="223" cy="146" r="4.5"/></g><path d="M186 186q14 8 28 0" fill="none" stroke="#2d2825" stroke-width="3" stroke-linecap="round"/></svg></div>
-    <span class="ba-t ba-tb">Antes</span><span class="ba-t ba-ta">Después</span>
-    <span class="ba-l" aria-hidden="true"><i></i></span>
-    <input type="range" min="0" max="100" value="50" aria-label="Comparar antes y después">
-  </div>
-  <p class="nota-ref rv">Ilustración referencial.</p>
-</div></section>
-
-<div class="divisor" aria-hidden="true"></div>
-<section id="calcula"><div class="in-w">
-  <span class="lbl rv">Tu cita</span><h2 class="rv">Arma tu servicio</h2>
-  <form class="calc rv" id="calc" onsubmit="return false">
-    <ul class="calc-l"><li><label><input type="checkbox" data-p="25" data-m="45" data-n="Corte para caballeros"><span class="ck" aria-hidden="true"></span><span class="nm">Corte para caballeros</span><span class="du">45 min</span><b>S/ 25</b></label></li><li><label><input type="checkbox" data-p="15" data-m="20" data-n="Barba"><span class="ck" aria-hidden="true"></span><span class="nm">Barba</span><span class="du">20 min</span><b>S/ 15</b></label></li><li><label><input type="checkbox" data-p="35" data-m="60" data-n="Corte + barba"><span class="ck" aria-hidden="true"></span><span class="nm">Corte + barba</span><span class="du">60 min</span><b>S/ 35</b></label></li><li><label><input type="checkbox" data-p="8" data-m="10" data-n="Perfilado de cejas"><span class="ck" aria-hidden="true"></span><span class="nm">Perfilado de cejas</span><span class="du">10 min</span><b>S/ 8</b></label></li></ul>
-    <div class="calc-t">
-      <div><span>Total estimado</span><b id="calcTotal">S/ 0</b></div>
-      <div><span>Duración</span><b id="calcMin">0 min</b></div>
-      <a class="btn" id="calcBtn" href="https://wa.me/51999119911?text=Hola%2C%20quiero%20reservar%20en%20Lapynta%20Barber%C3%ADa" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+<section class="front" id="inicio">
+  <div class="front-g">
+    <div class="front-t">
+      <p class="kicker tw">Primera plana</p>
+      <h1 class="rye">Un buen corte, con barberos que <em>te escuchan.</em></h1>
+      <p class="lede">Lapynta es una barbería clásica donde puedes encontrar barberos especializados que te asesoran sobre tu nuevo corte. Con un ambiente de calle vieja: calavera de toro, rueda de carreta y sillones de toda la vida.</p>
+      <div class="cta-row tw">
+        <a class="btn" href="#reserva">Pedir mi turno</a>
+        <a class="btn ghost" href="#servicios">Ver servicios</a>
+      </div>
+      <p class="meta tw"><a class="rating" href="https://maps.google.com/?cid=6398233229638788309" target="_blank" rel="noopener" aria-label="5,0 en Google Maps con 101 reseñas"><b data-count="5" data-dec="1">5,0</b> ★★★★★ · <span data-count="101">101</span> reseñas en Google</a><span class="ahora" id="ahora" hidden></span></p>
     </div>
-    <p class="nota-ref">Precios y duraciones referenciales.</p>
-  </form>
-</div></section>
-
-<div class="divisor" aria-hidden="true"></div>
-<section id="fidelidad"><div class="in-w">
-  <span class="lbl rv">Fidelidad</span><h2 class="rv">Tu tarjeta de sellos</h2>
-  <div class="fid rv" id="fid" data-n="5" data-k="fid-lapynta" data-premio="Corte gratis">
-    <ol class="fid-s"><li><span>1</span></li><li><span>2</span></li><li><span>3</span></li><li><span>4</span></li><li><span>5</span></li></ol>
-    <p class="fid-t" id="fidT" aria-live="polite">Cada visita suma un sello. A la visita 5: corte gratis.</p>
-    <div class="acc"><button class="btn" type="button" id="fidBtn">Marcar una visita</button><button class="btn sec" type="button" id="fidReset">Reiniciar</button></div>
+    <figure class="front-ph">
+      <div class="im"><img src="assets/img/pared.webp" width="765" height="788" alt="Cliente con capa de rayas frente a una pared con calavera de toro sobre una rueda de carreta y carteles antiguos"></div>
+      <figcaption class="tw">Foto 1. La pared de Lapynta, en Jr. San Martín 793.</figcaption>
+    </figure>
   </div>
-  <p class="nota-ref rv">Demostración: se guarda solo en este dispositivo.</p>
-</div></section>
-<div class="divisor" aria-hidden="true"></div>
-<section id="reservar"><div class="in-w">
-  <span class="lbl rv">Reservar</span><h2 class="rv">Cómo reservar</h2>
-  <ol class="pasos"><li class="rv"><span class="num">1</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Escríbenos</h3><p>Envíanos un mensaje por WhatsApp.</p></li><li class="rv"><span class="num">2</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><h3>Elige tu horario</h3><p>Dinos el servicio que quieres y cuándo te viene mejor.</p></li><li class="rv"><span class="num">3</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>Ven al local</h3><p>Te esperamos en Jr. San Martín 793, Magdalena del Mar.</p></li></ol>
-  <form id="cita" class="cita rv" novalidate>
-    <label>Servicio<select name="s"><option>Corte para caballeros</option></select></label>
-    <label>Día<input type="date" name="d" required></label>
-    <label>Hora<select name="h" required></select></label>
-    <label>Tu nombre<input type="text" name="n" autocomplete="given-name" maxlength="40" required></label>
-    <button class="btn" type="submit">Solicitar cita</button>
-    <p class="nota">Horario referencial. El negocio confirma tu cita por WhatsApp.</p>
-    <p class="err" role="alert"></p>
-  </form>
-</div></section>
+</section>
 
-
-<div class="divisor" aria-hidden="true"></div>
-<section id="sedes"><div class="in-w">
-  <span class="lbl rv">Sedes</span><h2 class="rv">Dónde encontrarnos</h2>
-  <ul class="sedes"><li class="rv">Lapynta Salón: Jr. San Martín 791, Magdalena del Mar (mismo nombre y misma cuadra)</li></ul>
-</div></section>
-
-
-
-<div class="divisor" aria-hidden="true"></div>
-<section id="ubicacion" class="fus"><div class="in-w">
-  <span class="lbl rv">Ubicación y opiniones</span><h2 class="rv">Visítanos y mira lo que dicen</h2>
-  <div class="fus-g">
-    <div class="fus-m rv"><address>Jr. San Martín 793<br>Magdalena del Mar, Lima</address>
-      <div class="mapa"><iframe title="Mapa de Lapynta Barbería" loading="lazy" src="https://maps.google.com/maps?q=-12.0890023,-77.0741012&z=17&output=embed"></iframe></div>
-      <a class="btn sec ico" href="https://maps.google.com/?cid=6398233229638788309" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></a></div>
-    <div class="fus-o">
-  <div class="val rv"><span class="n">5.0 ★</span><p>101 reseñas en Google Maps</p></div>
-  <div class="opin cinta manual"><p class="opin-h"><span class="vivo" aria-hidden="true"></span>Lo que dicen en Google Maps<button type="button" class="feed-ctl" aria-pressed="false">Pausar</button></p><ul class="feed"><li class="rev"><span class="av2" aria-hidden="true">O</span><button type="button" class="bub" data-rv="0" aria-haspopup="dialog"><span class="rh"><b>Olga D.</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">Hace 5 meses</span></span><span class="rtxt">Excelente atención y un ambiente súper acogedor. Quedé feliz con el resultado y definitivamente volveré.</span><span class="ver">Ver en Google ↗</span></button></li><li class="rev"><span class="av2" aria-hidden="true">G</span><button type="button" class="bub" data-rv="1" aria-haspopup="dialog"><span class="rh"><b>Gonzalo A.</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">Hace un año</span></span><span class="rtxt">Buen servicio, me realizaron mascarilla facial profunda y me gustó el resultado.... Mientras esperaba mi turno me ofrecieron bebidas, muy buena atención.... 100% recomendado, y lo mejor ubicado cerca…</span><span class="ver">Ver en Google ↗</span></button></li><li class="rev"><span class="av2" aria-hidden="true">S</span><button type="button" class="bub" data-rv="2" aria-haspopup="dialog"><span class="rh"><b>Swidleen N.</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">Hace un año</span></span><span class="rtxt">Desde que descubrí Barbería 100, no he vuelto a otro lugar. El ambiente es moderno y acogedor, con música excelente y un equipo que realmente sabe lo que hace. Ernesto y Oliver son unos cracks:…</span><span class="ver">Ver en Google ↗</span></button></li></ul><a class="mas" href="https://maps.google.com/?cid=6398233229638788309" target="_blank" rel="noopener">Ver todas las reseñas en Google Maps →</a></div>
-</div>
+<section class="sec servicios" id="servicios">
+  <header class="sec-h rv"><p class="tag tw">Clasificados</p><h2 class="rye">Servicios</h2><p class="sub">Lo que se hace en el local, según su catálogo de WhatsApp y las reseñas de sus clientes.</p></header>
+  <div class="cols">
+    <ul class="pl rv">
+      <li><span class="n">Limpieza facial<small>Vaporización con ozono, exfoliación, black mask y masajes · unos 45 min</small></span><i></i><b>S/ 35</b></li>
+      <li><span class="n">Corte para caballeros<small>Con asesoría del barbero</small></span><i></i><b class="q">Consultar</b></li>
+      <li><span class="n">Corte para niños</span><i></i><b class="q">Consultar</b></li>
+      <li><span class="n">Afeitado y arreglo de barba</span><i></i><b class="q">Consultar</b></li>
+    </ul>
+    <ul class="pl rv">
+      <li><span class="n">Mascarilla facial profunda<small>También de colágeno</small></span><i></i><b class="q">Consultar</b></li>
+      <li><span class="n">Hidratación capilar</span><i></i><b class="q">Consultar</b></li>
+      <li><span class="n">Tratamiento capilar</span><i></i><b class="q">Consultar</b></li>
+      <li><span class="n">Pinta y lavado de cortesía<small>Según una reseña</small></span><i></i><b class="q">Consultar</b></li>
+    </ul>
   </div>
-</div></section>
-<div class="divisor" aria-hidden="true"></div>
-<section id="contacto" class="cont"><div class="in-w">
-  <h2 class="rv">Reserva tu cita</h2>
-  <p class="rv" style="color:var(--suave)">+51 999 119 911</p>
-  <div class="acc rv"><a class="btn ico" href="https://wa.me/51999119911?text=Hola%2C%20quiero%20reservar%20en%20Lapynta%20Barber%C3%ADa" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp" title="Escríbenos por WhatsApp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a><a class="btn sec ico" href="tel:+51999119911" aria-label="Llamar" title="Llamar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a><a class="btn sec ico" href="https://www.instagram.com/lapyntabarberia/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
-</div></section>
+  <p class="nota tw rv">Solo la limpieza facial tiene precio publicado en su catálogo. Los demás precios se consultan por WhatsApp.</p>
+</section>
+
+<section class="sec ambiente" id="ambiente">
+  <header class="sec-h rv"><p class="tag tw">Crónica del local</p><h2 class="rye">Un sitio con carácter</h2></header>
+  <div class="dos">
+    <figure class="rv" data-rv="izq"><div class="im"><img src="assets/img/sillon.webp" width="678" height="800" alt="Cliente reclinado en un sillón rojo mientras un barbero con camisa de Lapynta trabaja detrás" loading="lazy"></div><figcaption class="tw">Foto 2. Los sillones de la barbería.</figcaption></figure>
+    <div class="texto rv">
+      <p class="cap">Los clientes cuentan que mientras esperan su turno les ofrecen café u otras bebidas, que el local está limpio y que el barbero escucha: si le pides que baje un poco, no te deja pelado.</p>
+      <p>El estilo de la casa es clásico y de aire western: capas de rayas rojas, azules y blancas, carteles de metal en la pared y una calavera de toro con sombrero sobre una rueda de carreta.</p>
+      <p>Más de un cliente la nombra entre las mejores barberías de Magdalena del Mar.</p>
+    </div>
+    <figure class="rv" data-rv="der"><div class="im"><img src="assets/img/ventana.webp" width="646" height="800" alt="Barbero con mascarilla cortando el cabello a un cliente junto a la ventana de la calle" loading="lazy"></div><figcaption class="tw">Foto 3. Un corte junto a la ventana.</figcaption></figure>
+  </div>
+</section>
+
+<section class="sec cartas" id="cartas">
+  <header class="sec-h rv"><p class="tag tw">Cartas al director</p><h2 class="rye">Lo que escriben los clientes</h2><p class="sub">5,0 en Google con 101 reseñas.</p></header>
+  <ul class="rvs">
+    <li class="rv"><blockquote>Que buen corte me quedó, excelente. Barbero sí escucha a sus clientes y si le dices baja un poco no te deja pelado.</blockquote><p class="tw">Samir I. · hace un año</p></li>
+    <li class="rv"><blockquote>Excelente atención y un ambiente súper acogedor. Quedé feliz con el resultado y definitivamente volveré.</blockquote><p class="tw">Olga D. · hace 5 meses</p></li>
+    <li class="rv"><blockquote>Muy buen servicio, 100 % recomendado. La atención es muy buena, bueno, bonito y barato.</blockquote><p class="tw">Nilsson T. · hace un año</p></li>
+    <li class="rv"><blockquote>Excelentes barberos. Me realicé un servicio completo de corte de cabello y el ambiente, súper limpio. Una de las mejores barberías de Magdalena.</blockquote><p class="tw">Martin C. · hace un año</p></li>
+    <li class="rv"><blockquote>Me realizaron una hidratación capilar. Muy bien servicio. Además, mientras esperaba mi turno me ofrecieron bebidas.</blockquote><p class="tw">Mariano R. · hace un año</p></li>
+    <li class="rv"><blockquote>A mi hijo le realizaron un corte para niños y le encantó. Buen servicio, ubicado en Magdalena del Mar.</blockquote><p class="tw">Christyan C. · hace un año</p></li>
+  </ul>
+  <p class="center rv"><a class="link tw" href="https://maps.google.com/?cid=6398233229638788309" target="_blank" rel="noopener">Ver las 101 reseñas en Google Maps ↗</a></p>
+</section>
+
+<section class="sec reserva" id="reserva">
+  <header class="sec-h rv"><p class="tag tw">Avisos</p><h2 class="rye">Pide tu turno</h2></header>
+  <form class="book rv" id="book" onsubmit="return false">
+    <div class="f-row"><span class="lbl tw">Día</span><div class="days" id="days" role="group" aria-label="Día"></div></div>
+    <div class="f-row"><span class="lbl tw">Hora</span><div class="slots" id="slots" role="group" aria-label="Hora"></div><p class="left tw" id="left" aria-live="polite"></p></div>
+    <div class="f-row"><label class="lbl tw" for="svc">Servicio</label>
+      <select id="svc"><option>Corte para caballeros</option><option>Corte para niños</option><option>Afeitado y arreglo de barba</option><option>Limpieza facial · S/ 35</option><option>Mascarilla facial profunda</option><option>Hidratación o tratamiento capilar</option></select></div>
+    <a class="btn big" id="bookBtn" href="https://wa.me/51999119911" target="_blank" rel="noopener"><span id="bookTxt">Reservar por WhatsApp</span></a>
+    <p class="fine tw">Horas libres de ejemplo para esta demo; la barbería confirma por WhatsApp. Las horas respetan su horario real.</p>
+  </form>
+</section>
+
+<section class="sec visita" id="visita">
+  <header class="sec-h rv"><p class="tag tw">Dónde estamos</p><h2 class="rye">Jr. San Martín 793</h2></header>
+  <div class="visita-g">
+    <div class="rv">
+      <address>Magdalena del Mar, Lima<br><small class="tw">En la misma cuadra está Lapynta Salón, en el 791.</small></address>
+      <table class="hrs tw" id="hrs"><caption class="sr">Horario de atención</caption>
+        <tr data-d="1"><th>Lunes</th><td>10:00 – 20:00</td></tr>
+        <tr data-d="2"><th>Martes</th><td>10:00 – 20:00</td></tr>
+        <tr data-d="3"><th>Miércoles</th><td>10:00 – 20:00</td></tr>
+        <tr data-d="4"><th>Jueves</th><td>10:00 – 20:00</td></tr>
+        <tr data-d="5"><th>Viernes</th><td>10:00 – 20:00</td></tr>
+        <tr data-d="6"><th>Sábado</th><td>10:00 – 20:00</td></tr>
+        <tr data-d="0"><th>Domingo</th><td>10:00 – 18:00</td></tr>
+      </table>
+      <ul class="soc tw">
+        <li><a href="https://wa.me/51999119911" target="_blank" rel="noopener" aria-label="WhatsApp de Lapynta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.3-4.2A8 8 0 1 1 8.3 18.8Z"/><path d="M9 9.5c.3 2.2 2.3 4.3 4.8 5l1.3-1.3-1.8-.9-.9.6c-.8-.4-1.5-1.1-1.9-1.9l.6-.9-.9-1.8Z"/></svg>WhatsApp</a></li>
+        <li><a href="https://www.instagram.com/lapyntabarberia/" target="_blank" rel="noopener" aria-label="Instagram de Lapynta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6" fill="currentColor"/></svg>Instagram</a></li>
+        <li><a href="https://maps.google.com/?cid=6398233229638788309" target="_blank" rel="noopener" aria-label="Lapynta en Google Maps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>Google Maps</a></li>
+        <li><a href="tel:+51999119911" aria-label="Llamar a Lapynta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>Llamar</a></li>
+      </ul>
+    </div>
+    <div class="mapa rv" data-rv="der"><iframe title="Mapa de Lapynta Barbería" loading="lazy" src="https://maps.google.com/maps?q=-12.0890023,-77.0741012&amp;z=17&amp;output=embed"></iframe></div>
+  </div>
+</section>
 </main>
-<footer><span>Lapynta Barbería</span><span>Jr. San Martín 793, Magdalena del Mar</span></footer>
-<div class="barra-res" id="barraRes"><span class="ahora" data-ahora hidden></span><a class="btn" href="https://wa.me/51999119911?text=Hola%2C%20quiero%20reservar%20en%20Lapynta%20Barber%C3%ADa" target="_blank" rel="noopener">Reservar</a></div>
-<script>window.CITA = {"wa":"https://wa.me/51999119911","n":"Lapynta Barbería","h":{"lun":["10:00","20:00"],"mar":["10:00","20:00"],"mie":["10:00","20:00"],"jue":["10:00","20:00"],"vie":["10:00","20:00"],"sab":["10:00","20:00"],"dom":["10:00","18:00"]},"ant":2}; window.RESENAS = [{"a":"Olga D.","e":5,"f":"Hace 5 meses","t":"Excelente atención y un ambiente súper acogedor. Quedé feliz con el resultado y definitivamente volveré.","u":"https://maps.app.goo.gl/wdyM7muzD61wDprq7"},{"a":"Gonzalo A.","e":5,"f":"Hace un año","t":"Buen servicio, me realizaron mascarilla facial profunda y me gustó el resultado.... Mientras esperaba mi turno me ofrecieron bebidas, muy buena atención.... 100% recomendado, y lo mejor ubicado cerca…","u":"https://maps.app.goo.gl/nn73X2angmxBVssaA"},{"a":"Swidleen N.","e":5,"f":"Hace un año","t":"Desde que descubrí Barbería 100, no he vuelto a otro lugar. El ambiente es moderno y acogedor, con música excelente y un equipo que realmente sabe lo que hace. Ernesto y Oliver son unos cracks:…","u":"https://maps.app.goo.gl/ZhPkcQyyFuZ3mie88"},{"a":"Mariano R.","e":5,"f":"Hace un año","t":"Me realizaron una hidratación capilar... Muy bien servicio. Además, mientras esperaba mi turno me ofrecieron bebidas... Una de las mejores barbería de Magdalena","u":"https://maps.app.goo.gl/v6a9V1qYPLws2ESbA"},{"a":"Frank H.","e":5,"f":"Hace un año","t":"Buen servicio de tratamiento capilar .... Muy buena atención,mientras esperaba mi turno para ser atendido, me ofrecieron café ..... Una de las mejores barberías de Magdalena","u":"https://maps.app.goo.gl/et6WzfosWsXz4hsu9"},{"a":"Samir I.","e":5,"f":"Hace un año","t":"Que buen corte me quedó, excelente. Barbero si escucha a sus cliente y si le dices baja un poco no te deja pelado","u":"https://maps.app.goo.gl/nVFToNqANRqQRwoEA"},{"a":"Nilsson T.","e":5,"f":"Hace un año","t":"Muy buen servicio, 100% recomendado. La atención es muy buena, bueno bonito y barato.","u":"https://maps.app.goo.gl/nofExec7R1HFHJyLA"},{"a":"Christyan C.","e":5,"f":"Hace un año","t":"A mí hijo le realizaron un corte para niños y le encantó.... Buen servicio ubicado en Magdalena del Mar","u":"https://maps.app.goo.gl/w9QoVcNVqUAtXAmj6"},{"a":"Gianmarco R.","e":5,"f":"Hace un año","t":"Me realice un corte de cabello, buen servicio y muy buena atención.... Excelente barbería ubicada en Magdalena del Mar","u":"https://maps.app.goo.gl/upianhSxUqNqAAjt6"},{"a":"Jose V.","e":5,"f":"Hace un año","t":"Me realice un tratamiento capilar... Excelente ambiente y buen servicio 👌 me ofrecieron bebidas mientras esperaba mi turno ... 10/10…","u":"https://maps.app.goo.gl/UJowvENvX8MtKUtt6"},{"a":"Martin C.","e":5,"f":"Hace un año","t":"Excelentes barberos.... Super recomendable, me realicé un servicio completo de corte de cabello, y el ambiente super limpio. Una de las mejores barberias de Magdalena","u":"https://maps.app.goo.gl/suLP7rGbWsYG26gq5"},{"a":"Jjots","e":5,"f":"Hace un año","t":"Me realice una limpieza facial profunda y quedé satisfecho, trabajan con buenos productos..... Buena barbería ubicada en Magdalena del Mar","u":"https://maps.app.goo.gl/Y5AWodDanDwyZMQ47"},{"a":"James","e":5,"f":"Hace un año","t":"Buen servicio, pinta genial y lavado de cortesía :)","u":"https://maps.app.goo.gl/FiushpzjJDyDxXPq9"},{"a":"Franccesco C.","e":5,"f":"Hace un año","t":"buen servicio y muy buena atención... muy atentos con los clientes","u":"https://maps.app.goo.gl/2TzNakEQNzrJ9Piv5"},{"a":"Marco C.","e":5,"f":"Hace un año","t":"Me realice un corte de cabello y una mascarilla facial profunda, súper recomendado. Una de las mejores barberías de Magdalena","u":"https://maps.app.goo.gl/s9iokr3mKLrFKrST7"},{"a":"Sebastian E.","e":5,"f":"Hace un año","t":"Excelente barbería, la atención fue excelente y los barberos son muy profesionales, gran servicio","u":"https://maps.app.goo.gl/SexwAYWgPHEXQArX9"},{"a":"Miguel A.","e":5,"f":"Hace un año","t":"Buen servicio de corte de cabello y afeitado de barba.... Excelente barbería","u":"https://maps.app.goo.gl/qYqygZfNoTb3z9x48"},{"a":"Ivan A.","e":5,"f":"Hace un año","t":"Super recomendado, me realizaron una limpieza facial profunda.... Una de las mejores barberías de Magdalena","u":"https://maps.app.goo.gl/7yyspLx11kBjERJDA"},{"a":"Frank D.","e":5,"f":"Hace un año","t":"Excelente servicio de corte, muy buena atención ☺️","u":"https://maps.app.goo.gl/5LbQ7EW5DVUNh9Hw6"},{"a":"Frank H.","e":5,"f":"Hace un año","t":"Me realice una mascarilla facial de colágeno ... Muy recomendado, trabajan con productos de calidad.","u":"https://maps.app.goo.gl/ikkJVJKXmwmvBMsd9"}];</script>
-<script src="../_comun/base.js"></script>
-<script></script>
+
+<footer class="foot">
+  <i class="zig" aria-hidden="true"></i>
+  <p class="rye big" aria-hidden="true">LAPYNTA</p>
+  <p class="tw">Lapynta Barbería · Jr. San Martín 793, Magdalena del Mar</p>
+  <p class="demo tw">Demo referencial preparada como propuesta. Fotos de su ficha de Google Maps; catálogo de su WhatsApp.</p>
+</footer>
+
+<div class="barra off" id="barra"><a class="btn big" href="#reserva">Pedir mi turno</a></div>
+
+<script defer src="lib/gsap.min.js?v=20261026"></script>
+<script defer src="lib/ScrollTrigger.min.js?v=20261026"></script>
+<script defer src="lib/manifest.js?v=20261026"></script>
+<script defer src="main.js?v=20261026"></script>
 </body>
 </html>

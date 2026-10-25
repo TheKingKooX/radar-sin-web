@@ -150,11 +150,11 @@
   }
 
 
-  // Fondo dinámico: trama de puntos azul marino, con una onda lenta y un foco que sigue al cursor
+  // Fondo dinámico: líneas finas de grabado que ondulan como seda y se curvan hacia el cursor
   function initFondo() {
     var cv = $("#fondo"), ctx = cv && cv.getContext("2d");
     if (!ctx) return;
-    var W, H, dpr, px = -999, py = -999, tx = -999, ty = -999, t0 = performance.now(), PASO = 30;
+    var W, H, dpr, px = -999, py = -999, tx = -999, ty = -999, t0 = performance.now(), N = 36, PASO = 14;
     function medir() {
       dpr = Math.min(window.devicePixelRatio || 1, 2); W = window.innerWidth; H = window.innerHeight;
       cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -162,18 +162,21 @@
     medir(); window.addEventListener("resize", medir);
     window.addEventListener("pointermove", function (e) { tx = e.clientX; ty = e.clientY; if (px < 0) { px = tx; py = ty; } }, { passive: true });
     function pintar(now) {
-      var t = (now - t0) / 1000, sc = window.scrollY * 0.12;
-      px += (tx - px) * 0.08; py += (ty - py) * 0.08;
+      var t = (now - t0) / 1000, sc = window.scrollY * 0.002, sep = H / (N - 1);
+      px += (tx - px) * 0.07; py += (ty - py) * 0.07;
       ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = "#0a2964";
-      for (var y = -PASO + (-sc % PASO); y < H + PASO; y += PASO) {
-        for (var x = 0; x < W + PASO; x += PASO) {
-          var dx = x - px, dy = y - py, d = Math.sqrt(dx * dx + dy * dy), f = Math.max(0, 1 - d / 240);
-          var onda = Math.sin(x * 0.011 + t * 0.7) * Math.cos(y * 0.013 - t * 0.5);
-          var r = 0.9 + onda * 0.5 + f * f * 3.4;
-          ctx.globalAlpha = 0.14 + f * 0.32;
-          ctx.beginPath(); ctx.arc(x + dx / (d + 1) * f * 6, y + dy / (d + 1) * f * 6, Math.max(0.3, r), 0, 6.283); ctx.fill();
+      ctx.strokeStyle = "#0a2964"; ctx.lineWidth = 1;
+      for (var i = 0; i < N; i++) {
+        var y0 = i * sep;
+        ctx.globalAlpha = 0.07 + 0.07 * Math.sin(i * 0.5 + t * 0.4) * Math.sin(i * 0.5 + t * 0.4);
+        ctx.beginPath();
+        for (var x = 0; x <= W + PASO; x += PASO) {
+          var y = y0 + Math.sin(x * 0.006 + t * 0.5 + i * 0.22 + sc) * 16 + Math.sin(x * 0.015 - t * 0.8 + i * 0.4) * 5;
+          var dx = x - px, dy = y - py, f = Math.exp(-(dx * dx + dy * dy) / 26000);
+          y += (py - y) * f * 0.55;
+          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
+        ctx.stroke();
       }
       requestAnimationFrame(pintar);
     }

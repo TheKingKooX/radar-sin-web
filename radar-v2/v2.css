@@ -1,0 +1,54 @@
+/* Radar sin web v2: capa de diseño sobre la lógica de la app. Fondo = radar con los negocios reales. */
+:root {
+  --bg: #f4f6ff; --surface: rgba(255, 255, 255, .78); --surface2: rgba(65, 105, 225, .08); --line: rgba(20, 30, 80, .12);
+  --accent: #4169e1; --accent-text: #2a4fc4; --glow: rgba(65, 105, 225, .22); --r: 22px;
+  --disp: "Sora", "Inter", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #04050b; --surface: rgba(16, 20, 38, .72); --surface2: rgba(120, 150, 255, .09); --line: rgba(150, 170, 255, .14); --accent-text: #8aa6ff; --glow: rgba(65, 105, 225, .34); }
+}
+body { font-family: "Inter", system-ui, sans-serif; background: var(--bg); }
+body::before { background: radial-gradient(55% 45% at 85% -10%, var(--glow), transparent 70%), radial-gradient(45% 40% at -5% 105%, var(--glow), transparent 70%); }
+#radar { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+/* Barra */
+.bar { background: color-mix(in srgb, var(--bg) 62%, transparent); -webkit-backdrop-filter: blur(22px) saturate(1.4); backdrop-filter: blur(22px) saturate(1.4); }
+.brand { font-family: var(--disp); font-weight: 700; }
+.brand b i { -webkit-text-stroke: 0; color: var(--accent-text); font-weight: 300; }
+.search { background: var(--surface); border-radius: 999px; padding: 0 16px; transition: box-shadow .3s, border-color .3s; }
+.search:focus-within { box-shadow: 0 0 0 4px var(--glow); outline: none; }
+
+/* Portada con cifras */
+.kpi { position: relative; margin: 6px 0 22px; padding: clamp(20px, 4vw, 40px) clamp(18px, 3.4vw, 40px); border: 1px solid var(--line); border-radius: 30px; background: var(--surface); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); overflow: hidden; animation: sube .7s var(--ease) both; }
+.kpi::after { content: ""; position: absolute; width: 380px; height: 380px; right: -120px; top: -160px; border-radius: 50%; background: radial-gradient(circle, var(--glow), transparent 68%); pointer-events: none; }
+.kpi h1 { margin: 0; font-family: var(--disp); font-weight: 700; font-size: clamp(30px, 6vw, 62px); line-height: 1; letter-spacing: -.045em; max-width: 14ch; }
+.kpi h1 em { font-style: normal; font-weight: 300; color: var(--accent-text); }
+.kpi p { margin: 14px 0 0; max-width: 52ch; color: var(--muted); }
+.kpi-n { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: clamp(18px, 3vw, 30px); }
+.kpi-n div { padding: 14px 16px; border-radius: 18px; background: var(--surface2); border: 1px solid var(--line); }
+.kpi-n b { display: block; font-family: var(--disp); font-weight: 700; font-size: clamp(26px, 4vw, 40px); letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+.kpi-n span { display: block; margin-top: 6px; color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+body:not([data-modo="lista"]) .kpi { display: none; }
+
+/* Tarjetas */
+.row { background: var(--surface); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-radius: var(--r); overflow: hidden; }
+.row::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s; background: radial-gradient(240px circle at var(--px, 50%) var(--py, 50%), var(--glow), transparent 70%); }
+.row-b { border-radius: var(--r); position: relative; z-index: 1; }
+.pick { z-index: 2; }
+.row-f { position: relative; z-index: 1; }
+.av { border-radius: 16px; width: 56px; height: 56px; background: var(--surface2); border: 1px solid var(--line); }
+.nm { font-family: var(--disp); font-weight: 600; letter-spacing: -.02em; }
+.pill.none { background: linear-gradient(135deg, var(--accent), #6f8cf0); border-color: transparent; }
+.star { color: var(--accent-text); }
+@media (hover: hover) and (pointer: fine) {
+  .row:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 22px 40px -26px var(--accent); }
+  .row:hover::before { opacity: 1; }
+}
+.xcard, .fgrid, .quitadas, .ftb-b, .ej-c, .btn, .chip { background: var(--surface); }
+.xcard, .ej-c { border-radius: var(--r); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.btn.pri, .btn.go, .chip[aria-pressed="true"] { background: linear-gradient(135deg, var(--accent), #6f8cf0); border-color: transparent; color: #fff; }
+.seg button[aria-selected="true"] { background: linear-gradient(135deg, var(--accent), #6f8cf0); }
+.sheet, .panel { background: color-mix(in srgb, var(--bg) 90%, var(--accent) 3%); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); }
+.tabs { background: color-mix(in srgb, var(--bg) 70%, transparent); }
+.sum b { font-family: var(--disp); }
+.ej-t, .group > .lbl { color: var(--accent-text); }

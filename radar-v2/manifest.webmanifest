@@ -1,0 +1,20 @@
+{
+  "name": "Radar sin web",
+  "short_name": "Radar",
+  "description": "Negocios de belleza de Lima Oeste con muchas reseñas y poca presencia web",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#05060d",
+  "theme_color": "#05060d",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

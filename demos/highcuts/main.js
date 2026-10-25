@@ -82,6 +82,50 @@
     requestAnimationFrame(frame);
   }
 
+  // Fondo: campo de agujas que apuntan al cursor (como el degradado de un fade).
+  // Cerca del cursor se alargan y se encienden en naranja; sin mouse, un punto virtual pasea solo.
+  function initFondo() {
+    var cv = $("#fondo");
+    if (!cv || !cv.getContext) return;
+    var ctx = cv.getContext("2d"), W = 0, H = 0, dpr = 1, paso = 44;
+    var px = -1, py = -1, vx = 0.5, vy = 0.4, activo = false, scroll = 0;
+    function medir() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = window.innerWidth; H = window.innerHeight;
+      cv.width = W * dpr; cv.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      paso = W < 700 ? 34 : 44;
+    }
+    medir(); window.addEventListener("resize", medir);
+    window.addEventListener("pointermove", function (e) { px = e.clientX; py = e.clientY; activo = true; }, { passive: true });
+    document.addEventListener("pointerleave", function () { activo = false; });
+    window.addEventListener("scroll", function () { scroll = window.pageYOffset; }, { passive: true });
+    var sx = W * 0.6, sy = H * 0.4;
+    function frame(t) {
+      requestAnimationFrame(frame);
+      if (document.hidden) return;
+      var tx = activo ? px : W * (0.5 + 0.32 * Math.sin(t / 3400)), ty = activo ? py : H * (0.45 + 0.3 * Math.cos(t / 4300));
+      sx += (tx - sx) * 0.08; sy += (ty - sy) * 0.08;
+      ctx.clearRect(0, 0, W, H);
+      var off = (scroll * 0.25) % paso, r = Math.min(W, H) * 0.42, lw = 1.5;
+      ctx.lineCap = "round";
+      for (var y = -off; y < H + paso; y += paso) {
+        for (var x = paso / 2; x < W + paso; x += paso) {
+          var dx = sx - x, dy = sy - y, d = Math.sqrt(dx * dx + dy * dy);
+          var cerca = Math.max(0, 1 - d / r), ang = Math.atan2(dy, dx) + 0.4 * Math.sin(t / 2200 + x * 0.01 + y * 0.013) * (1 - cerca);
+          var len = 4 + 18 * cerca * cerca + 2 * Math.sin(t / 1500 + x * 0.02);
+          ctx.strokeStyle = cerca > 0.04 ? "rgba(255,106,19," + (0.15 + 0.7 * cerca).toFixed(2) + ")" : "rgba(253,253,253,.1)";
+          ctx.lineWidth = lw;
+          ctx.beginPath();
+          ctx.moveTo(x - Math.cos(ang) * len / 2, y - Math.sin(ang) * len / 2);
+          ctx.lineTo(x + Math.cos(ang) * len / 2, y + Math.sin(ang) * len / 2);
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
   // Manifiesto: cada palabra se enciende según el desplazamiento
   function initManifiesto() {
     var p = $("#manif");
@@ -207,6 +251,7 @@
     safe(initReveals, "initReveals");
     safe(initCount, "initCount");
     safe(initFoco, "initFoco");
+    safe(initFondo, "initFondo");
     safe(initManifiesto, "initManifiesto");
     safe(initAcordeon, "initAcordeon");
     safe(initCarril, "initCarril");

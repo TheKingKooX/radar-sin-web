@@ -20,6 +20,7 @@ em { font-style: normal; font-weight: 300; }
 .wrap { width: min(1180px, 100% - 44px); margin-inline: auto; }
 :focus-visible { outline: 2px solid var(--or); outline-offset: 3px; border-radius: 8px; }
 
+#fondo { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 .prog { position: fixed; left: 0; top: 0; height: 3px; width: 100%; z-index: 80; background: var(--or); transform-origin: left; transform: scaleX(var(--sp, 0)); }
 
 /* Botones y enlaces: píldoras, como su identidad */
@@ -86,7 +87,7 @@ em { font-style: normal; font-weight: 300; }
 .nota.center { text-align: center; }
 
 /* Manifiesto: las palabras se encienden al desplazar */
-.manif { display: grid; place-items: center; min-height: 80vh; background: var(--surf); border-block: 1px solid var(--line); }
+.manif { display: grid; place-items: center; min-height: 80vh; background: rgba(17, 17, 17, .72); border-block: 1px solid var(--line); }
 .manif-t { max-width: 1050px; font-weight: 600; font-size: clamp(30px, 5vw, 70px); line-height: 1.12; letter-spacing: -.03em; text-align: center; text-wrap: balance; }
 .manif-t .w { transition: color .35s; }
 .js .manif-t.on .w { color: rgba(253, 253, 253, .2); }

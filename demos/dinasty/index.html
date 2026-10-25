@@ -10,8 +10,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261024">
-<script>document.documentElement.classList.add("js")</script>
+<link rel="stylesheet" href="styles.css?v=20261026">
+<script>document.documentElement.classList.add("js");try{var t=localStorage.getItem("dinasty-tema");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
 </head>
 <body>
 
@@ -20,6 +20,7 @@
 
 <header class="nav" id="nav">
   <a class="logo" href="#inicio" aria-label="Dinasty Barbershop, inicio"><img src="assets/img/logo.webp" width="44" height="44" alt=""><span>Dinasty</span></a>
+  <button class="theme" id="theme" type="button" aria-label="Cambiar a modo oscuro" aria-pressed="false"><svg class="luna" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg><svg class="sol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg></button>
   <button class="burger" id="burger" type="button" aria-label="Abrir el menú" aria-expanded="false" aria-controls="links"><span></span><span></span></button>
   <ul class="links" id="links">
     <li><a href="#servicios">Servicios</a></li>
@@ -170,9 +171,9 @@
 
 <div class="barra off" id="barra"><a class="btn big" href="#reserva">Reservar mi hora</a></div>
 
-<script defer src="lib/gsap.min.js?v=20261024"></script>
-<script defer src="lib/ScrollTrigger.min.js?v=20261024"></script>
-<script defer src="lib/manifest.js?v=20261024"></script>
-<script defer src="main.js?v=20261024"></script>
+<script defer src="lib/gsap.min.js?v=20261026"></script>
+<script defer src="lib/ScrollTrigger.min.js?v=20261026"></script>
+<script defer src="lib/manifest.js?v=20261026"></script>
+<script defer src="main.js?v=20261026"></script>
 </body>
 </html>

@@ -252,3 +252,7 @@ select:focus { border-color: var(--gold); }
   .barra.off { transform: translateY(110%); }
   .barra .btn { min-height: 52px; }
 }
+@media (max-width: 900px) {
+  .js .rv[data-rv="izq"], .js .rv[data-rv="der"] { transform: translateY(36px); }
+  .js .rv[data-rv].in { transform: none; }
+}

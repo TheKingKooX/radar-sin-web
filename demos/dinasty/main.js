@@ -187,7 +187,32 @@
     on(); window.addEventListener("scroll", on, { passive: true }); window.addEventListener("resize", on);
   }
 
+  // Modo oscuro: sigue al sistema si no se ha elegido y recuerda la elección
+  function initTema() {
+    var btn = $("#theme"), root = document.documentElement, meta = $('meta[name="theme-color"]');
+    if (!btn) return;
+    function aplicar(oscuro) {
+      if (oscuro) root.setAttribute("data-theme", "dark"); else root.removeAttribute("data-theme");
+      btn.setAttribute("aria-pressed", oscuro ? "true" : "false");
+      btn.setAttribute("aria-label", oscuro ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
+      if (meta) meta.setAttribute("content", oscuro ? "#0f0c07" : "#fefdfc");
+    }
+    aplicar(root.getAttribute("data-theme") === "dark");
+    btn.addEventListener("click", function () {
+      var oscuro = root.getAttribute("data-theme") !== "dark";
+      root.classList.add("cambia"); setTimeout(function () { root.classList.remove("cambia"); }, 600);
+      aplicar(oscuro);
+      try { localStorage.setItem("dinasty-tema", oscuro ? "dark" : "light"); } catch (e) {}
+    });
+    if (window.matchMedia) {
+      var mq = matchMedia("(prefers-color-scheme: dark)");
+      var alCambiar = function (e) { var g = null; try { g = localStorage.getItem("dinasty-tema"); } catch (x) {} if (!g) aplicar(e.matches); };
+      if (mq.addEventListener) mq.addEventListener("change", alCambiar);
+    }
+  }
+
   function boot() {
+    safe(initTema, "initTema");
     safe(initNav, "initNav");
     safe(initReveals, "initReveals");
     safe(initCount, "initCount");

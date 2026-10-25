@@ -2,179 +2,169 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lapynta Salón</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap">
-<link rel="stylesheet" href="../_comun/base.css">
-<style>
-:root { --bg: #050505; --fg: #ffffff; --acento: #ffffff; --suave: #9c9c9c; --f-titulo: "Montserrat"; --f-texto: "Montserrat"; --radio: 0; --trazo: 1.2; color-scheme: dark; }
-/* Fondo: negro con un resplandor gris que sigue al cursor */
-body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 30%), rgba(255, 255, 255, .08), transparent 70%); }
-body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: repeating-linear-gradient(45deg, transparent 0 46px, rgba(255, 255, 255, .025) 46px 47px); }
-.btn, .cta { text-transform: uppercase; letter-spacing: .24em; font-size: 12px; font-weight: 500; }
-.hero { isolation: isolate; }
-.hero-in { position: static; }
-.hero h1 { display: grid; gap: 12px; font-weight: 300; line-height: 1; }
-.hero h1 .a { font-size: clamp(52px, 13vw, 170px); letter-spacing: .3em; margin-right: -.3em; }
-.hero h1 .b { font-size: clamp(13px, 2vw, 22px); letter-spacing: .8em; color: var(--suave); font-weight: 400; }
-.hero .rom { position: absolute; right: -5vw; top: 50%; width: min(56vw, 600px); transform: translateY(-50%); fill: none; stroke: #fff; stroke-width: .6; stroke-dasharray: 1; stroke-dashoffset: 0; opacity: .5; pointer-events: none; z-index: -1; }
-.sv span { font-weight: 400; letter-spacing: .03em; }
-.val .n { font-weight: 200; }
-@media (prefers-reduced-motion: no-preference) {
-  .hero .rom path { stroke-dashoffset: 1; animation: traza 2.6s .2s cubic-bezier(.4, 0, .2, 1) forwards; }
-  .hero .rom path:nth-child(2) { animation-delay: .5s; } .hero .rom path:nth-child(3) { animation-delay: .8s; }
-  .hero .rom { animation: gira 90s linear infinite; }
-  @keyframes traza { to { stroke-dashoffset: 0; } }
-  @keyframes gira { to { transform: translateY(-50%) rotate(360deg); } }
-}
-</style>
-<noscript><style>.rv { opacity: 1 !important; transform: none !important; }</style></noscript>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lapynta Salón · Hair &amp; Color Studio en Magdalena del Mar</title>
+<meta name="description" content="Lapynta Salón, Hair & Color Studio en Jr. San Martín 791, Magdalena del Mar. Balayage, color, corte, uñas y pestañas. Reserva por WhatsApp.">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Manrope:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20261031">
+<script>document.documentElement.classList.add("js")</script>
 </head>
-<body class="anim">
-<header class="top">
-  <a class="marca" href="#inicio"><svg role="img" aria-label="Logo de Lapynta Salón" width="200" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" font-family="Montserrat, Arial, sans-serif" fill="#ffffff">
-  <rect width="200" height="200" fill="#020202"/>
-  <path d="M100 30 142 72 100 114 58 72Z" fill="none" stroke="#fff" stroke-width="2"/>
-  <text x="100" y="80" text-anchor="middle" font-size="22" font-weight="500" letter-spacing="1">LP</text>
-  <text x="100" y="160" text-anchor="middle" font-size="19" font-weight="300" letter-spacing="7">LAPYNTA</text>
-</svg></a>
-  <nav><a href="#servicios">Servicios</a><a href="#ubicacion">Ubicación</a><a href="#contacto">Contacto</a><a class="cta ico" href="https://wa.me/51975880001?text=Hola%2C%20quiero%20reservar%20en%20Lapynta%20Sal%C3%B3n" target="_blank" rel="noopener" aria-label="Reservar" title="Reservar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a></nav>
+<body>
+
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="scrim" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="prog" id="prog" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#inicio" aria-label="Lapynta Salón, inicio">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3 37 20 20 37 3 20Z"/><text x="20" y="24" text-anchor="middle">LP</text></svg>
+    <span>LAPYNTA<small>Salón</small></span>
+  </a>
+  <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+  <nav class="menu" id="menu" aria-label="Principal">
+    <a href="#servicios">Servicios</a>
+    <a href="#trabajos">Trabajos</a>
+    <a href="#opiniones">Opiniones</a>
+    <a href="#visita">Visita</a>
+    <a class="cta" href="#reserva">Reservar</a>
+  </nav>
 </header>
+
 <main>
-<section id="inicio" class="hero"><div class="hero-in">
-  <h1 aria-label="Lapynta Salón" data-par style="--kx:1;--ky:.14"><span class="a">LAPYNTA</span><span class="b">SALÓN</span>
-    <svg class="rom" viewBox="0 0 200 200" aria-hidden="true"><path pathLength="1" d="M100 6 194 100 100 194 6 100Z"/><path pathLength="1" d="M100 34 166 100 100 166 34 100Z"/><path pathLength="1" d="M100 62 138 100 100 138 62 100Z"/></svg></h1>
-  <p class="baja" data-par style="--kx:.5;--ky:.07">Un lugar pensado en ti.</p>
-  <p class="ahora" data-ahora hidden></p>
-  <div class="acc"><a class="btn ico" href="https://wa.me/51975880001?text=Hola%2C%20quiero%20reservar%20en%20Lapynta%20Sal%C3%B3n" target="_blank" rel="noopener" aria-label="Reservar por WhatsApp" title="Reservar por WhatsApp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a><a class="btn sec ico" href="#ubicacion" aria-label="Cómo llegar" title="Cómo llegar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></a></div>
-</div></section>
-<section id="nosotros"><div class="in-w">
-  <span class="lbl rv">Nosotros</span>
-  <div class="about"><h2 class="rv">Lapynta Salón</h2><p class="rv">Lapynta Salón es un salón en Magdalena del Mar, con 4.8 de puntaje y 142 reseñas en Google. Ofrece balayage y color, corte y uñas (nails). Reserva tu cita y ven a conocernos.</p></div>
-  <div class="why"><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg><h3>4.8 ★ en Google</h3><p>Calificación basada en 142 reseñas de clientes en Google Maps.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Reserva fácil</h3><p>Agenda tu cita por WhatsApp en pocos minutos.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>En Magdalena del Mar</h3><p>Jr. San Martín 791. Fácil de encontrar.</p></div></div>
-</div></section>
 
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="cifras"><div class="in-w">
-  <div class="cifras">
-    <div class="cifra rv"><b data-n="4.8" data-dec="1">4.8</b><span>de puntaje en Google ★</span></div>
-    <div class="cifra rv"><b data-n="142">142</b><span>reseñas de clientes</span></div>
-    <div class="cifra rv"><b data-n="6">6</b><span>días de atención a la semana</span></div>
-  </div>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="promo"><div class="in-w">
-  <div class="promo rv">
-    <div class="promo-i"><span class="lbl">Promoción del mes</span><h3>Corte + tratamiento</h3><p>Cuida tu cabello con un precio especial durante este mes.</p><p class="promo-p">S/ 70</p></div>
-    <div class="cuenta" id="cuenta" role="timer" aria-label="Tiempo que queda de la promoción"><span><b data-u="d">--</b>días</span><span><b data-u="h">--</b>horas</span><span><b data-u="m">--</b>min</span><span><b data-u="s">--</b>seg</span></div>
-    <a class="btn" href="https://wa.me/51975880001?text=Hola%2C%20quiero%20la%20promoci%C3%B3n%3A%20Corte%20%2B%20tratamiento" target="_blank" rel="noopener">Quiero la promo</a>
-  </div>
-  <p class="nota-ref rv">Promoción de ejemplo. Termina el último día del mes.</p>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="equipo"><div class="in-w">
-  <span class="lbl rv">Equipo</span><h2 class="rv">Quién te atiende</h2>
-  <div class="eq"><article class="rv"><span class="eq-av" aria-hidden="true">V</span><h3>Valeria</h3><p class="eq-r">Estilista</p><p class="eq-e">Corte y peinado</p><a class="btn sec" href="https://wa.me/51975880001?text=Hola%2C%20quiero%20reservar%20con%20Valeria%20en%20Lapynta%20Sal%C3%B3n" target="_blank" rel="noopener">Reservar con Valeria</a></article><article class="rv"><span class="eq-av" aria-hidden="true">D</span><h3>Daniela</h3><p class="eq-r">Colorista</p><p class="eq-e">Tinte y mechas</p><a class="btn sec" href="https://wa.me/51975880001?text=Hola%2C%20quiero%20reservar%20con%20Daniela%20en%20Lapynta%20Sal%C3%B3n" target="_blank" rel="noopener">Reservar con Daniela</a></article><article class="rv"><span class="eq-av" aria-hidden="true">P</span><h3>Paola</h3><p class="eq-r">Especialista capilar</p><p class="eq-e">Tratamientos</p><a class="btn sec" href="https://wa.me/51975880001?text=Hola%2C%20quiero%20reservar%20con%20Paola%20en%20Lapynta%20Sal%C3%B3n" target="_blank" rel="noopener">Reservar con Paola</a></article></div>
-  <p class="nota-ref rv">Equipo referencial.</p>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="servicios"><div class="in-w">
-  <span class="lbl rv">Servicios y galería</span><h2 class="rv">Lo que hacemos</h2>
-  <div class="sc-row rv" style="--abierta:3"><article class="sc open"><button type="button" class="sc-b" id="sc-h0" aria-expanded="true" aria-controls="sc-p0"><span class="sc-n">01</span><span class="sc-t">Balayage y color</span></button><div class="sc-media" id="sc-p0" role="region" aria-labelledby="sc-h0"><img class="a on" src="img/s1-a.svg" alt="Ilustración referencial de Balayage y color" loading="lazy"><img class="b" src="img/s1-b.svg" alt="Ilustración referencial de Balayage y color" loading="lazy"><p class="sc-d">Color, mechas y degradados a tu medida.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h1" aria-expanded="false" aria-controls="sc-p1"><span class="sc-n">02</span><span class="sc-t">Corte</span></button><div class="sc-media" id="sc-p1" role="region" aria-labelledby="sc-h1"><img class="a on" src="img/s2-a.svg" alt="Ilustración referencial de Corte" loading="lazy"><img class="b" src="img/s2-b.svg" alt="Ilustración referencial de Corte" loading="lazy"><p class="sc-d">Cortes precisos, a tu estilo.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h2" aria-expanded="false" aria-controls="sc-p2"><span class="sc-n">03</span><span class="sc-t">Uñas</span></button><div class="sc-media" id="sc-p2" role="region" aria-labelledby="sc-h2"><img class="a on" src="img/s3-a.svg" alt="Ilustración referencial de Uñas" loading="lazy"><img class="b" src="img/s3-b.svg" alt="Ilustración referencial de Uñas" loading="lazy"><p class="sc-d">Manos cuidadas y esmaltes a tu gusto. <span class="sc-p">nails</span></p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h3" aria-expanded="false" aria-controls="sc-p3"><span class="sc-n">04</span><span class="sc-t">Cabello</span></button><div class="sc-media" id="sc-p3" role="region" aria-labelledby="sc-h3"><img class="a on" src="img/s4-a.svg" alt="Ilustración referencial de Cabello" loading="lazy"><img class="b" src="img/s4-b.svg" alt="Ilustración referencial de Cabello" loading="lazy"><p class="sc-d">Cortes precisos, a tu estilo.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h4" aria-expanded="false" aria-controls="sc-p4"><span class="sc-n">05</span><span class="sc-t">Color</span></button><div class="sc-media" id="sc-p4" role="region" aria-labelledby="sc-h4"><img class="a on" src="img/s5-a.svg" alt="Ilustración referencial de Color" loading="lazy"><img class="b" src="img/s5-b.svg" alt="Ilustración referencial de Color" loading="lazy"><p class="sc-d">Color, mechas y degradados a tu medida.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h5" aria-expanded="false" aria-controls="sc-p5"><span class="sc-n">06</span><span class="sc-t">Tratamientos</span></button><div class="sc-media" id="sc-p5" role="region" aria-labelledby="sc-h5"><img class="a on" src="img/s6-a.svg" alt="Ilustración referencial de Tratamientos" loading="lazy"><img class="b" src="img/s6-b.svg" alt="Ilustración referencial de Tratamientos" loading="lazy"><p class="sc-d">Cuidado para devolver brillo y cuerpo.</p></div></article></div>
-  <p class="nota-ref rv">Ilustraciones referenciales.</p>
-</div></section>
-
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="resultado"><div class="in-w">
-  <span class="lbl rv">Resultado</span><h2 class="rv">Antes y después</h2>
-  <p class="rv" style="color:var(--suave);margin-top:10px">Desliza para ver la diferencia de un buen servicio.</p>
-  <div class="ba rv" style="--p:50%">
-    <div class="ba-i"><svg viewBox="0 0 400 300" role="img" aria-label="Después: cabello liso, suave y con brillo"><rect width="400" height="300" fill="#ffffff" opacity=".12"/><path d="M122 120C100 170 110 235 92 285h216c-18-50-8-115-30-165 2-58-40-80-78-80s-80 22-78 80z" fill="#3b2a23"/><path d="M150 70c-22 50-14 120-30 205" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".22"/><path d="M50 300c8-52 40-62 100-66h100c60 4 92 14 100 66z" fill="#9c9c9c"/><rect x="176" y="204" width="48" height="54" rx="14" fill="#e0b896"/><ellipse cx="200" cy="150" rx="58" ry="74" fill="#e0b896"/><path d="M138 112C146 74 178 64 206 66c30 2 52 18 56 50-22-26-60-34-124-4z" fill="#3b2a23"/><g fill="#3b2a23"><circle cx="178" cy="150" r="4.5"/><circle cx="222" cy="150" r="4.5"/></g><path d="M184 188q16 10 32 0" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/></svg></div>
-    <div class="ba-i ba-b"><svg viewBox="0 0 400 300" role="img" aria-label="Antes: cabello opaco y sin forma"><rect width="400" height="300" fill="#ffffff" opacity=".12"/><path d="M118 120C86 150 96 215 62 282l14 6h248l12-8c-30-60-18-130-52-160 4-54-44-86-82-86s-84 30-82 86z" fill="#3b2a23"/><path d="M96 168c-10 14-8 30-16 44M306 172c8 14 10 28 20 40M110 250c-6 8-8 16-14 24M296 252c6 8 10 16 16 24M150 44c-4-10 6-18 14-12M236 42c6-10 18-4 14 8" fill="none" stroke="#3b2a23" stroke-width="7" stroke-linecap="round"/><path d="M50 300c8-52 40-62 100-66h100c60 4 92 14 100 66z" fill="#9c9c9c"/><rect x="176" y="204" width="48" height="54" rx="14" fill="#e0b896"/><ellipse cx="200" cy="150" rx="58" ry="74" fill="#e0b896"/><path d="M136 116c-4-30 14-54 40-58-8 8-6 22 6 30 4-14 18-22 32-22-6 10-2 22 10 26 8-10 22-12 34-6-2 12 2 22 8 28-34-30-92-28-130 2z" fill="#3b2a23"/><g fill="#3b2a23"><circle cx="178" cy="150" r="4.5"/><circle cx="222" cy="150" r="4.5"/></g><path d="M184 188q16 10 32 0" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/></svg></div>
-    <span class="ba-t ba-tb">Antes</span><span class="ba-t ba-ta">Después</span>
-    <span class="ba-l" aria-hidden="true"><i></i></span>
-    <input type="range" min="0" max="100" value="50" aria-label="Comparar antes y después">
-  </div>
-  <p class="nota-ref rv">Ilustración referencial.</p>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="calcula"><div class="in-w">
-  <span class="lbl rv">Tu cita</span><h2 class="rv">Arma tu servicio</h2>
-  <form class="calc rv" id="calc" onsubmit="return false">
-    <ul class="calc-l"><li><label><input type="checkbox" data-p="90" data-m="120" data-n="Balayage y color"><span class="ck" aria-hidden="true"></span><span class="nm">Balayage y color</span><span class="du">120 min</span><b>S/ 90</b></label></li><li><label><input type="checkbox" data-p="25" data-m="45" data-n="Corte"><span class="ck" aria-hidden="true"></span><span class="nm">Corte</span><span class="du">45 min</span><b>S/ 25</b></label></li><li><label><input type="checkbox" data-p="35" data-m="50" data-n="Uñas"><span class="ck" aria-hidden="true"></span><span class="nm">Uñas</span><span class="du">50 min</span><b>S/ 35</b></label></li><li><label><input type="checkbox" data-p="35" data-m="40" data-n="Peinado"><span class="ck" aria-hidden="true"></span><span class="nm">Peinado</span><span class="du">40 min</span><b>S/ 35</b></label></li></ul>
-    <div class="calc-t">
-      <div><span>Total estimado</span><b id="calcTotal">S/ 0</b></div>
-      <div><span>Duración</span><b id="calcMin">0 min</b></div>
-      <a class="btn" id="calcBtn" href="https://wa.me/51975880001?text=Hola%2C%20quiero%20reservar%20en%20Lapynta%20Sal%C3%B3n" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+<section class="hero" id="inicio">
+  <div class="w">
+    <p class="kick">Hair &amp; Color Studio · Nails · Magdalena del Mar</p>
+    <h1>Un lugar <em>pensado en ti</em></h1>
+    <p class="lead">Balayage, color y corte, además de uñas y pestañas, en un local de pared verde y espejos redondos, en el centro de Magdalena del Mar.</p>
+    <div class="acts">
+      <a class="btn" href="#reserva">Reservar mi cita</a>
+      <a class="btn ghost" href="#servicios">Ver servicios</a>
     </div>
-    <p class="nota-ref">Precios y duraciones referenciales.</p>
-  </form>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="fidelidad"><div class="in-w">
-  <span class="lbl rv">Fidelidad</span><h2 class="rv">Tu tarjeta de sellos</h2>
-  <div class="fid rv" id="fid" data-n="5" data-k="fid-lapynta-salon" data-premio="Servicio de cortesía">
-    <ol class="fid-s"><li><span>1</span></li><li><span>2</span></li><li><span>3</span></li><li><span>4</span></li><li><span>5</span></li></ol>
-    <p class="fid-t" id="fidT" aria-live="polite">Cada visita suma un sello. A la visita 5: servicio de cortesía.</p>
-    <div class="acc"><button class="btn" type="button" id="fidBtn">Marcar una visita</button><button class="btn sec" type="button" id="fidReset">Reiniciar</button></div>
+    <p class="ahora" id="ahora" hidden></p>
   </div>
-  <p class="nota-ref rv">Demostración: se guarda solo en este dispositivo.</p>
-</div></section>
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="reservar"><div class="in-w">
-  <span class="lbl rv">Reservar</span><h2 class="rv">Cómo reservar</h2>
-  <ol class="pasos"><li class="rv"><span class="num">1</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Escríbenos</h3><p>Envíanos un mensaje por WhatsApp.</p></li><li class="rv"><span class="num">2</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><h3>Elige tu horario</h3><p>Dinos el servicio que quieres y cuándo te viene mejor.</p></li><li class="rv"><span class="num">3</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>Ven al local</h3><p>Te esperamos en Jr. San Martín 791, Magdalena del Mar.</p></li></ol>
-  <form id="cita" class="cita rv" novalidate>
-    <label>Servicio<select name="s"><option>Balayage y color</option><option>Corte</option><option>Uñas (nails)</option></select></label>
-    <label>Día<input type="date" name="d" required></label>
-    <label>Hora<select name="h" required></select></label>
-    <label>Tu nombre<input type="text" name="n" autocomplete="given-name" maxlength="40" required></label>
-    <button class="btn" type="submit">Solicitar cita</button>
-    <p class="nota">Horario referencial. El negocio confirma tu cita por WhatsApp.</p>
-    <p class="err" role="alert"></p>
-  </form>
-</div></section>
+  <a class="scroll" href="#servicios" aria-label="Bajar"><span></span></a>
+</section>
 
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="sedes"><div class="in-w">
-  <span class="lbl rv">Sedes</span><h2 class="rv">Dónde encontrarnos</h2>
-  <ul class="sedes"><li class="rv">Lapynta Barbería: Jr. San Martín 793, Magdalena del Mar (mismo nombre y misma cuadra)</li></ul>
-</div></section>
-
-
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="ubicacion" class="fus"><div class="in-w">
-  <span class="lbl rv">Ubicación y opiniones</span><h2 class="rv">Visítanos y mira lo que dicen</h2>
-  <div class="fus-g">
-    <div class="fus-m rv"><address>Jr. San Martín 791<br>Magdalena del Mar, Lima</address>
-      <div class="mapa"><iframe title="Mapa de Lapynta Salón" loading="lazy" src="https://maps.google.com/maps?q=-12.0891973,-77.0740525&z=17&output=embed"></iframe></div>
-      <a class="btn sec ico" href="https://maps.google.com/?cid=232187037717818741" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></a></div>
-    <div class="fus-o">
-  <div class="val rv"><span class="n">4.8 ★</span><p>142 reseñas en Google Maps</p></div>
-  <div class="opin cinta manual"><p class="opin-h"><span class="vivo" aria-hidden="true"></span>Lo que dicen en Google Maps<button type="button" class="feed-ctl" aria-pressed="false">Pausar</button></p><ul class="feed"><li class="rev"><span class="av2" aria-hidden="true">M</span><button type="button" class="bub" data-rv="0" aria-haspopup="dialog"><span class="rh"><b>Mary C.</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">Hace 5 meses</span></span><span class="rtxt">Excelente trabajo y atención al detalle, muy linda la chica que me atendió y mis uñas quedaron divinasss🥰🥰💓…</span><span class="ver">Ver en Google ↗</span></button></li><li class="rev"><span class="av2" aria-hidden="true">L</span><button type="button" class="bub" data-rv="1" aria-haspopup="dialog"><span class="rh"><b>Lucia G.</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">Hace 5 meses</span></span><span class="rtxt">Son super amables lindas personas excelente atención sobre todo el trato 🤗🤗🤗🤗 animanse va a cumplir con sus expectativas…</span><span class="ver">Ver en Google ↗</span></button></li><li class="rev"><span class="av2" aria-hidden="true">V</span><button type="button" class="bub" data-rv="2" aria-haspopup="dialog"><span class="rh"><b>Vanessa D.</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">Hace 5 meses</span></span><span class="rtxt">Excelente atención y servicio, muchas gracias por el balayage. Me encantó el resultado.</span><span class="ver">Ver en Google ↗</span></button></li></ul><a class="mas" href="https://maps.google.com/?cid=232187037717818741" target="_blank" rel="noopener">Ver todas las reseñas en Google Maps →</a></div>
-</div>
+<section class="stats" aria-label="Cifras">
+  <div class="w stats-g">
+    <div class="rv"><b><span data-count="4.8" data-dec="1">4,8</span></b><span>en Google Maps</span></div>
+    <div class="rv"><b><span data-count="142">142</span></b><span>reseñas</span></div>
+    <div class="rv"><b><span data-count="7">7</span></b><span>servicios</span></div>
+    <div class="rv"><b><span data-count="6">6</span></b><span>días a la semana</span></div>
   </div>
-</div></section>
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="contacto" class="cont"><div class="in-w">
-  <h2 class="rv">Reserva tu cita</h2>
-  <p class="rv" style="color:var(--suave)">+51 975 880 001</p>
-  <div class="acc rv"><a class="btn ico" href="https://wa.me/51975880001?text=Hola%2C%20quiero%20reservar%20en%20Lapynta%20Sal%C3%B3n" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp" title="Escríbenos por WhatsApp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a><a class="btn sec ico" href="tel:+51975880001" aria-label="Llamar" title="Llamar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a><a class="btn sec ico" href="https://www.instagram.com/lapyntasalon/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
-</div></section>
+</section>
+
+<section class="sec" id="servicios">
+  <div class="w">
+    <header class="sec-h rv"><p class="tag">01 · Servicios</p><h2>Lo que hacemos, <em>uno por uno</em></h2><p class="sub">Los precios se confirman por WhatsApp: el salón no los publica.</p></header>
+    <ol class="lista panel">
+      <li class="rv"><span class="n">01</span><div><h3>Balayage y color</h3><p>Degradados naturales, mechas y color a medida. Es lo que más aparece en su Instagram.</p></div><a class="pr" href="#reserva" data-svc="Balayage y color">Consultar</a></li>
+      <li class="rv"><span class="n">02</span><div><h3>Corrección de mechas</h3><p>Para igualar o rehacer un color que ya no te gusta.</p></div><a class="pr" href="#reserva" data-svc="Corrección de mechas">Consultar</a></li>
+      <li class="rv"><span class="n">03</span><div><h3>Alisado orgánico</h3><p>Cabello liso y brillante. Las reseñas hablan de un cabello «hermoso y saludable» con el planchado.</p></div><a class="pr" href="#reserva" data-svc="Alisado orgánico">Consultar</a></li>
+      <li class="rv"><span class="n">04</span><div><h3>Tratamiento Colorplex</h3><p>Con productos Baor Professional: protege y fortalece, preserva el color, da más humedad y brillo.</p></div><a class="pr" href="#reserva" data-svc="Tratamiento Colorplex">Consultar</a></li>
+      <li class="rv"><span class="n">05</span><div><h3>Corte</h3><p>Corte de cabello para mujer.</p></div><a class="pr" href="#reserva" data-svc="Corte">Consultar</a></li>
+      <li class="rv"><span class="n">06</span><div><h3>Uñas y manicure</h3><p>Diseños y acabados en uñas. Las reseñas lo mencionan seguido.</p></div><a class="pr" href="#reserva" data-svc="Uñas y manicure">Consultar</a></li>
+      <li class="rv"><span class="n">07</span><div><h3>Pestañas y cejas</h3><p>Lifting de pestañas y trabajo de cejas.</p></div><a class="pr" href="#reserva" data-svc="Pestañas y cejas">Consultar</a></li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec" id="trabajos">
+  <div class="w">
+    <header class="sec-h rv"><p class="tag">02 · Trabajos y local</p><h2>El estudio y <em>el resultado</em></h2></header>
+    <div class="gal">
+      <figure class="g1 rv" data-rv="zoom"><img src="assets/img/local.webp?v=20261031" width="1347" height="728" alt="Interior de Lapynta Salón: pared verde con el nombre, espejos redondos y silla de lavado" loading="lazy"><figcaption><span>El local</span>Jr. San Martín 791</figcaption></figure>
+      <figure class="g2 rv" data-rv="zoom"><img src="assets/img/retrato.webp?v=20261031" width="951" height="1104" alt="Clienta con ondas castaño cobrizo frente al espejo del salón" loading="lazy"><figcaption><span>Color</span>Castaño cobrizo</figcaption></figure>
+      <figure class="g3 rv" data-rv="zoom"><img src="assets/img/ondas.webp?v=20261031" width="1085" height="1104" alt="Cabello largo con ondas y degradado en tonos cenizas" loading="lazy"><figcaption><span>Balayage</span>Ondas con degradado</figcaption></figure>
+      <figure class="g4 rv" data-rv="zoom"><img src="assets/img/largo.webp?v=20261031" width="1059" height="1104" alt="Cabello largo castaño con luces y ondas, de espaldas" loading="lazy"><figcaption><span>Luces</span>Largo con ondas</figcaption></figure>
+      <figure class="g5 rv" data-rv="zoom"><img src="assets/img/corte.webp?v=20261031" width="1085" height="1104" alt="Media melena con ondas y luces, vista de espaldas" loading="lazy"><figcaption><span>Corte</span>Media melena</figcaption></figure>
+    </div>
+    <p class="fine rv">Fotos de la ficha de Lapynta Salón en Google Maps.</p>
+  </div>
+</section>
+
+<section class="sec" id="reserva">
+  <div class="w">
+    <header class="sec-h rv"><p class="tag">03 · Reserva</p><h2>Reserva <em>tu cita</em></h2><p class="sub">Elige día, hora y servicio: se abre WhatsApp con el mensaje ya escrito. Las horas libres son de ejemplo; el salón confirma por WhatsApp.</p></header>
+    <div class="cols">
+      <form class="book panel rv" id="book" onsubmit="return false">
+        <div><p class="lab">1 · Día</p><div class="days" id="days" role="group" aria-label="Día"></div></div>
+        <div><p class="lab">2 · Hora <span id="left" class="left"></span></p><div class="slots" id="slots" role="group" aria-label="Hora"></div></div>
+        <div><label class="lab" for="svc">3 · Servicio</label>
+          <select id="svc">
+            <option>Balayage y color</option><option>Corrección de mechas</option><option>Alisado orgánico</option><option>Tratamiento Colorplex</option><option>Corte</option><option>Uñas y manicure</option><option>Pestañas y cejas</option>
+          </select></div>
+        <a class="btn" id="bookBtn" href="https://wa.me/51975880001" target="_blank" rel="noopener"><span id="bookTxt">Reservar por WhatsApp</span></a>
+      </form>
+      <aside class="hrs panel rv">
+        <p class="lab">Horario</p>
+        <table id="hrs"><tbody>
+          <tr data-d="1"><td>Lunes</td><td>10:00 – 20:00</td></tr>
+          <tr data-d="2"><td>Martes</td><td>10:00 – 20:00</td></tr>
+          <tr data-d="3"><td>Miércoles</td><td>10:00 – 20:00</td></tr>
+          <tr data-d="4"><td>Jueves</td><td>10:00 – 20:00</td></tr>
+          <tr data-d="5"><td>Viernes</td><td>10:00 – 20:00</td></tr>
+          <tr data-d="6"><td>Sábado</td><td>10:00 – 20:00</td></tr>
+          <tr data-d="0"><td>Domingo</td><td>Cerrado</td></tr>
+        </tbody></table>
+        <p class="fine">Horario de su Instagram y de Google: lunes a sábado de 10 a. m. a 8 p. m.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="opiniones">
+  <div class="w">
+    <header class="sec-h rv"><p class="tag">04 · Opiniones</p><h2>Lo que <em>cuentan</em></h2><p class="sub">4,8 en Google con 142 reseñas. Seis de ellas, tal como las escribieron.</p></header>
+    <ul class="rvs">
+      <li class="rv"><p>«Excelente atención y servicio, muchas gracias por el balayage. Me encantó el resultado.»</p><b>Vanessa D.</b><span>5 estrellas · Google</span></li>
+      <li class="rv"><p>«Me encantó el trato del personal, muy amables y profesionales gracias por el café. Mi cabello quedó hermoso y saludable con el planchado.»</p><b>Olga D.</b><span>5 estrellas · Google</span></li>
+      <li class="rv"><p>«El mejor lugar. Lo recomiendo me hice las uñas y pestañas y me quedaron muy lindas.»</p><b>Vandrea</b><span>5 estrellas · Google</span></li>
+      <li class="rv"><p>«Me recomendaron este salón, me hicieron un corte de cabello y manicure, el resultado fue excelente y el trato agradable. Es el mejor Salón en Magdalena del Mar.»</p><b>Tkt</b><span>5 estrellas · Google</span></li>
+      <li class="rv"><p>«Excelente trabajo y atención al detalle, muy linda la chica que me atendió y mis uñas quedaron divinasss.»</p><b>Mary Cielo E.</b><span>5 estrellas · Google</span></li>
+      <li class="rv"><p>«Me encanta buen trato, excelente salón, manicura preciosa.»</p><b>Verónica G.</b><span>5 estrellas · Google</span></li>
+    </ul>
+    <p class="fine rv">Reseñas reales de Google Maps de Lapynta Salón; solo se quitaron emojis y se ajustó la puntuación.</p>
+  </div>
+</section>
+
+<section class="sec" id="visita">
+  <div class="w">
+    <header class="sec-h rv"><p class="tag">05 · Visita</p><h2>Jr. San Martín <em>791</em></h2><p class="sub">Magdalena del Mar, Lima. Al lado, en el 793, está Lapynta Barbería.</p></header>
+    <div class="cols visita">
+      <div class="map rv"><iframe title="Mapa de Lapynta Salón" src="https://maps.google.com/maps?q=-12.0891973,-77.0740525&amp;z=17&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      <div class="rv">
+        <ul class="soc">
+          <li><a href="https://wa.me/51975880001" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z"/><path d="M9 8c0 3.5 3 6.5 6.500 6.500l1-1.500-2-1-1 .8c-1-.4-2-1.400-2.400-2.400l.8-1-1-2Z"/></svg>WhatsApp 975 880 001</a></li>
+          <li><a href="https://www.instagram.com/lapyntasalon/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.500" y="3.500" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r=".6"/></svg>@lapyntasalon</a></li>
+          <li><a href="https://maps.google.com/?cid=232187037717818741" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.500-5.800-6.500-11a6.500 6.500 0 0 1 13 0C18.500 15.200 12 21 12 21Z"/><circle cx="12" cy="10" r="2.400"/></svg>Cómo llegar</a></li>
+          <li><a href="tel:+51975880001"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>Llamar</a></li>
+        </ul>
+        <p class="fine">Nombre en Google: «LAPYNTA SALÓN», peluquería.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 </main>
-<footer><span>Lapynta Salón</span><span>Jr. San Martín 791, Magdalena del Mar</span></footer>
-<div class="barra-res" id="barraRes"><span class="ahora" data-ahora hidden></span><a class="btn" href="https://wa.me/51975880001?text=Hola%2C%20quiero%20reservar%20en%20Lapynta%20Sal%C3%B3n" target="_blank" rel="noopener">Reservar</a></div>
-<script>window.CITA = {"wa":"https://wa.me/51975880001","n":"Lapynta Salón","h":{"lun":["10:00","20:00"],"mar":["10:00","20:00"],"mie":["10:00","20:00"],"jue":["10:00","20:00"],"vie":["10:00","21:00"],"sab":["10:00","21:00"],"dom":null},"ant":2}; window.RESENAS = [{"a":"Mary C.","e":5,"f":"Hace 5 meses","t":"Excelente trabajo y atención al detalle, muy linda la chica que me atendió y mis uñas quedaron divinasss🥰🥰💓…","u":"https://maps.app.goo.gl/BijWgBTuRYKH5i8d9"},{"a":"Lucia G.","e":5,"f":"Hace 5 meses","t":"Son super amables lindas personas excelente atención sobre todo el trato 🤗🤗🤗🤗 animanse va a cumplir con sus expectativas…","u":"https://maps.app.goo.gl/Sxvwz5FkWUX9Ku6YA"},{"a":"Vanessa D.","e":5,"f":"Hace 5 meses","t":"Excelente atención y servicio, muchas gracias por el balayage. Me encantó el resultado.","u":"https://maps.app.goo.gl/odjgwj4LTsbBfMsL9"},{"a":"Olga D.","e":5,"f":"Hace 5 meses","t":"Me encantó el trato del personal, muy amables y profesionales gracias por el café . Mi cabello quedó hermoso y saludable con el planchado.","u":"https://maps.app.goo.gl/tsgRojME5A73Gx3f6"},{"a":"Vandrea","e":5,"f":"Hace 2 meses","t":"El mejor lugar. Lo recomiendo me hice las uñas y pestañas y me quedaron muy lindas","u":"https://maps.app.goo.gl/tK8D7RmULBpYma2aA"},{"a":"Cliente","e":5,"f":"Hace 5 meses","t":"Me recomendaron este salón, me hicieron un corte de cabello y manicure, el resultado fue excelente y el trato agradable. Es el mejor Salón en Magdalena del Mar.","u":"https://maps.app.goo.gl/WjFqnz7KbBr8Zfwb6"},{"a":"Lucia V.","e":5,"f":"Hace 5 meses","t":"Excelente servicio 10 de 10 anímense chicas les va dejar con la abierta","u":"https://maps.app.goo.gl/yJwYBgY2cAtCRXYj7"},{"a":"Veronica G.","e":5,"f":"Hace 5 meses","t":"me encanta buen trato excelente salón manicura preciosa","u":"https://maps.app.goo.gl/iHsxFmFEaKKwTZ4J7"},{"a":"Isela I.","e":5,"f":"Hace 5 meses","t":"Muy buen salón de belleza en Magdalena, me encantó el laceado que me hicieron, regresaría una y mil veces más","u":"https://maps.app.goo.gl/2DYxFikhCTB49HGv8"},{"a":"Erika E.","e":5,"f":"Hace un año","t":"Tuve una experiencia maravillosa en el salón. Desde que llegué, el ambiente fue acogedor y el personal muy amable. Me atendieron puntualmente, me ofrecieron recomendaciones personalizadas y el…","u":"https://maps.app.goo.gl/xN4pnDQtv4PKgSK26"},{"a":"Adrian D.","e":5,"f":"Hace 3 meses","t":"La experiencia fue mi relajante y profesional","u":"https://maps.app.goo.gl/gae7TThMzVa9Mvy26"},{"a":"Carmen E.","e":5,"f":"Hace un año","t":"Super recomendado. Excelente atención, sus productos son de primera. Muy bueno su trabajo .Gracias por el servicio.","u":"https://maps.app.goo.gl/iHAzsfhDLo5mCp3R9"},{"a":"Elizabet F.","e":5,"f":"Hace 4 meses","t":"El mejor salón de magdalena del mar gracias por el café y el alisado full recomendado","u":"https://maps.app.goo.gl/w8VbEZVJhsyxPKhR9"},{"a":"Jaqueline M.","e":5,"f":"Hace un año","t":"Me encanto la paciencia y empatía con el cliente. La atención estupenda, dejaron mi cabello hermoso. Sigan brindando un servicio de calidad.","u":"https://maps.app.goo.gl/2LJ4znJyZvRD232ZA"},{"a":"Luz M.","e":5,"f":"Hace un año","t":"Les recomiendo LAPYNTA SALON , ya que ofrece una excelente atención, ambiente cómodo, y productos de primera calidad, y lo más importante vas a ser atendido por profesionales que te ayudarán a…","u":"https://maps.app.goo.gl/48JrNPNPZxuq2ZYG6"},{"a":"Sofía S.","e":5,"f":"Hace un año","t":"Buena atención y buen servicio, quedé muy complacida con el trabajo de Alejandro. Definitivamente volveré. 😌…","u":"https://maps.app.goo.gl/TT56UrpKEeaYk79T7"},{"a":"Ivan A.","e":5,"f":"Hace un año","t":"Mi esposa se realizó una manicura y le quedaron excelentes ... Bien servicio, muy buenos profesionales y un ambiente limpio 👍🏻…","u":"https://maps.app.goo.gl/biMgX9xv4inMFuBV6"},{"a":"Elizabeth C.","e":5,"f":"Hace 5 meses","t":"Buena atención en el balayage 🙂‍↔️…","u":"https://maps.app.goo.gl/QxqSMVenYwnMKczcA"},{"a":"Maria E.","e":5,"f":"Hace 5 meses","t":"La atención y servicio super recomendable","u":"https://maps.app.goo.gl/csR98bXmgqAmtdxF6"},{"a":"Gabriela E.","e":5,"f":"Hace 3 años","t":"Buena atención y buenos resultados, el local es muy lindo 🙌🏻…","u":"https://maps.app.goo.gl/Q9QyUgMSTqYhHnDs8"},{"a":"Milton P.","e":5,"f":"Hace un año","t":"Excelente lugar y atención, fui con mi novia y le hicieron un excelente diseño de cejas y pestañas 100% recomendado","u":"https://maps.app.goo.gl/Qjidp7kTAoKgPuKKA"},{"a":"Carlos E.","e":5,"f":"Hace un año","t":"Muy recomendable, mi pareja siempre va a ese lugar y siempre termina linda.","u":"https://maps.app.goo.gl/jG2vh4VbBAETLKug6"}];</script>
-<script src="../_comun/base.js"></script>
-<script></script>
+
+<footer class="foot">
+  <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3 37 20 20 37 3 20Z"/><text x="20" y="24" text-anchor="middle">LP</text></svg>
+  <p>LAPYNTA SALÓN · Un lugar pensado en ti.</p>
+  <p class="fine">Demo hecha con información pública del negocio (Instagram y Google Maps). Las horas libres de la reserva son de ejemplo.</p>
+</footer>
+
+<div class="barra" id="barra"><a class="btn" href="#reserva">Reservar por WhatsApp</a></div>
+
+<script defer src="lib/three.min.js?v=20261031"></script>
+<script defer src="lib/manifest.js?v=20261031"></script>
+<script defer src="main.js?v=20261031"></script>
 </body>
 </html>

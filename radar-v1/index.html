@@ -347,13 +347,8 @@ body[data-modo="ej"] .ftb, body[data-modo="ej"] .fx-wrap, body[data-modo="ej"] #
 .ej-f .btn { min-height: 36px; font-size: 13px; }
 .nota { width: 100%; min-height: 76px; resize: vertical; margin-bottom: 4px; }
 </style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="v2.css?v=20261111">
 </head>
 <body>
-<canvas id="radar" aria-hidden="true"></canvas>
 <div class="app" id="app">
   <header class="bar">
     <div class="brand">
@@ -376,7 +371,6 @@ body[data-modo="ej"] .ftb, body[data-modo="ej"] .fx-wrap, body[data-modo="ej"] #
 
     <main class="main" id="main">
       <div class="wrap">
-        <section class="kpi" id="kpi"><h1>Negocios con fama y <em>sin web</em></h1><p>Barberías, salones y spas de Lima Oeste con 100 reseñas o más en Google Maps y sin página propia.</p><div class="kpi-n"></div></section>
         <div class="seg" role="tablist" aria-label="Modo"><button id="modoLista" role="tab" type="button" aria-selected="true">Mi lista</button><button id="modoExp" role="tab" type="button" aria-selected="false">Explorar</button><button id="modoEj" role="tab" type="button" aria-selected="false">Ejemplos</button></div>
         <div class="ftb" id="ftb">
           <button class="ftb-b" id="btnFiltros" type="button" aria-expanded="false" aria-controls="filtros"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><span class="ftb-l"><span class="a">Filtros</span><span class="b">Ocultar</span></span><i class="ftb-n" id="ftbN" hidden></i><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
@@ -1188,6 +1182,5 @@ pintarForm(); pintarConexion(false); conectar();
 ponerModo("lista");
 
 </script>
-<script src="v2.js?v=20261111"></script>
 </body>
 </html>

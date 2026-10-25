@@ -122,7 +122,7 @@ figcaption { margin-top: 16px; font-size: 14px; color: var(--soft); letter-spaci
 .cap::first-letter { font-family: var(--rye); float: left; font-size: 4.6em; line-height: .8; padding: 6px 12px 0 0; color: var(--red); }
 
 /* Cartas */
-.cartas { background: var(--paper2); }
+.cartas { background: rgba(227, 216, 180, .7); }
 .rvs { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 2px solid var(--ink); }
 .rvs li { padding: 28px clamp(16px, 2.4vw, 34px); border-left: 1px solid var(--line); border-bottom: 1px solid var(--line); display: grid; align-content: space-between; gap: 20px; transition: background .3s; }
 .rvs li:nth-child(3n+1) { border-left: 0; padding-left: 0; }
@@ -239,3 +239,6 @@ address small { display: block; margin-top: 8px; font-family: var(--tw); font-si
   .js .rv[data-rv="izq"], .js .rv[data-rv="der"] { transform: translateY(30px); }
   .js .rv[data-rv].in { transform: none; }
 }
+
+/* Fondo dinámico: polvo del desierto y galones del zigzag que flotan con el viento */
+#fondo { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }

@@ -155,6 +155,47 @@
     on(); window.addEventListener("scroll", on, { passive: true }); window.addEventListener("resize", on);
   }
 
+
+  // Fondo dinámico: polvo y galones (el zigzag de su logo) que el viento arrastra; el cursor y el scroll los empujan
+  function initFondo() {
+    var cv = $("#fondo"), ctx = cv && cv.getContext("2d");
+    if (!ctx) return;
+    var W, H, dpr, mx = -999, my = -999, ps = [], sy = window.scrollY, vs = 0, t0 = performance.now();
+    var COL = ["#a93935", "#324b4e", "#1f2a2c"];
+    function nuevo(x) {
+      var g = Math.random() < 0.3;
+      return { x: x === undefined ? Math.random() * W : x, y: Math.random() * H, g: g, r: g ? 7 + Math.random() * 7 : 0.8 + Math.random() * 1.8,
+        c: g ? COL[Math.random() < 0.5 ? 0 : 1] : COL[2], a: g ? 0.22 + Math.random() * 0.18 : 0.15 + Math.random() * 0.2,
+        vx: 0.15 + Math.random() * 0.45, ph: Math.random() * 6.28, rot: Math.random() * 6.28, vr: (Math.random() - 0.5) * 0.01, ox: 0, oy: 0 };
+    }
+    function medir() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2); W = window.innerWidth; H = window.innerHeight;
+      cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var n = Math.round(Math.min(90, W * H / 14000)); ps = []; for (var i = 0; i < n; i++) ps.push(nuevo());
+    }
+    medir(); window.addEventListener("resize", medir);
+    window.addEventListener("pointermove", function (e) { mx = e.clientX; my = e.clientY; }, { passive: true });
+    function pintar(now) {
+      var t = (now - t0) / 1000, d = window.scrollY - sy; sy = window.scrollY; vs += (d - vs) * 0.1;
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < ps.length; i++) {
+        var p = ps[i], dx = p.x + p.ox - mx, dy = p.y + p.oy - my, dd = Math.sqrt(dx * dx + dy * dy);
+        if (dd < 130) { var f = (1 - dd / 130) * 2.2; p.ox += dx / (dd + 1) * f; p.oy += dy / (dd + 1) * f; }
+        p.ox *= 0.96; p.oy *= 0.96;
+        p.x += p.vx + Math.sin(t * 0.6 + p.ph) * 0.25; p.y += Math.cos(t * 0.5 + p.ph) * 0.2 - vs * 0.35; p.rot += p.vr;
+        if (p.x > W + 20) p.x = -20; if (p.y < -20) p.y = H + 20; else if (p.y > H + 20) p.y = -20;
+        ctx.globalAlpha = p.a; ctx.fillStyle = p.c; ctx.strokeStyle = p.c;
+        var x = p.x + p.ox, y = p.y + p.oy;
+        if (p.g) {
+          ctx.save(); ctx.translate(x, y); ctx.rotate(p.rot); ctx.lineWidth = 2; ctx.lineJoin = "miter";
+          ctx.beginPath(); ctx.moveTo(-p.r, p.r * 0.5); ctx.lineTo(0, -p.r * 0.5); ctx.lineTo(p.r, p.r * 0.5); ctx.stroke(); ctx.restore();
+        } else { ctx.beginPath(); ctx.arc(x, y, p.r, 0, 6.283); ctx.fill(); }
+      }
+      requestAnimationFrame(pintar);
+    }
+    requestAnimationFrame(pintar);
+  }
+
   function boot() {
     safe(initCabecera, "initCabecera");
     safe(initFecha, "initFecha");
@@ -165,6 +206,7 @@
     safe(initAbierto, "initAbierto");
     safe(initReserva, "initReserva");
     safe(initBarra, "initBarra");
+    safe(initFondo, "initFondo");
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
 })();

@@ -2,184 +2,235 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lima Barber Club</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;800&family=Lato:wght@300;400;700&display=swap">
-<link rel="stylesheet" href="../_comun/base.css">
-<style>
-:root { --bg: #191d2e; --fg: #f6efe0; --acento: #b88e40; --suave: #aab0c4; --f-titulo: "Playfair Display", Georgia, serif; --f-texto: "Lato"; --radio: 3px; --trazo: 1.5; color-scheme: dark; }
-/* Fondo: azul noche con luces doradas que derivan y un brillo que sigue al cursor */
-body::before { content: ""; position: fixed; inset: -15%; z-index: -1; pointer-events: none;
-  background: radial-gradient(36% 36% at 16% 24%, rgba(184, 142, 64, .14), transparent 70%), radial-gradient(34% 34% at 84% 76%, rgba(123, 76, 38, .22), transparent 70%), radial-gradient(26% 26% at 62% 12%, rgba(253, 253, 253, .05), transparent 70%); }
-body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(440px circle at var(--mx, 50%) var(--my, 30%), rgba(184, 142, 64, .12), transparent 70%); }
-@media (prefers-reduced-motion: no-preference) { body::before { animation: oro 26s ease-in-out infinite alternate; } @keyframes oro { to { transform: translate3d(5%, -4%, 0) scale(1.1); } } }
-.btn, .cta { text-transform: uppercase; letter-spacing: .16em; font-size: 12px; font-weight: 700; color: #191d2e; }
-.hero { isolation: isolate; }
-.hero-in { position: static; }
-.hero h1 { display: grid; gap: 8px; font-weight: 700; line-height: 1; }
-.hero h1 .a { font-size: clamp(48px, 12vw, 150px); letter-spacing: .02em; }
-.hero h1 .b { font-size: clamp(22px, 4.4vw, 54px); letter-spacing: .5em; color: var(--acento); font-weight: 500; }
-.hero .aro { position: absolute; right: -6vw; top: 50%; width: min(52vw, 560px); transform: translateY(-50%); fill: none; stroke: var(--acento); stroke-width: .8; stroke-dasharray: 1; stroke-dashoffset: 0; opacity: .7; pointer-events: none; z-index: -1; }
-.top .marca::before, .top .marca::after { border-radius: 50%; }
-h2 { font-weight: 700; letter-spacing: .01em; }
-.sv span { font-family: "Playfair Display", serif; font-size: 22px; font-weight: 600; }
-.val .n { color: var(--acento); font-weight: 700; }
-@media (prefers-reduced-motion: no-preference) {
-  .hero .aro circle { stroke-dashoffset: 1; animation: traza 2.8s .2s cubic-bezier(.4, 0, .2, 1) forwards; }
-  .hero .aro circle:nth-child(2) { animation-delay: .5s; }
-  @keyframes traza { to { stroke-dashoffset: 0; } }
-}
-</style>
-<noscript><style>.rv { opacity: 1 !important; transform: none !important; }</style></noscript>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lima Barber Club · Barbería en Jesús María</title>
+<meta name="description" content="Lima Barber Club, barbería clásica en Av. Garzón 598, Jesús María. Corte Elite y Premium, barba, facial y ondulación. Precios reales y reserva en línea.">
+<meta name="theme-color" content="#191d2e">
+<link rel="icon" href="assets/img/logo.webp" type="image/webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Oswald:wght@400;500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20261101">
+<script>document.documentElement.classList.add("js")</script>
 </head>
-<body class="anim">
-<header class="top">
-  <a class="marca" href="#inicio"><svg role="img" aria-label="Logo de Lima Barber Club" width="200" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" font-family="Playfair Display, Georgia, serif">
-  <rect width="200" height="200" fill="#191d2e"/>
-  <circle cx="100" cy="100" r="86" fill="none" stroke="#b88e40" stroke-width="4"/>
-  <circle cx="100" cy="100" r="78" fill="none" stroke="#7b4c26" stroke-width="2"/>
-  <path d="M78 74 74 54l13 9 13-14 13 14 13-9-4 20Z" fill="#b88e40"/>
-  <text x="100" y="108" text-anchor="middle" font-size="22" font-weight="700" fill="#fdfdfd" letter-spacing="1">LIMA</text>
-  <text x="100" y="130" text-anchor="middle" font-size="15" font-weight="500" fill="#fdfdfd" letter-spacing="3">BARBER</text>
-  <text x="100" y="150" text-anchor="middle" font-size="13" font-weight="500" fill="#b88e40" letter-spacing="6">CLUB</text>
-</svg></a>
-  <nav><a href="#servicios">Servicios</a><a href="#ubicacion">Ubicación</a><a href="#contacto">Contacto</a><a class="cta ico" href="https://wa.me/51932107266?text=Hola%2C%20quiero%20reservar%20en%20Lima%20Barber%20Club" target="_blank" rel="noopener" aria-label="Reservar" title="Reservar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a></nav>
+<body>
+
+<canvas id="bgc" aria-hidden="true"></canvas>
+<div class="prog" id="prog" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#inicio"><img src="assets/img/logo.webp?v=20261101" width="46" height="46" alt="" ><span>Lima Barber Club</span></a>
+  <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+  <nav class="menu" id="menu" aria-label="Principal">
+    <a href="#carta">Carta</a>
+    <a href="#club">El club</a>
+    <a href="#equipo">Equipo</a>
+    <a href="#opiniones">Opiniones</a>
+    <a href="#visita">Visita</a>
+    <a class="cta" href="#reserva">Reservar</a>
+  </nav>
 </header>
+
 <main>
-<section id="inicio" class="hero"><div class="hero-in">
-  <h1 aria-label="Lima Barber Club" data-par style="--kx:1;--ky:.14"><span class="a">LIMA BARBER</span><span class="b">CLUB</span>
-    <svg class="aro" viewBox="0 0 200 200" aria-hidden="true"><circle pathLength="1" cx="100" cy="100" r="96"/><circle pathLength="1" cx="100" cy="100" r="88"/></svg></h1>
-  <p class="baja" data-par style="--kx:.5;--ky:.07">Como en las mejores barberías del mundo.</p>
-  <p class="ahora" data-ahora hidden></p>
-  <div class="acc"><a class="btn ico" href="https://wa.me/51932107266?text=Hola%2C%20quiero%20reservar%20en%20Lima%20Barber%20Club" target="_blank" rel="noopener" aria-label="Reservar por WhatsApp" title="Reservar por WhatsApp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a><a class="btn sec ico" href="#ubicacion" aria-label="Cómo llegar" title="Cómo llegar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></a></div>
-</div></section>
-<section id="nosotros"><div class="in-w">
-  <span class="lbl rv">Nosotros</span>
-  <div class="about"><h2 class="rv">Lima Barber Club</h2><p class="rv">Lima Barber Club es una barbería en Jesús María, con 4.1 de puntaje y 245 reseñas en Google. Ofrece corte, barba, facial, ondulación y tinte. Reserva tu cita y ven a conocernos.</p></div>
-  <div class="why"><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg><h3>4.1 ★ en Google</h3><p>Calificación basada en 245 reseñas de clientes en Google Maps.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Reserva fácil</h3><p>Agenda tu cita por WhatsApp en pocos minutos.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>En Jesús María</h3><p>Av. Gral. Eugenio Garzón 598. Fácil de encontrar.</p></div></div>
-</div></section>
 
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="cifras"><div class="in-w">
-  <div class="cifras">
-    <div class="cifra rv"><b data-n="4.1" data-dec="1">4.1</b><span>de puntaje en Google ★</span></div>
-    <div class="cifra rv"><b data-n="245">245</b><span>reseñas de clientes</span></div>
-    <div class="cifra rv"><b data-n="6">6</b><span>días de atención a la semana</span></div>
-  </div>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="promo"><div class="in-w">
-  <div class="promo rv">
-    <div class="promo-i"><span class="lbl">Promoción del mes</span><h3>Corte + barba</h3><p>Llévate el combo completo a precio especial durante este mes.</p><p class="promo-p">S/ 30</p></div>
-    <div class="cuenta" id="cuenta" role="timer" aria-label="Tiempo que queda de la promoción"><span><b data-u="d">--</b>días</span><span><b data-u="h">--</b>horas</span><span><b data-u="m">--</b>min</span><span><b data-u="s">--</b>seg</span></div>
-    <a class="btn" href="https://wa.me/51932107266?text=Hola%2C%20quiero%20la%20promoci%C3%B3n%3A%20Corte%20%2B%20barba" target="_blank" rel="noopener">Quiero la promo</a>
-  </div>
-  <p class="nota-ref rv">Promoción de ejemplo. Termina el último día del mes.</p>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="equipo"><div class="in-w">
-  <span class="lbl rv">Equipo</span><h2 class="rv">Quién te atiende</h2>
-  <div class="eq"><article class="rv"><span class="eq-av" aria-hidden="true">J</span><h3>Joaquín</h3><p class="eq-r">Maestro barbero</p><p class="eq-e">Cortes clásicos y navaja</p><a class="btn sec" href="https://wa.me/51932107266?text=Hola%2C%20quiero%20reservar%20con%20Joaqu%C3%ADn%20en%20Lima%20Barber%20Club" target="_blank" rel="noopener">Reservar con Joaquín</a></article><article class="rv"><span class="eq-av" aria-hidden="true">F</span><h3>Fabián</h3><p class="eq-r">Barbero</p><p class="eq-e">Fade y degradados</p><a class="btn sec" href="https://wa.me/51932107266?text=Hola%2C%20quiero%20reservar%20con%20Fabi%C3%A1n%20en%20Lima%20Barber%20Club" target="_blank" rel="noopener">Reservar con Fabián</a></article><article class="rv"><span class="eq-av" aria-hidden="true">M</span><h3>Matías</h3><p class="eq-r">Barbero</p><p class="eq-e">Diseño de barba</p><a class="btn sec" href="https://wa.me/51932107266?text=Hola%2C%20quiero%20reservar%20con%20Mat%C3%ADas%20en%20Lima%20Barber%20Club" target="_blank" rel="noopener">Reservar con Matías</a></article></div>
-  <p class="nota-ref rv">Equipo referencial.</p>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="servicios"><div class="in-w">
-  <span class="lbl rv">Servicios y galería</span><h2 class="rv">Lo que hacemos</h2>
-  <div class="sc-row rv" style="--abierta:3"><article class="sc open"><button type="button" class="sc-b" id="sc-h0" aria-expanded="true" aria-controls="sc-p0"><span class="sc-n">01</span><span class="sc-t">Corte</span></button><div class="sc-media" id="sc-p0" role="region" aria-labelledby="sc-h0"><img class="a on" src="img/s1-a.svg" alt="Ilustración referencial de Corte" loading="lazy"><img class="b" src="img/s1-b.svg" alt="Ilustración referencial de Corte" loading="lazy"><p class="sc-d">Cortes precisos, a tu estilo.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h1" aria-expanded="false" aria-controls="sc-p1"><span class="sc-n">02</span><span class="sc-t">Barba</span></button><div class="sc-media" id="sc-p1" role="region" aria-labelledby="sc-h1"><img class="a on" src="img/s2-a.svg" alt="Ilustración referencial de Barba" loading="lazy"><img class="b" src="img/s2-b.svg" alt="Ilustración referencial de Barba" loading="lazy"><p class="sc-d">Perfilado y arreglo de barba.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h2" aria-expanded="false" aria-controls="sc-p2"><span class="sc-n">03</span><span class="sc-t">Facial</span></button><div class="sc-media" id="sc-p2" role="region" aria-labelledby="sc-h2"><img class="a on" src="img/s3-a.svg" alt="Ilustración referencial de Facial" loading="lazy"><img class="b" src="img/s3-b.svg" alt="Ilustración referencial de Facial" loading="lazy"><p class="sc-d">Cuidado de la piel y un momento de relax.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h3" aria-expanded="false" aria-controls="sc-p3"><span class="sc-n">04</span><span class="sc-t">Ondulación</span></button><div class="sc-media" id="sc-p3" role="region" aria-labelledby="sc-h3"><img class="a on" src="img/s4-a.svg" alt="Ilustración referencial de Ondulación" loading="lazy"><img class="b" src="img/s4-b.svg" alt="Ilustración referencial de Ondulación" loading="lazy"><p class="sc-d">Ondas definidas y con movimiento.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h4" aria-expanded="false" aria-controls="sc-p4"><span class="sc-n">05</span><span class="sc-t">Tinte</span></button><div class="sc-media" id="sc-p4" role="region" aria-labelledby="sc-h4"><img class="a on" src="img/s5-a.svg" alt="Ilustración referencial de Tinte" loading="lazy"><img class="b" src="img/s5-b.svg" alt="Ilustración referencial de Tinte" loading="lazy"><p class="sc-d">Color, mechas y degradados a tu medida.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h5" aria-expanded="false" aria-controls="sc-p5"><span class="sc-n">06</span><span class="sc-t">Cortes</span></button><div class="sc-media" id="sc-p5" role="region" aria-labelledby="sc-h5"><img class="a on" src="img/s6-a.svg" alt="Ilustración referencial de Cortes" loading="lazy"><img class="b" src="img/s6-b.svg" alt="Ilustración referencial de Cortes" loading="lazy"><p class="sc-d">Cortes precisos, a tu estilo.</p></div></article></div>
-  <p class="nota-ref rv">Ilustraciones referenciales.</p>
-</div></section>
-
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="resultado"><div class="in-w">
-  <span class="lbl rv">Resultado</span><h2 class="rv">Antes y después</h2>
-  <p class="rv" style="color:var(--suave);margin-top:10px">Desliza para ver la diferencia de un buen corte.</p>
-  <div class="ba rv" style="--p:50%">
-    <div class="ba-i"><svg viewBox="0 0 400 300" role="img" aria-label="Después: corte limpio y definido"><rect width="400" height="300" fill="#b88e40" opacity=".12"/><path d="M50 300c8-52 40-62 100-66h100c60 4 92 14 100 66z" fill="#aab0c4"/><rect x="176" y="204" width="48" height="54" rx="14" fill="#d9ae8a"/><ellipse cx="200" cy="148" rx="62" ry="78" fill="#d9ae8a"/><path d="M139 124C139 82 168 70 200 70s61 12 61 54c-12-20-32-27-61-27s-49 7-61 27z" fill="#2d2825"/><ellipse cx="141" cy="140" rx="7" ry="22" fill="#2d2825" opacity=".22"/><ellipse cx="259" cy="140" rx="7" ry="22" fill="#2d2825" opacity=".22"/><path d="M146 168c4 36 26 52 54 52s50-16 54-52c-10 22-28 30-54 30s-44-8-54-30z" fill="#2d2825" opacity=".85"/><path d="M146 168c4 36 26 52 54 52s50-16 54-52" fill="none" stroke="#b88e40" stroke-width="2" opacity=".7"/><g fill="#2d2825"><circle cx="177" cy="146" r="4.5"/><circle cx="223" cy="146" r="4.5"/></g><path d="M186 186q14 8 28 0" fill="none" stroke="#2d2825" stroke-width="3" stroke-linecap="round"/></svg></div>
-    <div class="ba-i ba-b"><svg viewBox="0 0 400 300" role="img" aria-label="Antes: cabello y barba sin arreglar"><rect width="400" height="300" fill="#b88e40" opacity=".12"/><path d="M50 300c8-52 40-62 100-66h100c60 4 92 14 100 66z" fill="#aab0c4"/><rect x="176" y="204" width="48" height="54" rx="14" fill="#d9ae8a"/><ellipse cx="200" cy="148" rx="62" ry="78" fill="#d9ae8a"/><path d="M124 150C96 84 140 36 200 42s104 44 76 108c8-34-14-56-40-60-12 10-24 14-36 14s-24-4-36-14c-26 4-48 26-40 60z" fill="#2d2825"/><path d="M118 100c-12-6-14-22-2-30M284 96c12-6 16-22 4-30M170 40c-6-14 8-24 18-18M224 40c10-12 24-4 20 10" fill="none" stroke="#2d2825" stroke-width="9" stroke-linecap="round"/><path d="M142 166c2 44 28 62 58 62s56-18 58-62c-14 16-24 36-58 34-34 2-44-18-58-34z" fill="#2d2825" opacity=".55"/><g stroke="#2d2825" stroke-width="2" stroke-linecap="round" opacity=".6"><path d="M150 186l-6 6M162 204l-6 8M246 206l6 8M256 188l6 6M200 232v8"/></g><g fill="#2d2825"><circle cx="177" cy="146" r="4.5"/><circle cx="223" cy="146" r="4.5"/></g><path d="M186 186q14 8 28 0" fill="none" stroke="#2d2825" stroke-width="3" stroke-linecap="round"/></svg></div>
-    <span class="ba-t ba-tb">Antes</span><span class="ba-t ba-ta">Después</span>
-    <span class="ba-l" aria-hidden="true"><i></i></span>
-    <input type="range" min="0" max="100" value="50" aria-label="Comparar antes y después">
-  </div>
-  <p class="nota-ref rv">Ilustración referencial.</p>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="calcula"><div class="in-w">
-  <span class="lbl rv">Tu cita</span><h2 class="rv">Arma tu servicio</h2>
-  <form class="calc rv" id="calc" onsubmit="return false">
-    <ul class="calc-l"><li><label><input type="checkbox" data-p="25" data-m="45" data-n="Corte"><span class="ck" aria-hidden="true"></span><span class="nm">Corte</span><span class="du">45 min</span><b>S/ 25</b></label></li><li><label><input type="checkbox" data-p="15" data-m="20" data-n="Barba"><span class="ck" aria-hidden="true"></span><span class="nm">Barba</span><span class="du">20 min</span><b>S/ 15</b></label></li><li><label><input type="checkbox" data-p="40" data-m="40" data-n="Facial"><span class="ck" aria-hidden="true"></span><span class="nm">Facial</span><span class="du">40 min</span><b>S/ 40</b></label></li><li><label><input type="checkbox" data-p="35" data-m="40" data-n="Ondulación"><span class="ck" aria-hidden="true"></span><span class="nm">Ondulación</span><span class="du">40 min</span><b>S/ 35</b></label></li></ul>
-    <div class="calc-t">
-      <div><span>Total estimado</span><b id="calcTotal">S/ 0</b></div>
-      <div><span>Duración</span><b id="calcMin">0 min</b></div>
-      <a class="btn" id="calcBtn" href="https://wa.me/51932107266?text=Hola%2C%20quiero%20reservar%20en%20Lima%20Barber%20Club" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+<section class="hero" id="inicio">
+  <div class="w hero-g">
+    <div class="hero-t">
+      <p class="kick">Barbería · Jesús María · Lima</p>
+      <h1>Como en las mejores <em>barberías del mundo</em></h1>
+      <p class="lead">Un club clásico en la esquina de Garzón: sillones de cuero, música a tu gusto y un barbero que te escucha antes de tomar la tijera.</p>
+      <div class="acts">
+        <a class="btn" href="#reserva">Reservar mi cita</a>
+        <a class="btn ghost" href="#carta">Ver la carta</a>
+      </div>
+      <p class="ahora" id="ahora" hidden></p>
     </div>
-    <p class="nota-ref">Precios y duraciones referenciales.</p>
-  </form>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="fidelidad"><div class="in-w">
-  <span class="lbl rv">Fidelidad</span><h2 class="rv">Tu tarjeta de sellos</h2>
-  <div class="fid rv" id="fid" data-n="5" data-k="fid-limabarber" data-premio="Corte gratis">
-    <ol class="fid-s"><li><span>1</span></li><li><span>2</span></li><li><span>3</span></li><li><span>4</span></li><li><span>5</span></li></ol>
-    <p class="fid-t" id="fidT" aria-live="polite">Cada visita suma un sello. A la visita 5: corte gratis.</p>
-    <div class="acc"><button class="btn" type="button" id="fidBtn">Marcar una visita</button><button class="btn sec" type="button" id="fidReset">Reiniciar</button></div>
+    <figure class="carnet rv" data-rv="zoom">
+      <div class="carnet-in">
+        <img src="assets/img/logo.webp?v=20261101" width="510" height="510" alt="Insignia de Lima Barber Club">
+        <p class="c1">Socio del club</p>
+        <p class="c2">Lima Barber Club</p>
+        <p class="c3">Av. Garzón 598 · Jesús María</p>
+      </div>
+    </figure>
   </div>
-  <p class="nota-ref rv">Demostración: se guarda solo en este dispositivo.</p>
-</div></section>
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="reservar"><div class="in-w">
-  <span class="lbl rv">Reservar</span><h2 class="rv">Cómo reservar</h2>
-  <ol class="pasos"><li class="rv"><span class="num">1</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Escríbenos</h3><p>Envíanos un mensaje por WhatsApp.</p></li><li class="rv"><span class="num">2</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><h3>Elige tu horario</h3><p>Dinos el servicio que quieres y cuándo te viene mejor.</p></li><li class="rv"><span class="num">3</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>Ven al local</h3><p>Te esperamos en Av. Gral. Eugenio Garzón 598, Jesús María.</p></li></ol>
-  <form id="cita" class="cita rv" novalidate>
-    <label>Servicio<select name="s"><option>Corte</option><option>Barba</option><option>Facial</option><option>Ondulación</option><option>Tinte</option></select></label>
-    <label>Día<input type="date" name="d" required></label>
-    <label>Hora<select name="h" required></select></label>
-    <label>Tu nombre<input type="text" name="n" autocomplete="given-name" maxlength="40" required></label>
-    <button class="btn" type="submit">Solicitar cita</button>
-    <p class="nota">Horario referencial. El negocio confirma tu cita por WhatsApp.</p>
-    <p class="err" role="alert"></p>
-  </form>
-</div></section>
+</section>
 
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="sedes"><div class="in-w">
-  <span class="lbl rv">Sedes</span><h2 class="rv">Dónde encontrarnos</h2>
-  <ul class="sedes"><li class="rv">Av. San Luis 2733, San Luis</li></ul>
-</div></section>
-
-
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="ubicacion" class="fus"><div class="in-w">
-  <span class="lbl rv">Ubicación y opiniones</span><h2 class="rv">Visítanos y mira lo que dicen</h2>
-  <div class="fus-g">
-    <div class="fus-m rv"><address>Av. Gral. Eugenio Garzón 598<br>Jesús María, Lima</address>
-      <div class="mapa"><iframe title="Mapa de Lima Barber Club" loading="lazy" src="https://maps.google.com/maps?q=-12.0660206,-77.0446342&z=17&output=embed"></iframe></div>
-      <a class="btn sec ico" href="https://maps.google.com/?cid=6887026952226413008" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></a></div>
-    <div class="fus-o">
-  <div class="val rv"><span class="n">4.1 ★</span><p>245 reseñas en Google Maps</p></div>
-  <div class="opin cinta manual"><p class="opin-h"><span class="vivo" aria-hidden="true"></span>Lo que dicen en Google Maps<button type="button" class="feed-ctl" aria-pressed="false">Pausar</button></p><ul class="feed"><li class="rev"><span class="av2" aria-hidden="true">E</span><button type="button" class="bub" data-rv="0" aria-haspopup="dialog"><span class="rh"><b>Elías A.</b><span class="est" aria-label="4 de 5 estrellas">★★★★☆</span><span class="fe">Hace 2 años</span></span><span class="rtxt">Un buen lugar para hacer un arreglo capilar y corrección de barba, nos atienden jóvenes que saben su oficio.</span><span class="ver">Ver en Google ↗</span></button></li><li class="rev"><span class="av2" aria-hidden="true">R</span><button type="button" class="bub" data-rv="1" aria-haspopup="dialog"><span class="rh"><b>Renato C.</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">Hace 7 años</span></span><span class="rtxt">Barberia clásica ubicada en la esquina de Garzón. Excelente atención y dedicación al cliente. A la altura del gusto y las tendencias puedes elegir un corte de los que te muestran en la tablet al…</span><span class="ver">Ver en Google ↗</span></button></li><li class="rev"><span class="av2" aria-hidden="true">F</span><button type="button" class="bub" data-rv="2" aria-haspopup="dialog"><span class="rh"><b>Fabiola V.</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">Hace 4 años</span></span><span class="rtxt">Excelente servicio. Nos atendió Ronald, mi hijo quedó contento con su corte y nosotros satisfechos por el trabajo profesional realizado por Ronald. 100% recomendable.</span><span class="ver">Ver en Google ↗</span></button></li></ul><a class="mas" href="https://maps.google.com/?cid=6887026952226413008" target="_blank" rel="noopener">Ver todas las reseñas en Google Maps →</a></div>
-</div>
+<section class="stats" aria-label="Cifras">
+  <div class="w stats-g">
+    <div class="rv"><b><span data-count="4.6" data-dec="1">4,6</span></b><span>en su página de reservas</span></div>
+    <div class="rv"><b><span data-count="245">245</span></b><span>reseñas en Google</span></div>
+    <div class="rv"><b><span data-count="5">5</span></b><span>barberos en el equipo</span></div>
+    <div class="rv"><b><span data-count="7">7</span></b><span>días a la semana</span></div>
   </div>
-</div></section>
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="contacto" class="cont"><div class="in-w">
-  <h2 class="rv">Reserva tu cita</h2>
-  <p class="rv" style="color:var(--suave)">+51 932 107 266</p>
-  <div class="acc rv"><a class="btn ico" href="https://wa.me/51932107266?text=Hola%2C%20quiero%20reservar%20en%20Lima%20Barber%20Club" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp" title="Escríbenos por WhatsApp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M9 8.5c0 3 2.5 6 6 6.5l1.2-1.6-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg></a><a class="btn sec ico" href="tel:+51932107266" aria-label="Llamar" title="Llamar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a><a class="btn sec ico" href="http://limabarberclub.site.agendapro.com/" target="_blank" rel="noopener" aria-label="Página de reservas" title="Página de reservas"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></a></div>
-</div></section>
+</section>
+
+<section class="sec" id="carta">
+  <div class="w">
+    <header class="sec-h rv"><p class="tag">I · La carta</p><h2>Elite o <em>Premium</em></h2><p class="sub">Dos niveles de servicio para el corte y la barba. Precios y duraciones de su página de reservas en AgendaPro.</p></header>
+
+    <div class="tiers">
+      <article class="tier elite rv">
+        <p class="tier-n">Elite</p>
+        <ul>
+          <li><span>Corte Elite</span><i></i><b>S/ 50</b><small>30 min</small></li>
+          <li><span>Corte Elite + diseño</span><i></i><b>S/ 65</b><small>45 min</small></li>
+          <li><span>Corte Elite niño</span><i></i><b>S/ 50</b><small>30 min</small></li>
+          <li><span>Barba Elite</span><i></i><b>S/ 35</b><small>25 min</small></li>
+          <li><span>Retoque de corte Elite</span><i></i><b>S/ 35</b><small>30 min</small></li>
+          <li class="pack"><span>Paquete corte + barba Elite</span><i></i><b>S/ 75</b></li>
+        </ul>
+      </article>
+      <article class="tier rv">
+        <p class="tier-n">Premium</p>
+        <ul>
+          <li><span>Corte Premium</span><i></i><b>S/ 40</b><small>30 min</small></li>
+          <li><span>Corte Premium + diseño</span><i></i><b>S/ 50</b><small>45 min</small></li>
+          <li><span>Corte Premium niño</span><i></i><b>S/ 40</b><small>30 min</small></li>
+          <li><span>Barba Premium</span><i></i><b>S/ 30</b><small>25 min</small></li>
+          <li><span>Retoque de corte Premium</span><i></i><b>S/ 30</b><small>30 min</small></li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="otros">
+      <article class="rv"><h3>Cuidado y detalles</h3>
+        <ul>
+          <li><span>Peinado</span><i></i><b>S/ 25</b><small>20 min</small></li>
+          <li><span>Pulido de cejas, nariz y oído</span><i></i><b>S/ 10</b><small>10 min</small></li>
+          <li><span>Tratamiento capilar</span><i></i><b>S/ 40</b><small>30 min</small></li>
+          <li><span>Bigen en barba</span><i></i><b>S/ 20</b><small>25 min</small></li>
+          <li><span>Tinte de barba</span><i></i><b>S/ 40</b><small>40 min</small></li>
+        </ul></article>
+      <article class="rv"><h3>Facial</h3>
+        <ul>
+          <li><span>Exfoliación</span><i></i><b>S/ 25</b><small>25 min</small></li>
+          <li><span>Black mask</span><i></i><b>S/ 40</b><small>30 min</small></li>
+          <li><span>Facial profundo</span><i></i><b>S/ 80</b><small>40 min</small></li>
+        </ul></article>
+      <article class="rv"><h3>Color y ondulación</h3>
+        <ul>
+          <li><span>Tinte de cabello (varón)</span><i></i><b>S/ 80</b><small>1 h</small></li>
+          <li><span>Platinado</span><i></i><b>S/ 180</b><small>3 h</small></li>
+          <li><span>Tinte rubio (varón)</span><i></i><b>S/ 180</b><small>3 h</small></li>
+          <li><span>Tinte rojo (varón)</span><i></i><b>S/ 180</b><small>3 h</small></li>
+          <li><span>Ondulación</span><i></i><b>S/ 180</b><small>3 h</small></li>
+        </ul></article>
+    </div>
+    <p class="fine rv">Precios vistos en su página de reservas; pueden cambiar. Reserva en línea en <a class="link" href="https://limabarberclub.site.agendapro.com/pe/sucursal/432989" target="_blank" rel="noopener">AgendaPro</a>.</p>
+  </div>
+</section>
+
+<section class="sec club" id="club">
+  <div class="w club-g">
+    <div class="club-t">
+      <header class="sec-h rv"><p class="tag">II · El club</p><h2>Un local con <em>carácter</em></h2></header>
+      <p class="rv">Paredes color vino con molduras doradas, sillones de barbería de cromo y cuero, espejos con luz y hasta una moto clásica en vitrina. La música la eliges tú, y los fines de semana, según las reseñas, hay ofertas y bebidas.</p>
+      <p class="rv">Está a dos cuadras de la Rambla de Av. Brasil y a una de Av. 28 de Julio, con dos estacionamientos hacia Av. Mogaburo y espacio en la cuadra 5 de Av. Garzón. Es <em>pet friendly</em>.</p>
+    </div>
+    <div class="club-f">
+      <figure class="rv" data-rv="zoom"><img src="assets/img/equipo.webp?v=20261101" width="1379" height="688" alt="Barberos con camisa blanca junto a un sillón de cromo y cuero en Lima Barber Club" loading="lazy"><figcaption>Sala principal</figcaption></figure>
+      <div class="club-s">
+        <figure class="rv" data-rv="zoom"><img src="assets/img/sillon.webp?v=20261101" width="806" height="697" alt="Sillón de barbería y tocador con espejos" loading="lazy"><figcaption>Los puestos</figcaption></figure>
+        <figure class="rv" data-rv="zoom"><img src="assets/img/fachada.webp?v=20261101" width="806" height="697" alt="Fachada de Lima Barber Club en Av. Garzón 598 con el poste de barbero" loading="lazy"><figcaption>Av. Garzón 598</figcaption></figure>
+      </div>
+    </div>
+    <p class="fine rv">Fotos de su ficha de Google Maps.</p>
+  </div>
+</section>
+
+<section class="sec" id="equipo">
+  <div class="w">
+    <header class="sec-h rv"><p class="tag">III · Equipo</p><h2>Quién <em>te atiende</em></h2><p class="sub">Los barberos que aparecen en su página de reservas. Puedes elegir con quién cortarte.</p></header>
+    <ul class="eq">
+      <li class="rv"><b>A</b><h3>Alex</h3></li>
+      <li class="rv"><b>E</b><h3>Esequiel</h3></li>
+      <li class="rv"><b>F</b><h3>Fabian</h3></li>
+      <li class="rv"><b>G</b><h3>Gabriel</h3></li>
+      <li class="rv"><b>R</b><h3>Ronald</h3></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec" id="reserva">
+  <div class="w">
+    <header class="sec-h rv"><p class="tag">IV · Reserva</p><h2>Reserva <em>tu cita</em></h2><p class="sub">Elige día, hora, barbero y servicio: se abre WhatsApp con el mensaje escrito. Las horas libres son de ejemplo; el club confirma.</p></header>
+    <div class="cols">
+      <form class="book rv" id="book" onsubmit="return false">
+        <div><p class="lab">1 · Día</p><div class="days" id="days" role="group" aria-label="Día"></div></div>
+        <div><p class="lab">2 · Hora <span id="left" class="left"></span></p><div class="slots" id="slots" role="group" aria-label="Hora"></div></div>
+        <div class="two">
+          <div><label class="lab" for="pro">3 · Barbero</label>
+            <select id="pro"><option>Cualquiera</option><option>Alex</option><option>Esequiel</option><option>Fabian</option><option>Gabriel</option><option>Ronald</option></select></div>
+          <div><label class="lab" for="svc">4 · Servicio</label>
+            <select id="svc">
+              <option>Corte Elite (S/ 50)</option><option>Corte Elite + diseño (S/ 65)</option><option>Corte Premium (S/ 40)</option><option>Corte Premium + diseño (S/ 50)</option><option>Barba Elite (S/ 35)</option><option>Barba Premium (S/ 30)</option><option>Corte + barba Elite (S/ 75)</option><option>Facial profundo (S/ 80)</option><option>Black mask (S/ 40)</option><option>Tinte de cabello (S/ 80)</option><option>Platinado (S/ 180)</option><option>Ondulación (S/ 180)</option>
+            </select></div>
+        </div>
+        <a class="btn" id="bookBtn" href="https://wa.me/51932107266" target="_blank" rel="noopener"><span id="bookTxt">Reservar por WhatsApp</span></a>
+        <p class="fine">¿Prefieres su agenda oficial? <a class="link" href="https://limabarberclub.site.agendapro.com/pe/sucursal/432989" target="_blank" rel="noopener">Reservar en AgendaPro</a>.</p>
+      </form>
+      <aside class="hrs rv">
+        <p class="lab">Horario</p>
+        <table id="hrs"><tbody>
+          <tr data-d="1"><td>Lunes</td><td>10:00 – 21:00</td></tr>
+          <tr data-d="2"><td>Martes</td><td>10:00 – 21:00</td></tr>
+          <tr data-d="3"><td>Miércoles</td><td>10:00 – 21:00</td></tr>
+          <tr data-d="4"><td>Jueves</td><td>10:00 – 21:00</td></tr>
+          <tr data-d="5"><td>Viernes</td><td>10:00 – 21:00</td></tr>
+          <tr data-d="6"><td>Sábado</td><td>10:00 – 21:00</td></tr>
+          <tr data-d="0"><td>Domingo</td><td>10:00 – 20:00</td></tr>
+        </tbody></table>
+        <p class="fine">Horario de su ficha de Google y del letrero de la puerta.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="opiniones">
+  <div class="w">
+    <header class="sec-h rv"><p class="tag">V · Opiniones</p><h2>Lo que <em>cuentan</em></h2><p class="sub">4,1 en Google con 245 reseñas, y 4,6 en su página de reservas. Cinco de las positivas, tal como las escribieron.</p></header>
+    <ul class="rvs">
+      <li class="rv"><p>«Excelente servicio. Nos atendió Ronald, mi hijo quedó contento con su corte y nosotros satisfechos por el trabajo profesional realizado por Ronald. 100% recomendable.»</p><b>Fabiola V.</b><span>5 estrellas · Google</span></li>
+      <li class="rv"><p>«Muy buena barbería. Todo muy limpio y ordenado. Lo recomiendo 100%. Te brindan una cerveza artesanal de cortesía muy buena.»</p><b>Pedro C.</b><span>5 estrellas · Google</span></li>
+      <li class="rv"><p>«Excelente servicio, he tenido el gusto de estar desde que inicio y no dudo en recomendarlo. Leo y los demás muchachos son buena onda, te permiten poner música a tu gusto y los fines de semana t dan ofertas y bebidas.»</p><b>Omar L.</b><span>5 estrellas · Google</span></li>
+      <li class="rv"><p>«Barbería clásica ubicada en la esquina de Garzón. Excelente atención y dedicación al cliente.»</p><b>Renato C.</b><span>5 estrellas · Google</span></li>
+      <li class="rv"><p>«Le hicieron un corte a mi novio, quedó bonito. Buen servicio, calidad 10/10 y buena música.»</p><b>Angela O.</b><span>5 estrellas · Google</span></li>
+    </ul>
+    <p class="fine rv">Reseñas reales de Google Maps de Lima Barber Club. Se quitaron emojis y se ajustó la puntuación; la de Renato se acorta en un punto final. En Google también hay reseñas negativas (sobre citas y precio); aquí se muestran las positivas.</p>
+  </div>
+</section>
+
+<section class="sec" id="visita">
+  <div class="w">
+    <header class="sec-h rv"><p class="tag">VI · Visita</p><h2>Av. Garzón <em>598</em></h2><p class="sub">Jesús María, Lima. También tienen otro local en Av. San Luis 2733, San Luis.</p></header>
+    <div class="cols visita">
+      <div class="map rv"><iframe title="Mapa de Lima Barber Club" src="https://maps.google.com/maps?q=-12.0660206,-77.0446342&amp;z=17&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      <div class="rv">
+        <ul class="soc">
+          <li><a href="https://wa.me/51932107266" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z"/><path d="M9 8c0 3.5 3 6.5 6.5 6.5l1-1.5-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2Z"/></svg>WhatsApp 932 107 266</a></li>
+          <li><a href="https://www.instagram.com/limabarberclub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r=".6"/></svg>@limabarberclub</a></li>
+          <li><a href="https://www.facebook.com/limabarbercluboficial" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4.500h-3a4 4 0 0 0-4 4V11H7.500v3.500H10V21h3.500v-6.500H16l.5-3.500h-3V9a1 1 0 0 1 .5-1Z"/></svg>Facebook</a></li>
+          <li><a href="https://maps.google.com/?cid=6887026952226413008" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.8-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.200 12 21 12 21Z"/><circle cx="12" cy="10" r="2.400"/></svg>Cómo llegar</a></li>
+          <li><a href="tel:+51932107266"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>Llamar</a></li>
+        </ul>
+        <p class="fine">La puerta también anota el 01 658 5803 para reservas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 </main>
-<footer><span>Lima Barber Club</span><span>Av. Gral. Eugenio Garzón 598, Jesús María</span></footer>
-<div class="barra-res" id="barraRes"><span class="ahora" data-ahora hidden></span><a class="btn" href="https://wa.me/51932107266?text=Hola%2C%20quiero%20reservar%20en%20Lima%20Barber%20Club" target="_blank" rel="noopener">Reservar</a></div>
-<script>window.CITA = {"wa":"https://wa.me/51932107266","n":"Lima Barber Club","h":{"lun":["10:00","21:00"],"mar":["10:00","21:00"],"mie":["10:00","21:00"],"jue":["10:00","21:00"],"vie":["10:00","21:00"],"sab":["10:00","21:00"]},"ant":2}; window.RESENAS = [{"a":"Elías A.","e":4,"f":"Hace 2 años","t":"Un buen lugar para hacer un arreglo capilar y corrección de barba, nos atienden jóvenes que saben su oficio.","u":"https://maps.app.goo.gl/ngUdQn9g7pEHjDKr5"},{"a":"Renato C.","e":5,"f":"Hace 7 años","t":"Barberia clásica ubicada en la esquina de Garzón. Excelente atención y dedicación al cliente. A la altura del gusto y las tendencias puedes elegir un corte de los que te muestran en la tablet al…","u":"https://maps.app.goo.gl/T7KquRMK8kNaWumz9"},{"a":"Fabiola V.","e":5,"f":"Hace 4 años","t":"Excelente servicio. Nos atendió Ronald, mi hijo quedó contento con su corte y nosotros satisfechos por el trabajo profesional realizado por Ronald. 100% recomendable.","u":"https://maps.app.goo.gl/eCCFkhgPSDwHd2Ut5"},{"a":"Matias S.","e":4,"f":"Hace un año","t":"La atención fue buena. El barbero que me tocó fue muy amable conmigo, me preguntó como me peino, que tipo de corte me interesaba de acuerdo a su catálogo, me ofreció bebida, me lavó el cabello y…","u":"https://maps.app.goo.gl/AQKkGYS2j6nvVvrz6"},{"a":"Angela O.","e":5,"f":"Hace 2 años","t":"Le hicieron un corte a mi novio, quedó bonito 🤭 Buen servicio, calidad 10/10 y buena música 😌…","u":"https://maps.app.goo.gl/gU92SATd6Y6fyvQg9"},{"a":"Antonio V.","e":5,"f":"Hace un año","t":"Excelente sitio para un buen corte de cabello, espero siga mejorando somos clientes continuos","u":"https://maps.app.goo.gl/s8tKQ9Jn2RwaZmUb9"},{"a":"Pedro C.","e":5,"f":"Hace un año","t":"Muy buena barbería. Todo muy limpio y ordenado. Lo recomiendo 100% Ps. Te brindan una cerveza artesanal de cortesía muy buena.","u":"https://maps.app.goo.gl/nf4J9P9BPbhQRgDu9"},{"a":"Omar L.","e":5,"f":"Hace 6 años","t":"Excelente servicio, he tenido el gusto de estar desde que inicio y no dudo en recomendarlo. Leo y los demás muchachos son buena onda, te permiten poner música a tu gusto y los fines de semana t dan…","u":"https://maps.app.goo.gl/Fx9TvKbV93aGQPah6"},{"a":"Jorge G.","e":4,"f":"Hace 4 años","t":"Personal bastante amable y cuidadoso","u":"https://maps.app.goo.gl/3Wcuohwy8ZpB9oW88"},{"a":"Antony P.","e":5,"f":"Hace un año","t":"100% recomendado excelente servicio por parte de los chicos y chicas de recepción 😁…","u":"https://maps.app.goo.gl/t7STc24DZsVxTY2p6"},{"a":"Kelly J.","e":5,"f":"Hace 2 años","t":"Servicio excelente, para mí hijo , mucha paciencia y el servicio A1.. la atención es rápida y muy amables ..todos .. muchos éxitos !!","u":"https://maps.app.goo.gl/vrVvBXEHgrWQmRAy5"},{"a":"Humberto A.","e":4,"f":"Hace 5 años","t":"Cordial y buen servicio, se cumplen los protocolos de bioseguridad. Espero que no bajen la guardia en este tema. Transacciones y facturación vía correo, disminuye el contacto físico; bien ahí!","u":"https://maps.app.goo.gl/TE1Hh6QdgxYM6ZRf8"},{"a":"Nikel P.","e":5,"f":"Hace 3 años","t":"Excelente lugar, fui en una fecha especial a atenderme y me brindaron la asesoría necesaria para la ocasión, el corte fue A1 y la atención excelente.","u":"https://maps.app.goo.gl/iRT6pw87Q7uRgudf9"},{"a":"Edison J.","e":5,"f":"Hace 2 años","t":"Todo perfecto y el trato de lo mejor. Pidan su cerveza catedral en el servicio Élite y el servicio con Ronald","u":"https://maps.app.goo.gl/iVRJeNPRUbDdeE556"},{"a":"Adrián C.","e":5,"f":"Hace 6 años","t":"La atención de calidad. Chicos muy amables. Desde que fui por primera vez me gustó mucho. Así que cada vez que necesito un corte de cabello 💇🏻‍♂️ Lima Barber Club💈 es a dónde voy. Éxitos...…","u":"https://maps.app.goo.gl/5um8fqqGuvhdfeFY8"},{"a":"Guillermo J.","e":5,"f":"Hace 4 años","t":"Excelente servicio 10/10, me atendió Leo, un capo del hair curt, gran ambiente,buena musica, grandes profesionales. Lo recomiendo.","u":"https://maps.app.goo.gl/Zdo58cAp1nTQFyHn8"},{"a":"Víctor C.","e":5,"f":"Hace 5 años","t":"Barbería 10/10, equipo profesional, bien capacitado, y con equipo de primera calidad. Asisto a esta barbería desde su fundación y nunca me ha decepcionado, el trato ya sea en la recepción o con el…","u":"https://maps.app.goo.gl/2wpkDqRVMHE8joTh6"},{"a":"Alejandro P.","e":5,"f":"Hace 4 años","t":"Excelente servicio profesional, todos los meses mi hermano menor y yo nos cortamos aquí. 100% recomendado.","u":"https://maps.app.goo.gl/iGzx2oST31rvTU8V9"},{"a":"Sebastián C.","e":5,"f":"Hace 3 años","t":"100% recomendado 👍. Formidable servicio profesional, breve espera de atención, descuentos, e infaltable música 🙂…","u":"https://maps.app.goo.gl/1YbpaR1pJRdkzmxu5"},{"a":"Angel R.","e":5,"f":"Hace 3 años","t":"Excelente servicio por parte del barbero Christian Perea, muy paciente con los detalles del corte y presto a dar recomendaciones del cuidado del corte y escuchando lo que quiere el cliente. 5…","u":"https://maps.app.goo.gl/w53ZP3qdQoVLF6Y96"}];</script>
-<script src="../_comun/base.js"></script>
-<script></script>
+
+<footer class="foot">
+  <img src="assets/img/logo.webp?v=20261101" width="64" height="64" alt="">
+  <p>LIMA BARBER CLUB</p>
+  <p class="fine">Demo hecha con información pública del negocio (AgendaPro, Google Maps). Las horas libres de la reserva son de ejemplo.</p>
+</footer>
+
+<div class="barra" id="barra"><a class="btn" href="#reserva">Reservar por WhatsApp</a></div>
+
+<script defer src="lib/manifest.js?v=20261101"></script>
+<script defer src="main.js?v=20261101"></script>
 </body>
 </html>

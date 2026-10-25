@@ -2,170 +2,170 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Emy's Salon</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@300;400;600;700&display=swap">
-<link rel="stylesheet" href="../_comun/base.css">
-<style>
-:root { --bg: #fff8f6; --fg: #3a1414; --acento: #d8090b; --suave: #7a4a4a; --f-titulo: "Pacifico", cursive; --f-texto: "Nunito"; --radio: 999px; --trazo: 1.6; color-scheme: light; }
-/* Fondo: manchas rojas y rosadas que flotan despacio y un brillo que sigue al cursor */
-body::before { content: ""; position: fixed; inset: -15%; z-index: -1; pointer-events: none;
-  background: radial-gradient(36% 36% at 14% 24%, rgba(252, 2, 3, .12), transparent 70%), radial-gradient(34% 34% at 86% 18%, rgba(255, 170, 170, .38), transparent 70%), radial-gradient(40% 40% at 62% 88%, rgba(216, 9, 11, .10), transparent 70%); }
-body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 30%), rgba(255, 255, 255, .8), transparent 70%); }
-@media (prefers-reduced-motion: no-preference) { body::before { animation: flota 24s ease-in-out infinite alternate; } @keyframes flota { to { transform: translate3d(5%, -4%, 0) rotate(6deg) scale(1.1); } } }
-.btn:not(.sec), .cta { color: #fff; }
-.hero h1 { display: grid; gap: 4px; font-weight: 400; line-height: 1.05; }
-.hero h1 .a { font-size: clamp(76px, 20vw, 250px); color: var(--acento); letter-spacing: 0; }
-.hero h1 .b { font-family: "Nunito", sans-serif; font-size: clamp(16px, 3vw, 32px); letter-spacing: .45em; text-transform: uppercase; font-weight: 600; color: var(--fg); }
-h2 { font-weight: 400; letter-spacing: 0; font-size: clamp(34px, 5.4vw, 60px); }
-.sv span { font-weight: 700; }
-.val .n { color: var(--acento); font-weight: 400; font-family: "Pacifico", cursive; }
-@media (prefers-reduced-motion: no-preference) {
-  .hero h1 .a { animation: ent 1.2s cubic-bezier(.23, 1, .32, 1) both; }
-  .hero h1 .b { animation: ent 1.2s .25s cubic-bezier(.23, 1, .32, 1) both; }
-  @keyframes ent { from { opacity: 0; transform: translateX(-24px) rotate(-2deg); } }
-}
-</style>
-<noscript><style>.rv { opacity: 1 !important; transform: none !important; }</style></noscript>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Emy's Salón &amp; Spa · Jesús María</title>
+<meta name="description" content="Emy's Salón & Spa, 24 años en el rubro de la belleza. Laceado japonés, color, limpieza facial y uñas en Av. Eugenio Garzón, Jesús María. Con cita previa.">
+<meta name="theme-color" content="#e50d12">
+<link rel="icon" href="assets/img/logo.webp" type="image/webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20261109">
+<script>document.documentElement.classList.add("js")</script>
 </head>
-<body class="anim">
-<header class="top">
-  <a class="marca" href="#inicio"><svg role="img" aria-label="Logo de Emy's Salon" width="220" height="120" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 120" fill="#ffffff">
-  <rect width="220" height="120" rx="14" fill="#fc0203"/>
-  <text x="110" y="74" text-anchor="middle" font-family="Pacifico, cursive" font-size="54">Emy's</text>
-  <text x="110" y="100" text-anchor="middle" font-family="Nunito, Arial, sans-serif" font-size="13" font-weight="600" letter-spacing="4">SALÓN &amp; SPA</text>
-</svg></a>
-  <nav><a href="#servicios">Servicios</a><a href="#ubicacion">Ubicación</a><a href="#contacto">Contacto</a><a class="cta ico" href="tel:+5113308233" aria-label="Reservar" title="Reservar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a></nav>
+<body>
+
+<canvas id="bokeh" aria-hidden="true"></canvas>
+<div class="prog" id="prog" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#inicio"><img src="assets/img/logo.webp?v=20261109" width="46" height="46" alt=""><span class="script">Emy's</span><small>Salón &amp; Spa</small></a>
+  <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+  <nav class="menu" id="menu" aria-label="Principal">
+    <a href="#servicios">Servicios</a>
+    <a href="#promos">Promociones</a>
+    <a href="#trabajos">Trabajos</a>
+    <a href="#opiniones">Opiniones</a>
+    <a href="#visita">Visita</a>
+    <a class="cta" href="#reserva">Reservar</a>
+  </nav>
 </header>
+
 <main>
-<section id="inicio" class="hero"><div class="hero-in">
-  <h1 aria-label="Emy's Salon" data-par style="--kx:1;--ky:.14"><span class="a">Emy's</span><span class="b">Salón &amp; Spa</span></h1>
-  <p class="baja" data-par style="--kx:.5;--ky:.07">24 años de trayectoria en el rubro de la belleza.</p>
-  <p class="ahora" data-ahora hidden></p>
-  <div class="acc"><a class="btn ico" href="tel:+5113308233" aria-label="Llamar para reservar" title="Llamar para reservar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a><a class="btn sec ico" href="#ubicacion" aria-label="Cómo llegar" title="Cómo llegar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></a></div>
-</div></section>
-<section id="nosotros"><div class="in-w">
-  <span class="lbl rv">Nosotros</span>
-  <div class="about"><h2 class="rv">Emy's Salon</h2><p class="rv">Emy's Salon es un salón en Jesús María, con 4.8 de puntaje y 104 reseñas en Google. Ofrece laceado japonés, color y cabello. Reserva tu cita y ven a conocernos.</p></div>
-  <div class="why"><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg><h3>4.8 ★ en Google</h3><p>Calificación basada en 104 reseñas de clientes en Google Maps.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Reserva por teléfono</h3><p>Llámanos y agenda tu cita.</p></div><div class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>En Jesús María</h3><p>Av. Gral. Eugenio Garzón 719. Fácil de encontrar.</p></div></div>
-</div></section>
 
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="cifras"><div class="in-w">
-  <div class="cifras">
-    <div class="cifra rv"><b data-n="4.8" data-dec="1">4.8</b><span>de puntaje en Google ★</span></div>
-    <div class="cifra rv"><b data-n="104">104</b><span>reseñas de clientes</span></div>
-    <div class="cifra rv"><b data-n="6">6</b><span>días de atención a la semana</span></div>
-  </div>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="promo"><div class="in-w">
-  <div class="promo rv">
-    <div class="promo-i"><span class="lbl">Promoción del mes</span><h3>Corte + tratamiento</h3><p>Cuida tu cabello con un precio especial durante este mes.</p><p class="promo-p">S/ 70</p></div>
-    <div class="cuenta" id="cuenta" role="timer" aria-label="Tiempo que queda de la promoción"><span><b data-u="d">--</b>días</span><span><b data-u="h">--</b>horas</span><span><b data-u="m">--</b>min</span><span><b data-u="s">--</b>seg</span></div>
-    <a class="btn" href="tel:+5113308233">Quiero la promo</a>
-  </div>
-  <p class="nota-ref rv">Promoción de ejemplo. Termina el último día del mes.</p>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="equipo"><div class="in-w">
-  <span class="lbl rv">Equipo</span><h2 class="rv">Quién te atiende</h2>
-  <div class="eq"><article class="rv"><span class="eq-av" aria-hidden="true">P</span><h3>Paola</h3><p class="eq-r">Estilista</p><p class="eq-e">Corte y peinado</p><a class="btn sec" href="tel:+5113308233">Reservar con Paola</a></article><article class="rv"><span class="eq-av" aria-hidden="true">V</span><h3>Valeria</h3><p class="eq-r">Colorista</p><p class="eq-e">Tinte y mechas</p><a class="btn sec" href="tel:+5113308233">Reservar con Valeria</a></article><article class="rv"><span class="eq-av" aria-hidden="true">D</span><h3>Daniela</h3><p class="eq-r">Especialista capilar</p><p class="eq-e">Tratamientos</p><a class="btn sec" href="tel:+5113308233">Reservar con Daniela</a></article></div>
-  <p class="nota-ref rv">Equipo referencial.</p>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="servicios"><div class="in-w">
-  <span class="lbl rv">Servicios y galería</span><h2 class="rv">Lo que hacemos</h2>
-  <div class="sc-row rv" style="--abierta:4.2"><article class="sc open"><button type="button" class="sc-b" id="sc-h0" aria-expanded="true" aria-controls="sc-p0"><span class="sc-n">01</span><span class="sc-t">Laceado japonés</span></button><div class="sc-media" id="sc-p0" role="region" aria-labelledby="sc-h0"><img class="a on" src="img/s1-a.svg" alt="Ilustración referencial de Laceado japonés" loading="lazy"><img class="b" src="img/s1-b.svg" alt="Ilustración referencial de Laceado japonés" loading="lazy"><p class="sc-d">Cabello liso, suave y fácil de peinar.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h1" aria-expanded="false" aria-controls="sc-p1"><span class="sc-n">02</span><span class="sc-t">Color</span></button><div class="sc-media" id="sc-p1" role="region" aria-labelledby="sc-h1"><img class="a on" src="img/s2-a.svg" alt="Ilustración referencial de Color" loading="lazy"><img class="b" src="img/s2-b.svg" alt="Ilustración referencial de Color" loading="lazy"><p class="sc-d">Color, mechas y degradados a tu medida.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h2" aria-expanded="false" aria-controls="sc-p2"><span class="sc-n">03</span><span class="sc-t">Cabello</span></button><div class="sc-media" id="sc-p2" role="region" aria-labelledby="sc-h2"><img class="a on" src="img/s3-a.svg" alt="Ilustración referencial de Cabello" loading="lazy"><img class="b" src="img/s3-b.svg" alt="Ilustración referencial de Cabello" loading="lazy"><p class="sc-d">Cortes precisos, a tu estilo.</p></div></article><article class="sc"><button type="button" class="sc-b" id="sc-h3" aria-expanded="false" aria-controls="sc-p3"><span class="sc-n">04</span><span class="sc-t">Tratamientos</span></button><div class="sc-media" id="sc-p3" role="region" aria-labelledby="sc-h3"><img class="a on" src="img/s4-a.svg" alt="Ilustración referencial de Tratamientos" loading="lazy"><img class="b" src="img/s4-b.svg" alt="Ilustración referencial de Tratamientos" loading="lazy"><p class="sc-d">Cuidado para devolver brillo y cuerpo.</p></div></article></div>
-  <p class="nota-ref rv">Ilustraciones referenciales.</p>
-</div></section>
-
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="resultado"><div class="in-w">
-  <span class="lbl rv">Resultado</span><h2 class="rv">Antes y después</h2>
-  <p class="rv" style="color:var(--suave);margin-top:10px">Desliza para ver la diferencia de un buen servicio.</p>
-  <div class="ba rv" style="--p:50%">
-    <div class="ba-i"><svg viewBox="0 0 400 300" role="img" aria-label="Después: cabello liso, suave y con brillo"><rect width="400" height="300" fill="#d8090b" opacity=".12"/><path d="M122 120C100 170 110 235 92 285h216c-18-50-8-115-30-165 2-58-40-80-78-80s-80 22-78 80z" fill="#3b2a23"/><path d="M150 70c-22 50-14 120-30 205" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".22"/><path d="M50 300c8-52 40-62 100-66h100c60 4 92 14 100 66z" fill="#7a4a4a"/><rect x="176" y="204" width="48" height="54" rx="14" fill="#e0b896"/><ellipse cx="200" cy="150" rx="58" ry="74" fill="#e0b896"/><path d="M138 112C146 74 178 64 206 66c30 2 52 18 56 50-22-26-60-34-124-4z" fill="#3b2a23"/><g fill="#3b2a23"><circle cx="178" cy="150" r="4.5"/><circle cx="222" cy="150" r="4.5"/></g><path d="M184 188q16 10 32 0" fill="none" stroke="#d8090b" stroke-width="4" stroke-linecap="round"/></svg></div>
-    <div class="ba-i ba-b"><svg viewBox="0 0 400 300" role="img" aria-label="Antes: cabello opaco y sin forma"><rect width="400" height="300" fill="#d8090b" opacity=".12"/><path d="M118 120C86 150 96 215 62 282l14 6h248l12-8c-30-60-18-130-52-160 4-54-44-86-82-86s-84 30-82 86z" fill="#3b2a23"/><path d="M96 168c-10 14-8 30-16 44M306 172c8 14 10 28 20 40M110 250c-6 8-8 16-14 24M296 252c6 8 10 16 16 24M150 44c-4-10 6-18 14-12M236 42c6-10 18-4 14 8" fill="none" stroke="#3b2a23" stroke-width="7" stroke-linecap="round"/><path d="M50 300c8-52 40-62 100-66h100c60 4 92 14 100 66z" fill="#7a4a4a"/><rect x="176" y="204" width="48" height="54" rx="14" fill="#e0b896"/><ellipse cx="200" cy="150" rx="58" ry="74" fill="#e0b896"/><path d="M136 116c-4-30 14-54 40-58-8 8-6 22 6 30 4-14 18-22 32-22-6 10-2 22 10 26 8-10 22-12 34-6-2 12 2 22 8 28-34-30-92-28-130 2z" fill="#3b2a23"/><g fill="#3b2a23"><circle cx="178" cy="150" r="4.5"/><circle cx="222" cy="150" r="4.5"/></g><path d="M184 188q16 10 32 0" fill="none" stroke="#d8090b" stroke-width="4" stroke-linecap="round"/></svg></div>
-    <span class="ba-t ba-tb">Antes</span><span class="ba-t ba-ta">Después</span>
-    <span class="ba-l" aria-hidden="true"><i></i></span>
-    <input type="range" min="0" max="100" value="50" aria-label="Comparar antes y después">
-  </div>
-  <p class="nota-ref rv">Ilustración referencial.</p>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="calcula"><div class="in-w">
-  <span class="lbl rv">Tu cita</span><h2 class="rv">Arma tu servicio</h2>
-  <form class="calc rv" id="calc" onsubmit="return false">
-    <ul class="calc-l"><li><label><input type="checkbox" data-p="70" data-m="60" data-n="Laceado japonés"><span class="ck" aria-hidden="true"></span><span class="nm">Laceado japonés</span><span class="du">60 min</span><b>S/ 70</b></label></li><li><label><input type="checkbox" data-p="90" data-m="120" data-n="Color"><span class="ck" aria-hidden="true"></span><span class="nm">Color</span><span class="du">120 min</span><b>S/ 90</b></label></li><li><label><input type="checkbox" data-p="25" data-m="45" data-n="Corte de cabello"><span class="ck" aria-hidden="true"></span><span class="nm">Corte de cabello</span><span class="du">45 min</span><b>S/ 25</b></label></li><li><label><input type="checkbox" data-p="35" data-m="40" data-n="Peinado"><span class="ck" aria-hidden="true"></span><span class="nm">Peinado</span><span class="du">40 min</span><b>S/ 35</b></label></li></ul>
-    <div class="calc-t">
-      <div><span>Total estimado</span><b id="calcTotal">S/ 0</b></div>
-      <div><span>Duración</span><b id="calcMin">0 min</b></div>
-      <a class="btn" id="calcBtn" href="tel:+5113308233">Pedir por WhatsApp</a>
+<section class="hero" id="inicio">
+  <div class="w hero-g">
+    <div class="hero-t">
+      <p class="kick">Salón &amp; Spa · Jesús María</p>
+      <h1 class="script">Emy's</h1>
+      <p class="sub-h">24 años en el rubro de la belleza</p>
+      <p class="lead">Laceado japonés, color, limpieza facial y uñas. Emy te asesora y te guía en el proceso: tú te sientas y ella hace su magia.</p>
+      <div class="acts">
+        <a class="btn" href="#reserva">Reservar mi cita</a>
+        <a class="btn ghost" href="#servicios">Ver servicios</a>
+      </div>
+      <p class="ahora" id="ahora" hidden></p>
     </div>
-    <p class="nota-ref">Precios y duraciones referenciales.</p>
-  </form>
-</div></section>
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="fidelidad"><div class="in-w">
-  <span class="lbl rv">Fidelidad</span><h2 class="rv">Tu tarjeta de sellos</h2>
-  <div class="fid rv" id="fid" data-n="5" data-k="fid-emys" data-premio="Servicio de cortesía">
-    <ol class="fid-s"><li><span>1</span></li><li><span>2</span></li><li><span>3</span></li><li><span>4</span></li><li><span>5</span></li></ol>
-    <p class="fid-t" id="fidT" aria-live="polite">Cada visita suma un sello. A la visita 5: servicio de cortesía.</p>
-    <div class="acc"><button class="btn" type="button" id="fidBtn">Marcar una visita</button><button class="btn sec" type="button" id="fidReset">Reiniciar</button></div>
+    <figure class="hero-f rv" data-rv="zoom"><img src="assets/img/firma.webp?v=20261109" width="616" height="818" alt="Clienta con cabello ondulado castaño frente al letrero de Emy's" fetchpriority="high"></figure>
   </div>
-  <p class="nota-ref rv">Demostración: se guarda solo en este dispositivo.</p>
-</div></section>
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="reservar"><div class="in-w">
-  <span class="lbl rv">Reservar</span><h2 class="rv">Cómo reservar</h2>
-  <ol class="pasos"><li class="rv"><span class="num">1</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Llámanos</h3><p>Comunícate por teléfono.</p></li><li class="rv"><span class="num">2</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><h3>Elige tu horario</h3><p>Dinos el servicio que quieres y cuándo te viene mejor.</p></li><li class="rv"><span class="num">3</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>Ven al local</h3><p>Te esperamos en Av. Gral. Eugenio Garzón 719, Jesús María.</p></li></ol>
-  <form id="cita" class="cita rv" novalidate>
-    <label>Servicio<select name="s"><option>Laceado japonés</option><option>Color</option><option>Cabello</option></select></label>
-    <label>Día<input type="date" name="d" required></label>
-    <label>Hora<select name="h" required></select></label>
-    <label>Tu nombre<input type="text" name="n" autocomplete="given-name" maxlength="40" required></label>
-    <button class="btn" type="submit">Solicitar cita</button>
-    <p class="nota">Horario referencial. El negocio confirma tu cita por WhatsApp.</p>
-    <p class="err" role="alert"></p>
-  </form>
-</div></section>
+</section>
 
-
-
-
-
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="ubicacion" class="fus"><div class="in-w">
-  <span class="lbl rv">Ubicación y opiniones</span><h2 class="rv">Visítanos y mira lo que dicen</h2>
-  <div class="fus-g">
-    <div class="fus-m rv"><address>Av. Gral. Eugenio Garzón 719<br>Jesús María, Lima</address>
-      <div class="mapa"><iframe title="Mapa de Emy's Salon" loading="lazy" src="https://maps.google.com/maps?q=-12.0673979,-77.0455368&z=17&output=embed"></iframe></div>
-      <a class="btn sec ico" href="https://maps.google.com/?cid=8357353606332994377" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></a></div>
-    <div class="fus-o">
-  <div class="val rv"><span class="n">4.8 ★</span><p>104 reseñas en Google Maps</p></div>
-  <div class="opin cinta manual"><p class="opin-h"><span class="vivo" aria-hidden="true"></span>Lo que dicen en Google Maps<button type="button" class="feed-ctl" aria-pressed="false">Pausar</button></p><ul class="feed"><li class="rev"><span class="av2" aria-hidden="true">K</span><button type="button" class="bub" data-rv="0" aria-haspopup="dialog"><span class="rh"><b>Karen E.</b><span class="est" aria-label="4 de 5 estrellas">★★★★☆</span><span class="fe">Hace un año</span></span><span class="rtxt">He tenido muy buena experiencia siempre que he venido para realizarme laceados, recomiendo la atención con Julio César. Además, el servicio de maquillaje profesional y peinados me ha gustado mucho.…</span><span class="ver">Ver en Google ↗</span></button></li><li class="rev"><span class="av2" aria-hidden="true">J</span><button type="button" class="bub" data-rv="1" aria-haspopup="dialog"><span class="rh"><b>Jacqueline M.</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">Hace 3 meses</span></span><span class="rtxt">Siempre que llegó a su salón solo me siento, y Emy hace su magia..yo siempre salgo contenta</span><span class="ver">Ver en Google ↗</span></button></li><li class="rev"><span class="av2" aria-hidden="true">C</span><button type="button" class="bub" data-rv="2" aria-haspopup="dialog"><span class="rh"><b>Corina R.</b><span class="est" aria-label="5 de 5 estrellas">★★★★★</span><span class="fe">Hace 4 meses</span></span><span class="rtxt">Maravilloso, me cambia de look. Muchas gracias amiguitas</span><span class="ver">Ver en Google ↗</span></button></li></ul><a class="mas" href="https://maps.google.com/?cid=8357353606332994377" target="_blank" rel="noopener">Ver todas las reseñas en Google Maps →</a></div>
-</div>
+<section class="stats" aria-label="Cifras">
+  <div class="w stats-g">
+    <div class="rv"><b><span data-count="4.8" data-dec="1">4,8</span></b><span>en Google</span></div>
+    <div class="rv"><b><span data-count="104">104</span></b><span>reseñas</span></div>
+    <div class="rv"><b><span data-count="24">24</span></b><span>años de trayectoria</span></div>
+    <div class="rv"><b><span data-count="7">7</span></b><span>días a la semana</span></div>
   </div>
-</div></section>
-<div class="divisor orn" aria-hidden="true"></div>
-<section id="contacto" class="cont"><div class="in-w">
-  <h2 class="rv">Reserva tu cita</h2>
-  <p class="rv" style="color:var(--suave)">+51 1 3308233</p>
-  <div class="acc rv"><a class="btn ico" href="tel:+5113308233" aria-label="Llamar ahora" title="Llamar ahora"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a><a class="btn sec ico" href="https://www.instagram.com/emyssalonspa/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
-</div></section>
+</section>
+
+<section class="sec" id="servicios">
+  <div class="w">
+    <header class="sec-h rv"><p class="tag">01 · Servicios</p><h2>Lo que <em>hacemos</em></h2><p class="sub">Los servicios que muestran en su Instagram y en las reseñas. Sin lista fija de precios: abajo están las promociones que publicaron.</p></header>
+    <div class="cards">
+      <article class="card rv"><figure><img src="assets/img/liso.webp?v=20261109" width="618" height="818" alt="Cabello negro, largo y muy liso" loading="lazy"></figure><h3>Laceado japonés</h3><p>Una clienta cuenta que Emy «te asesora y te guía en el proceso para hacerte un buen laceado».</p><a class="pr" href="#reserva" data-svc="Laceado japonés">Consultar</a></article>
+      <article class="card rv"><figure><img src="assets/img/mechas.webp?v=20261109" width="655" height="585" alt="Cabello largo con mechas claras sobre base oscura" loading="lazy"></figure><h3>Color y mechas</h3><p>Tintes, mechas y cambios de look. «Maravilloso, me cambia de look», escribe una clienta.</p><a class="pr" href="#reserva" data-svc="Color y mechas">Consultar</a></article>
+      <article class="card rv"><figure><img src="assets/img/rizos.webp?v=20261109" width="660" height="696" alt="Mujer con rizos naturales definidos" loading="lazy"></figure><h3>Cabello y peinado</h3><p>Corte, rizos y peinados. «Solo me siento, y Emy hace su magia», cuenta otra clienta.</p><a class="pr" href="#reserva" data-svc="Corte y peinado">Consultar</a></article>
+      <article class="card rv"><figure><img src="assets/img/unas.webp?v=20261109" width="760" height="1004" alt="Mesa de manicure con esmaltes y sillón del salón" loading="lazy"></figure><h3>Uñas y limpieza facial</h3><p>Mesa de manicure, esmaltes en pared y tratamientos de piel, con promociones publicadas.</p><a class="pr" href="#reserva" data-svc="Uñas y limpieza facial">Consultar</a></article>
+    </div>
+    <p class="fine rv">Fotos de su Instagram y de su ficha de Google Maps.</p>
+  </div>
+</section>
+
+<section class="sec" id="promos">
+  <div class="w">
+    <header class="sec-h rv"><p class="tag">02 · Promociones</p><h2>Con <em>precio</em></h2><p class="sub">Promociones que aparecen en su Instagram. Son de distintas fechas: confirma la vigencia por WhatsApp.</p></header>
+    <div class="promos">
+      <article class="promo rv"><span class="p">S/ 70</span><h3>Uñas + limpieza facial</h3><p>«Renueva tu piel, realza tu belleza.» Promoción que publicaron en su perfil.</p></article>
+      <article class="promo rv"><span class="p">S/ 70</span><h3>Limpieza facial básica</h3><p>Promoción de septiembre. Incluye limpiador según fototipo, exfoliante, tónico, ablandador de comedones y extracción, gel descongestivo, alta frecuencia, sérum liposomado, crema nutritiva y fotoprotector.</p></article>
+      <article class="promo rv"><span class="p">S/ 80</span><h3>Color + corte + cejas</h3><p>Tinte, corte y depilación con hilo de cejas, en la promoción «color» del 28/05.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="trabajos">
+  <div class="w">
+    <header class="sec-h rv"><p class="tag">03 · Trabajos</p><h2>El <em>resultado</em></h2></header>
+    <div class="gal">
+      <figure class="rv" data-rv="zoom"><img src="assets/img/brillo.webp?v=20261109" width="616" height="818" alt="Cabello largo liso con brillo y reflejos claros" loading="lazy"><figcaption>Liso con reflejos</figcaption></figure>
+      <figure class="rv" data-rv="zoom"><img src="assets/img/fachada.webp?v=20261109" width="760" height="1004" alt="Fachada de Emy's con su letrero rojo de tijeras" loading="lazy"><figcaption>La fachada</figcaption></figure>
+    </div>
+    <p class="fine rv">Fotos de su Instagram y de Google Street View.</p>
+  </div>
+</section>
+
+<section class="sec" id="reserva">
+  <div class="w">
+    <header class="sec-h rv"><p class="tag">04 · Reserva</p><h2>Reserva <em>tu cita</em></h2><p class="sub">Atienden con cita previa. Elige día, hora y servicio: se abre WhatsApp con el mensaje escrito. Las horas libres son de ejemplo; el salón confirma.</p></header>
+    <div class="cols">
+      <form class="book rv" id="book" onsubmit="return false">
+        <div><p class="lab">1 · Día</p><div class="days" id="days" role="group" aria-label="Día"></div></div>
+        <div><p class="lab">2 · Hora <span id="left" class="left"></span></p><div class="slots" id="slots" role="group" aria-label="Hora"></div></div>
+        <div><label class="lab" for="svc">3 · Servicio</label>
+          <select id="svc"><option>Laceado japonés</option><option>Color y mechas</option><option>Corte y peinado</option><option>Uñas y limpieza facial</option><option>Limpieza facial básica (promo S/ 70)</option></select></div>
+        <a class="btn" id="bookBtn" href="https://wa.me/51999188816" target="_blank" rel="noopener"><span id="bookTxt">Reservar por WhatsApp</span></a>
+      </form>
+      <aside class="hrs rv">
+        <p class="lab">Horario</p>
+        <table id="hrs"><tbody>
+          <tr data-d="1"><td>Lunes</td><td>10:00 – 21:00</td></tr>
+          <tr data-d="2"><td>Martes</td><td>10:00 – 21:00</td></tr>
+          <tr data-d="3"><td>Miércoles</td><td>10:00 – 21:00</td></tr>
+          <tr data-d="4"><td>Jueves</td><td>10:00 – 21:00</td></tr>
+          <tr data-d="5"><td>Viernes</td><td>10:00 – 21:00</td></tr>
+          <tr data-d="6"><td>Sábado</td><td>10:00 – 21:00</td></tr>
+          <tr data-d="0"><td>Domingo</td><td>10:00 – 21:00</td></tr>
+        </tbody></table>
+        <p class="fine">Horario de su ficha de Google. En sus promociones indican 3 a 8 p. m.: conviene confirmar.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="opiniones">
+  <div class="w">
+    <header class="sec-h rv"><p class="tag">05 · Opiniones</p><h2>Lo que <em>cuentan</em></h2><p class="sub">4,8 en Google con 104 reseñas. Cinco de ellas, tal como las escribieron.</p></header>
+    <ul class="rvs">
+      <li class="rv"><p>«Visitar el salón Emy's siempre será una gran satisfacción, primero por el bellísimo trato por la profesional en el tema Emilia, seguido de los buenísimos productos de calidad que usa para engreir tu cabello. Te deja toda una Reyna. Sin duda lo recomiendo.»</p><b>Gloria C.</b><span>5 estrellas · Google</span></li>
+      <li class="rv"><p>«Emy es muy buena, te aseora y te guia en el proceso para hacerte un buen laceado, estoy feliz con el resultado. Les recomiendo venir aquí.»</p><b>Patricia G.</b><span>5 estrellas · Google</span></li>
+      <li class="rv"><p>«Siempre que llegó a su salón solo me siento, y Emy hace su magia..yo siempre salgo contenta.»</p><b>Jacqueline M.</b><span>5 estrellas · Google</span></li>
+      <li class="rv"><p>«Excelente atencion. Un trabajo muy profesional. Estoy muy contenta con los resultados.»</p><b>Claudia M.</b><span>5 estrellas · Google</span></li>
+      <li class="rv"><p>«Maravilloso, me cambia de look. Mucha gracias amiguitas.»</p><b>Corina R.</b><span>5 estrellas · Google</span></li>
+    </ul>
+    <p class="fine rv">Reseñas reales de Google Maps de Emy's Salon; se acortaron los apellidos y se ajustó la puntuación en dos de ellas («Reyna.» y «Maravilloso, me cambia de look.»).</p>
+  </div>
+</section>
+
+<section class="sec" id="visita">
+  <div class="w">
+    <header class="sec-h rv"><p class="tag">06 · Visita</p><h2>Av. Eugenio Garzón <em>719</em></h2><p class="sub">Jesús María, Lima. En sus publicaciones aparece como Garzón 707 y 711: confirma el número al llegar.</p></header>
+    <div class="cols visita">
+      <div class="map rv"><iframe title="Mapa de Emy's Salón &amp; Spa" src="https://maps.google.com/maps?q=-12.0673979,-77.0455368&amp;z=17&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      <div class="rv">
+        <ul class="soc">
+          <li><a href="https://wa.me/51999188816" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z"/><path d="M9 8c0 3.5 3 6.5 6.5 6.5l1-1.5-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2Z"/></svg>WhatsApp 999 188 816</a></li>
+          <li><a href="https://www.instagram.com/emyssalonspa/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r=".6"/></svg>@emyssalonspa</a></li>
+          <li><a href="https://maps.google.com/?cid=8357353606332994377" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.8-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.2 12 21 12 21Z"/><circle cx="12" cy="10" r="2.4"/></svg>Cómo llegar</a></li>
+          <li><a href="tel:+5113308233"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>Llamar (01) 330 8233</a></li>
+        </ul>
+        <p class="fine">El 999 188 816 sale en sus promociones de Instagram; la ficha de Google lista el (01) 330 8233. No hemos confirmado que el primero sea WhatsApp.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 </main>
-<footer><span>Emy's Salon</span><span>Av. Gral. Eugenio Garzón 719, Jesús María</span></footer>
-<div class="barra-res" id="barraRes"><span class="ahora" data-ahora hidden></span><a class="btn" href="tel:+5113308233">Reservar</a></div>
-<script>window.CITA = {"wa":"tel:+5113308233","n":"Emy's Salon","h":{"lun":["10:00","21:00"],"mar":["10:00","21:00"],"mie":["10:00","21:00"],"jue":["10:00","21:00"],"vie":["10:00","21:00"],"sab":["10:00","21:00"]},"ant":2}; window.RESENAS = [{"a":"Karen E.","e":4,"f":"Hace un año","t":"He tenido muy buena experiencia siempre que he venido para realizarme laceados, recomiendo la atención con Julio César. Además, el servicio de maquillaje profesional y peinados me ha gustado mucho.…","u":"https://maps.app.goo.gl/37rUcuVnJ4qvnjis5"},{"a":"Jacqueline M.","e":5,"f":"Hace 3 meses","t":"Siempre que llegó a su salón solo me siento, y Emy hace su magia..yo siempre salgo contenta","u":"https://maps.app.goo.gl/q8rpkLLT4WE2CRoT8"},{"a":"Corina R.","e":5,"f":"Hace 4 meses","t":"Maravilloso, me cambia de look. Muchas gracias amiguitas","u":"https://maps.app.goo.gl/WSd6VfLV87tCeVRBA"},{"a":"Alicia L.","e":5,"f":"Hace 5 meses","t":"Me quedo excelente. Me voy feliz.","u":"https://maps.app.goo.gl/2Bbhgtm79ARSAn946"},{"a":"Patricia G.","e":5,"f":"Hace un año","t":"Emy es muy buena, te aseora y te guia en el proceso para hacerte un buen laceado, estoy feliz con el resultado. Les recomiendo venir aquí","u":"https://maps.app.goo.gl/kmM6cesjDEZjzC1q8"},{"a":"Madeley M.","e":5,"f":"Hace un año","t":"Muy buena atención de todos, un ambiente muy lindo y me gustó mucho los resultados, lo recomiendo siempre que quieran un resultado profesional 🍒🩷…","u":"https://maps.app.goo.gl/9dAGukmFVJPjjXmx9"},{"a":"Claudia M.","e":5,"f":"Hace un año","t":"Excelente atencion. Un trabajo muy profesional. Estoy muy contenta con los resultados.","u":"https://maps.app.goo.gl/p7p3CB4Q2t7bExCeA"},{"a":"Gloria C.","e":5,"f":"Hace un año","t":"Visitar el salón Emy's siempre será una gran satisfacción, primero por el bellísimo trato por la profesional en el tema Emilia, seguido de los buenísimos productos de calidad que usa para engreir tu…","u":"https://maps.app.goo.gl/FWFfqQ5Nq19cYKaX8"},{"a":"Flora L.","e":5,"f":"Hace 2 años","t":"Emys Salón encantada más de un año con ustedes ahora mi laciado una maravilloso, regio muy recomendable ,a atención excelente unas tromen, yo mi cabello afro Huy muy crespo termine lacia no lo puedo…","u":"https://maps.app.goo.gl/ZqNzx3cSwaeZSZUC9"},{"a":"Pamela L.","e":5,"f":"Hace un año","t":"Estoy contenta con su servicio, pone esmero en su trabajo y de garantía. Es muy profesional en su trabajo y te orienta lo que te va a quedar mejor, cada vez que vengo a atenderme salgo contenta y con…","u":"https://maps.app.goo.gl/69fS8o4RjTW4sG3H8"},{"a":"Yrma R.","e":5,"f":"Hace un año","t":"Emys salón te cambia la vida en minutos, sales llena de energía, renovada y sobre todo feliz que es lo más importante. Gracias gracias gracias","u":"https://maps.app.goo.gl/SUDoMv26baMhFvjh9"},{"a":"Paulina A.","e":5,"f":"Hace un año","t":"Saludarle a Sra Emita del Salón de Belleza Emys y felicitarle por el trabajo Exelente que Realiza yo particularmente me siento Muy contenta porque veo la Diferencia y calidad en su trabajo.","u":"https://maps.app.goo.gl/FWbiTWxVbNDThVsz8"},{"a":"Sara","e":5,"f":"Hace un año","t":"Una experiencia muy linda me gustó mucho lo que hicieron a mi cabello espero volver pronto recomendado!!!","u":"https://maps.app.goo.gl/pFnMqMMa1e6uqRPWA"},{"a":"Susana M.","e":5,"f":"Hace un año","t":"Una experiencia excelente y muy recomendado, por su gran experiencia ☺️","u":"https://maps.app.goo.gl/crx4JX2AEjD1VeQZ8"},{"a":"Ana C.","e":5,"f":"Hace un año","t":"Muy buena atención y excelente trabajo","u":"https://maps.app.goo.gl/YxVGzbD7ddbaAGUf9"},{"a":"Ana A.","e":5,"f":"Hace un año","t":"Muy buena atención.. el cambio de look muy bien acertado.. los productos utilizados de primera..","u":"https://maps.app.goo.gl/aWk5q8T5p9cyZk7y7"},{"a":"Luis F.","e":5,"f":"Hace un año","t":"Me gustó atención respetuosa y amigable y salí con un buen corte para caballero","u":"https://maps.app.goo.gl/Gt5ERimkSf1bpnz6A"},{"a":"Rosa P.","e":5,"f":"Hace un año","t":"Estoy muy contenta con la experiencia de Emys Salon , excelente atención me gustó el laceado que me hicieron , Felices","u":"https://maps.app.goo.gl/8ALojtwYrXoo2aicA"},{"a":"Ketty C.","e":5,"f":"Hace un año","t":"Siempre que vengo salgo feliz con los resultados, son unos capos!","u":"https://maps.app.goo.gl/VFjdZQWjD9CsaAbh9"},{"a":"Esther G.","e":5,"f":"Hace un año","t":"Buena atención si lo recomiendo es la mejor...","u":"https://maps.app.goo.gl/vLFFNtQVYqTWQ3oX9"}];</script>
-<script src="../_comun/base.js"></script>
-<script></script>
+
+<footer class="foot">
+  <img src="assets/img/logo.webp?v=20261109" width="72" height="72" alt="">
+  <p class="script">Emy's</p>
+  <p>SALÓN &amp; SPA · 24 AÑOS</p>
+  <p class="fine">Demo hecha con información pública del negocio (Instagram y Google Maps). Las horas libres de la reserva son de ejemplo.</p>
+</footer>
+
+<div class="barra" id="barra"><a class="btn" href="#reserva">Reservar por WhatsApp</a></div>
+
+<script defer src="lib/manifest.js?v=20261109"></script>
+<script defer src="main.js?v=20261109"></script>
 </body>
 </html>

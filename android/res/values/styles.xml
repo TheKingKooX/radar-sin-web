@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- DayNight: el WebView sigue el modo claro u oscuro del teléfono (prefers-color-scheme). -->
+    <style name="Tema" parent="@android:style/Theme.DeviceDefault.DayNight">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/fondo</item>
+    </style>
+    <color name="fondo">#f4f6ff</color>
+    <color name="icono_fondo">#05060d</color>
+</resources>
